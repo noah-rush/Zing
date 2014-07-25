@@ -1,0 +1,256 @@
+
+<!doctype html>
+
+<head>
+
+{%block stylesheet%}
+  <link href="static/css/bootstrap.min.css" rel="stylesheet">
+{%endblock%}
+
+  
+  
+
+<style type="text/css">
+body {background-color: #e06666;
+text-indent: 0.25%;
+color: black}
+h1{color: black;}
+form{color: black;
+background-color: white;
+padding-right: 0.1;
+white-space: 5px}
+#blank{
+}
+.button-group{
+  margin-right: 0%;
+  margin-left: 3%;
+}
+.input-group{
+  margin-bottom: 2%;
+  margin-top: 2%;
+  margin-right: 0%;
+  margin-left: 10%;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+#panela{
+  background-color: black;
+}
+#createbutton{
+  margin-left: 40%;
+  margin-bottom: 5%
+
+}
+#panelb{
+  background-color: white;
+}
+#panelc{
+  background-color: red;
+}
+#panelsignup{
+  background-color: white;
+  display: none;
+  height: 0%;
+}
+#signup:hover{
+  background-color: black;
+  color:white;
+}
+#signin:hover{
+  background-color: black;
+  color:white;
+}
+#signup{
+  background-color: white;
+  color:black;
+}
+#signin{
+  background-color: white;
+  color: black;
+}
+.jumbotron{
+  background-color: white;
+}
+#loginscreen{
+    display:none;
+}
+#somethingWrong{
+    display:none;
+}
+#submit{
+	display:none;
+}
+#name{
+	display:none;
+}
+#variable{
+	display:none;
+	
+}
+.form-control{
+  border-radius: 20px;
+}
+#logout{
+	display:none;
+}
+#yesuser{
+    display:none;
+}
+#nouser{
+    display:none;
+}
+.dropdown-menu{
+  background-color: gray;
+}
+#form{
+  background-color: gray;
+}
+
+
+</style>
+</head>
+
+
+
+        <title>{% block title %}Zing{% endblock %}</title>
+
+
+
+<h1>Welcome to Zing!</h1>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">ZING</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li  class="active"><a id = "venues" href="#venues">Venues</a></li>
+        <li><a id = "NowPlaying" href="#nowplaying">Now Playing</a></li>
+        <li class="dropdown">
+          <a  href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="#">Reviews</a></li>
+            <li><a href="#">My Performanes</a></li>
+            <li class="divider"></li>
+            <li><a href="#createEvent">Post an event!</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+ 
+
+        <li  id = "nouser"class="dropdown">
+          <a   href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
+
+          <ul  class="dropdown-menu" role="menu">
+           <div  id = "loginscreen" >
+    
+    <form  role = "form"   >
+    <div id = "somethingWrong"></div>
+            <div class="input-group">
+          <input  type="text" id = "username"class="form-control" placeholder="Username">
+          </div>
+
+           <div class="input-group">
+  <input  type="password" id = "password" class="form-control" placeholder="Password">
+</div>
+
+            <br>    
+            <a id = "loginbutton" class="btn btn-default" href="#login" >Submit</a>
+            
+        </form>
+        <a id = "createAccount" href="/newUser" >New? Create an account. </a>
+</div>
+</ul>
+</li>
+
+<li  class="dropdown">
+          <a  id = "yesuser" href="#" class="dropdown-toggle" data-toggle="dropdown">{{useron}}<span class="caret"></span></a>
+
+          <ul  class="dropdown-menu" role="menu">
+                  <div id = "logout">
+<form action = "/logout" method = "post">
+<input type="submit" value = "Logout">
+</form></div>
+
+
+
+
+
+          
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div id ="variable">{{useron}}</div>
+<div class = "container" id="content">{% block content %}
+
+<br> 
+<br>
+
+
+
+<div id = "panela" class="panel panel-default">
+  <div class="panel-body">
+  <div id = "panelb" class="panel panel-default">
+  <div class="panel-body">
+    <div id = "panelc"class="panel panel-default">
+  <div class="panel-body">
+   <div class="jumbotron">
+  <h1>Welcome to Zing!</h1>
+  <p>Your Philadelphia theatre, reviews, tickets, schedules and more </p>
+  <p><a href = "#signup" id = "signup"class="btn btn-primary btn-lg" role="button">Sign up</a>
+  <a href = "#signin" id = "signin"class="btn btn-primary btn-lg" role="button">Sign in</a></p>
+
+</div>
+<div id = "panelsignup" class="panel panel-default" style = "width: 35%">
+  <div class="panel-body">
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+{% endblock %}</div>
+<div id="venuel" ></div>
+
+
+
+
+
+
+{% block sources %}
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="static/login.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/jquery.ba-hashchange.min.js"></script>
+{% endblock %}
+</body>

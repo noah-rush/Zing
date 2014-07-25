@@ -1,0 +1,36 @@
+<!doctype html>
+
+{%extends "layout.html"%}
+{% block title %}{{persondata[0]['name']}}{% endblock %}
+{%block stylesheet%}<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+
+{{persondata[0]['actorname']}}
+<br>
+<br>
+{{persondata[0]['bio']}}
+<br>
+<br>
+
+{% for roles in roles%}
+<a href = "/show/{{roles['name']}}"> {{roles['name']}}</a> --> {{roles['role']}} 
+<br>
+{%endfor %}
+<br>
+
+<img src="../static/actorpics/{{persondata[0]['pic']}}"> 
+
+
+{%endblock %}
+
+{% block sources %}
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="../static/login.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/jquery.ba-hashchange.min.js"></script>
+
+  {% endblock %}

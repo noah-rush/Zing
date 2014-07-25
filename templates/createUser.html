@@ -1,0 +1,65 @@
+
+<form class= "form-inline" role="form">
+
+<div class= "input-group">
+
+    <div id = "somethingWrong"></div>
+
+<h1 style="margin-left: 28%">Step One</h1>
+            <div class="input-group">
+          <input  type="text" id = "Username"class="form-control" placeholder="Username">
+          </div>
+<div class="input-group">
+ <input  margin-bottom = "0px" margin-top = "0px"type="password" id = "Password" class="form-control" placeholder="Password">
+</div>
+ <div class="input-group">
+  <input  type="password" id = "confPassword" class="form-control" placeholder="Confirm">
+</div>
+ <div class="input-group">
+  <input  type="text" id = "email" class="form-control" placeholder="Email">
+</div>
+
+
+<p style="margin-left:10%; font-size: 26px"> Birthday </p>
+
+
+<div class="form-group">
+
+<select style = "width: 80%; margin-left:33%"class="form-control" placeholder = "Month">
+<option value="" selected disabled>Month</option>
+  {%for month in ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
+  
+    <option>{{month}}</option>>
+ {%endfor%}
+ 
+</select>
+</div>
+
+ <div class="form-group">
+
+ <select style = "width: 100%; margin-left:26%"class="form-control">
+  <option value="" selected disabled>Day</option>
+  {%for month in range(31)%}
+ 
+    <option>{{month}}</option>>
+ {%endfor%}
+
+</select>
+ </div>
+ <div class="form-group">
+<select style = "width: 100%; margin-left:24%"class="form-control">
+<option value="" selected disabled>Year</option>
+  {%for month in range(2000, 1930, -1)%}
+  
+    <option>{{month}}</option>>
+ {%endfor%}
+</select>
+  </div>
+    
+ </div>
+
+            <br>    
+            <a margin-left = "40%" margin-bottom ="5%" id = "createbutton" class="btn btn-default" href="#createAccount" >Create My Account</a>
+            
+            </form>
+  

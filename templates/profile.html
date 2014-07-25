@@ -1,0 +1,44 @@
+<!doctype html>
+
+{%extends "layout.html"%}
+{% block title %}{{username}}{% endblock %}
+{%block stylesheet%}<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+</style>
+{% endblock %}
+
+
+
+
+
+
+{% block content %}
+
+My activity 
+<br>
+<br>
+{% for result in results %}
+{{result['time']}}
+<br>
+{{result['name']}}  
+<br>
+{{result['rating']}} STARS ! 
+<br>
+<object width="300" height="100" type="text/plain" data="../static/reviews/{{result['reviewtext']}}" border="2" >
+</object>
+
+{%endfor%}
+
+
+
+{%endblock %}
+
+{% block sources %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="../static/login.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/jquery.ba-hashchange.min.js"></script>
+  {% endblock %}

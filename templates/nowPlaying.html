@@ -1,0 +1,6 @@
+   <table>
+{% for results in results %}
+<tr><td><a href = "/show/{{results[0]}}" name = "show" method = "post">{{results[0]}}</a></td>
+<td><a href = "/venue/{{results[1]}}" name = "show" method = "post">{{results[1]}}</a> </td><tr>
+{% endfor %}
+</table>
