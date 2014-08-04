@@ -1,5 +1,46 @@
-   <table>
+
+
+   <table style= "background-color: white;border-color: black; border: 1px solid black;; ">
+   <tr>
 {% for results in results %}
-<tr><td><a href = "/venue/{{results['name']}}" name = "venue" method = "post">{{results['name']}}<a></td> <tr>
+<td style = "text-align: center">
+
+  <a href = "/venue/{{results['name']}}" id = "link{{loop.index}}"><img 
+  id = "image{{loop.index}}" src="../static/images/marquee.jpg" width = "100%" height = "50%"class="img-responsive" alt="Responsive image" >{{results['name']}}</img></a>
+ </td> 
+<script type="text/javascript">
+$(function(){
+var iURL = "http://ajax.googleapis.com/ajax/services/search/images";
+var query = $("#link{{loop.index}}")
+query = query.text()
+$.ajax({
+    url: iURL,
+    type: 'GET',
+    dataType: 'jsonp',
+    data: {
+        v:  '1.0',
+        q:  query,
+        format: 'json',
+        jsoncallback:  '?'
+    },
+    success: callback,
+    error: function(xhr, textStatus, error){
+            console.log(xhr.statusText, textStatus, error);
+        }
+});
+});
+
+function callback(json){
+   console.log(json.responseData.results[0].unescapedUrl)
+   $("#image{{loop.index}}").attr('src',json.responseData.results[0].unescapedUrl)
+}
+</script>
+
+
+
+
+{% if loop.index is divisibleby(5) %}
+</tr>
+{% endif %}
 {% endfor %}
 </table>

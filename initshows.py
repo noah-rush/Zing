@@ -20,18 +20,8 @@ def main():
 
 
   c = conn.cursor()
-
-  c.execute("CREATE TABLE Karlshows2(id serial PRIMARY KEY, name VARCHAR(100), venueID int, start_date DATE, end_date DATE)")
-  sheet = wb.sheet_by_index(1) 
-  for row in range(sheet.nrows):
-      values = []
-      for col in range(sheet.ncols):
-          values.append(sheet.cell_value(row,col))
-      c.execute("SELECT id from Karlvenues WHERE name = %s", (values[2],))
-      venID = c.fetchall()
-      if len(venID)>0:
-      	venID =  venID[0][0]
-      	c.execute("INSERT INTO Karlshows2(name, venueID, start_date, end_date) VALUES(%s,%s,%s, %s)", (values[1], venID, values[3], values[4]))
+  c.execute("DROP TABLE Fringeshows")
+  c.execute("CREATE TABLE Fringeshows(id serial PRIMARY KEY, name VARCHAR(1000), venueID int, producer VARCHAR(500), description VARCHAR(2000), pic VARCHAR(500))")
 
 
   c.close()

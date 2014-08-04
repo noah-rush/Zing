@@ -7,11 +7,19 @@ function do_stuff() {
 
 }
 function signup(){
-	$("#panelsignup").show();
+	//$("#panelsignup").show();
 	console.log("signup");
 	$.ajax({
 		success: show_signup,
 		url: "/signupform"
+	})
+}
+function signin(){
+	//$("#panelsignup").show();
+	console.log("signin");
+	$.ajax({
+		success: show_signin,
+		url: "/signinform"
 	})
 }
 
@@ -31,7 +39,11 @@ function printmonth(){
 }
 
 function show_signup(data){
-		$("#panelsignup").html(data);
+		$("#jumbo").html(data);
+		//panelMove();
+}
+function show_signin(data){
+		$("#jumbo").html(data);
 		//panelMove();
 }
 function login_rout(data){
@@ -40,19 +52,7 @@ function login_rout(data){
 	var somethingwrong = $("#somethingWrong")
 	switch(str){
 		case "Log":
-			var user = data.substring(18);
-			console.log(user);
-			$("#loginscreen").hide();
-			var nouser = $("#nouser");
-			nouser.hide();
-			var logout = $("#logout");
-			var name = $("#name");
-			var yesuser = $("#yesuser");
-			yesuser.text(user)
-			yesuser.show();
-
-			logout.show();
-			name.show();
+			document.write(data)
 			break;
 		case "Use":
 			somethingwrong.show();
@@ -69,16 +69,44 @@ function login_rout(data){
 
 
 function login_func(){
-	var user = $("#username").val();
-	var password = $("#password").val();
-	console.log(user)
-	console.log(password)
+	var user = $("#loginUsername").val();
+	var password = $("#loginPassword").val();
+	console.log(user);
+	console.log(password);
 	$.ajax({
 		success: login_rout,
   		url: "/loggedin",
 		data: {
 			username: user,
 			password: password
+		}
+	});
+}
+
+function create_Account(){
+	console.log("got here")
+	var day = $("#day").val();
+	var year = $("#year").val();
+	console.log(year);
+	console.log(day);
+	var firstname = $("#first").val();
+	var lastname = $("#last").val();
+	var password = $("#password").val();
+	var passConfirm = $("#confPassword").val();
+	var email = $("#email").val();
+	var month = $("#month").val();
+	$.ajax({
+		success: show_signup,
+  		url: "/usercreate",
+		data: {
+			firstname: firstname,
+			lastname: lastname,
+			password: password,
+			passwordConfirm: passConfirm,
+			email: email,
+			month: month,
+			day: day,
+			year: year
 		}
 	});
 }
@@ -103,7 +131,7 @@ function show_reviews(){
 
 function display_venues(data){
 	console.log(data);
-	$("#venuel").html(data);
+	$("#panelc").html(data);
 }
 
 function display_nowPlaying(data){
@@ -136,23 +164,29 @@ var check = $("#variable").text();
 $(window).hashchange( function test(){
 	var hash = location.hash;
 	console.log(hash);
-	show_venues;
 	switch(hash){
 	case "#venues":
-		show_venues()
+		show_venues();
 		break;
 	case "#nowplaying":
-		show_nowPlaying()
+		show_nowPlaying();
 		break;
 	case "#createEvent":
 		alert();
 		break;
 	case "#login":
-		login_func()
+		login_func();
 		break;
 	case "#signup":
 		signup();
 		break;
+	case "#createAccount":
+		create_Account();
+		break;
+	case "#signin":
+		signin();
+		break;
+
 
 	}
 

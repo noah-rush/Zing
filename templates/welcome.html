@@ -1,0 +1,184 @@
+
+<!doctype html>
+
+<head>
+
+{%block stylesheet%}
+  <link href="static/css/bootstrap.min.css" rel="stylesheet">
+{%endblock%}
+
+  
+  
+
+<style type="text/css">
+body {background-color: #e06666;
+text-indent: 0.25%;
+color: black}
+h1{color: black;}
+form{color: black;
+background-color: white;
+padding-right: 0.1;
+white-space: 5px}
+#blank{
+}
+#createbutton{
+  background-color: rgb(105, 103, 103);;
+  color: white;
+}
+.button-group{
+  margin-right: 0%;
+  margin-left: 3%;
+}
+.input-group{
+  margin-bottom: 2%;
+  margin-top: 2%;
+  margin-right: 0%;
+  margin-left: 10%;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+#panela{
+  background-color: black;
+
+}
+#createbutton{
+  margin-left: 40%;
+  margin-bottom: 5%
+
+}
+#panelb{
+  background-color: white;
+}
+#panelc{
+  background-color: red;
+
+}
+.panel{ 
+border: 0px;
+border-radius: 20px;}
+#panelsignup{
+  color: orange;
+  display: none;
+  height: 0%;
+}
+#signup:hover{
+  background-color: black;
+  color:white;
+}
+#signin:hover{
+  background-color: black;
+  color:white;
+}
+#signup{
+  background-color: white;
+  color:black;
+}
+#signin{
+  background-color: white;
+  color: black;
+}
+.jumbotron{
+  background-color: white;
+}
+#loginscreen{
+    display:none;
+}
+#somethingWrong{
+    display:none;
+}
+#submit{
+	display:none;
+}
+#name{
+	display:none;
+}
+#variable{
+	display:none;
+	
+}
+.form-control{
+  border-radius: 20px;
+}
+#logout{
+	display:none;
+}
+#yesuser{
+    display:none;
+}
+#nouser{
+    display:none;
+}
+.dropdown-menu{
+  background-color: gray;
+}
+#form{
+  background-color: gray;
+}
+
+
+</style>
+</head>
+
+
+
+        <title>{% block title %}Zing{% endblock %}</title>
+
+
+
+<br>
+<br>
+<br>
+<body>
+
+
+
+<div id ="variable">{{useron}}</div>
+<div class = "container" id="content">{% block content %}
+
+<br> 
+<br>
+
+
+
+<div id = "panela" class="panel panel-default">
+  <div class="panel-body">
+  <div id = "panelb" class="panel panel-default">
+  <div class="panel-body">
+    <div id = "panelc"class="panel panel-default">
+  <div class="panel-body">
+   <div id= "jumbo"class="jumbotron">
+  <h1>Welcome to Zing!</h1>
+  <p>Your Philadelphia theatre, reviews, tickets, schedules and more </p>
+  <p><a href = "#signup" id = "signup"class="btn btn-primary btn-lg" role="button">Sign up</a>
+  <a href = "#signin" id = "signin"class="btn btn-primary btn-lg" role="button">Sign in</a></p>
+
+</div>
+<div id = "panelsignup" class="panel panel-default" >
+  <div class="panel-body">
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+{% endblock %}</div>
+<div id="venuel" ></div>
+
+
+
+
+
+
+{% block sources %}
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="static/login.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/jquery.ba-hashchange.min.js"></script>
+{% endblock %}
+</body>

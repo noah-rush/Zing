@@ -6,20 +6,10 @@ from xlrd import open_workbook
 
 def main():
   wb = open_workbook('zingTheaterMarketingDirectory.xlsx')
-  urlparse.uses_netloc.append("postgres")
-  url = urlparse.urlparse(os.environ["DATABASE_URL"])
+  import connectionBoiler
+  connectionBoiler.connect()
 
-  conn = psycopg2.connect(
-      database=url.path[1:],
-      user=url.username,
-      password=url.password,
-      host=url.hostname,
-      port=url.port
-  )
-
-
-
-  c = conn.cursor()
+  c=connectionBoiler.connect()
   c.execute("DELETE FROM Karlcasting")
   #c.execute("CREATE TABLE Karlcasting(id serial PRIMARY KEY, actorID int, showID int, role VARCHAR(100))")
   sheet = wb.sheet_by_index(2) 

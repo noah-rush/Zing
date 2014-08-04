@@ -1,32 +1,33 @@
 
 <form class= "form-inline" role="form">
 
-<div class= "input-group">
 
-    <div id = "somethingWrong"></div>
-
-<h1 style="margin-left: 28%">Step One</h1>
-            <div class="input-group">
-          <input  type="text" id = "Username"class="form-control" placeholder="Username">
+<h1>Sign up </h1>
+<p> Zing is a free resource for actors, critics, theatergoers and producers</p>
+  <div class="form-group">
+  <input  type="text" id = "first"class="form-control" placeholder="First Name">
           </div>
-<div class="input-group">
- <input  margin-bottom = "0px" margin-top = "0px"type="password" id = "Password" class="form-control" placeholder="Password">
+          <div class="form-group">
+  <input  type="text" id = "last"class="form-control" placeholder="Last Name">
+          </div>
+ <div class="form-group">
+ <input  margin-bottom = "0px" margin-top = "0px"type="password" id = "password" class="form-control" placeholder="Password">
 </div>
- <div class="input-group">
+  <div class="form-group">
   <input  type="password" id = "confPassword" class="form-control" placeholder="Confirm">
 </div>
- <div class="input-group">
+  <div class="form-group">
   <input  type="text" id = "email" class="form-control" placeholder="Email">
 </div>
 
 
-<p style="margin-left:10%; font-size: 26px"> Birthday </p>
-
-
+<br>
+<div class "form-group" style = "margin-left: 33%;
+margin-top: 2%">
 <div class="form-group">
 
-<select style = "width: 80%; margin-left:33%"class="form-control" placeholder = "Month">
-<option value="" selected disabled>Month</option>
+<select id = "month" style = "width: 80%; margin-left:33%"class="form-control" placeholder = "Month">
+<option value="" selected disabled>Date</option>
   {%for month in ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
   
     <option>{{month}}</option>>
@@ -37,8 +38,8 @@
 
  <div class="form-group">
 
- <select style = "width: 100%; margin-left:26%"class="form-control">
-  <option value="" selected disabled>Day</option>
+ <select id = "day" style = "width: 100%; margin-left:26%"class="form-control">
+  <option value="" selected disabled>Of</option>
   {%for month in range(31)%}
  
     <option>{{month}}</option>>
@@ -47,16 +48,16 @@
 </select>
  </div>
  <div class="form-group">
-<select style = "width: 100%; margin-left:24%"class="form-control">
-<option value="" selected disabled>Year</option>
+<select id = "year" style = "width: 100%; margin-left:24%"class="form-control">
+<option value="" selected disabled>Birth</option>
   {%for month in range(2000, 1930, -1)%}
   
     <option>{{month}}</option>>
  {%endfor%}
 </select>
   </div>
-    
- </div>
+    </div>
+ 
 
             <br>    
             <a margin-left = "40%" margin-bottom ="5%" id = "createbutton" class="btn btn-default" href="#createAccount" >Create My Account</a>

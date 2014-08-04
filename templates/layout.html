@@ -19,6 +19,104 @@ form{color: black;
 background-color: white;
 padding-right: 0.1;
 white-space: 5px}
+.img-responsive:hover { opacity: 0.3; 
+  filter: alpha(opacity=30); } 
+.star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.star-rating i {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+
+}
+.star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+.total-star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 125px;
+  height: 25px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.total-star-rating i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.total-star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+
+
+
+.star-rating input:hover + i,
+.star-rating input:checked + i {
+  opacity: 1;
+}
+.star-rating i ~ i {
+  width: 40%;
+}
+.star-rating i ~ i ~ i {
+  width: 60%;
+}
+.star-rating i ~ i ~ i ~ i {
+  width: 80%;
+}
+.star-rating i ~ i ~ i ~ i ~ i {
+  width: 100%;
+}
+.choice {
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  display: block;
+}
+
 #blank{
 }
 .button-group{
@@ -38,6 +136,7 @@ white-space: 5px}
 }
 #panela{
   background-color: black;
+
 }
 #createbutton{
   margin-left: 40%;
@@ -50,8 +149,15 @@ white-space: 5px}
 #panelc{
   background-color: red;
 }
-#panelsignup{
+#panelc2{
   background-color: white;
+
+}
+.panel{ 
+border: 0px;
+border-radius: 20px;}
+#panelsignup{
+  color: orange;
   display: none;
   height: 0%;
 }
@@ -119,7 +225,9 @@ white-space: 5px}
 
 
 
-<h1>Welcome to Zing!</h1>
+<br>
+<br>
+<br>
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -139,7 +247,6 @@ white-space: 5px}
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li  class="active"><a id = "venues" href="#venues">Venues</a></li>
-        <li><a id = "NowPlaying" href="#nowplaying">Now Playing</a></li>
         <li class="dropdown">
           <a  href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -208,37 +315,45 @@ white-space: 5px}
 
 
 <div id ="variable">{{useron}}</div>
-<div class = "container" id="content">{% block content %}
+<div class = "container" id="content">
 
 <br> 
 <br>
 
 
-
-<div id = "panela" class="panel panel-default">
+<div id = "panela" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <div id = "panelb" class="panel panel-default">
-  <div class="panel-body">
-    <div id = "panelc"class="panel panel-default">
-  <div class="panel-body">
-   <div class="jumbotron">
-  <h1>Welcome to Zing!</h1>
-  <p>Your Philadelphia theatre, reviews, tickets, schedules and more </p>
-  <p><a href = "#signup" id = "signup"class="btn btn-primary btn-lg" role="button">Sign up</a>
-  <a href = "#signin" id = "signin"class="btn btn-primary btn-lg" role="button">Sign in</a></p>
-
-</div>
-<div id = "panelsignup" class="panel panel-default" style = "width: 35%">
-  <div class="panel-body">
+    <div class="row">
+      <div class = "col-lg-8 col-md-4 col-sm-4">
+        <div id = "panelb" class="panel panel-default">
+ 
+          <div class="panel-body">
+            <div id = "panelc"class="panel panel-default">
+              <div class="panel-body">
+                {% block contentA %}
+   
+                {% endblock %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class = "col-lg-4 col-md-4 ">
+        <div id = "panelb" class="panel panel-default">
+          <div class="panel-body">
+            <div id = "panelc2"class="panel panel-default">
+              <div class = "panel-body">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-  </div>
-</div>
-  </div>
-</div>
+</div> 
 
 
-{% endblock %}</div>
+
 <div id="venuel" ></div>
 
 
@@ -249,7 +364,7 @@ white-space: 5px}
 {% block sources %}
 
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="static/login.js"></script>
+  <script src="static/homepage.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/jquery.ba-hashchange.min.js"></script>
 {% endblock %}

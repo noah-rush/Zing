@@ -6,9 +6,11 @@
 {% endblock %}
 
 
-{% block content %}
+{% block contentA %}
+<div id = "paneltext"class="panel panel-default">
+              <div class = "panel-body">
+<h2 id = "showname">{{persondata[0]['actorname']}}</h2>
 
-{{persondata[0]['actorname']}}
 <br>
 <br>
 {{persondata[0]['bio']}}
@@ -20,16 +22,20 @@
 <br>
 {%endfor %}
 <br>
+<div id = "panelpic"style = "background-color:rgba(167, 160, 160, 0.31)"class="panel panel-default">
+              <div class = "panel-body">
+<img id = "pic" src="../static/actorpics/{{persondata[0]['pic']}}"> 
+</div>
+</div>
 
-<img src="../static/actorpics/{{persondata[0]['pic']}}"> 
-
-
+</div>
+</div>
 {%endblock %}
 
 {% block sources %}
 
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="../static/login.js"></script>
+  <script src="../static/person.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/jquery.ba-hashchange.min.js"></script>
 

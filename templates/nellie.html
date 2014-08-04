@@ -1,0 +1,191 @@
+<!doctype html>
+
+{%extends "layout.html"%}
+{% block title %}{{showdata['name']}}{% endblock %}
+{%block stylesheet%}<link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+#writeuserreview{
+    display:none;
+}
+#startRating{
+	display:none;
+}
+#yourRating{
+	display:none;
+}
+#submitreview{
+	display:none;
+}
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+
+
+
+
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+</style>
+{% endblock %}
+
+
+</style>
+{% block contentA %}
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{showdata['name']}}</h4>
+      </div>
+      <div class="modal-body">
+      By {{useron}}
+      <br>
+      <br>
+      <textarea id = "writeuserreview"cols="50" rows="5">
+...
+</textarea>
+        <span class="star-rating">
+      }
+      }
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+<div class ="choice">
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id = "submitreview" class="btn btn-primary" data-dismiss="modal">Submit Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id = "paneltext"class="panel panel-default">
+<div class = "panel-heading">
+<h1 id = "showname">{{showdata['name']}}</h1>
+<span class="total-star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%if showdata['producer']|length > 40 %}
+
+<div class = "producer1"><i>{{showdata['producer']}}</i></div>
+{%else%}
+<span class = "producer"><i>{{showdata['producer']}}</i></span>
+{%endif%}
+</div>
+              <div class = "panel-body">
+<div class = "row">
+<br>
+<div class = "col-md-6" style "text-align: center">
+<img src = "{{showdata['pic']}}" width = "100%">
+</div>
+<div class = "col-md-6">
+</div>
+<div class = "col-md-6">
+<table>
+<tr>
+{% for date in dates %}
+<td>
+<a href = {{date['ticketlink']}}>{{date['playing']}}</a>
+</td>
+</tr>
+{%endfor %}
+</table>
+<br>
+<br>
+<br>
+<button class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+</div>
+
+
+
+</div>
+
+
+
+<br>
+<br>
+{% if venue[0] is defined %}
+Playing at - <a href = "/venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
+{% endif %}
+
+<br>
+<br>
+<p>{{description}}</p>
+
+
+
+<br>
+{% for cast in cast%}
+{{cast['role']}} -- <a href = "/person/{{cast['actorname']}}"> {{cast['actorname']}}</a>
+<br>
+{%endfor %}
+<br>
+
+{% for review in reviews %}
+
+<object width="300" height="100" type="text/plain" data="../static/reviews/{{review['reviewtext']}}" border="2" >
+</object>
+<br>{{review['journalist']}}
+<br>{{review['publication']}}
+{%endfor %}
+
+
+
+<br>
+{% for review in userreviews %}
+
+<object width="300" height="100" type="text/plain" data="../static/reviews/{{review['reviewtext']}}" border="2" >
+</object>
+
+{%endfor %}
+
+
+
+
+
+
+
+
+<div id="startRating" >{{rating}}</div>
+
+
+</div>
+</div>
+
+{%endblock %}
+
+
+
+
+
+{% block sources %}
+
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="../../static/show.js"></script>
+  <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/jquery.ba-hashchange.min.js"></script>
+    
+ 
+  
+  
+
+  {% endblock %}

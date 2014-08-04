@@ -4,18 +4,26 @@
 {% block title %}{{venuedata['name']}}{% endblock %}
 {%block stylesheet%}<link href="../static/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
-{% block content %}
+{% block contentA %}
+<div id = "paneltext"class="panel panel-default">
+              <div class = "panel-body">
+<h2 id = "showname">{{venuedata['name']}}</h2>
 
-{{venuedata['name']}}
+
 <br>
 SHOWS
 <br>
 {% for showdata in showdata%}
+<table>
+<tr>
+<td>
+<a href = "/show/{{showdata['name']}}">{{showdata['name']}} </a>
+</td>
 
-<a href = "/show/{{showdata['name']}}">{{showdata['name']}} </a>, {{showdata['start_date']}} - {{showdata['end_date']}}
-<br>
+
 {%endfor %}
-
+</tr>
+</table>
 
 <br>
 STAFF
@@ -25,12 +33,14 @@ STAFF
 {{staff['name']}}, {{staff['title']}}, {{staff['email']}}
 <br>
 {%endfor %}
+</div>
+</div>
 {%endblock %}
 
 {% block sources %}
 
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="../static/login.js"></script>
+  <script src="../static/show.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/jquery.ba-hashchange.min.js"></script>
 

@@ -9,6 +9,27 @@ function do_stuff() {
 
 }
 
+function getnowplaying(){
+	$.ajax({
+  		url: "/nowPlaying",
+		success: displaynowplaying
+	});
+
+}
+
+
+function displaynowplaying(data){
+	console.log(data);
+	$("#panelc2").html(data);
+}
+
+
+
+
+
+
+$(document).ready(start);
+
 function login_rout(data){
 	console.log(data);
 	var str = data.substring(0,3);
@@ -64,11 +85,12 @@ function show_nowPlaying(){
 function show_reviews(){
 	$("#writeuserreview").show();
 	$("#submitreview").show();
+	
 }
 
 function display_venues(data){
 	console.log(data);
-	$("#venuel").html(data);
+	$("#panelc").html(data);
 }
 
 function display_nowPlaying(data){
@@ -76,27 +98,23 @@ function display_nowPlaying(data){
 	$("#venuel").html(data);
 }
 
-function submit_rating(){
+
+function submit_review(){
+
+
+	var text = $("#writeuserreview").val();
 	var show = $("#showname").text();
-	console.log(show);
+	console.log(text);
 	console.log(stars);
 	$.ajax({
 		url: "/submitrating",
-		success: setpage,
 		data: {
 			show:  show,
 			rating: stars
 		}
 	})
-}
-function submit_review(){
-
-	$("#writeuserreview").hide();
-	$("#submitreview").hide();
-	var text = $("#writeuserreview").val();
-	var show = $("#showname").text();
-	console.log(text);
 	$.ajax({
+		success: reload,
 		url: "/submitreview",
 		data: {
 			show:  show,
@@ -105,17 +123,15 @@ function submit_review(){
 	})
 
 }
-
-
-function setpage(data){
-	var show = $("#showname").text();
-	$('.choice').text("You gave " + show + " " + stars+ "." );
-	$(".total-star-rating i").css("width", data + "%")
-	
+function reload(){
+	location.reload();
 }
 
 
+
+
 function start (){
+
 var check = $("#variable").text();
 	if(check == "none")
 	{
@@ -159,20 +175,18 @@ $(window).hashchange( function test(){
 $(":radio").change(
   function(){
 	stars = this.value
-    $('.choice').text( "");
   } 
 )
 
 $(window).hashchange();
  $("#writebutton").on("click", show_reviews);
- $("#ratebutton").on("click", submit_rating);
  $("#submitreview").on("click", submit_review);
  var initRating = $("#startRating").text();
  var yourInitRating = $("#yourRating").text();
  $(".total-star-rating i ").css("width", initRating +"%" );
  $(".star-rating i").css("border", yourInitRating + "%")
 
-
+getnowplaying();
 // $("#venues").on("click", show_venues);
 // $("#NowPlaying").on( "click", show_nowPlaying);
 }
