@@ -1,11 +1,14 @@
 #connection boilerplate
 
+
+Database_URL = "postgres://rnrbbyzitetmsb:jmRnF-H43hThjBRjU81IOvyKhN@ec2-54-197-250-40.compute-1.amazonaws.com:5432/dn2eee7k8ndak"
+
 def get_cursor():
 	import os
 	import psycopg2
 	import urlparse
 	urlparse.uses_netloc.append("postgres")
-	url = urlparse.urlparse(os.environ["DATABASE_URL"])
+	url = urlparse.urlparse(Database_URL)
 
 	conn = psycopg2.connect(
       database=url.path[1:],
@@ -21,7 +24,7 @@ def get_conn():
 	import psycopg2
 	import urlparse
 	urlparse.uses_netloc.append("postgres")
-	url = urlparse.urlparse(os.environ["DATABASE_URL"])
+	url = urlparse.urlparse(Database_URL)
 
 	conn = psycopg2.connect(
       database=url.path[1:],
