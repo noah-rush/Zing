@@ -1,0 +1,43 @@
+{
+<<<<<<< HEAD
+  "name": "bootstrap3-typeahead",
+  "version": "3.0.0",
+  "authors": [
+    "bassjobsen"
+  ],
+  "main": [
+    "bootstrap3-typeahead.js"
+  ],
+=======
+  "name": "devbridge-autocomplete",
+  "version": "1.2.9",
+  "homepage": "https://github.com/devbridge/jQuery-Autocomplete",
+  "authors": [
+    "Tomas Kirda"
+  ],
+  "description": "Autocomplete provides suggestions while you type into the text field.",
+  "main": "dist/jquery.autocomplete.js",
+  "keywords": [
+    "ajax",
+    "autocomplete"
+  ],
+  "license": "MIT",
+>>>>>>> a9e79277fbf237ccc7e05ead77dd08ea30b3a9e8
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+<<<<<<< HEAD
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.0"
+=======
+    "spec"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+>>>>>>> a9e79277fbf237ccc7e05ead77dd08ea30b3a9e8
+  }
+}

@@ -226,6 +226,10 @@ $(window).hashchange( function test(){
 
 });
 
+$("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 
 
 
@@ -236,3 +240,4 @@ $(window).hashchange();
 // $("#NowPlaying").on( "click", show_nowPlaying);
 }
 $(document).ready(start);
+$("#wrapper").toggleClass("toggled");

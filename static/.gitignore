@@ -1,3 +1,12 @@
+<<<<<<< HEAD
 dist/*
 .DS_Store
 **/.DS_Store
+=======
+/*.user
+/*.sln
+/*.suo
+/.idea*
+/*.xml
+/bower_components
+>>>>>>> a9e79277fbf237ccc7e05ead77dd08ea30b3a9e8

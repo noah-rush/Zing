@@ -40,7 +40,7 @@ def index():
         name = c.fetchall()[0]['first']
         print name
         return render_template('homepage.html', useron=name)
-    return render_template('welcome.html')
+    return render_template('homepage.html', useron = 'none')
 
 
 @app.route('/usernameNotFound', methods=['GET', 'POST'])
@@ -62,15 +62,14 @@ def loggedin():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("SELECT first,id, passhash FROM KarlUsers2 where email=%s", (username,))
     data = c.fetchall()
-    realkey = data[0]['passhash']
-    userid = data[0]['id']
-    if len(realkey) == 1:
-        realkey = realkey[0]['passhash']
+    if len(data) >0:
+      realkey = data[0]['passhash']
+      userid = data[0]['id']
     else:
         return "Username not found."
     if security.check_password_hash(realkey, password):
         session['username'] = userid
-        return render_template('homepage.html', useron=data[0]['first'])
+        return "Login Successful"
     return "Incorrect Password"
 
 
@@ -152,7 +151,7 @@ def nowPlaying():
     c.execute("SELECT COUNT(*), showid from ShowRatings4 where CURRENT_TIMESTAMP-time < INTERVAL '24 hours' GROUP BY showid")
     recentresults = c.fetchall()
     print showresults
-    print recentresults
+    
     results = []
     for x in range(len(showresults)):
         result = []
@@ -480,6 +479,24 @@ def person(person):
                            persondata=results,
                            useron='none',
                            roles=roles)
+
+
+@app.route('/autocomplete/allshows', methods=['GET', 'POST'] )
+def autocomplete():
+  query = request.args.get('query')
+  print query
+  query = '%' + query + '%'
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("""SELECT name from Fringeshows
+            where name LIKE %s""", (query,))
+  results = c.fetchall()
+  print results
+  jsonresults = []
+  for result in results:
+     jsonresults.append(result['name'])
+  print jsonresults
+  return jsonify(query = "Unit", suggestions = jsonresults)
+
 
 
 @app.route('/submitrating', methods=['GET', 'POST'])

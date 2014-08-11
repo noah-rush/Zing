@@ -22,6 +22,10 @@ function signin(){
 		url: "/signinform"
 	})
 }
+function autocomp(){
+	
+	$('#query').autocomplete({serviceUrl: '/autocomplete/allshows'});
+}; 
 
 function panelMove() {
 var panel = $("#panelsignup");
@@ -40,6 +44,7 @@ function printmonth(){
 
 function show_signup(data){
 		$("#jumbo").html(data);
+		autocomp();
 		//panelMove();
 }
 function show_signin(data){
@@ -50,19 +55,20 @@ function login_rout(data){
 	console.log(data);
 	var str = data.substring(0,3);
 	var somethingwrong = $("#somethingWrong")
+	console.log(data)
 	switch(str){
 		case "Log":
-			document.write(data)
+			window.location.href = "/";
 			break;
 		case "Use":
 			somethingwrong.show();
-			somethingwrong.text("Username not found. Try again.");
-			window.location.href = "/";
+			alert("Username not found. Try again.");
+			setTimeout(function(){window.location.href = "/#signin"},3000);
 			break;
 		case "Inc":
 			somethingwrong.show();
-			somethingwrong.text("Incorrect Password. Try again.");
-			window.location.href = "/";
+			alert("Incorrect Password. Try again.");
+			setTimeout(function(){window.location.href = "/#signin"},3000);
 			break;
 		}
 }
@@ -198,7 +204,11 @@ $(window).hashchange( function test(){
 $(window).hashchange();
  $("#writebutton").on("click", show_reviews);
   $("#months").on("click", printmonth);
+
+
+
 // $("#venues").on("click", show_venues);
 // $("#NowPlaying").on( "click", show_nowPlaying);
 }
 $(document).ready(start);
+
