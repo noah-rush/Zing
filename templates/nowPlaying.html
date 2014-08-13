@@ -89,7 +89,7 @@
 <div class="list-group">
 {% for results in results %}         
 {%if results[1]|length < 25%}
-  <a class = "list-group-item" href = "/show/{{results[1]}}" >{{results[1]}} 
+  <a class = "list-group-item" href = "#show/{{results[1]}}" >{{results[1]}} 
 
 <span id = "starsspot"class="total-star-rating-{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
@@ -103,7 +103,7 @@
   {%endif%}
   {% else %}
 
-  <a class = "list-group-item" href = "/show/{{results[1]}}" >{{results[1]}} 
+  <a class = "list-group-item" href = "#show/{{results[1]}}" >{{results[1]}} 
   <p>
   <div id = "starsspot4" class="total-star-rating-long-{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>

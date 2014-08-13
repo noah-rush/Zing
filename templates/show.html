@@ -1,22 +1,14 @@
-<!doctype html>
 
-{%extends "layout.html"%}
-{% block title %}{{showdata['name']}}{% endblock %}
-{%block stylesheet%}<link href="../static/css/bootstrap.min.css" rel="stylesheet">
-<link href="../static/simple-sidebar/css/simple-sidebar.css"rel = "stylesheet">
+
 <style type="text/css">
-#writeuserreview{
-    display:none;
-}
+
 #startRating{
 	display:none;
 }
 #yourRating{
 	display:none;
 }
-#submitreview{
-	display:none;
-}
+
 .producer{
   font-size: 14pt;
   text-align: right;
@@ -27,7 +19,93 @@
   text-align: right;
   
 }
+.checkboxFivegood {
+  width: 25px;
+  position: relative;
+}
+.checkboxFivegood label {
+  cursor: pointer;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background: #eee;
+  border:1px solid #ddd;
+}
+.checkboxFivegood label:after {
+  opacity: 0.2;
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 5px;
+  background: transparent;
+  top: 6px;
+  left: 7px;
+  border: 3px solid green;
+  border-top: none;
+  border-right: none;
 
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.checkboxFivegood label:hover::after {
+  opacity: 0.5;
+}
+
+/**
+ * Create the checkbox state for the tick
+ */
+.checkboxFivegood input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+
+.checkboxFivebad {
+  width: 25px;
+  position: relative;
+}
+.checkboxFivebad label {
+  cursor: pointer;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background: #eee;
+  border:1px solid #ddd;
+}
+.checkboxFivebad label:after {
+  opacity: 0.2;
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 5px;
+  background: transparent;
+  top: 6px;
+  left: 7px;
+  border: 3px solid red;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.checkboxFivebad label:hover::after {
+  opacity: 0.5;
+}
+
+/**
+ * Create the checkbox state for the tick
+ */
+.checkboxFivebad input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
 
 
 
@@ -35,11 +113,7 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 </style>
-{% endblock %}
 
-
-</style>
-{% block contentA %}
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -53,9 +127,98 @@ body {
       By {{useron}}
       <br>
       <br>
+
+      Which one of these words apply?
+      <br>
+      <br>
+      <div class = "row">
+      <div class = "col-md-6">
+      <section id = "good">
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    </section>
+    <section>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    </section>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    <div class="checkboxFivegood">
+      <input type="checkbox" value="1" id="checkboxFiveInput" name="Inspiring" />
+      <label for="checkboxFiveInput"></label>
+    </div>
+    </section>
+      <input class = "good" type = "checkbox"> Inspiring</input>
+      <br>
+      <input class = "good" type = "checkbox"> Funny</input>
+      <br>
+      <input class = "good" type = "checkbox"> Thought provoking</input>
+      <br>
+      <input class = "good" type = "checkbox"> Energizing</input>
+      <br>
+      <input class = "good" type = "checkbox"> Outrageous</input>
+      <br>
+      <input class = "good" style = "text-color: green" type = "checkbox"> Entertaining</input>
+      <br>
+      <input class = "good" type = "checkbox"> Heart Wrenching</input>
+      <br>
+      <input class = "good" type = "checkbox"> Dramatic</input>
+      <br>
+      <input class = "good" type = "checkbox"> Passionate</input>
+      <br>
+      <input class = "good" type = "checkbox"> Sexy</input>
+</div>
+ <div class = "col-md-6">
+      <input type = "checkbox"> Overly long</input>
+      <br>
+      <input type = "checkbox"> Boring</input>
+      <br>
+      <input type = "checkbox"> Self Indulgent</input>
+      <br>
+      <input type = "checkbox"> Sophmoric</input>
+      <br>
+      <input type = "checkbox"> Insulting</input>
+      <br>
+      <input type = "checkbox"> A dud</input>
+      
+</div>
+
+
+
+
+</div>
+
       <textarea id = "writeuserreview"cols="50" rows="5">
 ...
 </textarea>
+
+
         <span class="star-rating">
       
       
@@ -75,6 +238,12 @@ body {
     </div>
   </div>
 </div>
+
+
+
+
+
+
 <div id = "paneltext"class="panel panel-default">
 <div class = "panel-heading">
 <h1 id = "showname">{{showdata['name']}}</h1>
@@ -172,21 +341,3 @@ Playing at - <a href = "/venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
 </div>
 </div>
 
-{%endblock %}
-
-
-
-
-
-{% block sources %}
-
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="../static/show.js"></script>
-  <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/jquery.ba-hashchange.min.js"></script>
-    
- 
-  
-  
-
-  {% endblock %}

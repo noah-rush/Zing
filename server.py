@@ -348,10 +348,10 @@ def nellie():
     return render_template("error.html")
 
 
-@app.route('/show/<show>', methods=['GET', 'POST'])
-def show(show):
+@app.route('/show', methods=['GET', 'POST'])
+def show():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    print show
+    show = request.args.get('show')
     if show == "What Good Has Come Out of Camden":
       show = show + "?"
     if show == "The Ray Charles Experience  Live!":

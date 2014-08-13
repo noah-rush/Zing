@@ -12,7 +12,7 @@
   
 
 <style type="text/css">
-body {background-color: #e06666;
+body {background-color: white;
 text-indent: 0.25%;
 color: black}
 h1{color: black;}
@@ -59,6 +59,14 @@ white-space: 5px}
   padding: 0;
   z-index: 2;
   position: relative;
+}
+#fb_login_button { 
+    width: 80px; 
+}
+#fb_login_button span, 
+#fb_login_button iframe {.
+    width: 80px! important;
+    height: 25px! important;
 }
 .total-star-rating {
   font-size: 0;
@@ -137,6 +145,10 @@ white-space: 5px}
   background-color: black;
 
 }
+#panelbig{
+  background-color: white;
+
+}
 #createbutton{
   margin-left: 40%;
   margin-bottom: 5%
@@ -144,6 +156,13 @@ white-space: 5px}
 }
 #panelb{
   background-color: white;
+}
+#panelheader{
+  background-color: white;
+  border: 3px solid;
+  border-color: #e06666;
+  color: black;
+  text-align: center;
 }
 #panelc{
   background-color: red;
@@ -159,6 +178,13 @@ border-radius: 20px;}
   color: orange;
   display: none;
   height: 0%;
+}
+#paneltop{
+  background-color: white;
+  border: 2px solid;
+  border-color: black;
+  width: 60%;
+
 }
 #signup:hover{
   background-color: black;
@@ -223,7 +249,25 @@ border-radius: 20px;}
 .sidebar-brand{
   color: red;
 }
+#search{
+  font-size: 12pt
+}
+a{ 
+color: black;
+ text-decoration: underline;
+ border: 1pt solid;
+ border-color: black
+}
+a:hover{
+  background-color: gray;
+  color: white;
+  text-decoration: underline;
+  border: 1pt solid;
 
+}
+.top-button{
+
+}
 
 </style>
 </head>
@@ -232,26 +276,28 @@ border-radius: 20px;}
         <title>{% block title %}Zing{% endblock %}</title>
 
 <body>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create an Account</h4>
-      </div>
+  
+ 
       <div id = "createAnAccount" class="modal-body">
       <div id = "panela" class="panel panel-default">
   <div class="panel-body">
   <div id = "panelb" class="panel panel-default">
   <div class="panel-body">
-    <div id = "panelc"class="panel panel-default">
+    <div id = "panelcmodal"class="panel panel-default">
   <div class="panel-body">
    <div id= "jumbo"class="jumbotron">
 <form class= "form-inline" role="form">
 
 
 <h1>Sign up </h1>
-<p> Zing is a free resource for actors, critics, theatergoers and producers</p>
+<p> Zing is a free resource for actors, critics, theatergoers and producers, login using facebook
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+, or enter your information and create an account below</p>
   <div class="form-group">
   <input  type="text" id = "first"class="form-control" placeholder="First Name">
           </div>
@@ -270,134 +316,17 @@ border-radius: 20px;}
 
 
 <br>
-<div class "form-group" style = "margin-left: 33%;
-margin-top: 2%">
-<div class="form-group">
-
-<select id = "month" style = "width: 80%; margin-left:33%"class="form-control" placeholder = "Month">
-<option value="" selected disabled>Date</option>
-  {%for month in ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
-  
-    <option>{{month}}</option>>
- {%endfor%}
- 
-</select>
-</div>
-
- <div class="form-group">
-
- <select id = "day" style = "width: 100%; margin-left:26%"class="form-control">
-  <option value="" selected disabled>Of</option>
-  {%for month in range(31)%}
- 
-    <option>{{month}}</option>>
- {%endfor%}
-
-</select>
- </div>
- <div class="form-group">
-<select id = "year" style = "width: 100%; margin-left:24%"class="form-control">
-<option value="" selected disabled>Birth</option>
-  {%for month in range(2000, 1930, -1)%}
-  
-    <option>{{month}}</option>>
- {%endfor%}
-</select>
-  </div>
-    </div>
+<br>
+ <a style = "margin-left: 0%; background-color: black; color: white"id = "createbutton" class="btn btn-default" href="#createAccount" >Create My Account</a>
  
 
             
             </form>
-            <script>
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
+     
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
 
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '698403073548094',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.0' // use version 2.0
-  });
 
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
 
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
-  };
-
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-</script>
-
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
 
 <div id="status">
 </div>
@@ -419,61 +348,87 @@ margin-top: 2%">
 </div>
 </div>
 
-<div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a style = "color: red" href="#">
-                      <b>Zing</b>
-                    </a>
-                </li>
-                <li style = "border-top: 4px solid; border-color: #e06666;">
-              
-     <br>
-       
-    <div class="input-group">
-     <input type="text" class="form-control" placeholder = "Search">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-     
-    </div><!-- /input-group -->
-    <br>
+<div id = "panelbig" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+
+<div class = "row">
+<div id = "paneltop" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
   
+<div class = "col-lg-2 col-md-2 col-sm-2">
 
- 
-                    
-                </li>
-                <li style = "border-top: 2px solid; border-color: #e06666;">
-                    <a style = "color: black" href="#"><b>Browse</b></a>
-                </li>
-                <li style = "border-top: 2px solid; border-color: #e06666;">
-                    <a style = "color: black" href="#"><b>Login</b></a>
-                </li>
-                <li style = "border-top: 2px solid; border-color: #e06666;">
-                    <a data-toggle="modal" data-target="#myModal" style = "color: black" href="#signup"><b>Create an Account</b></a>
-                </li>
-                <li style = "border-top: 2px solid; border-color: #e06666;">
-                    <a style = "color: black" href="#"><b>About</b></a>
-                </li>
-                <li style = "border-top: 2px solid; border-color: #e06666;">
-                    <a style = "color: black" href="#"><b>Contact</b></a>
-                </li>
-            </ul>
-        </div>
+ <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+          
+  <button class="btn btn-default btn-sm dropdown-toggle" href = "#user" type="button" data-toggle="dropdown">
+     <span class = "glyphicon glyphicon-user"></span>
+<span id = "user" style = "display:none">  {{useron}}</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+  </ul>
+ </div>
+ </div>
+</div>
 
 
-<div id ="variable">{{useron}}</div>
- <div id="page-content-wrapper">
 
-  <a href = "#menu-toggle" id = "menu-toggle"><img 
-  src="static/images/trivet-web-z-monotypeCorsiv.png" width = "4%" height = "4%"class="img-responsive" alt="Responsive image" ></img></a>
+
+
+
+
+<div class = "col-lg-2 col-md-2 col-sm-2">
+<div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <button href = "#search" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+  <span class="glyphicon glyphicon-search"></span>  Search
+</button>
+  
+</div>
+</div>
+</div>
+  <div class = "col-lg-4 col-md-4 col-sm-4">
+  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <h1 style = "margin-top: 0; margin-bottom: 0; font-size: 16pt; text-align: center">ZiNG</h1>
+  </div>
+  </div>
+ </div>
+ <div class = "col-lg-2 col-md-2 col-sm-2">
+ <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <button href = "#browse" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+
+  <span class="glyphicon glyphicon-list"></span>    Browse
+</button>
+</div>
+</div>
+</div>
+ <div class = "col-lg-2 col-md-2 col-sm-2">
+ <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <button href = "#about" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+
+  <span class="glyphicon glyphicon-pencil"></span>    About Us / Contact
+</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
 <div class = "container" id="content">
 
-<br> 
-<br>
+
 
 
 <div id = "panela" style = "width: 100%"class="panel panel-default">
@@ -507,7 +462,8 @@ margin-top: 2%">
   </div>
 </div> 
 </div>
-
+</div>
+</div>
 
 <div id="venuel" ></div>
 
