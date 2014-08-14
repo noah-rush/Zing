@@ -7,6 +7,13 @@ function getnowplaying(){
 	});
 
 }
+function getcomingsoon(){
+	$.ajax({
+  		url: "/comingsoon",
+		success: displaycomingsoon
+	});
+
+}
 function facebook(){
 	 function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -99,6 +106,11 @@ function displaynowplaying(data){
 	console.log(data);
 	$("#panelc2").html(data);
 }
+function displaycomingsoon(data){
+	console.log(data);
+	$("#panelc3").html(data);
+}
+
 
 
 function do_stuff() {
@@ -310,6 +322,7 @@ function submit_review(){
 
 function start (){
 	getnowplaying();
+	getcomingsoon();
 var check = $("#user").text();
 	if(check == "none")
 	{
@@ -369,7 +382,7 @@ $(window).hashchange();
   $("#months").on("click", printmonth);
 
  $("#submitreview").on("click", submit_review);
-
+$("#good").find(".checkboxFive label::after").css("border: 1px solid green");
  console.log('here');
   facebook()
 // $("#venues").on("click", show_venues);

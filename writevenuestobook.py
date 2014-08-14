@@ -17,5 +17,5 @@ for data in a:
 	sheet1.write(data[0],1,data[1])
 	sheet1.write(data[0],2,data[2])
 	sheet1.write(data[0],3,data[3])
-book.save('venues.xls')
+book.save("venues.xls")
 book.save(TemporaryFile())

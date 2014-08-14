@@ -119,7 +119,7 @@ def findData(str):
                         if(not(venueFound)):
                             linkOne = link
                             venueid = findVenue(linkOne)
-                            c.execute("UPDATE Fringeshows SET venueid = %s where showid = %s", (venueid, showid))
+                            c.execute("UPDATE Fringeshows SET venueid = %s where id = %s", (venueid, showid))
                             venueFound = True
         conn.commit()
         driver.quit()
@@ -130,23 +130,24 @@ def findData(str):
 
 
 
-
-counter = 0
-for line in data:
-    if "Comedy" in line:
-        test = ""
-        while(not("<div id=\"footer\">" in test)):
-            test = data.next()
-            if("a href" in test):
-                counter = counter + 1
-                first = test.find("\"")+1
-                last = test.find("\">")
-                link = test[first:last]
-                findData(link)
+def main():
+    counter = 0
+    for line in data:
+        if "Comedy" in line:
+            test = ""
+            while(not("<div id=\"footer\">" in test)):
+                test = data.next()
+                if("a href" in test):
+                    counter = counter + 1
+                    first = test.find("\"")+1
+                    last = test.find("\">")
+                    link = test[first:last]
+                    findData(link)
      #            linkOne = lotsadata[0][0]
      #            print lotsadata
      #            #findVenue(linkOne)
-print counter
+    print counter
+
 
 
 				

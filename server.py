@@ -176,6 +176,60 @@ def nowPlaying():
 
     return render_template('nowPlaying.html', results=results)
 
+@app.route('/comingsoon')
+def comingsoon():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    # c.execute("""SELECT Karlshows2.name, SUM(rating), COUNT(rating)
+    #              from Karlshows2, ShowRatings4
+    #              WHERE (CURRENT_DATE, CURRENT_DATE)
+    #              OVERLAPS (start_date, end_date)
+    #              and ShowRatings4.showid = Karlshows2.id
+    #              GROUP BY Karlshows2.name""")
+    showcount = 0 
+    iterator = 0
+    results = []
+    while showcount < 15:
+      difference = 15-showcount 
+      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'DayMonthDDYYY'), Fringeshows.id from Fringeshows, Fringedates where Fringedates.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s LIMIT %s""", (iterator,difference))
+      showresults = c.fetchall()
+      print showresults
+      showcount = showcount + len(showresults)
+      for x in range(len(showresults)):
+         result = []
+         result.append(showresults[x]['playing'])
+         result.append(showresults[x]['name'])
+         c.execute("SELECT SUM(rating), COUNT(rating) from ShowRatings4 where showid = %s", (showresults[x]['id'],))
+         ratingResults = c.fetchall()
+         if ratingResults[0]['sum'] != None:
+            averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
+            result.append(convert_to_percent(averageRating))
+         result.append(showresults[x]['to_char'])
+         results.append(result)
+      iterator = iterator +1
+
+
+    dates = []
+   
+    for x in results:
+      if len(x) == 4:
+        date = x[3]
+      else: 
+        date = x[2]
+
+      if any(date == s for s in dates):
+        pass
+      else:
+        dates.append(date)
+    print dates
+
+
+      
+        
+
+
+
+    return render_template('comingsoon.html', results=results)
+
 
 @app.route('/venue/<venue>', methods=['GET', 'POST'])
 def venue(venue):
