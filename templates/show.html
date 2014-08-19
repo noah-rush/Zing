@@ -270,6 +270,7 @@ body {
 <div class = "col-md-6">
 </div>
 <div class = "col-md-6">
+Get Tickets
 <table>
 <tr>
 {% for date in dates %}
@@ -294,7 +295,7 @@ body {
 <br>
 <br>
 {% if venue[0] is defined %}
-Playing at - <a href = "/venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
+Playing at - <a href = "#venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
 {% endif %}
 
 <br>

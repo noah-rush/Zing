@@ -255,8 +255,7 @@ border-radius: 20px;}
 a{ 
 color: black;
  text-decoration: underline;
- border: 1pt solid;
- border-color: black
+
 }
 a:hover{
   background-color: gray;
@@ -355,32 +354,88 @@ a:hover{
 <div class = "row">
 <div id = "paneltop" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
+<div class = "col-lg-3 col-md-3 col-sm-3">
+  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <a href = "#home" ><img src="static/images/header.png" alt="..." class="img-thumbnail"></a>
+  </div>
+  </div>
+  <div id = "panela" class="panel panel-default">
+  <div class="panel-body">
+  <div id = "panelb" class="panel panel-default">
+ 
+          <div class="panel-body">
+          <div id = "panelc3"class="panel panel-default">
+              <div class="panel-body">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
   
-<div class = "col-lg-2 col-md-2 col-sm-2">
+
+ <div class = "col-lg-6 col-md-6 col-sm-6">
+        <div id = "panelb" class="panel panel-default">
+ 
+          <div class="panel-body">
+            <div id = "panelc"class="panel panel-default">
+              <div class="panel-body">
+             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  
+<div class = "col-lg-3 col-md-3 col-sm-3">
 
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
+  <div class="panel-body" id = "panelheaderuser">
           
-  <button class="btn btn-default btn-sm dropdown-toggle" href = "#user" type="button" data-toggle="dropdown">
+ 
+     {%if useron == 'none'%}
+      <a class="btn btn-default btn-sm" href = "#login" type="button" >
      <span class = "glyphicon glyphicon-user"></span>
-<span id = "user" style = "display:none">  {{useron}}</span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
+<span id = "user" >  Login</span>
+
+</a>
+{% else %}
+<div class="dropdown">
+   <button class="btn btn-default btn-sm dropdown-toggle"  type="button" data-toggle="dropdown">
+     <span class = "glyphicon glyphicon-user"></span>
+<span id = "user" >  {{useron}}</span>
+ <span class="caret"></span>
+ </button>
+<ul class="dropdown-menu" role="menu">
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Account Settings</a></li>
+    <li><a href="#logout">Logout</a></li>
   </ul>
+  </div>
+{% endif %}
+ 
+  
  </div>
  </div>
+
+
+
+<div id = "panela" class="panel panel-default">
+  <div class="panel-body">
+ <div id = "panelb" class="panel panel-default">
+          <div class="panel-body">
+            <div id = "panelc2"class="panel panel-default">
+              <div class = "panel-body">
+              </div>
+            </div>
+          </div>
+        </div>
 </div>
 
-
-
-
-
-
-
-<div class = "col-lg-2 col-md-2 col-sm-2">
+</div>
 <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
   <button href = "#search" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -389,15 +444,9 @@ a:hover{
   
 </div>
 </div>
-</div>
-  <div class = "col-lg-4 col-md-4 col-sm-4">
-  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <h1 style = "margin-top: 0; margin-bottom: 0; font-size: 16pt; text-align: center">ZiNG</h1>
-  </div>
-  </div>
- </div>
- <div class = "col-lg-2 col-md-2 col-sm-2">
+
+  
+
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
   <button href = "#browse" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -406,8 +455,8 @@ a:hover{
 </button>
 </div>
 </div>
-</div>
- <div class = "col-lg-2 col-md-2 col-sm-2">
+
+
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
   <button href = "#about" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -417,71 +466,8 @@ a:hover{
 </div>
 </div>
 </div>
-
 </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-<div id = "panela" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-    <div class="row">
-
-       <div class = "col-lg-3 col-md-3 col-sm-3">
-        <div id = "panelb" class="panel panel-default">
- 
-          <div class="panel-body">
-          <div id = "panelc3"class="panel panel-default">
-              <div class="panel-body">
-
-
-
-
-
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-      <div class = "col-lg-6 col-md-6 col-sm-6">
-        <div id = "panelb" class="panel panel-default">
- 
-          <div class="panel-body">
-            <div id = "panelc"class="panel panel-default">
-              <div class="panel-body">
-                {% block contentA %}
    
-                {% endblock %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class = "col-lg-3 col-md-3 ">
-        <div id = "panelb" class="panel panel-default">
-          <div class="panel-body">
-            <div id = "panelc2"class="panel panel-default">
-              <div class = "panel-body">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 
-</div>
-</div>
 
 
 <div id="venuel" ></div>

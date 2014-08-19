@@ -31,52 +31,119 @@ conn = connectionBoiler.get_conn()
 
 app = Flask(__name__)
 
-
+####HOMEPAGE - checks for username in session
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if 'username' in session:
+        
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
         print name
         return render_template('homepage.html', useron=name)
+    print 'kkkkk'
     return render_template('homepage.html', useron = 'none')
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+  return render_template("todayscontent.html")
+###returns text for username not found
 
 
 @app.route('/usernameNotFound', methods=['GET', 'POST'])
 def usernameNotFound():
     return "UserName not found."
 
-
+###returns text for bad password
 @app.route('/passwordNotFound', methods=['GET', 'POST'])
 def passwordNotFound():
     return "Password not found."
 
+### zing sign in without facebook    
+@app.route('/signin')
+def signin():
+  email = request.args.get('email')
+  password = request.args.get('password')
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT first,id, passhash FROM KarlUsers2 where email=%s", (email,))
+  data = c.fetchall()
+  if data != []:
+    realkey = data[0]['passhash']
+    userid = data[0]['id']
+  else:
+    return "Email not found"
+  if security.check_password_hash(realkey, password):
+    session['username'] = userid
+    return render_template("todayscontent.html", useron = data[0]['first'])
+  return "Incorrect Password"
 
-@app.route('/loggedin', methods=['GET', 'POST'])
-def loggedin():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    print username
-    print password
+#### this takes automatic facebook login and uses it to automatically log the user into zing session
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    firstname = request.args.get('firstname')
+    lastname = request.args.get('lastname')
+    email = request.args.get('email')
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("SELECT first,id, passhash FROM KarlUsers2 where email=%s", (username,))
+    c.execute("SELECT first,id, passhash FROM KarlUsers2 where email=%s", (email,))
     data = c.fetchall()
-    if len(data) >0:
+    if len(data) > 0:
       realkey = data[0]['passhash']
       userid = data[0]['id']
     else:
-        return "Username not found."
-    if security.check_password_hash(realkey, password):
-        session['username'] = userid
-        return "Login Successful"
-    return "Incorrect Password"
+        return render_template("zingsignin.html", email = email)
+    print data
+    session['username'] = userid
+    return "logged in"
 
-
+###logout
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+
+### response to a facebook sign in, either logs existing user in or prompts them to create an account with email and password
+@app.route('/facebookcreateform', methods=['GET', 'POST'])
+def fbcreateform():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  email = str(request.args.get('email'))
+  firstname = str(request.args.get('firstname'))
+  c.execute("SELECT * from KarlUsers2 where email = %s",(email,))
+  testemail = c.fetchall()
+  print testemail
+  if testemail != []:
+    userid = testemail[0]['id']
+    session['username'] = userid
+    return render_template("todayscontent.html", useron = firstname)
+  lastname = str(request.args.get('lastname'))
+  template_vars = {"email": email,
+                   "first": firstname,
+                   "last": lastname}
+  return render_template("zingsignin.html", **template_vars)
+
+#### creates account
+@app.route('/facebookcreate', methods=['GET', 'POST'])
+def fbcreate():
+    c = conn.cursor()
+    firstname = str(request.args.get('firstname'))
+    lastname = str(request.args.get('lastname'))
+    email = str(request.args.get('email'))
+    password = request.args.get('password')
+    c.execute("SELECT * from KarlUsers2 where email = %s", (email,))
+    testemail = c.fetchall()
+    if testemail != []:
+        return "We already have an account for that email."
+    fullname = firstname + lastname
+    you = User(fullname, password)
+    passhash = you.pw_hash
+    c.execute("""INSERT INTO KarlUsers2(first, last, email, passhash)
+                    VALUES (%s, %s, %s, %s)""",
+                  (firstname, lastname, email, passhash))
+    conn.commit()
+    c.execute("SELECT id FROM KarlUsers2 ORDER BY id DESC LIMIT 1")
+    userid = c.fetchall()[0][0]
+    username = firstname + str(userid)
+    session['username'] = userid
+    return render_template('usersurvey.html', firstname=firstname)
 
 
 @app.route('/newUser', methods=['GET', 'POST'])
@@ -150,7 +217,7 @@ def nowPlaying():
     showresults = c.fetchall()
     c.execute("SELECT COUNT(*), showid from ShowRatings4 where CURRENT_TIMESTAMP-time < INTERVAL '24 hours' GROUP BY showid")
     recentresults = c.fetchall()
-    print showresults
+   
     
     results = []
     for x in range(len(showresults)):
@@ -162,19 +229,23 @@ def nowPlaying():
             recentAction = True
         if not(recentAction):
           result.append(0)
-          print "not found"
-        print result
+          
+        
         result.append(showresults[x]['name'])
-        print result
+        
         averageRating = float(showresults[x]['sum'])/float(showresults[x]['count'])
+        print convert_to_percent(averageRating)
         result.append(convert_to_percent(averageRating))
-        print result
+        
         results.append(result)
+        
     print results
 
 
-
     return render_template('nowPlaying.html', results=results)
+
+
+
 
 @app.route('/comingsoon')
 def comingsoon():
@@ -188,39 +259,69 @@ def comingsoon():
     showcount = 0 
     iterator = 0
     results = []
-    while showcount < 15:
-      difference = 15-showcount 
-      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'DayMonthDDYYY'), Fringeshows.id from Fringeshows, Fringedates where Fringedates.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s LIMIT %s""", (iterator,difference))
+    while showcount < 10:
+      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'Day'), Fringeshows.id from Fringeshows, Fringedates where Fringedates.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s""", (iterator,))
       showresults = c.fetchall()
-      print showresults
-      showcount = showcount + len(showresults)
+      doubles = False
+      nilreturn = False
+      if showresults == []:
+        nilreturn = True
+
       for x in range(len(showresults)):
-         result = []
-         result.append(showresults[x]['playing'])
-         result.append(showresults[x]['name'])
-         c.execute("SELECT SUM(rating), COUNT(rating) from ShowRatings4 where showid = %s", (showresults[x]['id'],))
-         ratingResults = c.fetchall()
-         if ratingResults[0]['sum'] != None:
-            averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
-            result.append(convert_to_percent(averageRating))
-         result.append(showresults[x]['to_char'])
-         results.append(result)
+         if len(results) < 10:
+           result = []
+           playing = showresults[x]['playing']
+           pm = playing.rfind(" ") 
+           playing = playing[pm:]
+           result.append(playing)
+           result.append(showresults[x]['name'])
+           c.execute("SELECT SUM(rating), COUNT(rating) from ShowRatings4 where showid = %s", (showresults[x]['id'],))
+           ratingResults = c.fetchall()
+           if ratingResults[0]['sum'] != None:
+              averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
+              result.append(convert_to_percent(averageRating))
+           else:
+              result.append("50.0")
+           result.append(showresults[x]['to_char'])
+           result.append(showresults[x]['ticketlink'])
+           already =False
+           for y in results:
+              if showresults[x]['name'] in y:
+                already = True
+           if already:
+              pass
+              doubles = True
+           else:
+              results.append(result)
       iterator = iterator +1
+      showcount = len(results)
 
 
     dates = []
-   
     for x in results:
-      if len(x) == 4:
         date = x[3]
-      else: 
-        date = x[2]
+        print x[2]
+        if date in dates:
+          pass
+        else:
+          dates.append(date)
+  
+    alldates = []
+    print results
+ 
 
-      if any(date == s for s in dates):
-        pass
-      else:
-        dates.append(date)
-    print dates
+    # datedata = {}
+    # for x in dates: 
+    #   daydata = []
+    #   for y in results:
+    #     if len(y) == 4:
+    #       date = y[3]
+    #     else: 
+    #       date = y[2]
+    #     if date == x:
+    #       daydata.append(y)
+    #   datedata[x] = daydata
+    # print datedata
 
 
       
@@ -228,11 +329,13 @@ def comingsoon():
 
 
 
-    return render_template('comingsoon.html', results=results)
+    return render_template('comingsoon.html', results=results, dates = dates, alldates = alldates)
+ 
 
 
-@app.route('/venue/<venue>', methods=['GET', 'POST'])
-def venue(venue):
+@app.route('/venue', methods=['GET', 'POST'])
+def venue():
+    venue = request.args.get('venue')
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("SELECT * from Fringevenues where name = %s", (venue,))
     results = c.fetchall()
@@ -242,12 +345,11 @@ def venue(venue):
     c.execute("""SELECT name from Fringeshows
                  where venueid = %s """, (results['id'],))
     shows = c.fetchall()
-    c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
-    name = c.fetchall()[0]['first']
-    print name
-    print shows
+   
     if 'username' in session:
-        return render_template('venue.html', venuedata=results,
+      c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
+      name = c.fetchall()[0]['first']
+      return render_template('venue.html', venuedata=results,
                                staff=employees, useron=name,
                                showdata=shows)
     return render_template('venue.html', venuedata=results,
@@ -412,7 +514,7 @@ def show():
       show = show + " "
     c.execute("SELECT * from Fringeshows where name = %s", (show,))
     showdata = c.fetchall()
-    print showdata
+    
     if len(showdata)>0:
       c.execute("""SELECT Karlactors.actorName, Karlcasting.role
                 from Karlactors, Karlcasting
@@ -435,7 +537,7 @@ def show():
       c.execute("""SELECT * from Fringedates 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
-      print dates
+      
       totalstars = sum([stars['rating'] for stars in results])
       numReviews = len(results)
       averageRating = 0
@@ -473,7 +575,7 @@ def show():
               yourRating = convert_to_percent(yourRating)
           c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
           name = c.fetchall()[0]['first']
-          print name
+         
           template_vars['useron'] = name    
       return render_template("show.html", **template_vars)
     return render_template("error.html")

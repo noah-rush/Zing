@@ -14,6 +14,7 @@ function getcomingsoon(){
 	});
 
 }
+
 function facebook(){
 	 function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -25,14 +26,14 @@ function facebook(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
+      
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Sign up using Facebook';
+      
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+      
 
     }
   }
@@ -90,18 +91,30 @@ FB.getLoginStatus(function(response) {
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
     console.log(JSON.stringify(response));
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-        var modal = $('#signupModal');
-        modal.modal('hide');
-        var check = $("#user");
-        check.text(response.first_name);
-        check.show();
+        var check = $("#panelheaderuser");
+        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\">\<li><a href=\"#\">Profile</a></li>\ <li><a href=\"#\">Account Settings</a></li>\  <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
+        var name = response.first_name;
+        console.log(response.first_name);
+        name = response.first_name;
+        console.log(user);
+          $("#user").text(" " + response.first_name + " ");
+        $.ajax({
+  		url: "/login",
+  		success: handle_login,
+		data: {
+			firstname: response.first_name,
+			lastname: response.last_name,
+			email: response.email
+		}
+	});
 
     });
   }
 }
 
+function handle_login(data){
+	console.log(data);
+}
 function displaynowplaying(data){
 	console.log(data);
 	$("#panelc2").html(data);
@@ -122,10 +135,22 @@ function do_stuff() {
 
 }
 function signup(){
-	//$("#panelsignup").show();
-	  facebook();
-
-  
+	
+  var lastname = $("#newlast").val();
+	var firstname = $("#newfirst").val();
+	var email = $("#newemail").val();
+	var password = $("#newpassword").val();
+	console.log(lastname, firstname, email, password);
+	 $.ajax({
+		url: "/facebookcreate",
+		data: {
+			email:  email,
+			firstname: firstname,
+			lastname: lastname,
+			password: password
+		},
+		success: show_password
+	});
 }
 
 function panelMove() {
@@ -179,50 +204,67 @@ function login_rout(data){
 			break;
 		}
 }
-
+function logout(){
+	var fbresponse = false
+	FB.getLoginStatus(function(response) {
+     if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      fbresponse = true 
+      
+    }
+  });
+	if(fbresponse){
+	FB.logout(function(response) {
+    });
+	}
+    var check = $("#user");
+    check.text(" Login ");
+    var check = $("#panelheaderuser");
+    check.html( "<a class=\"btn btn-default btn-sm\" href = \"#login\" type=\"button\" ><span class = \"glyphicon glyphicon-user\"></span><span id = \"user\" >  Login</span></a>");
+	$.ajax({
+  		url: "/logout",
+		
+	});
+}
 
 function login_func(){
-	var user = $("#username").val();
-	var password = $("#password").val();
-	console.log(user)
-	console.log(password)
 	$.ajax({
-		success: login_rout,
-  		url: "/loggedin",
-		data: {
-			username: user,
-			password: password
-		}
+		success: login_display,
+  		url: "/signinform",
+		
 	});
+}
+function login_display(data){
+	$("#panelc").find('.panel-body').html(data);
 }
 
-function create_Account(){
-	console.log("got here")
-	var day = $("#day").val();
-	var year = $("#year").val();
-	console.log(year);
-	console.log(day);
-	var firstname = $("#first").val();
-	var lastname = $("#last").val();
-	var password = $("#password").val();
-	var passConfirm = $("#confPassword").val();
-	var email = $("#email").val();
-	var month = $("#month").val();
-	$.ajax({
-		success: show_signup,
-  		url: "/usercreate",
-		data: {
-			firstname: firstname,
-			lastname: lastname,
-			password: password,
-			passwordConfirm: passConfirm,
-			email: email,
-			month: month,
-			day: day,
-			year: year
-		}
-	});
-}
+// function create_Account(){
+// 	console.log("got here")
+// 	var day = $("#day").val();
+// 	var year = $("#year").val();
+// 	console.log(year);
+// 	console.log(day);
+// 	var firstname = $("#first").val();
+// 	var lastname = $("#last").val();
+// 	var password = $("#password").val();
+// 	var passConfirm = $("#confPassword").val();
+// 	var email = $("#email").val();
+// 	var month = $("#month").val();
+// 	$.ajax({
+// 		success: show_signup,
+//   		url: "/usercreate",
+// 		data: {
+// 			firstname: firstname,
+// 			lastname: lastname,
+// 			password: password,
+// 			passwordConfirm: passConfirm,
+// 			email: email,
+// 			month: month,
+// 			day: day,
+// 			year: year
+// 		}
+// 	});
+// }
 
 function show_venues(){
 	$.ajax({
@@ -268,16 +310,25 @@ function display_venues(data){
 
 };
 function display_show(data){
-	console.log(data);
 	$("#panelc").find('.panel-body').html(data);
 	 var initRating = $("#startRating").text();
  $(".total-star-rating i").css("width", initRating +"%");
 };
+
 function show(data){
 	$.ajax({
 		url: '/show',
 		data: {
 			show: data
+		},
+		success: display_show
+	})
+};
+function venue(data){
+	$.ajax({
+		url: '/venue',
+		data: {
+			venue: data
 		},
 		success: display_show
 	})
@@ -293,6 +344,66 @@ function display_nowPlaying(data){
 	console.log(data);
 	$("#venuel").html(data);
 };
+function facebookLogin(){
+	 FB.login(function(response) {
+   console.log(response);
+   console.log(response.email);
+FB.api('/me', function(response) {
+	name = response.first_name;
+      $.ajax({
+   		success: show_password,
+		url: "/facebookcreateform",
+		data: {
+			email:  response.email,
+			firstname: response.first_name,
+			lastname: response.last_name
+		}
+	});
+  })
+  
+ }, {scope: 'public_profile,email'});
+}
+function home(){
+	$.ajax({
+		success: show_container,
+		url:"/home"
+	})
+}
+
+
+function show_container(data){
+	$("#panelc").find('.panel-body').html(data);
+}
+
+function show_password(data){
+	$("#panelc").find('.panel-body').html(data);
+	if(data.indexOf("placeholder=\"Password\"")==-1){
+		  var check = $("#panelheaderuser");
+        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\">\<li><a href=\"#\">Profile</a></li>\ <li><a href=\"#\">Account Settings</a></li>\  <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
+        
+          $("#user").text(" " + name + " ");
+	}
+}
+var name
+function fbsignup(){
+	var lastname = $("#lastname").text();
+	var firstname = $("#firstname").text();
+	var email = $("#fbemail").val();
+	var password = $("#fbpassword").val();
+	console.log(lastname, firstname, email, password)
+
+	 $.ajax({
+		url: "/facebookcreate",
+		data: {
+			email:  email,
+			firstname: firstname,
+			lastname: lastname,
+			password: password
+		},
+		success: show_password
+	});
+}
+
 
 function submit_review(){
 
@@ -318,11 +429,24 @@ function submit_review(){
 	})
 
 }
+function signin(){
+	var email = $("#loginEmail").val();
+	var password = $("#loginPassword").val();
+	$.ajax({
+		url:"/signin",
+		data:
+		{email:email,
+		password:password
+		},
+		success: show_password
+	})
+}
 
 
 function start (){
 	getnowplaying();
 	getcomingsoon();
+	home();
 var check = $("#user").text();
 	if(check == "none")
 	{
@@ -338,6 +462,11 @@ $(window).hashchange( function test(){
 	{
 		console.log(hash.substring(6));
 		show(hash.substring(6));
+	}
+	if(hash.substring(0,6) == "#venue")
+	{
+		console.log(hash.substring(7));
+		venue(hash.substring(7));
 	}
 	console.log(hash);
 	switch(hash){
@@ -356,9 +485,25 @@ $(window).hashchange( function test(){
 	case "#signup":
 		signup();
 		break;
+	case "#fbsignup":
+		fbsignup();
+		break;
+	case "#logout":
+		logout();
+		break;
 	case "#createAccount":
 		create_Account();
 		break;
+	case "#facebookLogin":
+		facebookLogin()
+		break;
+	case "#signin":
+		signin()
+		break;
+	case "#home":
+		home()
+		break;
+
 
 
 	}
@@ -376,7 +521,7 @@ $('.good').click(function(){
         $(this).css("color",  "green");
     } 
 });
-
+$('#popover').popover({ trigger: "hover" });
 $(window).hashchange();
  $("#writebutton").on("click", show_reviews);
   $("#months").on("click", printmonth);
