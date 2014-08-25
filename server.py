@@ -3,11 +3,12 @@ import psycopg2
 import psycopg2.extras
 import urlparse
 from flask import render_template, jsonify, Flask
-from flask import request, escape, session, url_for, redirect, Markup
+from flask import request, escape, session, url_for, redirect, Markup, Response
 import sys
 from werkzeug.security import generate_password_hash, \
     check_password_hash
 from werkzeug import security
+import json
 
 
 class User(object):
@@ -331,6 +332,42 @@ def comingsoon():
 
     return render_template('comingsoon.html', results=results, dates = dates, alldates = alldates)
  
+@app.route('/yelp')
+def yelp():
+  from geopy.geocoders import GoogleV3
+  geolocator = GoogleV3()
+
+  lat = request.args.get('lat')
+  lng = request.args.get('lng')
+  latlng = lat + ","+lng
+  import yelp
+  response = yelp.main(lat,lng)
+  businesses = response[0]['businesses']
+  print businesses
+  results = []
+  for business in businesses:
+    result = []
+    print business['name']
+    result.append(business['name'])
+    location =  business['location']
+    if 'coordinate' in location.keys():
+      print location['coordinate']
+      result.append(location['coordinate']['latitude'])
+      result.append(location['coordinate']['longitude'])
+    else:
+      if len(location['display_address'])>2:
+        displayAddress = location['display_address'][0] + " " + location['display_address'][2]  
+      else: 
+        displayAddress = location['display_address'][0] 
+      address, (latitude, longitude) = geolocator.geocode(displayAddress)
+      result.append(latitude)
+      result.append(longitude)
+    results.append(result)
+  results= json.dumps(results)
+  print results
+  return results
+
+
 
 
 @app.route('/venue', methods=['GET', 'POST'])
@@ -345,7 +382,6 @@ def venue():
     c.execute("""SELECT name from Fringeshows
                  where venueid = %s """, (results['id'],))
     shows = c.fetchall()
-   
     if 'username' in session:
       c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
       name = c.fetchall()[0]['first']

@@ -14,6 +14,13 @@ function getcomingsoon(){
 	});
 
 }
+function profile(){
+	$.ajax({
+  		url: "/nowPlaying",
+		success: displaycomingsoon
+	});
+
+}
 
 function facebook(){
 	 function statusChangeCallback(response) {
@@ -116,11 +123,11 @@ function handle_login(data){
 	console.log(data);
 }
 function displaynowplaying(data){
-	console.log(data);
+	
 	$("#panelc2").html(data);
 }
 function displaycomingsoon(data){
-	console.log(data);
+	
 	$("#panelc3").html(data);
 }
 
@@ -314,6 +321,94 @@ function display_show(data){
 	 var initRating = $("#startRating").text();
  $(".total-star-rating i").css("width", initRating +"%");
 };
+function display_venue(data){
+	$("#panelc").find('.panel-body').html(data);
+	var address = $("#address").text();
+	console.log(address)
+	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
+	  $.ajax({
+  	url: urlsearch,
+  	success: initialize
+  })
+
+}
+
+var map
+ function initialize(data) {
+    var map_canvas = document.getElementById('map_canvas');
+    var lat = data.results[0]['geometry']['location']['lat'];
+	var lng = data.results[0]['geometry']['location']['lng'];
+    var map_options = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(map_canvas, map_options);
+    var myLatlng = new google.maps.LatLng(lat,lng);
+   var marker = new google.maps.Marker({
+    position: myLatlng,
+    map: map,
+    title: $("#showname").text()
+});
+   var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +$("#showname").text() + '</h1>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+   google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+  });
+	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+   marker.setMap(map);
+  
+   $.ajax({
+   	url: "/yelp",
+   	data: {
+   		lat: lat,
+   		lng: lng
+   	},
+   	success: yelpresults
+
+
+  })
+}
+
+function yelpresults(data){
+	data = jQuery.parseJSON(data);
+
+	for(i=0; i<data.length; i++){
+		data[i];
+		console.log(data[i]);
+		var myLatlng = new google.maps.LatLng(data[i][1],data[i][2]);
+	var marker = new google.maps.Marker({
+    position: myLatlng,
+    map: map,
+    title:data[i][0]
+});
+	var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+   google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+  });
+	marker.setMap(map);
+}
+}
+
 
 function show(data){
 	$.ajax({
@@ -330,7 +425,7 @@ function venue(data){
 		data: {
 			venue: data
 		},
-		success: display_show
+		success: display_venue
 	})
 };
 function show_reviews(){
@@ -341,7 +436,7 @@ function show_reviews(){
 
 
 function display_nowPlaying(data){
-	console.log(data);
+	
 	$("#venuel").html(data);
 };
 function facebookLogin(){
@@ -412,23 +507,11 @@ function submit_review(){
 	var show = $("#showname").text();
 	console.log(text);
 	console.log(stars);
-	$.ajax({
-		url: "/submitrating",
-		data: {
-			show:  show,
-			rating: stars
-		}
-	})
-	$.ajax({
-		success: reload,
-		url: "/submitreview",
-		data: {
-			show:  show,
-			review: text
-		}
-	})
 
 }
+
+
+
 function signin(){
 	var email = $("#loginEmail").val();
 	var password = $("#loginPassword").val();
@@ -441,6 +524,7 @@ function signin(){
 		success: show_password
 	})
 }
+
 
 
 function start (){
@@ -503,6 +587,12 @@ $(window).hashchange( function test(){
 	case "#home":
 		home()
 		break;
+	case "#profile":
+		profile()
+		break;
+	case "#submitreview":
+		submit_review()
+		break;
 
 
 
@@ -515,21 +605,44 @@ $(":radio").change(
   function(){
 	stars = this.value
   } 
-)
+);
 $('.good').click(function(){
     if($(this).is(':checked')){
         $(this).css("color",  "green");
     } 
 });
+var lastchecked = $("#toprated");
+$("input[name='dio']").change(function() {
+	$("input[name='dio']").each(function(){
+    if(this.checked) {
+    lastchecked.checked = false
+	console.log($("input[name='dio']:checked").val());
+	 $("#leftBoxTitle").text($("input[name='dio']:checked").val());
+	var but = $( "input[name='dio']:checked").closest("label");
+	but.css("background-color", "red");
+	lastchecked.css("background-color", "#e06666");
+	lastchecked = but;
+	// console.log($( "input[name='dio']:checked").closest("label"))
+        // do something when selected
+    } else {
+    	
+    
+        
+    }
+	
+	
+
+})
+});
+
+
 $('#popover').popover({ trigger: "hover" });
 $(window).hashchange();
- $("#writebutton").on("click", show_reviews);
-  $("#months").on("click", printmonth);
-
- $("#submitreview").on("click", submit_review);
+ $("#submitshowreview").on("click", submit_review);
 $("#good").find(".checkboxFive label::after").css("border: 1px solid green");
  console.log('here');
-  facebook()
+  facebook();
+
 // $("#venues").on("click", show_venues);
 // $("#NowPlaying").on( "click", show_nowPlaying);
 }

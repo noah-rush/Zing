@@ -7,7 +7,7 @@
   <link href="static/css/bootstrap.min.css" rel="stylesheet">
   <link href="static/simple-sidebar/css/simple-sidebar.css"rel = "stylesheet">
 {%endblock%}
-
+<script src="https://maps.googleapis.com/maps/api/js"></script>
   
   
 
@@ -173,7 +173,7 @@ white-space: 5px}
 }
 .panel{ 
 border: 0px;
-border-radius: 20px;}
+border-radius: 10px;}
 #panelsignup{
   color: orange;
   display: none;
@@ -267,6 +267,10 @@ a:hover{
 .top-button{
 
 }
+#map_canvas {
+        width: 500px;
+        height: 400px;
+      }
 
 </style>
 </head>
@@ -357,7 +361,7 @@ a:hover{
 <div class = "col-lg-3 col-md-3 col-sm-3">
   <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <a href = "#home" ><img src="static/images/header.png" alt="..." class="img-thumbnail"></a>
+  <a href = "#home" ><img src="static/zingheader.png" alt="..." class="img-thumbnail"></a>
   </div>
   </div>
   <div id = "panela" class="panel panel-default">
@@ -377,6 +381,55 @@ a:hover{
   
 
  <div class = "col-lg-6 col-md-6 col-sm-6">
+ <div id = "panelheader" style = "width: 100%"class="panel panel-default">
+  <div class="panel-body">
+  <div class="btn-group" style = "text-align: center;  "data-toggle="buttons">
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
+    <input id = "toprated" type="radio" name="dio" style = "background-color:#e06666"value="Top Rated" checked> Top Rated
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Cheap Tickets"> Cheap Tickets
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="This Week"> This Week
+  </label>
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Editor's Picks" > Editor's Picks
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Experimental"> Experimental
+  </label>
+  <label class="btn btn-primary" style = "margin-left: 0px; border-radius: 0px; width: 16.667%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Comedy"> Comedy
+  </label>
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.667%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666"  value="Classics" > Classics
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Drama"> Drama
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Trending"> Trending
+  </label>
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Musicals" > Musicals
+  </label>
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
+    <input type="radio" name="dio" style = "background-color:#e06666" value="Tonight"> Tonight
+  </label>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+ 
+
         <div id = "panelb" class="panel panel-default">
  
           <div class="panel-body">
@@ -438,7 +491,7 @@ a:hover{
 </div>
 <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <button href = "#search" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+  <button href = "#search" class="btn btn-default btn-sm" type="button" >
   <span class="glyphicon glyphicon-search"></span>  Search
 </button>
   
@@ -449,7 +502,7 @@ a:hover{
 
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <button href = "#browse" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+  <button href = "#browse" class="btn btn-default btn-sm " type="button" >
 
   <span class="glyphicon glyphicon-list"></span>    Browse
 </button>
@@ -459,7 +512,7 @@ a:hover{
 
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <button href = "#about" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+  <button href = "#about" class="btn btn-default btn-sm " type="button" >
 
   <span class="glyphicon glyphicon-pencil"></span>    About Us / Contact
 </button>
@@ -483,6 +536,7 @@ a:hover{
   <script src="static/homepage.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/jquery.ba-hashchange.min.js"></script>
+
  
 {% endblock %}
 </body>
