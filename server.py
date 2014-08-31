@@ -201,6 +201,9 @@ def venues():
 #     if temp > top:
 
 
+@app.route('/zingDescript')
+def zingDescript():
+  return render_template('zingdescription.html')
 
 @app.route('/nowPlaying')
 def nowPlaying():
@@ -430,6 +433,9 @@ def antigone():
       c.execute("""SELECT * from Fringedates 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
+      c.execute("""SELECT * from adjectives 
+                where showid = %s""", (showdata[0]['id'],))
+      adjectives= c.fetchall()
       print dates
       totalstars = sum([stars['rating'] for stars in results])
       numReviews = len(results)
@@ -446,7 +452,8 @@ def antigone():
                        "userreviews": userreviews,
                        "rating": averageRating,
                        "yourRating": yourRating,
-                       "dates": dates
+                       "dates": dates,
+                       "adjectives": adjectives
                        }
       if(numReviews) != 0:
           averageRating = float(totalstars)/float(numReviews)
@@ -500,6 +507,9 @@ def nellie():
       c.execute("""SELECT * from Fringedates 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
+      c.execute("""SELECT * from adjectives 
+                where showid = %s""", (showdata[0]['id'],))
+      adjectives= c.fetchall()
       print dates
       totalstars = sum([stars['rating'] for stars in results])
       numReviews = len(results)
@@ -516,7 +526,8 @@ def nellie():
                        "userreviews": userreviews,
                        "rating": averageRating,
                        "yourRating": yourRating,
-                       "dates": dates
+                       "dates": dates,
+                       "adjectives": adjectives
                        }
       if(numReviews) != 0:
           averageRating = float(totalstars)/float(numReviews)
@@ -564,20 +575,57 @@ def show():
                 from Karlreviews
                 where showid = %s""", (showdata[0]['id'],))
       reviews = c.fetchall()
-      c.execute("""SELECT reviewText from UserReviews2
-                where showid = %s""", (showdata[0]['id'],))
+      c.execute("""SELECT reviewText, userReviews2.userid, rating, to_char(ShowRatings4.time, 'MMDDYYYY')
+                from UserReviews2, ShowRatings4
+                where userreviews2.showid = %s 
+                and UserReviews2.userid = ShowRatings4.userid""", (showdata[0]['id'],))
       userreviews = c.fetchall()
+    
       c.execute("""SELECT rating from ShowRatings4
                 where showID = %s""", (showdata[0]['id'],))
       results = c.fetchall()
       c.execute("""SELECT * from Fringedates 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
+      c.execute("""SELECT adjective,COUNT(userid) from goodadjectives 
+                where showid = %s
+                GROUP BY adjective""", (showdata[0]['id'],))
+      goodadjectives= c.fetchall()
+      c.execute("""SELECT adjective,COUNT(userid) from badadjectives 
+                where showid = %s
+                GROUP BY adjective""", (showdata[0]['id'],))
+      badadjectives= c.fetchall()
+
       
       totalstars = sum([stars['rating'] for stars in results])
       numReviews = len(results)
       averageRating = 0
       yourRating = 0
+      reviewtexts = []
+      print userreviews
+      for review in userreviews:
+        data = []
+        reviewtext = review['reviewtext']
+        rating = review['rating']
+        print rating
+        c.execute("SELECT first, last from KarlUsers2 where id = %s", (review['userid'],))
+        username = c.fetchall()
+        print username
+        reviewtext = "static/reviews/" + reviewtext
+        f = open(reviewtext, 'r')
+        text = f.read()
+        f.close()
+        data.append(text)
+        rating = convert_to_percent(float(rating))
+        data.append(rating)
+        data.append(username)
+        date = review['to_char']
+        date = date[1:2] + "/" + date[2:4] + "/" + date[4:]
+        data.append(date)
+        reviewtexts.append(data)
+      print reviewtexts
+
+
       description = showdata[0]['description']
       producer = showdata[0]['producer']
       producer = Markup(producer)
@@ -589,10 +637,12 @@ def show():
                        "useron": 'none',
                        "cast": casting, "venue": venue,
                        "reviews": reviews,
-                       "userreviews": userreviews,
+                       "userreviews": reviewtexts,
                        "rating": averageRating,
                        "yourRating": yourRating,
-                       "dates": dates
+                       "dates": dates,
+                       "goodadjectives": goodadjectives,
+                       "badadjectives": badadjectives
                        }
 
       if(numReviews) != 0:
@@ -694,7 +744,7 @@ def autocomplete():
 @app.route('/submitrating', methods=['GET', 'POST'])
 def submitrating():
     show = request.args.get('show')
-    rating = request.args.get('rating')
+    rating = request.args.get('stars')
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("""SELECT id from Fringeshows
               where name = %s""", (show,))
@@ -727,7 +777,12 @@ def submitreview():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     show = request.args.get('show')
-    review = request.args.get('review')
+    review = request.args.get('text')
+    rating = request.args.get('stars')
+    goods = request.args.get('goods')
+    bads = request.args.get('bads')
+    goods  = json.loads(goods)
+    bads = json.loads(bads)
     c.execute("""SELECT id from Fringeshows
               where name = %s""", (show,))
     showID = c.fetchall()
@@ -740,12 +795,30 @@ def submitreview():
     if "/" in show:
       slash = show.find("/")
       show = show[:slash]
-    filepath = str(showID)+str(userid)+str(show) + str(userid)+'.txt'
+    filepath = str(userid)+str(show)+'.txt'
     newReview = open('static/reviews/' + filepath, 'w')
     newReview.write(review)
     newReview.close()
-    c.execute("""INSERT INTO UserReviews2(userid, showID, reviewText)
+    if rating != None:
+      c.execute("SET TIME ZONE 'America/New_York'")
+      c.execute("""INSERT INTO UserReviews2(userid, showID, reviewText)
               VALUES(%s, %s, %s)""", (userid, showID, filepath))
+      c.execute("""DELETE from ShowRatings4
+              where userid = %s and showid = %s""",
+              (userid, showID))
+      c.execute("""INSERT INTO ShowRatings4(userid, rating, showID, time)
+              VALUES(%s, %s, %s, CURRENT_TIMESTAMP)""",
+              (userid, rating, showID))
+    for good in goods:
+      print good
+      c.execute("""INSERT INTO goodAdjectives(showid, adjective, userid)
+                VALUES(%s,%s,%s)""",
+                (showID, good, userid))
+    for bad in bads:
+      print bad
+      c.execute("""INSERT INTO badAdjectives(showid, adjective, userid)
+                VALUES(%s,%s,%s)""",
+                (showID, bad, userid))
     conn.commit()
     return ""
 

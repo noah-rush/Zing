@@ -106,7 +106,45 @@
 .checkboxFivebad input[type=checkbox]:checked + label:after {
   opacity: 1;
 }
+{%for review in userreviews%}
 
+.person-star-rating-x{{loop.index}} {
+  margin-left: 10%;
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.person-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{review[1]}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.person-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
 
 
 body {
@@ -133,46 +171,45 @@ body {
       <br>
       <div class = "row">
       <div class = "col-md-6">
-   
-      <input class = "good" type = "checkbox"> Inspiring</input>
+  <div class = "checkboxlistgood" id = "checkboxlistgood">
+     <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
       <br>
-      <input class = "good" type = "checkbox"> Funny</input>
+      <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
       <br>
-      <input class = "good" type = "checkbox"> Thought provoking</input>
+      <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
       <br>
-      <input class = "good" type = "checkbox"> Energizing</input>
+      <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
       <br>
-      <input class = "good" type = "checkbox"> Outrageous</input>
+      <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
       <br>
-      <input class = "good" style = "text-color: green" type = "checkbox"> Entertaining</input>
+      <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
       <br>
-      <input class = "good" type = "checkbox"> Heart Wrenching</input>
+      <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
       <br>
-      <input class = "good" type = "checkbox"> Dramatic</input>
+      <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
       <br>
-      <input class = "good" type = "checkbox"> Passionate</input>
+      <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
       <br>
-      <input class = "good" type = "checkbox"> Sexy</input>
+      <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
+</div>
 </div>
  <div class = "col-md-6">
-      <input type = "checkbox"> Overly long</input>
+ <div class = "checkboxlistbad" id = "checkboxlistbad">
+      <input type = "checkbox" name = "Overly long"> Overly long</input>
       <br>
-      <input type = "checkbox"> Boring</input>
+      <input type = "checkbox" name = "Boring"> Boring</input>
       <br>
-      <input type = "checkbox"> Self Indulgent</input>
+      <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
       <br>
-      <input type = "checkbox"> Sophmoric</input>
+      <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
       <br>
-      <input type = "checkbox"> Insulting</input>
+      <input type = "checkbox" name = "Insulting"> Insulting</input>
       <br>
-      <input type = "checkbox"> A dud</input>
-      
+      <input type = "checkbox" name = "A dud"> A dud</input>
+      </div>
+</div>
 </div>
 
-
-
-
-</div>
 <br>
 Any extra thoughts...?
 <br>
@@ -192,18 +229,19 @@ Your rating?
         <span class="star-rating">
       
       
-  <input type="radio" name="rating" value="1"><i></i>
-  <input type="radio" name="rating" value="2"><i></i>
-  <input type="radio" name="rating" value="3"><i></i>
-  <input type="radio" name="rating" value="4"><i></i>
-  <input type="radio" name="rating" value="5"><i></i>
+  <input type="radio" name="stars" value="1"><i></i>
+  <input type="radio" name="stars" value="2"><i></i>
+  <input type="radio" name="stars" value="3"><i></i>
+  <input type="radio" name="stars" value="4"><i></i>
+  <input type="radio" name="stars" value="5"><i></i>
 </span>
-<div class ="choice">
-</div>
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id = "submitshowreview" href = "#submitreview" class="btn btn-primary" >Submit Review</button>
+       <button onClick="submit_review()" type="button" id = "submitshowreview" data-dismiss="modal" href = "#submitreview" class="btn btn-primary" >Submit Review</button>
       </div>
     </div>
   </div>
@@ -216,9 +254,22 @@ Your rating?
 
 <div id = "paneltext"class="panel panel-default">
 <div class = "panel-heading">
-<h1 id = "showname">{{showdata['name']}}  <button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+<h1 ><span id = "showname">{{showdata['name']}}</span>
+{%if showdata['name']|length > 40 %}
+<div><button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+</div>
 </h1>
-
+<span class="total-star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+<div class = "producer1"><i>{{producer}}</i></div>
+{%else%}
+<button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+</h1>
 <span class="total-star-rating">
   <input type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
@@ -227,10 +278,10 @@ Your rating?
   <input type="radio" name="rating" value="5"><i></i>
 </span>
 {%if showdata['producer']|length > 40 %}
-
 <div class = "producer1"><i>{{producer}}</i></div>
 {%else%}
 <span class = "producer"><i>{{producer}}</i></span>
+{%endif%}
 {%endif%}
 </div>
               <div class = "panel-body">
@@ -251,8 +302,6 @@ Get Tickets
 {%endfor %}
 </table>
 <br>
-<br>
-<br>
 
 </div>
 
@@ -262,8 +311,7 @@ Get Tickets
 
 
 
-<br>
-<br>
+
 {% if venue[0] is defined %}
 Playing at - <a href = "#venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
 {% endif %}
@@ -291,13 +339,56 @@ Playing at - <a href = "#venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
 
 
 
+<div style = "color: green">
+{% for adjective in goodadjectives %}
+{{adjective['count']}} 
+{% if adjective['count'] >1 %}
+people
+{%else%}
+person 
+{%endif%}
+found this 
+{{adjective['adjective']}}
 <br>
-{% for review in userreviews %}
+{%endfor %}
+</div>
 
-<object width="300" height="100" type="text/plain" data="../static/reviews/{{review['reviewtext']}}" border="2" >
-</object>
+
+<div style = "color:red">
+{% for adjective in badadjectives %}
+{{adjective['count']}} 
+{% if adjective['count'] >1 %}
+people
+{%else%}
+person 
+{%endif%}
+found this 
+{{adjective['adjective']}}
+<br>
+{%endfor %}
+</div>
+
+
+
+<br>
+<ul class="list-group">
+{% for review in userreviews %}
+<li class="list-group-item" style = "text-align: center"><p>
+{{review[2][0]['first']}} {{review[2][0]['last']}}
+<span class="person-star-rating-x{{loop.index}}">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+<br>
+{{review[0]}}</p></li>
+
+</div>
 
 {%endfor %}
+</ul>
 
 
 

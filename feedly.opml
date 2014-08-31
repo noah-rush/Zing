@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Noah subscriptions in feedly Cloud</title>
+    </head>
+    <body>
+        <outline type="rss" text="Blogs: Shapiro on Theater" title="Blogs: Shapiro on Theater" xmlUrl="http://feeds.feedburner.com/ShapiroOnTheater" htmlUrl="http://www.newsworks.org/"/>
+        <outline type="rss" text="Arts &amp; Culture" title="Arts &amp; Culture" xmlUrl="http://feeds.feedburner.com/PW-ArtsCulture" htmlUrl="http://www.philadelphiaweekly.com/arts-and-culture"/>
+    </body>
+</opml>

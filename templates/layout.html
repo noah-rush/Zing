@@ -8,7 +8,12 @@
   <link href="static/simple-sidebar/css/simple-sidebar.css"rel = "stylesheet">
 {%endblock%}
 <script src="https://maps.googleapis.com/maps/api/js"></script>
-  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/jquery.ba-hashchange.min.js"></script>
+<script type="text/javascript" src="static/dist/jquery.autocomplete.js"></script>
+<script src="static/homepage.js"></script>
+
   
 
 <style type="text/css">
@@ -22,6 +27,48 @@ padding-right: 0.1;
 white-space: 5px}
 .img-responsive:hover { opacity: 0.3; 
   filter: alpha(opacity=30); } 
+.star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.a{
+  color:black;
+}
+.star-rating i {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+
+}
+.star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
 .star-rating {
   font-size: 0;
   white-space: nowrap;
@@ -60,6 +107,7 @@ white-space: 5px}
   z-index: 2;
   position: relative;
 }
+
 #fb_login_button { 
     width: 80px; 
 }
@@ -234,7 +282,7 @@ border-radius: 10px;}
     display:none;
 }
 .dropdown-menu{
-  background-color: gray;
+  background-color: white;
 }
 #form{
   background-color: gray;
@@ -256,10 +304,10 @@ a{
 color: black;
  text-decoration: underline;
 
+
 }
 a:hover{
-  background-color: gray;
-  color: white;
+  color: blue;
   text-decoration: underline;
   border: 1pt solid;
 
@@ -361,7 +409,7 @@ a:hover{
 <div class = "col-lg-3 col-md-3 col-sm-3">
   <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
-  <a href = "#home" ><img src="static/zingheader.png" alt="..." class="img-thumbnail"></a>
+  <a href = "#home" ><img src="static/zingheadernew.png" alt="..." class="img-thumbnail"></a>
   </div>
   </div>
   <div id = "panela" class="panel panel-default">
@@ -420,8 +468,23 @@ a:hover{
 
 
 </div>
+<form class="form-inline" role="form" style = "width: 100%">
+<div class="form-group">
+<div id = "panela" style = "background-color:#e06666" class="panel panel-default">
+ 
+          <div class="panel-body">
+           <a href = "#find"><button type="button" style = "background-color: white; color: black" id = "find" class="btn" >Find</button></a>
+  <input  type="text" style = "text-align: center; margin-left: 0%;width: 50%"id = "rate" class="form-control" placeholder="Rate a Show"       autocomplete = "on">
+ 
+  <button type="button" style = "background-color: white; color: black"id = "modalReview" class="btn btn-primary" >Review</button>
+
+  </div>
+  </div>
+          </div>
+          </form>
 </div>
 </div>
+
 
 
 
@@ -476,7 +539,7 @@ a:hover{
 
 
 
-<div id = "panela" class="panel panel-default">
+<div id = "panel" class="panel panel-default">
   <div class="panel-body">
  <div id = "panelb" class="panel panel-default">
           <div class="panel-body">
@@ -532,10 +595,7 @@ a:hover{
 
 {% block sources %}
 
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="static/homepage.js"></script>
-  <script src="static/js/bootstrap.min.js"></script>
-  <script src="static/jquery.ba-hashchange.min.js"></script>
+
 
  
 {% endblock %}
