@@ -5,14 +5,9 @@
 
 {%block stylesheet%}
   <link href="static/css/bootstrap.min.css" rel="stylesheet">
-  <link href="static/simple-sidebar/css/simple-sidebar.css"rel = "stylesheet">
 {%endblock%}
 <script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/jquery.ba-hashchange.min.js"></script>
-<script type="text/javascript" src="static/dist/jquery.autocomplete.js"></script>
-<script src="static/homepage.js"></script>
+
 
   
 
@@ -25,6 +20,23 @@ form{color: black;
 background-color: white;
 padding-right: 0.1;
 white-space: 5px}
+.border-left, .border-right { position: relative; }
+.border-left:before, .border-right:after {
+    position: absolute;
+    content:'';
+    height: auto;
+    top: 0px;
+    bottom: 0px;
+    border-right: 2px solid #aaa;
+    width: 0;
+}
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+.border-left:before { left: 0px; }
+.border-right:after { right: 0px; }
+.border-left:before { left: 0px; }
+.border-right:before { right: 0px; }
 .img-responsive:hover { opacity: 0.3; 
   filter: alpha(opacity=30); } 
 .star-rating {
@@ -176,7 +188,21 @@ white-space: 5px}
   padding: 20px;
   display: block;
 }
+#lightbox{
+  background-color:#eee;
+  padding: 10px;
+  border-bottom: 2px solid #666;
+  border-right: 2px solid #666;
+  }
+#lightboxDetails{
+  font-size: 0.8em;
+  padding-top: 0.4em;
+  } 
+#lightboxCaption{ float: left; }
+#keyboardMsg{ float: right; }
 
+#lightbox img{ border: none; } 
+#overlay img{ border: none; }
 #blank{
 }
 .button-group{
@@ -309,7 +335,7 @@ color: black;
 a:hover{
   color: blue;
   text-decoration: underline;
-  border: 1pt solid;
+  
 
 }
 .top-button{
@@ -319,7 +345,9 @@ a:hover{
         width: 500px;
         height: 400px;
       }
-
+.btn-primary{
+  color:black;
+}
 </style>
 </head>
 
@@ -327,6 +355,7 @@ a:hover{
         <title>{% block title %}Zing{% endblock %}</title>
 
 <body>
+
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -400,11 +429,11 @@ a:hover{
 </div>
 
 
-<div id = "panelbig" style = "width: 100%"class="panel panel-default">
+<div id = "panelbig" style = "width: 100%; background-color: white"class="panel panel-default">
   <div class="panel-body">
 
 <div class = "row">
-<div id = "paneltop" style = "width: 100%"class="panel panel-default">
+<div id = "paneltop" style = "width: 100%; background-color: gray"class="panel panel-default">
   <div class="panel-body">
 <div class = "col-lg-3 col-md-3 col-sm-3">
   <div id = "panelheader" style = "width: 100%"class="panel panel-default">
@@ -413,11 +442,11 @@ a:hover{
   </div>
   </div>
   <div id = "panela" class="panel panel-default">
-  <div class="panel-body">
+  <div class="panel-body" style="background-color:white">
   <div id = "panelb" class="panel panel-default">
  
           <div class="panel-body">
-          <div id = "panelc3"class="panel panel-default">
+          <div style = "background-color:white" id = "panelc3"class="panel panel-default">
               <div class="panel-body">
 </div>
 </div>
@@ -432,56 +461,60 @@ a:hover{
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
   <div class="panel-body">
   <div class="btn-group" style = "text-align: center;  "data-toggle="buttons">
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
-    <input id = "toprated" type="radio" name="dio" style = "background-color:#e06666"value="Top Rated" checked> Top Rated
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color: white; border-color:black">
+    <input id = "toprated" type="radio" name="topbuttons" style = "background-color:#e06666"value="Top Rated" checked> Top Rated
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Cheap Tickets"> Cheap Tickets
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color: white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Cheap Tickets"> Cheap Tickets
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="This Week"> This Week
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="This Week"> This Week
   </label>
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Editor's Picks" > Editor's Picks
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Editor's Picks" > Editor's Picks
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Experimental"> Experimental
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Experimental"> Experimental
   </label>
-  <label class="btn btn-primary" style = "margin-left: 0px; border-radius: 0px; width: 16.667%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Comedy"> Comedy
+  <label class="btn btn-primary" style = "margin-left: 0px; border-radius: 0px; width: 16.667%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Comedy"> Comedy
   </label>
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.667%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666"  value="Classics" > Classics
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.667%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666"  value="Classics" > Classics
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Drama"> Drama
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Drama"> Drama
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Trending"> Trending
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Trending"> Trending
   </label>
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Musicals" > Musicals
+  <label class="btn btn-primary " style = "border-radius: 0px; width: 16.67%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Musicals" > Musicals
   </label>
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:#e06666; border-color:white">
-    <input type="radio" name="dio" style = "background-color:#e06666" value="Tonight"> Tonight
+  <label class="btn btn-primary" style = "border-radius: 0px; width: 16.67%; background-color:white; border-color:black">
+    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Tonight"> Tonight
   </label>
 
 
 </div>
 <form class="form-inline" role="form" style = "width: 100%">
 <div class="form-group">
-<div id = "panela" style = "background-color:#e06666" class="panel panel-default">
+<div id = "panela" style = "background-color:white; border-color:black; border-radius: 0px; opacity: 0.8" class="panel panel-default">
  
           <div class="panel-body">
            <a href = "#find"><button type="button" style = "background-color: white; color: black" id = "find" class="btn" >Find</button></a>
-  <input  type="text" style = "text-align: center; margin-left: 0%;width: 50%"id = "rate" class="form-control" placeholder="Rate a Show"       autocomplete = "on">
+  <input  type="text" style = "text-align: center; margin-left: 0%;width: 50%"id = "rate" class="form-control" placeholder="Review a show"autocomplete = "on">
  
-  <button type="button" style = "background-color: white; color: black"id = "modalReview" class="btn btn-primary" >Review</button>
+  <a href = "#quickReview" ><button type="button" style = "background-color: white; color: black" id = "modalReview" class="btn btn-primary" >Review</button></a>
 
   </div>
   </div>
           </div>
-          </form>
+          <br>
+          
+  
+</form>
+
 </div>
 </div>
 
@@ -496,7 +529,7 @@ a:hover{
         <div id = "panelb" class="panel panel-default">
  
           <div class="panel-body">
-            <div id = "panelc"class="panel panel-default">
+            <div id = "panelc" style = "background-color: white"class="panel panel-default">
               <div class="panel-body">
              
               </div>
@@ -512,28 +545,29 @@ a:hover{
   <div class="panel-body" id = "panelheaderuser">
           
  
-     {%if useron == 'none'%}
-      <a class="btn btn-default btn-sm" href = "#login" type="button" >
-     <span class = "glyphicon glyphicon-user"></span>
-<span id = "user" >  Login</span>
-
-</a>
-{% else %}
+     
+ {%if useron == "none"%}
+   <a href = "#login"><button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+      <span class = "glyphicon glyphicon-user"></span>
+     <span id = "user" >  Login</span>
+</button></a>
+ {%else%}
 <div class="dropdown">
    <button class="btn btn-default btn-sm dropdown-toggle"  type="button" data-toggle="dropdown">
      <span class = "glyphicon glyphicon-user"></span>
+     <span id = "user" >  Login</span>
+  
 <span id = "user" >  {{useron}}</span>
+
  <span class="caret"></span>
  </button>
 <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Profile</a></li>
-    <li><a href="#">Account Settings</a></li>
+  
     <li><a href="#logout">Logout</a></li>
   </ul>
   </div>
-{% endif %}
+ {%endif%}
  
-  
  </div>
  </div>
 
@@ -552,25 +586,9 @@ a:hover{
 </div>
 
 </div>
-<div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <button href = "#search" class="btn btn-default btn-sm" type="button" >
-  <span class="glyphicon glyphicon-search"></span>  Search
-</button>
-  
-</div>
-</div>
 
   
 
- <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <button href = "#browse" class="btn btn-default btn-sm " type="button" >
-
-  <span class="glyphicon glyphicon-list"></span>    Browse
-</button>
-</div>
-</div>
 
 
  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
@@ -595,6 +613,10 @@ a:hover{
 
 {% block sources %}
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/jquery.ba-hashchange.min.js"></script>
+<script src="static/homepage.js"></script>
 
 
  

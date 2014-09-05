@@ -24,7 +24,8 @@ for result in results:
     print result[0]
     print result[1]
     print result[2]
-    name = str(result[2]) + str(result[1])
-    urllib.urlretrieve(result[0], "static/Fringeimages/" + name + ".jpg")
+    name =  str(result[1])
+    if result[0] != None:
+    	urllib.urlretrieve(result[0], "static/Fringeimages/" + name + ".jpg")
 
        

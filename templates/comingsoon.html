@@ -57,17 +57,22 @@
 </style>
 <div id = "paneltext"class="panel panel-default">
 <div class = "panel-heading">
-<h1 id = "leftBoxTitle" style = "font-size: 20pt; text-align: center">Coming Soon</h1>
+<h1 id = "leftBoxTitle" style = "font-size: 20pt; text-align: center"><b>Coming Soon</b></h1>
+<div style = "text-align: right;">
+<a  href ="#fullschedule" style = "font-size: 9pt"> View Full Schedule</a>
+</div>
 </div>
 
 <div class="list-group">
 {% for date in dates %}
-<h2 style = "font-size: 14pt"><b><i>{{date}}</b></i> </h2>     
+<h2 style = "font-size: 14pt"><i>{{date}}</i> </h2>     
 {%for results in results%}  
 {%if results[3] ==date%} 
-{%if results[1]|length < 15%}
+{%if results[1]|length < 10%}
   <a  class = "list-group-item" href = "#show/{{results[1]}}"> 
   {{results[1]}} 
+{%if results[2] == "none"%}
+{%else%}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
@@ -75,6 +80,7 @@
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
 </span>
+{%endif%}
 </a>
 
  
@@ -82,6 +88,8 @@
 
   <a class = "list-group-item" href = "#show/{{results[1]}}" >{{results[1]}} 
   <br>
+  {%if results[2] == "none"%}
+{%else%}
   <div id = "starsspot" class="total-star-rating-x{{loop.index}}">
   <input type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
@@ -89,6 +97,7 @@
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
 </div>
+{%endif%}
 <br>
   </a>
 

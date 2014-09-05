@@ -33,6 +33,22 @@ conn = connectionBoiler.get_conn()
 app = Flask(__name__)
 
 ####HOMEPAGE - checks for username in session
+
+def convertDate(date):
+        strlength = len(date)
+        print date
+        day = date[:date.find("y")+1]
+        month = date[date.find("ber")-6:strlength-6]
+        numday = date[strlength-6: strlength-4]
+        year = date[ strlength-4:]
+        if  numday.find("0") == 0:
+          numday = numday[1:]
+      
+
+        playingdate = day + ", " + month + " " + numday +" " + year
+        print playingdate
+        return playingdate
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if 'username' in session:
@@ -47,7 +63,12 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-  return render_template("todayscontent.html")
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  featuredids = [876,877,878,879,880,881,882,883,884,885,886,887]
+  c.execute("SELECT name,id from Fringeshows where id>875 and id <888")
+  featured = c.fetchall()
+  print featured
+  return render_template("todayscontent.html", featured = featured)
 ###returns text for username not found
 
 
@@ -249,7 +270,13 @@ def nowPlaying():
     return render_template('nowPlaying.html', results=results)
 
 
-
+@app.route('/allshows')
+def allshows():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT * FROM Fringeshows")
+  results = c.fetchall()
+  print c.fetchall()
+  return render_template("allshows.html", results=results)
 
 @app.route('/comingsoon')
 def comingsoon():
@@ -264,7 +291,7 @@ def comingsoon():
     iterator = 0
     results = []
     while showcount < 10:
-      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'Day'), Fringeshows.id from Fringeshows, Fringedates where Fringedates.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s""", (iterator,))
+      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'Day'), Fringeshows.id from Fringeshows, Fringedates2 where Fringedates2.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s""", (iterator,))
       showresults = c.fetchall()
       doubles = False
       nilreturn = False
@@ -285,7 +312,7 @@ def comingsoon():
               averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
               result.append(convert_to_percent(averageRating))
            else:
-              result.append("50.0")
+              result.append("none")
            result.append(showresults[x]['to_char'])
            result.append(showresults[x]['ticketlink'])
            already =False
@@ -335,6 +362,51 @@ def comingsoon():
 
     return render_template('comingsoon.html', results=results, dates = dates, alldates = alldates)
  
+@app.route('/fullschedule')
+def fullschedule():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    # c.execute("""SELECT Karlshows2.name, SUM(rating), COUNT(rating)
+    #              from Karlshows2, ShowRatings4
+    #              WHERE (CURRENT_DATE, CURRENT_DATE)
+    #              OVERLAPS (start_date, end_date)
+    #              and ShowRatings4.showid = Karlshows2.id
+    #              GROUP BY Karlshows2.name""")
+    showcount = 0 
+    iterator = 0
+    results = []
+    c.execute("""SELECT SUM(rating), COUNT(rating), 
+              Fringeshows.name, playing, ticketlink,
+              to_char(playingdate,'DayMonthDDYYYY'),
+              timeOfShow, Fringeshows.id 
+              from Fringeshows, Fringedates2, ShowRatings4 
+              where Fringedates2.showid = Fringeshows.id 
+              and ShowRatings4.showid = Fringeshows.id 
+              GROUP BY Fringeshows.name, Fringedates2.playing, ticketlink, to_char, timeOfShow, Fringeshows.id, playingdate
+              ORDER BY playingdate""")
+    showresults = c.fetchall()
+    print showresults
+    averageRatings = []
+    for x in showresults:
+        if x['sum'] != None:
+          avg = convert_to_percent(float(x['sum'])/float(x['count']))
+          averageRatings.append(avg)
+        else: 
+          averageRatings.append(0)
+        x['to_char'] = convertDate(x['to_char'])
+          
+    dates = []
+    for x in showresults:
+        date = x['to_char']
+        if date in dates:
+          pass
+        else:
+          dates.append(date)
+    
+
+ 
+    return render_template('fullschedule.html', results=showresults, dates = dates, ratings = averageRatings)
+
+
 @app.route('/yelp')
 def yelp():
   from geopy.geocoders import GoogleV3
@@ -377,13 +449,13 @@ def yelp():
 def venue():
     venue = request.args.get('venue')
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("SELECT * from Fringevenues where name = %s", (venue,))
+    c.execute("SELECT * from Fringevenues where id = %s", (venue,))
     results = c.fetchall()
     results = results[0]
-    c.execute("SELECT * from Karlstaff where theatre = %s", (venue,))
+    c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
     c.execute("""SELECT name from Fringeshows
-                 where venueid = %s """, (results['id'],))
+                 where venueid = %s """, (venue,))
     shows = c.fetchall()
     if 'username' in session:
       c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
@@ -430,7 +502,7 @@ def antigone():
       c.execute("""SELECT rating from ShowRatings4
                 where showID = %s""", (showdata[0]['id'],))
       results = c.fetchall()
-      c.execute("""SELECT * from Fringedates 
+      c.execute("""SELECT * from Fringedates2 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
       c.execute("""SELECT * from adjectives 
@@ -504,7 +576,7 @@ def nellie():
       c.execute("""SELECT rating from ShowRatings4
                 where showID = %s""", (showdata[0]['id'],))
       results = c.fetchall()
-      c.execute("""SELECT * from Fringedates 
+      c.execute("""SELECT * from Fringedates2 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
       c.execute("""SELECT * from adjectives 
@@ -578,13 +650,13 @@ def show():
       c.execute("""SELECT reviewText, userReviews2.userid, rating, to_char(ShowRatings4.time, 'MMDDYYYY')
                 from UserReviews2, ShowRatings4
                 where userreviews2.showid = %s 
-                and UserReviews2.userid = ShowRatings4.userid""", (showdata[0]['id'],))
+                and ShowRatings4.showid = %s
+                and UserReviews2.userid = ShowRatings4.userid""", (showdata[0]['id'],showdata[0]['id']))
       userreviews = c.fetchall()
-    
-      c.execute("""SELECT rating from ShowRatings4
+      c.execute("""SELECT SUM(rating), COUNT(rating) from ShowRatings4
                 where showID = %s""", (showdata[0]['id'],))
       results = c.fetchall()
-      c.execute("""SELECT * from Fringedates 
+      c.execute("""SELECT to_char(playingdate, 'DayMonthDDYYYY'), timeOfShow, ticketlink from Fringedates2 
                 where showid = %s""", (showdata[0]['id'],))
       dates= c.fetchall()
       c.execute("""SELECT adjective,COUNT(userid) from goodadjectives 
@@ -595,14 +667,14 @@ def show():
                 where showid = %s
                 GROUP BY adjective""", (showdata[0]['id'],))
       badadjectives= c.fetchall()
-
-      
-      totalstars = sum([stars['rating'] for stars in results])
+      c.execute("""SELECT articleid, link, title  from contentconnection, outsidecontent where contentconnection.showid = %s
+                and contentconnection.articleid = outsidecontent.id""", (showdata[0]['id'],))
+      articleids = c.fetchall()
+      print articleids
       numReviews = len(results)
       averageRating = 0
       yourRating = 0
       reviewtexts = []
-      print userreviews
       for review in userreviews:
         data = []
         reviewtext = review['reviewtext']
@@ -624,11 +696,31 @@ def show():
         data.append(date)
         reviewtexts.append(data)
       print reviewtexts
+      showdates = []
+      for x in dates:
+        date = {}
+        date['timeofshow'] = x['timeofshow']
+        date['ticketlink'] = x['ticketlink']
+       
+        strlength = len(x['to_char'])
+        day = x['to_char'][:x['to_char'].find("y")+1]
+        month = x['to_char'][x['to_char'].find("ber")-6:strlength-6]
+        numday = x['to_char'][strlength-6: strlength-4]
+        year = x['to_char'][ strlength-4:]
+        if  numday.find("0") == 0:
+          numday = numday[1:]
+      
 
+        playingdate = day + ", " + month + " " + numday +" " + year
+        print playingdate
+        date['playingdate'] = playingdate
+        showdates.append(date)
 
       description = showdata[0]['description']
       producer = showdata[0]['producer']
       producer = Markup(producer)
+      if results[0]['sum'] != None:
+        averageRating = convert_to_percent(float(results[0]['sum'])/float(results[0]['count']))
       if "<p>" in description:
         description = Markup(description)
       template_vars = {"showdata": showdata[0],
@@ -640,14 +732,11 @@ def show():
                        "userreviews": reviewtexts,
                        "rating": averageRating,
                        "yourRating": yourRating,
-                       "dates": dates,
+                       "dates": showdates,
                        "goodadjectives": goodadjectives,
-                       "badadjectives": badadjectives
+                       "badadjectives": badadjectives,
+                       "articles": articleids
                        }
-
-      if(numReviews) != 0:
-          averageRating = float(totalstars)/float(numReviews)
-          template_vars['rating'] = convert_to_percent(averageRating)
       if 'username' in session:
           c.execute("""SELECT rating
                     from ShowRatings4, KarlUsers2

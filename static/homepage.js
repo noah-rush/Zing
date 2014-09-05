@@ -1,16 +1,4 @@
-/**
-*  Ajax Autocomplete for jQuery, version 1.2.9
-*  (c) 2013 Tomas Kirda
-*
-*  Ajax Autocomplete for jQuery is freely distributable under the terms of an MIT-style license.
-*  For details, see the web site: https://github.com/devbridge/jQuery-Autocomplete
-*
-*/
 
-/*jslint  browser: true, white: true, plusplus: true */
-/*global define, window, document, jQuery */
-
-// Expose plugin as an AMD module if AMD loader is present:
 (function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
@@ -824,6 +812,7 @@
 
 
 var stars;
+
 function getnowplaying(){
 	$.ajax({
   		url: "/nowPlaying",
@@ -845,6 +834,27 @@ function getcomingsoon(){
 	});
 
 };
+function get_all_shows(){
+    $.ajax({
+        url: "/allshows",
+        success: display_all_shows
+    });
+
+};
+function full_schedule(){
+    $.ajax({
+        url: "/fullschedule",
+        success: display_full_schedule
+    });
+
+};
+function display_all_shows(data){
+    $("#panelc").find('.panel-body').html(data);
+}
+function display_full_schedule(data){
+    $("#panelc").find('.panel-body').html(data);
+}
+
 function profile(){
 	$.ajax({
   		url: "/nowPlaying",
@@ -954,6 +964,8 @@ FB.getLoginStatus(function(response) {
     });
   }
 }
+
+var quickReview = false;
 
 function handle_login(data){
 	console.log(data);
@@ -1156,6 +1168,7 @@ function display_venues(data){
     });
 
 };
+
 function display_show(data){
 	$("#panelc").find('.panel-body').html(data);
 	 var initRating = $("#startRating").text();
@@ -1167,7 +1180,10 @@ function display_show(data){
  $(".good").click(function(){
 	console.log(this.value)
 })
-
+if(quickReview){
+    $('#myModal').modal('show');
+}
+quickReview = false;
 };
 function display_venue(data){
 	$("#panelc").find('.panel-body').html(data);
@@ -1316,14 +1332,32 @@ FB.api('/me', function(response) {
   
  }, {scope: 'public_profile,email'});
 }
-function home(){
+function homepage(){
 	$.ajax({
 		success: show_container,
 		url:"/home"
 	})
 }
 
+function inputs(){
+    $("input[name='topbuttons']").change(function() {
+    console.log($('input[name="topbuttons"]:checked').val());
+    $("input[name='topbuttons']").each(function(){
+    if(this.checked) {
+    lastchecked.checked = false;
+    console.log($("input[name='topbuttons']:checked").val());
+     $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
+    var but = $( "input[name='topbuttons']:checked").closest("label");
+    but.css("background-color", "red");
+    lastchecked.css("background-color", "white");
+    lastchecked = but;
+    }
+    
+    
 
+})
+});
+};
 function show_container(data){
 	$("#panelc").find('.panel-body').html(data);
 }
@@ -1372,25 +1406,26 @@ function submit_review(){
         });
        
 	var text = $("#writeuserreview").val();
-	var show = $("#showname").text();
+	var showname = $("#showname").text();
 	console.log(text);
 	console.log(stars);
 	 $.ajax({
 		url: "/submitreview",
 		data: {
-			show: show,
+			show: showname,
 			text: text,
 			stars: stars,
 			goods: JSON.stringify(goods),
 			bads: JSON.stringify(bads)
 		}
 	});
-	  location.reload();
+     show(showname);
+	  
 
 
 }
 
-
+var lastchecked = $("#toprated");
 
 function signin(){
 	var email = $("#loginEmail").val();
@@ -1411,7 +1446,8 @@ function start (){
 	getzingdescript();
 	//getnowplaying();
 	getcomingsoon();
-	home();
+	homepage();
+    inputs();
 
 
 $(window).hashchange( function test(){
@@ -1459,7 +1495,7 @@ $(window).hashchange( function test(){
 		signin()
 		break;
 	case "#home":
-		home()
+		homepage()
 		break;
 	case "#profile":
 		profile()
@@ -1467,6 +1503,16 @@ $(window).hashchange( function test(){
 	case "#submitreview":
 		submit_review()
 		break;
+    case "#allshows":
+        get_all_shows()
+        break;
+    case "#fullschedule":
+        full_schedule()
+        break;
+
+
+
+
     
 
 
@@ -1475,44 +1521,24 @@ $(window).hashchange( function test(){
 
 });
 
-
-
-
-
-
-$('.good').click(function(){
-    if($(this).is(':checked')){
-        $(this).css("color",  "green");
-    } 
-});
 $("#find").click(function(){
-        show($('#rate').val())
+        show($('#rate').val());
        }
-       )
-var lastchecked = $("#toprated");
-$("input[name='dio']").change(function() {
-	$("input[name='dio']").each(function(){
-    if(this.checked) {
-    lastchecked.checked = false
-	console.log($("input[name='dio']:checked").val());
-	 $("#leftBoxTitle").text($("input[name='dio']:checked").val());
-	var but = $( "input[name='dio']:checked").closest("label");
-	but.css("background-color", "red");
-	lastchecked.css("background-color", "#e06666");
-	lastchecked = but;
-    } else {
-    	
-    
-        
-    }
-	
-	
-
-})
-});
+       );
+$("#modalReview").click(function(){
+        show($('#rate').val());
+        quickReview = true;
+       }
+       );
+$("#modalReview").click(function(){
+        show($('#rate').val());
+        quickReview = true;
+       }
+       );
 
 
-$('#popover').popover({ trigger: "hover" });
+
+
 $(window).hashchange();
  $("#submitshowreview").on("click", submit_review);
  console.log('here');

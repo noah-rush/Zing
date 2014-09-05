@@ -151,7 +151,22 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 </style>
-
+<body>
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    {{showdata['name']}}
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="modal-body">
+   
+        <img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%">
+   
+    </div>
+    </div>
+    </div>
+    </div>
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -254,8 +269,11 @@ Your rating?
 
 <div id = "paneltext"class="panel panel-default">
 <div class = "panel-heading">
+
+
+
 <h1 ><span id = "showname">{{showdata['name']}}</span>
-{%if showdata['name']|length > 40 %}
+{%if showdata['name']|length > 30 %}
 <div><button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
 </div>
 </h1>
@@ -277,26 +295,52 @@ Your rating?
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
 </span>
-{%if showdata['producer']|length > 40 %}
 <div class = "producer1"><i>{{producer}}</i></div>
-{%else%}
-<span class = "producer"><i>{{producer}}</i></span>
-{%endif%}
+
 {%endif%}
 </div>
               <div class = "panel-body">
 <div class = "row">
 <br>
-<div class = "col-md-8" style "text-align: center">
-<img src = "{{showdata['pic']}}" width = "100%">
+<div class = "col-md-8 " style "text-align: center">
+
+<a  data-toggle="modal" data-target="#imageModal" >
+
+<img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%"></a>
+
+
+<br>
+<br>
+{% if venue[0] is defined %}
+Playing at - <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
+{% endif %}
+
+<br>
+<br>
+<p>{{description}}</p>
+
+<div style = "text-align: center">
+<br>
+{%if articles|length > 0%}
+<b>Outside Reviews</b>
+<br>
+<br>
+{% for article in articles %}
+
+<a href = "{{article['link']}}">{{article['title']}}</a>
+<br>
+{%endfor %}
+{%endif%}
 </div>
-<div class = "col-md-4">
+</div>
+<div class = "col-md-4 border-left" style = "border-bottom: 2px dashed #aaa; 
+border-top: 2px dashed #aaa; text-align: center">
 Get Tickets
 <table>
 <tr>
 {% for date in dates %}
 <td>
-<a href = {{date['ticketlink']}}>{{date['playing']}}</a>
+<a href = {{date['ticketlink']}}>{{date['playingdate']}} -- {{date['timeofshow']}}</a>
 </td>
 </tr>
 {%endfor %}
@@ -312,13 +356,7 @@ Get Tickets
 
 
 
-{% if venue[0] is defined %}
-Playing at - <a href = "#venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
-{% endif %}
 
-<br>
-<br>
-<p>{{description}}<p>
 
 
 
@@ -329,13 +367,7 @@ Playing at - <a href = "#venue/{{venue[0]['name']}}"> {{venue[0]['name']}}</a>
 {%endfor %}
 <br>
 
-{% for review in reviews %}
 
-<object width="300" height="100" type="text/plain" data="../static/reviews/{{review['reviewtext']}}" border="2" >
-</object>
-<br>{{review['journalist']}}
-<br>{{review['publication']}}
-{%endfor %}
 
 
 
@@ -402,4 +434,6 @@ found this
 
 </div>
 </div>
+
+</body>
 

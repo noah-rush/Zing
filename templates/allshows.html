@@ -1,0 +1,27 @@
+
+<div id = "paneltext"class="panel panel-default">
+<div class = "panel-body">
+<br>
+<br>
+
+<div class="list-group" style = "text-align: center">
+{%for result in results%}
+<a  class = "list-group-item" href = "#show/{{result['name']}}"> 
+{% if result['id'] == 44%}
+<img max-height = "100px" src = "static/Fringeimages/(hashtag)44.jpg" width = "100%"></a>
+{%elif result['id'] == 24%}
+        <img max-height = "100px" src = "static/Fringeimages/shamanicinterfaces24.jpg" width = "100%">
+{%else%}
+<img style = "max-height: 20%" src = "static/Fringeimages/{{result['name']}}{{result['id']}}.jpg" ></a>
+
+{%endif%}
+<h2 style = "display:inline">{{result['name']}}</h2>
+
+{%endfor%}
+
+</div>
+
+</div>
+
+
+
