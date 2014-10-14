@@ -68,9 +68,15 @@
 <div class = "panel-body" style = "background-color: gray">
 
 {% for date in dates %}
-
-
+<div class = "row">
+<div class = "col-md-8">
 <h2 style = "font-size: 14pt"><b><i>{{date}}</b></i> </h2>
+</div>
+<div class = "col-md-4">
+<h2 style = "font-size: 14pt"><b><i>Tickets</b></i> </h2>
+</div>
+</div>
+
 <div class = "row">
 <div class="list-group"> 
 
@@ -93,8 +99,9 @@
 </a>
 </div>
 <div class = "col-md-4 border-left2">
+
 <a  class = "list-group-item" href = "{{results['ticketlink']}}"> 
-  {{results['timeofshow']}} <span class="glyphicon glyphicon-usd"></span>Tix
+  {{results['timeofshow']}} 
   </a>
   </div>
 {%endif%}

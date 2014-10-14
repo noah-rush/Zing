@@ -57,9 +57,9 @@ def index():
         c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
         print name
-        return render_template('homepage.html', useron=name)
+        return render_template('layout.html', useron=name)
     print 'kkkkk'
-    return render_template('homepage.html', useron = 'none')
+    return render_template('layout.html', useron = 'none')
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -290,42 +290,42 @@ def comingsoon():
     showcount = 0 
     iterator = 0
     results = []
-    while showcount < 10:
-      c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'Day'), Fringeshows.id from Fringeshows, Fringedates2 where Fringedates2.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s""", (iterator,))
-      showresults = c.fetchall()
-      doubles = False
-      nilreturn = False
-      if showresults == []:
-        nilreturn = True
+    # while showcount < 10:
+    #   c.execute("""SELECT Fringeshows.name, playing, ticketlink,to_char(playingdate,'Day'), Fringeshows.id from Fringeshows, Fringedates2 where Fringedates2.showid = Fringeshows.id and playingdate = CURRENT_DATE + %s""", (iterator,))
+    #   showresults = c.fetchall()
+    #   doubles = False
+    #   nilreturn = False
+    #   if showresults == []:
+    #     nilreturn = True
 
-      for x in range(len(showresults)):
-         if len(results) < 10:
-           result = []
-           playing = showresults[x]['playing']
-           pm = playing.rfind(" ") 
-           playing = playing[pm:]
-           result.append(playing)
-           result.append(showresults[x]['name'])
-           c.execute("SELECT SUM(rating), COUNT(rating) from ShowRatings4 where showid = %s", (showresults[x]['id'],))
-           ratingResults = c.fetchall()
-           if ratingResults[0]['sum'] != None:
-              averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
-              result.append(convert_to_percent(averageRating))
-           else:
-              result.append("none")
-           result.append(showresults[x]['to_char'])
-           result.append(showresults[x]['ticketlink'])
-           already =False
-           for y in results:
-              if showresults[x]['name'] in y:
-                already = True
-           if already:
-              pass
-              doubles = True
-           else:
-              results.append(result)
-      iterator = iterator +1
-      showcount = len(results)
+    #   for x in range(len(showresults)):
+    #      if len(results) < 10:
+    #        result = []
+    #        playing = showresults[x]['playing']
+    #        pm = playing.rfind(" ") 
+    #        playing = playing[pm:]
+    #        result.append(playing)
+    #        result.append(showresults[x]['name'])
+    #        c.execute("SELECT SUM(rating), COUNT(rating) from ShowRatings4 where showid = %s", (showresults[x]['id'],))
+    #        ratingResults = c.fetchall()
+    #        if ratingResults[0]['sum'] != None:
+    #           averageRating = float(ratingResults[0]['sum'])/float(ratingResults[0]['count'])
+    #           result.append(convert_to_percent(averageRating))
+    #        else:
+    #           result.append("none")
+    #        result.append(showresults[x]['to_char'])
+    #        result.append(showresults[x]['ticketlink'])
+    #        already =False
+    #        for y in results:
+    #           if showresults[x]['name'] in y:
+    #             already = True
+    #        if already:
+    #           pass
+    #           doubles = True
+    #        else:
+    #           results.append(result)
+    #   iterator = iterator +1
+    #   showcount = len(results)
 
 
     dates = []

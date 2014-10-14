@@ -1179,10 +1179,10 @@ function display_show(data){
 });
  $(".good").click(function(){
 	console.log(this.value)
-})
+});
 if(quickReview){
     $('#myModal').modal('show');
-}
+};
 quickReview = false;
 };
 function display_venue(data){
@@ -1530,11 +1530,7 @@ $("#modalReview").click(function(){
         quickReview = true;
        }
        );
-$("#modalReview").click(function(){
-        show($('#rate').val());
-        quickReview = true;
-       }
-       );
+
 
 
 
