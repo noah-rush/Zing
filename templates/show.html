@@ -19,95 +19,7 @@
   text-align: right;
   
 }
-.checkboxFivegood {
-  width: 25px;
-  position: relative;
-}
-.checkboxFivegood label {
-  cursor: pointer;
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  top: 0;
-  left: 0;
-  background: #eee;
-  border:1px solid #ddd;
-}
-.checkboxFivegood label:after {
-  opacity: 0.2;
-  content: '';
-  position: absolute;
-  width: 9px;
-  height: 5px;
-  background: transparent;
-  top: 6px;
-  left: 7px;
-  border: 3px solid green;
-  border-top: none;
-  border-right: none;
-
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-.checkboxFivegood label:hover::after {
-  opacity: 0.5;
-}
-
-/**
- * Create the checkbox state for the tick
- */
-.checkboxFivegood input[type=checkbox]:checked + label:after {
-  opacity: 1;
-}
-
-.checkboxFivebad {
-  width: 25px;
-  position: relative;
-}
-.checkboxFivebad label {
-  cursor: pointer;
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  top: 0;
-  left: 0;
-  background: #eee;
-  border:1px solid #ddd;
-}
-.checkboxFivebad label:after {
-  opacity: 0.2;
-  content: '';
-  position: absolute;
-  width: 9px;
-  height: 5px;
-  background: transparent;
-  top: 6px;
-  left: 7px;
-  border: 3px solid red;
-  border-top: none;
-  border-right: none;
-
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-.checkboxFivebad label:hover::after {
-  opacity: 0.5;
-}
-
-/**
- * Create the checkbox state for the tick
- */
-.checkboxFivebad input[type=checkbox]:checked + label:after {
-  opacity: 1;
-}
 {%for review in userreviews%}
-
 .person-star-rating-x{{loop.index}} {
   margin-left: 10%;
   font-size: 0;
@@ -150,23 +62,24 @@
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
+
 </style>
+
 <body>
+
 <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-    <div class="modal-header">
-    {{showdata['name']}}
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    </div>
-    <div class="modal-body">
-   
+      <div class="modal-header">
+        {{showdata['name']}}
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
         <img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%">
-   
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
+  </div>
+</div>
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -177,79 +90,75 @@ body {
         <h4 class="modal-title" id="myModalLabel">{{showdata['name']}}</h4>
       </div>
       <div class="modal-body">
-      By {{useron}}
-      <br>
-      <br>
-
-      Which one of these words apply?
-      <br>
-      <br>
-      <div class = "row">
+        By {{useron}}
+        <br>
+        <br>
+        Which one of these words apply?
+        <br>
+        <br>
+        <div class = "row">
+          <div class = "col-md-6">
+            <div class = "checkboxlistgood" id = "checkboxlistgood">
+              <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
+              <br>
+              <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
+              <br>
+              <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
+              <br>
+              <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
+              <br>
+              <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
+              <br>
+              <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
+              <br>
+              <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
+              <br>
+              <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
+              <br>
+              <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
+              <br>
+              <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
+          </div>
+        </div>
       <div class = "col-md-6">
-  <div class = "checkboxlistgood" id = "checkboxlistgood">
-     <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
-      <br>
-      <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
-      <br>
-      <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
-      <br>
-      <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
-      <br>
-      <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
-      <br>
-      <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
-      <br>
-      <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
-      <br>
-      <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
-      <br>
-      <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
-      <br>
-      <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
-</div>
-</div>
- <div class = "col-md-6">
- <div class = "checkboxlistbad" id = "checkboxlistbad">
-      <input type = "checkbox" name = "Overly long"> Overly long</input>
-      <br>
-      <input type = "checkbox" name = "Boring"> Boring</input>
-      <br>
-      <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
-      <br>
-      <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
-      <br>
-      <input type = "checkbox" name = "Insulting"> Insulting</input>
-      <br>
-      <input type = "checkbox" name = "A dud"> A dud</input>
+        <div class = "checkboxlistbad" id = "checkboxlistbad">
+            <input type = "checkbox" name = "Overly long"> Overly long</input>
+            <br>
+            <input type = "checkbox" name = "Boring"> Boring</input>
+            <br>
+            <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
+            <br>
+            <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
+            <br>
+            <input type = "checkbox" name = "Insulting"> Insulting</input>
+            <br>
+            <input type = "checkbox" name = "A dud"> A dud</input>
+        </div>
       </div>
-</div>
-</div>
+    </div>
 
-<br>
-Any extra thoughts...?
-<br>
-
-
-      <textarea id = "writeuserreview"cols="50" rows="5">
-...
-</textarea>
-
-<br>
-<br>
-Your rating?
-<br>
-<br>
+    <br>
+    Any extra thoughts...?
+    <br>
 
 
-        <span class="star-rating">
+    <textarea id = "writeuserreview"cols="50" rows="5">...
+    </textarea>
+
+    <br>
+    <br>
+    Your rating?
+    <br>
+    <br>
+    <span class="star-rating">
       
       
-  <input type="radio" name="stars" value="1"><i></i>
-  <input type="radio" name="stars" value="2"><i></i>
-  <input type="radio" name="stars" value="3"><i></i>
-  <input type="radio" name="stars" value="4"><i></i>
-  <input type="radio" name="stars" value="5"><i></i>
-</span>
+    <input type="radio" name="stars" value="1"><i></i>
+    <input type="radio" name="stars" value="2"><i></i>
+    <input type="radio" name="stars" value="3"><i></i>
+    <input type="radio" name="stars" value="4"><i></i>
+    <input type="radio" name="stars" value="5"><i></i>
+    </span>
 
 
 
@@ -268,52 +177,45 @@ Your rating?
 
 
 <div id = "paneltext"class="panel panel-default">
-<div class = "panel-heading">
+  <div class = "panel-heading">
+    <h1 ><span id = "showname">{{showdata['name']}}</span>
+    {%if showdata['name']|length > 30 %}
+    <div><button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+  </div>
+    </h1>
+    <span class="total-star-rating">
+    <input type="radio" name="rating" value="1"><i></i>
+    <input type="radio" name="rating" value="2"><i></i>
+    <input type="radio" name="rating" value="3"><i></i>
+    <input type="radio" name="rating" value="4"><i></i>
+    <input type="radio" name="rating" value="5"><i></i>
+    </span>
+    <div class = "producer1"><i>{{producer}}</i></div>
+    {%else%}
+    <button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+    </h1>
+    <span class="total-star-rating">
+      <input type="radio" name="rating" value="1"><i></i>
+      <input type="ra dio" name="rating" value="2"><i></i>
+      <input type="radio" name="rating" value="3"><i></i>
+      <input type="radio" name="rating" value="4"><i></i>
+      <input type="radio" name="rating" value="5"><i></i>
+    </span>
+    <div class = "producer1"><i>{{producer}}</i></div>
 
-
-
-<h1 ><span id = "showname">{{showdata['name']}}</span>
-{%if showdata['name']|length > 30 %}
-<div><button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+      {%endif%}
 </div>
-</h1>
-<span class="total-star-rating">
-  <input type="radio" name="rating" value="1"><i></i>
-  <input type="radio" name="rating" value="2"><i></i>
-  <input type="radio" name="rating" value="3"><i></i>
-  <input type="radio" name="rating" value="4"><i></i>
-  <input type="radio" name="rating" value="5"><i></i>
-</span>
-<div class = "producer1"><i>{{producer}}</i></div>
-{%else%}
-<button style = "float:right"class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
-</h1>
-<span class="total-star-rating">
-  <input type="radio" name="rating" value="1"><i></i>
-  <input type="radio" name="rating" value="2"><i></i>
-  <input type="radio" name="rating" value="3"><i></i>
-  <input type="radio" name="rating" value="4"><i></i>
-  <input type="radio" name="rating" value="5"><i></i>
-</span>
-<div class = "producer1"><i>{{producer}}</i></div>
-
-{%endif%}
-</div>
-              <div class = "panel-body">
-<div class = "row">
-<br>
-<div class = "col-md-8 " style "text-align: center">
-
-<a  data-toggle="modal" data-target="#imageModal" >
-
-<img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%"></a>
-
-
-<br>
-<br>
-{% if venue[0] is defined %}
-Playing at - <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
-{% endif %}
+        <div class = "panel-body">
+        <div class = "row">
+        <br>
+        <div class = "col-md-8 " style "text-align: center">
+        <a  data-toggle="modal" data-target="#imageModal" >
+        <img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%"></a>
+        <br>
+        <br>
+        {% if venue[0] is defined %}
+        Playing at - <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
+        {% endif %}
 
 <br>
 <br>

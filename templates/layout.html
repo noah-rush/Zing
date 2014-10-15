@@ -1,510 +1,600 @@
-
 <!doctype html>
 
 <head>
 
-{%block stylesheet%}
-  <link href="static/css/bootstrap.min.css" rel="stylesheet">
-{%endblock%}
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+    {%block stylesheet%}
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">{%endblock%}
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
 
 
-  
 
-<style type="text/css">
-body {background-color: white;
-text-indent: 0.25%;
-color: black}
-h1{color: black;}
-form{color: black;
-background-color: white;
-padding-right: 0.1;
-white-space: 5px}
-.border-left, .border-right { position: relative; }
-.border-left:before, .border-right:after {
-    position: absolute;
-    content:'';
-    height: auto;
-    top: 0px;
-    bottom: 0px;
-    border-right: 2px solid #aaa;
-    width: 0;
-}
 
-.inner-item {
-    text-align: center;
-    img {
-        margin: 0 auto;
+    <style type="text/css">
+    body {
+        background-color: white;
+        text-indent: 0.25%;
+        color: black
     }
-}
-.border-left:before { left: 0px; }
-.border-right:after { right: 0px; }
-.border-left:before { left: 0px; }
-.border-right:before { right: 0px; }
-.img-responsive:hover { opacity: 0.3; 
-  filter: alpha(opacity=30); } 
-.star-rating {
-  font-size: 0;
-  white-space: nowrap;
-  display: inline-block;
-  width: 250px;
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-}
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
-.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-.autocomplete-selected { background: #F0F0F0; }
-.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
-.a{
-  color:black;
-}
-.star-rating i {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 20%;
-  z-index: 1;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-
-}
-.star-rating input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  opacity: 0;
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  position: relative;
-}
-.star-rating {
-  font-size: 0;
-  white-space: nowrap;
-  display: inline-block;
-  width: 250px;
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-}
-.a{
-  color:black;
-}
-.star-rating i {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 20%;
-  z-index: 1;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-
-}
-.star-rating input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  opacity: 0;
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  position: relative;
-}
-
-#fb_login_button { 
-    width: 80px; 
-}
-#fb_login_button span, 
-#fb_login_button iframe {.
-    width: 80px! important;
-    height: 25px! important;
-}
-.total-star-rating {
-  font-size: 0;
-  white-space: nowrap;
-  display: inline-block;
-  width: 125px;
-  height: 25px;
-  overflow: hidden;
-  position: relative;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-}
-.total-star-rating i {
-  opacity: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0%;
-  z-index: 1;
-  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
-  background-size: contain;
-}
-.total-star-rating input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  opacity: 0;
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  position: relative;
-}
-
-
-
-.star-rating input:hover + i,
-.star-rating input:checked + i {
-  opacity: 1;
-}
-.star-rating i ~ i {
-  width: 40%;
-}
-.star-rating i ~ i ~ i {
-  width: 60%;
-}
-.star-rating i ~ i ~ i ~ i {
-  width: 80%;
-}
-.star-rating i ~ i ~ i ~ i ~ i {
-  width: 100%;
-}
-.choice {
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  display: block;
-}
-#lightbox{
-  background-color:#eee;
-  padding: 10px;
-  border-bottom: 2px solid #666;
-  border-right: 2px solid #666;
-  }
-#lightboxDetails{
-  font-size: 0.8em;
-  padding-top: 0.4em;
-  } 
-#lightboxCaption{ float: left; }
-#keyboardMsg{ float: right; }
-
-#lightbox img{ border: none; } 
-#overlay img{ border: none; }
-#blank{
-}
-.button-group{
-  margin-right: 0%;
-  margin-left: 3%;
-}
-
-.scrollable-menu {
-    height: auto;
-    max-height: 200px;
-    overflow-x: hidden;
-}
-#panela{
-  background-color: black;
-
-}
-#panelbig{
-  background-color: white;
-
-}
-#createbutton{
- 
-
-}
-#panelb{
-  background-color: white;
-}
-#panelheader{
-  background-color: white;
-  border: 3px solid;
-  border-color: #e06666;
-  color: black;
-  text-align: center;
-}
-#panelc{
-  background-color: red;
-}
-#panelc2{
-  background-color: white;
-
-}
-.panel{ 
-border: 0px;
-border-radius: 10px;}
-#panelsignup{
-  color: orange;
-  display: none;
-  height: 0%;
-}
-#paneltop{
-  background-color: white;
-  border: 2px solid;
-  border-color: black;
-  width: 60%;
-
-}
-#signup:hover{
-  background-color: black;
-  color:white;
-}
-#signin:hover{
-  background-color: black;
-  color:white;
-}
-#signup{
-  background-color: white;
-  color:black;
-}
-#signin{
-  background-color: white;
-  color: black;
-}
-.jumbotron{
-  background-color: white;
-}
-#loginscreen{
-    display:none;
-}
-#somethingWrong{
-    display:none;
-}
-#submit{
-	display:none;
-}
-#name{
-	display:none;
-}
-#variable{
-	display:none;
-	
-}
-.form-control{
-  border-radius: 20px;
-}
-#logout{
-	display:none;
-}
-#yesuser{
-    display:none;
-}
-#nouser{
-    display:none;
-}
-.dropdown-menu{
-  background-color: white;
-}
-#form{
-  background-color: gray;
-}
-.sidebar{
-  background-color:gray;
-}
-#sidebar-wrapper{
-  background-color: rgb(213, 213, 213);
-  color: black;
-}
-.sidebar-brand{
-  color: red;
-}
-#search{
-  font-size: 12pt
-}
-a{ 
-color: black;
- 
-
-
-}
-a:hover{
-  color: blue;
-  text-decoration: underline;
+    h1 {
+        color: black;
+    }
+    form {
+        color: black;
+        background-color: white;
+        padding-right: 0.1;
+        white-space: 5px
+    }
+    .panel-default > .panel-heading {
+        border-color: #e06666;
+        border-width: 4px;
+    }
+    #panelsearch > .panel-body {
+        padding: 6px;
+        border-radius: 0px;
+    }
+    #panelsearch > .panel-body > input {
+        border-radius: 0px;
+    }
+    #panelsearch {
+        background-color: #e06666;
+        border-radius: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+    .tag-drop > span {
+        border-radius: 10px;
+        border: 1px solid black;
+        padding-left: 3%;
+        padding-right: 3%;
+        margin-right: 2%;
+        padding-top: 1.5%;
+        padding-bottom: 1.5%;
+        margin-bottom: 1%;
+        display: inline-block;
+    }
+    .tag-drop > span > a {
+        display: inline-block;
+        float: right;
+    }
+    .border-left,
+    .border-right {
+        position: relative;
+    }
+    .border-left:before,
+    .border-right:after {
+        position: absolute;
+        content: '';
+        height: auto;
+        top: 0px;
+        bottom: 0px;
+        border-right: 2px solid #aaa;
+        width: 0;
+    }
+    .inner-item {
+        text-align: center;
+        img {
+            margin: 0 auto;
+        }
+    }
+    .border-left:before {
+        left: 0px;
+    }
+    .border-right:after {
+        right: 0px;
+    }
+    .border-left:before {
+        left: 0px;
+    }
+    .border-right:before {
+        right: 0px;
+    }
+    .img-responsive:hover {
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+    }
+    .star-rating {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 250px;
+        height: 50px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .autocomplete-suggestions {
+        border: 1px solid #999;
+        background: #FFF;
+        overflow: auto;
+    }
+    .autocomplete-suggestion {
+        padding: 2px 5px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .autocomplete-selected {
+        background: #F0F0F0;
+    }
+    .autocomplete-suggestions strong {
+        font-weight: normal;
+        color: #3399FF;
+    }
+    .a {
+        color: black;
+    }
+    .star-rating i {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 20%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .star-rating input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+    .star-rating {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 250px;
+        height: 50px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .a {
+        color: black;
+    }
+    .star-rating i {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 20%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .star-rating input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+    #fb_login_button {
+        width: 80px;
+    }
+    #fb_login_button span,
+    #fb_login_button iframe {
+        . width: 80px! important;
+        height: 25px! important;
+    }
+    .form-control {
+        padding-right: 0px;
+    }
+    .form-control + .glyphicon {
+        position: absolute;
+        right: 7%;
+        padding: 31px 27px;
+    }
+    .total-star-rating {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 125px;
+        height: 25px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .total-star-rating i {
+        opacity: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .total-star-rating input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+    .star-rating input:hover + i,
+    .star-rating input:checked + i {
+        opacity: 1;
+    }
+    .star-rating i ~ i {
+        width: 40%;
+    }
+    .star-rating i ~ i ~ i {
+        width: 60%;
+    }
+    .star-rating i ~ i ~ i ~ i {
+        width: 80%;
+    }
+    .star-rating i ~ i ~ i ~ i ~ i {
+        width: 100%;
+    }
+    .choice {
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        display: block;
+    }
+    #lightbox {
+        background-color: #eee;
+        padding: 10px;
+        border-bottom: 2px solid #666;
+        border-right: 2px solid #666;
+    }
+    #lightboxDetails {
+        font-size: 0.8em;
+        padding-top: 0.4em;
+    }
+    #lightboxCaption {
+        float: left;
+    }
+    #keyboardMsg {
+        float: right;
+    }
+    #lightbox img {
+        border: none;
+    }
+    #overlay img {
+        border: none;
+    }
+    #blank {} .button-group {
+        margin-right: 0%;
+        margin-left: 3%;
+    }
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+    }
+    #panela {
+        background-color: black;
+    }
+    #createbutton {} #panelb {
+        background-color: white;
+    }
+    #panelheader {
+        background-color: white;
+        border: 0px solid;
+        border-color: #e06666;
+        color: black;
+        text-align: center;
+    }
   
-
-}
-.top-button{
-
-}
-#map_canvas {
+    #panelc {
+        border-bottom: 2px solid black;
+       border-top: 0px solid #e06666;
+        
+        color: black;
+    }
+    #panelc2 {
+        background-color: white;
+    }
+    .panel {
+        border: 0px;
+        border-radius: 10px;
+    }
+    h1 {
+        font-weight: 600;
+    }
+    .homepage-image {
+        max-width: 100%
+    }
+    #panelsignup {
+        color: orange;
+        display: none;
+        height: 0%;
+    }
+    #paneltop {
+        background-color: rgb(240, 240, 240);
+        border: 0px solid;
+        border-color: black;
+        width: 60%;
+    }
+    #panelbig {
+      background-color: rgb(221,221,221);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        border: 0px solid;
+        border-color: black;
+        width: 60%;
+    }
+    body {
+        background-color: rgb(240, 240, 240);
+    }
+    #signup:hover {
+        background-color: black;
+        color: white;
+    }
+    #signin:hover {
+        background-color: black;
+        color: white;
+    }
+    #signup {
+        background-color: white;
+        color: black;
+    }
+    #signin {
+        background-color: white;
+        color: black;
+    }
+    .jumbotron {
+        background-color: white;
+    }
+    #loginscreen {
+        display: none;
+    }
+    #somethingWrong {
+        display: none;
+    }
+    #submit {
+        display: none;
+    }
+    #name {
+        display: none;
+    }
+    #variable {
+        display: none;
+    }
+    .form-control {
+        border-radius: 20px;
+    }
+    #logout {
+        display: none;
+    }
+    #yesuser {
+        display: none;
+    }
+    #nouser {
+        display: none;
+    }
+    .dropdown-menu {
+        background-color: white;
+    }
+    #form {
+        background-color: gray;
+    }
+    .sidebar {
+        background-color: gray;
+    }
+    #sidebar-wrapper {
+        background-color: rgb(213, 213, 213);
+        color: black;
+    }
+    .sidebar-brand {
+        color: red;
+    }
+    #search {
+        font-size: 12pt
+    }
+    a {
+        color: black;
+    }
+    a:hover {
+        color: blue;
+        text-decoration: underline;
+    }
+    .top-button {} #map_canvas {
         width: 500px;
         height: 400px;
-      }
-.btn-primary{
-  color:black;
-}
-</style>
+    }
+    .btn-primary {
+        color: black;
+    }
+    </style>
+
 </head>
 
-
-        <title>{% block title %}Zing{% endblock %}</title>
+<title>{% block title %}Zing{% endblock %}</title>
 
 <body>
 
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-  
- 
-      <div id = "createAnAccount" class="modal-body">
-      <div id = "panela" class="panel panel-default">
-  <div class="panel-body">
-  <div id = "panelb" class="panel panel-default">
-  <div class="panel-body">
-    <div id = "panelcmodal"class="panel panel-default">
-  <div class="panel-body">
-   <div id= "jumbo"class="jumbotron">
-<form class= "form-inline" role="form">
-
-
-<h1>Sign up </h1>
-<p> Zing is a free resource for actors, critics, theatergoers and producers, login using facebook
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-, or enter your information and create an account below</p>
-  <div class="form-group">
-  <input  type="text" id = "first"class="form-control" placeholder="First Name">
-          </div>
-          <div class="form-group">
-  <input  type="text" id = "last"class="form-control" placeholder="Last Name">
-          </div>
- <div class="form-group">
- <input  margin-bottom = "0px" margin-top = "0px"type="password" id = "password" class="form-control" placeholder="Password">
-</div>
-  <div class="form-group">
-  <input  type="password" id = "confPassword" class="form-control" placeholder="Confirm">
-</div>
-  <div class="form-group">
-  <input  type="text" id = "email" class="form-control" placeholder="Email">
-</div>
-
-
-<br>
-<br>
- <a style = "margin-left: 0%; background-color: black; color: white"id = "createbutton" class="btn btn-default" href="#createAccount" >Create My Account</a>
- 
-
-            
-            </form>
-     
 
 
 
 
 
-<div id="status">
-</div>
+    <div class="row">
+        <div id="panelbig" style="width: 100%" class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div id="logopanel" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#home">
+                                <img src="static/zingheadernew.png" alt="..." class="img-thumbnail">
+                            </a>
+                        </div>
+                    </div>
+                    <div id="panela" class="panel panel-default">
+                        <div class="panel-body" style="background-color:white">
+                            <div id="panelsearch" style="width: 100%; margin-left:0%;" class="panel panel-default">
+                                <div class="panel-body">
+                                    <input type="text" style="text-align: center;width: 100%" id="rate" class="form-control" placeholder="Find a show" autocomplete="on">
+                                    <span class="glyphicon glyphicon-search"></span>
+
+
+                                </div>
+                            </div>
+                           
+                                    <div style="background-color:white" id="panelc3" class="panel panel-default">
+                                        <div class="panel-body">
+                                        </div>
+                                    </div>
+                              
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-7 col-md-7 col-sm-7">
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+
+                            <span class="btn-group" style="text-align: center; width: 100%  " data-toggle="buttons">
+                                <label class="btn btn-primary " style="border-radius: 0px; width: 20%; background-color: white; border-color:black">
+                                    <input id="toprated" type="radio" name="topbuttons" style="background-color:#e06666" value="Top Rated" checked>Top Rated
+                                </label>
+
+                                <label class="btn btn-primary" style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
+                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="This Week">This Week
+                                </label>
+                                <label class="btn btn-primary " style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
+                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="Editor's Picks">Picks
+                                </label>
+
+                                <label class="btn btn-primary" style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
+                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="Trending">Trending
+                                </label>
+
+                                <label class="btn btn-primary" style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
+                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="Tonight">Tonight
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <div id="panelcenter" style="background-color: white" class="panel panel-default">
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-lg-2 col-md-2 col-sm-2">
+
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body" id="panelheaderuser">
+
+
+
+                            {%if useron == "none"%}
+                            <a href="#login">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span id="user">Login</span>
+                                </button>
+                            </a>
+                            {%else%}
+                            <div class="dropdown">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span id="user">Login</span>
+
+                                    <span id="user">{{useron}}</span>
+
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li><a href="#logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {%endif%}
+
+                        </div>
+                    </div>
+
+
+
+                    <div id="panel" class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="panelb" class="panel panel-default">
+                                <div class="panel-body">
+                                    <div id="panelc2" class="panel panel-default">
+                                        <div class="panel-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#about" class="btn btn-default btn-sm " type="button">
+
+                                <span class="glyphicon glyphicon-pencil"></span>About Us / Contact
+                            </a>
+                        </div>
+                    </div>
+                    {%if adminPrivileges%}
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#editpage" class="btn btn-default btn-sm " type="button">
+
+                                <span class="glyphicon glyphicon-pencil"></span>Edit Page
+                            </a>
+                        </div>
+                    </div>
+                    {%endif%}
+
+                </div>
             </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-</div>
-</div>  
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id = "submitreview" class="btn btn-primary" data-dismiss="modal">Submit Review</button>
-      </div>
+        </div>
     </div>
-  </div>
-</div>
-</div>
-
-
-<div id = "panelbig" style = "width: 100%; background-color: white"class="panel panel-default">
-  <div class="panel-body">
-
-<div class = "row">
-<div id = "paneltop" style = "width: 100%; background-color: gray"class="panel panel-default">
-  <div class="panel-body">
-<div class = "col-lg-3 col-md-3 col-sm-3">
-  <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <a href = "#home" ><img src="static/zingheadernew.png" alt="..." class="img-thumbnail"></a>
-  </div>
-  </div>
-  <div id = "panela" class="panel panel-default">
-  <div class="panel-body" style="background-color:white">
-  <div id = "panelb" class="panel panel-default">
- 
-          <div class="panel-body">
-          <div style = "background-color:white" id = "panelc3"class="panel panel-default">
-              <div class="panel-body">
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-  
-
- <div class = "col-lg-6 col-md-6 col-sm-6">
- <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <div class="btn-group" style = "text-align: center; width: 100%  "data-toggle="buttons" >
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color: white; border-color:black">
-    <input id = "toprated" type="radio" name="topbuttons" style = "background-color:#e06666"value="Top Rated" checked> Top Rated
-  </label>
-  
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
-    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="This Week"> This Week
-  </label>
-  <label class="btn btn-primary " style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
-    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Editor's Picks" > Picks
-  </label>
-  
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
-    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Trending"> Trending
-  </label>
- 
-  <label class="btn btn-primary" style = "border-radius: 0px; width: 20%; background-color:white; border-color:black">
-    <input type="radio" name="topbuttons" style = "background-color:#e06666" value="Tonight"> Tonight
-  </label>
-
-
-</div>
-<form class="form-inline" role="form" style = "width: 100%">
-<div class="form-group">
-<div id = "panela" style = "background-color:white; border-color:black; border-radius: 0px; opacity: 0.8" class="panel panel-default">
- 
-          <div class="panel-body">
-           <a href = "#find"><button type="button" style = "background-color: white; color: black" id = "find" class="btn" >Find</button></a>
-  <input  type="text" style = "text-align: center; margin-left: 0%;width: 50%"id = "rate" class="form-control" placeholder="Review a show"autocomplete = "on">
- 
-  <a href = "#quickReview" ><button type="button" style = "background-color: white; color: black" id = "modalReview" class="btn btn-primary" >Review</button></a>
-
-  </div>
-  </div>
-          </div>
-          <br>
-          
-  
-</form>
-
-</div>
-</div>
 
 
 
@@ -512,101 +602,20 @@ a:hover{
 
 
 
- 
-
-        <div id = "panelb" class="panel panel-default">
- 
-          <div class="panel-body">
-            <div id = "panelc" style = "background-color: white"class="panel panel-default">
-              <div class="panel-body">
-             
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-  
-<div class = "col-lg-3 col-md-3 col-sm-3">
-
- <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body" id = "panelheaderuser">
-          
- 
-     
- {%if useron == "none"%}
-   <a href = "#login"><button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-      <span class = "glyphicon glyphicon-user"></span>
-     <span id = "user" >  Login</span>
-</button></a>
- {%else%}
-<div class="dropdown">
-   <button class="btn btn-default btn-sm dropdown-toggle"  type="button" data-toggle="dropdown">
-     <span class = "glyphicon glyphicon-user"></span>
-     <span id = "user" >  Login</span>
-  
-<span id = "user" >  {{useron}}</span>
-
- <span class="caret"></span>
- </button>
-<ul class="dropdown-menu" role="menu">
-  
-    <li><a href="#logout">Logout</a></li>
-  </ul>
-  </div>
- {%endif%}
- 
- </div>
- </div>
 
 
+    {% block sources %}
 
-<div id = "panel" class="panel panel-default">
-  <div class="panel-body">
- <div id = "panelb" class="panel panel-default">
-          <div class="panel-body">
-            <div id = "panelc2"class="panel panel-default">
-              <div class = "panel-body">
-              </div>
-            </div>
-          </div>
-        </div>
-</div>
-
-</div>
-
-  
-
-
-
- <div id = "panelheader" style = "width: 100%"class="panel panel-default">
-  <div class="panel-body">
-  <button href = "#about" class="btn btn-default btn-sm " type="button" >
-
-  <span class="glyphicon glyphicon-pencil"></span>    About Us / Contact
-</button>
-</div>
-</div>
-</div>
-</div>
-   
-
-
-<div id="venuel" ></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/jquery.ba-hashchange.min.js"></script>
+    <script src="static/jQuery-File-Upload-9.8.0/js/vendor/jquery.ui.widget.js"></script>
+    <script src="static/jQuery-File-Upload-9.8.0/js/jquery.iframe-transport.js"></script>
+    <script src="static/jQuery-File-Upload-9.8.0/js/jquery.fileupload.js"></script>
+    <script src="static/homepage.js"></script>
 
 
 
 
-
-
-{% block sources %}
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/jquery.ba-hashchange.min.js"></script>
-<script src="static/homepage.js"></script>
-
-
- 
-{% endblock %}
+    {% endblock %}
 </body>

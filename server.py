@@ -28,6 +28,7 @@ sys.setdefaultencoding("utf-8")
 
 
 import connectionBoiler
+
 conn = connectionBoiler.get_conn()
 
 app = Flask(__name__)
@@ -51,26 +52,112 @@ def convertDate(date):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # import starsbackground
+    # starsbackground.go()
     if 'username' in session:
         
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from KarlUsers2 where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
         print name
-        return render_template('layout.html', useron=name)
+        print session['username'];
+        c.execute("SELECT id from admin where userid = %s",(session['username'],));
+        adminID = c.fetchall();
+        if len(adminID)>0:
+              return render_template('layout.html', useron=name, adminPrivileges=True)
+        return render_template('layout.html', useron=name, adminPrivileges=False)
     print 'kkkkk'
-    return render_template('layout.html', useron = 'none')
+    return render_template('layout.html', useron = 'none', adminPrivileges=False)
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  featuredids = [876,877,878,879,880,881,882,883,884,885,886,887]
-  c.execute("SELECT name,id from Fringeshows where id>875 and id <888")
-  featured = c.fetchall()
-  print featured
-  return render_template("todayscontent.html", featured = featured)
+  c.execute("SELECT * from posts ORDER BY id DESC")
+  blog = c.fetchall()
+  
+  for post in blog:
+    filename = post['article']
+    text = open('static/Posts/'+filename, 'r')
+    a = text.read()
+    if len(a)>100:
+      post['article'] = Markup(a[:100])
+    else:
+      post['article'] = Markup(a)
+    text.close()
+  print blog
+  return render_template("newHomepage.html", blog = blog)
 ###returns text for username not found
 
+@app.route('/post', methods=['GET', 'POST'])
+def post():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  articleid = request.args.get('id')
+  c.execute("SELECT * from posts where id = %s", (articleid,))
+  article = c.fetchall()
+  print article
+  article = article[0]
+  
+  
+  filename = article['article']
+  text = open('static/Posts/'+filename, 'r')
+  a = text.read()
+  article['article'] = Markup(a)
+  text.close()
+  print article
+  return render_template("post.html", article = article)
+###returns text for username not found
+
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+  return render_template("editor.html")
+
+
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+  return render_template("about.html")
+
+@app.route('/photo', methods=[ 'POST'])
+def photo():
+    try:
+       
+        files = request.files
+        print files
+
+        uploaded_files = _handleUpload(files)
+
+        return jsonify({'files': uploaded_files})
+    except:
+        raise
+        return jsonify({'status': 'error'})
+
+UPLOAD_FOLDER = 'static/images/'
+ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+
+
+def allowed_file(filename):
+  extension = filename[filename.find('.')+1:]
+  print extension
+  allowed = False
+  for exts in ALLOWED_EXTENSIONS:
+    if extension == exts:
+      allowed = True
+  return allowed
+
+
+def _handleUpload(files):
+    if not files:
+       return None
+    filenames = []
+    saved_files_urls = []
+    for key, file in files.iteritems():
+        if file and allowed_file(file.filename):
+            filename = file.filename
+            print os.path.join(UPLOAD_FOLDER, filename)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            filenames.append("%s" % (file.filename))
+            
+
+    return filenames
 
 @app.route('/usernameNotFound', methods=['GET', 'POST'])
 def usernameNotFound():
@@ -98,6 +185,34 @@ def signin():
     session['username'] = userid
     return render_template("todayscontent.html", useron = data[0]['first'])
   return "Incorrect Password"
+
+@app.route('/contentPost')
+def contentPost():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  title = request.args.get('title')
+  author = request.args.get('author')
+  article = request.args.get('article')
+  tags = json.loads(request.args.get('tags'))
+  photo = request.args.get('photo')
+  filepath = str(title)+str(author)+'.txt'
+  newReview = open('static/Posts/' + filepath, 'w')
+  newReview.write(article)
+  newReview.close()
+  c.execute("""INSERT INTO Posts(author, userid,title,article,pic) 
+            VALUES(%s,%s,%s,%s,%s) RETURNING id""", (author, session['username'], title, filepath, photo))
+  articleid = c.fetchall()[0]['id'];
+  conn.commit()
+  for tag in tags:
+    c.execute("SELECT id from Fringeshows where name = %s", (tag,))
+    showid = c.fetchall()[0]['id']
+    c.execute("INSERT INTO article_tags(articleid, showid) VALUES(%s,%s)", (articleid, showid))
+  conn.commit()
+  return "aok"
+
+
+
+
+
 
 #### this takes automatic facebook login and uses it to automatically log the user into zing session
 @app.route('/login', methods=['GET', 'POST'])

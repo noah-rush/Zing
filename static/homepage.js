@@ -865,7 +865,8 @@ function profile(){
 
 function autocomp(){
 	
-	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows'});
+	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){find()}});
+    $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
 }; 
 
 function facebook(){
@@ -1094,7 +1095,7 @@ function login_func(){
 	});
 }
 function login_display(data){
-	$("#panelc").find('.panel-body').html(data);
+	$("#panelcenter").find('.panel-body').html(data);
 }
 
 // function create_Account(){
@@ -1170,7 +1171,9 @@ function display_venues(data){
 };
 
 function display_show(data){
-	$("#panelc").find('.panel-body').html(data);
+	$("#panelcenter").find('.panel-body').html(data);
+
+
 	 var initRating = $("#startRating").text();
  $(".total-star-rating i").css("width", initRating +"%");
  $("input[name='stars']").change(function(){
@@ -1180,9 +1183,6 @@ function display_show(data){
  $(".good").click(function(){
 	console.log(this.value)
 });
-if(quickReview){
-    $('#myModal').modal('show');
-};
 quickReview = false;
 };
 function display_venue(data){
@@ -1274,7 +1274,9 @@ function yelpresults(data){
 }
 function find(){
     data = $('#rate').val();
+    $('#rate').val("");
     console.log(data);
+    window.location.hash = data;
     $.ajax({
         url: '/show',
         data: {
@@ -1282,6 +1284,49 @@ function find(){
         },
         success: display_show
     })
+}
+function post(data){
+    id = data
+    window.location.hash = data;
+    $.ajax({
+        url: '/post',
+        data: {
+            id: id
+        },
+        success: show_container
+    })
+}
+
+function publish(){
+  var article = CKEDITOR.instances.editor1.getData();
+  var title = $('#post-title').val();
+  var author = $('#post-author').val();
+  var tags = $('.tag-drop');
+  var photo = $('#photopath').val();
+  console.log(article);
+  console.log(title);
+  console.log(author);
+  console.log(photo);
+  finalTags = []
+  for(i = 0; i<tags[0].children.length; i++){
+    console.log(tags[0])
+    finalTags.push(tags[0]['children'][i]['firstChild']['textContent'])
+    console.log(finalTags)
+  }
+  console.log(finalTags)
+  var column = $('#addphoto').parent();
+  column[0].children[0]['innerText'] = "Update";
+  column[0].children[0]['href'] = "#update";
+  finalTags = JSON.stringify(finalTags)
+  $.ajax({
+    url: "/contentPost",
+    data: {title: title,
+        tags: finalTags,
+           author: author,
+           photo: photo,
+            article: article}
+  })
+
 }
 
 function show(data){
@@ -1338,6 +1383,12 @@ function homepage(){
 		url:"/home"
 	})
 }
+function open_editor(){
+    $.ajax({
+        success: show_editor,
+        url:"/edit"
+    })
+}
 
 function inputs(){
     $("input[name='topbuttons']").change(function() {
@@ -1359,7 +1410,51 @@ function inputs(){
 });
 };
 function show_container(data){
-	$("#panelc").find('.panel-body').html(data);
+	$("#panelcenter").find('.panel-body').html(data);
+  
+    
+}
+function show_editor(data){
+    $("#panelcenter").find('.panel-body').html(data);
+    autocomp();
+    CKEDITOR.replace( 'editor1' );
+    $('#addtag').on('click', function(e){
+        $('.tag-drop').append('<span>' + $('#addtags').val() + '<a class = "close">x</a></span>');
+        $('.close').on('click', function(e){
+      e.currentTarget.parentElement.remove();
+    }
+    )
+    }
+    )
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                console.log(file)
+                $('#photopath').val(file);
+                $('.modal-body').html( '<img src = "static/images/' + file + '" width = "100%">');
+                $('.modal-header').html( file);
+                $("#imageModal").modal('show');
+                var column = $("#addphoto").parent()
+                column.append('<br><br><a data-toggle="modal" data-target="#imageModal" class = "btn btn-info">View Photo</a>')
+                $('#addphoto').text("Change Photo")
+               
+            });
+        }
+    }
+    )
+    $('#addphoto').on('click', function(e){
+        console.log(e)
+        $('#fileupload').trigger('click');
+    });
+
+}
+
+function about(){
+   $.ajax({
+    url: "/about",
+    success: show_container
+   })
 }
 
 function show_password(data){
@@ -1391,7 +1486,22 @@ function fbsignup(){
 	});
 }
 
-
+function trackScrolling(){
+    $( window ).scroll(function(e) {
+        console.log(e.currentTarget['scrollY'])
+        if(parseInt(e.currentTarget['scrollY'])>218){
+            $('#panela').css({
+                "position":"fixed",
+                "top": "0"
+            })
+        }else{
+            $('#panela').css({
+                "position":"relative",
+                "top": "0"
+            })
+        }
+    })
+}
 function submit_review(){
 
 	var goods = [];
@@ -1462,6 +1572,11 @@ $(window).hashchange( function test(){
 		console.log(hash.substring(7));
 		venue(hash.substring(7));
 	}
+    if(hash.substring(0,5) == "#post")
+    {
+        console.log(hash.substring(5));
+        post(hash.substring(5));
+    }
 	console.log(hash);
 	switch(hash){
 	case "#venues":
@@ -1509,6 +1624,23 @@ $(window).hashchange( function test(){
     case "#fullschedule":
         full_schedule()
         break;
+    case "#editpage":
+    open_editor();
+        
+        break;
+    case "#publish":
+    publish();
+        
+        break;
+    case "#update":
+    publish();
+        
+        break;
+    case "#about":
+    about();
+    break;
+    
+ 
 
 
 
@@ -1540,6 +1672,7 @@ $(window).hashchange();
  console.log('here');
   facebook();
 autocomp();
+trackScrolling();
 // $("#venues").on("click", show_venues);
 // $("#NowPlaying").on( "click", show_nowPlaying);
 }

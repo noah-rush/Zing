@@ -1,0 +1,21 @@
+
+
+
+{%for article in blog%}
+
+<div id = "panelc" style = "background-color: white"class="panel panel-default">
+<div class="panel-body">
+<div class = "row">
+<div class ="col-md-12 blog-picture">
+<h1>{{article['title']}}</h1>
+<a href = "#post{{article['id']}}"><img class = "homepage-image" src = "static/images/{{article['pic']}}"></a>
+</div>
+<div class = "col-md-12">
+{{article['article']}}
+<a href = "#post{{article['id']}}"> Read More</a>
+</div>
+</div>
+</div>
+</div>
+{%endfor%}
+

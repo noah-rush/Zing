@@ -1,0 +1,55 @@
+ <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+   
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="modal-body">
+   
+       
+   
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+ <form>
+ 			<div class = "row">
+ 			<div class = "col-md-8">
+ 			<input  type="text"  style = "width: 100%" id = "post-title"class="form-control" placeholder="Title">
+ 			<br>
+ 			<input  type="text"  style = "width: 100%" id = "post-author"class="form-control" placeholder="Author">
+ 			<br>
+ 			<input  type="text" id = "addtags" class="form-control" placeholder="Type a show" autocomplete = "on">
+ 			<br>
+ 			<input  type="text" id = "photopath" class="form-control" placeholder="Add a photo -->" autocomplete = "on">
+ 			<br>
+ 			<div class = "tag-drop">
+ 			 </div>
+ 			<input id="fileupload" type="file" style = "display:none"name="files[]" data-url="/photo" >
+</div>
+ 			<div class = "col-md-4">
+ 			<a href = "#publish" style = "width = 100%" class = "btn btn-success">Publish</a>
+ 			<br>
+ 			<br>
+ 			 <a href = "#update" style = "width = 100%" class = "btn btn-success">View all Posts</a>
+ 			 <br>
+ 			 <br>
+ 			 <a id = "addtag" style = "width = 100%" class = "btn btn-success">Add Tag</a>
+ 			 <br>
+ 			 <br>
+ 			 <a id = "addphoto"  style = "width = 100%" class = "btn btn-success">Add Photo</a>
+ 			</div>
+ 			</div>
+ 			<br>
+ 			 <br>
+ 			 
+			
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+            <script>
+            </script>
+        </form>
