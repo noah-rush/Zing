@@ -811,6 +811,99 @@
 }));
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////END OF AUTOCOMPLETE PLUGIN
+
+
+
+
+
+
 var stars;
 
 function getnowplaying(){
@@ -852,7 +945,7 @@ function display_all_shows(data){
     $("#panelc").find('.panel-body').html(data);
 }
 function display_full_schedule(data){
-    $("#panelc").find('.panel-body').html(data);
+    $("#panelcenter").find('.panel-body').html(data);
 }
 
 function profile(){
@@ -869,6 +962,13 @@ function autocomp(){
     $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
 }; 
 
+function newUserAuthorize(){
+    console.log($("#user").text());
+    if($("#user").text() ==  "Login"){
+     $("#loginModal").modal('show');
+    }
+}
+
 function facebook(){
 	 function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -882,12 +982,10 @@ function facebook(){
       testAPI();
       
     } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
+      newUserAuthorize();
       
     } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      
+      newUserAuthorize(); 
 
     }
   }
@@ -943,8 +1041,8 @@ FB.getLoginStatus(function(response) {
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-    console.log(JSON.stringify(response));
+        console.log('Successful login for: ' + response.name);
+        console.log(JSON.stringify(response));
         var check = $("#panelheaderuser");
         check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\">\<li><a href=\"#\">Profile</a></li>\ <li><a href=\"#\">Account Settings</a></li>\  <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
         var name = response.first_name;
@@ -996,13 +1094,13 @@ function do_stuff() {
 }
 function signup(){
 	
-  var lastname = $("#newlast").val();
+    var lastname = $("#newlast").val();
 	var firstname = $("#newfirst").val();
 	var email = $("#newemail").val();
 	var password = $("#newpassword").val();
 	console.log(lastname, firstname, email, password);
 	 $.ajax({
-		url: "/facebookcreate",
+		url: "/zingnewuser",
 		data: {
 			email:  email,
 			firstname: firstname,
@@ -1186,18 +1284,19 @@ function display_show(data){
 quickReview = false;
 };
 function display_venue(data){
-	$("#panelc").find('.panel-body').html(data);
+	$("#panelcenter").find('.panel-body').html(data);
 	var address = $("#address").text();
-	console.log(address)
-	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
-	  $.ajax({
-  	url: urlsearch,
-  	success: initialize
-  })
+    console.log(data);
+	console.log(address);
+	// var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
+	//   $.ajax({
+ //  	url: urlsearch,
+ //  	success: initialize
+ //  })
 
 }
 
-var map
+    var map
  function initialize(data) {
     var map_canvas = document.getElementById('map_canvas');
     var lat = data.results[0]['geometry']['location']['lat'];
@@ -1360,8 +1459,8 @@ function display_nowPlaying(data){
 };
 function facebookLogin(){
 	 FB.login(function(response) {
-   console.log(response);
-   console.log(response.email);
+   console.log(response.status);
+   
 FB.api('/me', function(response) {
 	name = response.first_name;
       $.ajax({
@@ -1391,21 +1490,28 @@ function open_editor(){
 }
 
 function inputs(){
+    $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
     $("input[name='topbuttons']").change(function() {
     console.log($('input[name="topbuttons"]:checked').val());
     $("input[name='topbuttons']").each(function(){
     if(this.checked) {
     lastchecked.checked = false;
     console.log($("input[name='topbuttons']:checked").val());
+    if($("input[name='topbuttons']:checked").val() == "Top Rated"){
+        $.ajax({
+            url: "/toprated",
+            success: displaycomingsoon
+     })
+    }
+    if($("input[name='topbuttons']:checked").val() == "This Week"){
+       getcomingsoon();
+    }
      $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
     var but = $( "input[name='topbuttons']:checked").closest("label");
     but.css("background-color", "red");
     lastchecked.css("background-color", "white");
     lastchecked = but;
     }
-    
-    
-
 })
 });
 };
@@ -1458,33 +1564,67 @@ function about(){
 }
 
 function show_password(data){
-	$("#panelc").find('.panel-body').html(data);
-	if(data.indexOf("placeholder=\"Password\"")==-1){
-		  var check = $("#panelheaderuser");
-        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\">\<li><a href=\"#\">Profile</a></li>\ <li><a href=\"#\">Account Settings</a></li>\  <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
-        
-          $("#user").text(" " + name + " ");
-	}
-}
-var name
-function fbsignup(){
-	var lastname = $("#lastname").text();
-	var firstname = $("#firstname").text();
-	var email = $("#fbemail").val();
-	var password = $("#fbpassword").val();
-	console.log(lastname, firstname, email, password)
+    console.log(data);
+    
+    if(data[0] == "U"){
+        $('#user').text(" " + data.substring(10));
+        $("#loginModal").modal('hide');
 
-	 $.ajax({
-		url: "/facebookcreate",
-		data: {
-			email:  email,
-			firstname: firstname,
-			lastname: lastname,
-			password: password
-		},
-		success: show_password
-	});
+    }
+     if(data[0] == "P"){
+       $('#somethingWrong').html('Please Login with Facebook');
+       $('#somethingWrong').css({"color" : "red"});
+       $('#somethingWrong').show()
+
+    }
+    if(data[0] == "E"){
+       
+        $('#somethingWrong').html('An account with that email already exists. <br> Please <a id = "signinfrommodal">sign in </a> or use a different email.')
+        $('#somethingWrong').css({"color" : "red"});
+        $('#somethingWrong').show()
+        $("#signinfrommodal").on("click", function(e){
+            $("#loginModal").find("#paneltext").html("\
+                <div id = \"somethingWrong\" style = \"display: none\"></div>\
+                <br>\
+                <h2 > Sign in to Zing</h2>\
+                <br>\
+                <a style = \"background-color: #3B5998; color: white; \"  class=\"btn btn-default\" href=\"#facebookLogin\" >Sign in with Facebook</a>\
+                <br>\
+                <br>\
+                <form class = \"form-inline\" role = \"form\" >\
+                <div class=\"form-group\" style = \"width: 37.5%\">\
+                  <input  type=\"text\"  style = \"width: 100%\" id = \"loginEmail\"class=\"form-control\" placeholder=\"Email\">\
+                          </div>\
+                          <div class=\"form-group\" style = \"width: 37.5%\">\
+                  <input  type=\"password\" style = \"width: 100%\" id = \"loginPassword\" class=\"form-control\" placeholder=\"Password\">\
+                          </div>\
+                          <br>\
+                           <div class=\"form-group\"style = \"width: 75%\"> \
+                </div>\
+                <br>\
+                <a style = \"margin-bottom: 5%\"  id = \"signin2\" class=\"btn btn-default\" href=\"#signin\" >Sign in</a>\
+                </form>\
+                </div>\
+                </div>\
+                ");
+
+        })
+
+    }
+    if(data[0] == "I"){
+        $('#somethingWrong').html('Incorrect Password. Try Again')
+        $('#somethingWrong').css({"color" : "red"});
+        $('#somethingWrong').show()
+    }
+    if(data[0] == "N"){
+        $('#user').text(" " + data.substring(16));
+        $("#loginModal").find("#paneltext").html('usersurvey.html');
+        $("#loginModal").modal('show');
+    }	
 }
+
+
+var name
 
 function trackScrolling(){
     $( window ).scroll(function(e) {
@@ -1492,12 +1632,14 @@ function trackScrolling(){
         if(parseInt(e.currentTarget['scrollY'])>218){
             $('#panela').css({
                 "position":"fixed",
-                "top": "0"
+                "top": "0",
+                "width":"23%"
             })
         }else{
             $('#panela').css({
                 "position":"relative",
-                "top": "0"
+                "top": "0",
+                "width":"100%"
             })
         }
     })
@@ -1593,9 +1735,6 @@ $(window).hashchange( function test(){
 		break;
 	case "#signup":
 		signup();
-		break;
-	case "#fbsignup":
-		fbsignup();
 		break;
 	case "#logout":
 		logout();

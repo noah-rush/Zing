@@ -67,7 +67,13 @@
 <div id = "paneltext"class="panel panel-default">
 <div class = "panel-body" style = "background-color: gray">
 
-{% for date in dates %}
+
+{%for result in results%} 
+<a  class = "list-group-item" href = "#show/{{result['name']}}"> {{result['name']}}<span style = "float:right">{{result['start']}} - {{result['enddate']}}</a>
+
+{%endfor%}
+
+<!-- {% for date in dates %}
 <div class = "row">
 <div class = "col-md-8">
 <h2 style = "font-size: 14pt"><b><i>{{date}}</b></i> </h2>
@@ -114,3 +120,4 @@
 </div>
 
 
+ -->

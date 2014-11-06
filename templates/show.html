@@ -75,7 +75,7 @@ body {
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <div class="modal-body">
-        <img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%">
+        <img src = "static/Zingimages/{{showdata['id']}}.jpg" width = "100%">
       </div>
     </div>
   </div>
@@ -208,71 +208,28 @@ body {
         <div class = "panel-body">
         <div class = "row">
         <br>
-        <div class = "col-md-8 " style "text-align: center">
+        <div class = "col-md-7 " style "text-align: center">
         <a  data-toggle="modal" data-target="#imageModal" >
-        <img src = "static/Fringeimages/{{showdata['id']}}.jpg" width = "100%"></a>
-        <br>
-        <br>
-        {% if venue[0] is defined %}
-        Playing at - <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
-        {% endif %}
+        <img src = "static/Zingimages/{{showdata['id']}}.jpg" width = "100%"></a>
+  
 
-<br>
-<br>
-<p>{{description}}</p>
 
 <div style = "text-align: center">
 <br>
-{%if articles|length > 0%}
-<b>Outside Reviews</b>
-<br>
-<br>
-{% for article in articles %}
 
-<a href = "{{article['link']}}">{{article['title']}}</a>
-<br>
-{%endfor %}
-{%endif%}
 </div>
 </div>
-<div class = "col-md-4 border-left" style = "border-bottom: 2px dashed #aaa; 
+<div class = "col-md-5 border-left" style = "border-bottom: 2px dashed #aaa; 
 border-top: 2px dashed #aaa; text-align: center">
-Get Tickets
-<table>
-<tr>
-{% for date in dates %}
-<td>
-<a href = {{date['ticketlink']}}>{{date['playingdate']}} -- {{date['timeofshow']}}</a>
-</td>
-</tr>
-{%endfor %}
-</table>
-<br>
 
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<br>
-{% for cast in cast%}
-{{cast['role']}} -- <a href = "/person/{{cast['actorname']}}"> {{cast['actorname']}}</a>
-<br>
-{%endfor %}
-<br>
-
-
-
-
-
+{{headerDescription}}
+ {% if venue[0] is defined %}
+ <br>
+        at the <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
+        {% endif %}
+        <p>{{description}}</p>
+        <div class = "row">
+<div class = "col-md-6">
 <div style = "color: green">
 {% for adjective in goodadjectives %}
 {{adjective['count']}} 
@@ -301,10 +258,8 @@ found this
 <br>
 {%endfor %}
 </div>
-
-
-
-<br>
+</div>
+<div class = "col-md-6">
 <ul class="list-group">
 {% for review in userreviews %}
 <li class="list-group-item" style = "text-align: center"><p>
@@ -318,11 +273,45 @@ found this
 </span>
 <br>
 {{review[0]}}</p></li>
+{%endfor %}
+</ul>
+</div>
+</div>
+        {%if articles|length > 0%}
+<b>Outside Reviews</b>
+<br>
+<br>
+{% for article in articles %}
+
+<a href = "{{article['link']}}">{{article['title']}}</a>
+<br>
+{%endfor %}
+{%endif%}
+<br>
 
 </div>
 
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- <br>
+{% for cast in cast%}
+{{cast['role']}} -- <a href = "/person/{{cast['actorname']}}"> {{cast['actorname']}}</a>
+<br>
 {%endfor %}
-</ul>
+<br> -->
+
+
+
+
 
 
 

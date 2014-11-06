@@ -25,6 +25,9 @@
         padding-right: 0.1;
         white-space: 5px
     }
+    a{
+        cursor:pointer;
+    }
     .panel-default > .panel-heading {
         border-color: #e06666;
         border-width: 4px;
@@ -433,7 +436,46 @@
 
 <body>
 
-
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id = "paneltext" style = "text-align: center"class="panel panel-default">
+            <div id = "somethingWrong" style = "display: none"></div>
+                <br>
+                <h2 > Sign up for Zing</h2>
+                <br>
+                <a style = "background-color: #3B5998; color: white; "  id = "signin2" class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
+                <br>    
+                Don't worry, we never post without your permission.
+                <br>
+                <p> or create an account </p>
+                <br>
+                <form class = "form-inline" role = "form" >
+                    <div class="form-group" style = "width: 37.5%">
+                        <input  type="text"  style = "width: 100%" id = "newfirst"class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group" style = "width: 37.5%">
+                        <input  type="text" style = "width: 100%" id = "newlast"class="form-control" placeholder="Last Name">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 75%"> 
+                        <input style = "width: 100%" type="text" id = "newemail" class="form-control" placeholder="Email">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 75%" >
+                        <input style = "width: 100%" margin-bottom = "0px" margin-top = "0px"type="password" id = "newpassword" class="form-control" placeholder="Password">
+                    </div>
+                    <br>
+                    <br>
+                    <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signup" >Sign up</a>
+                </form>
+        </div>
+    </div>
+</div>
+      </div>
+    </div>
+ 
 
 
 
@@ -479,8 +521,8 @@
                                     <input id="toprated" type="radio" name="topbuttons" style="background-color:#e06666" value="Top Rated" checked>Top Rated
                                 </label>
 
-                                <label class="btn btn-primary" style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
-                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="This Week">This Week
+                                <label class="btn btn-primary" style="border-radius: 0px; width: 20%; background-color:white; border-color:black;">
+                                    <input type="radio" name="topbuttons" style="background-color:#e06666" value="This Week" >This Week
                                 </label>
                                 <label class="btn btn-primary " style="border-radius: 0px; width: 20%; background-color:white; border-color:black">
                                     <input type="radio" name="topbuttons" style="background-color:#e06666" value="Editor's Picks">Picks
@@ -535,7 +577,7 @@
                             <div class="dropdown">
                                 <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon-user"></span>
-                                    <span id="user">Login</span>
+                                    
 
                                     <span id="user">{{useron}}</span>
 
@@ -576,7 +618,7 @@
                         <div class="panel-body">
                             <a href="#about" class="btn btn-default btn-sm " type="button">
 
-                                <span class="glyphicon glyphicon-pencil"></span>About Us / Contact
+                                <span class="glyphicon glyphicon-pencil"></span> About Us / Contact
                             </a>
                         </div>
                     </div>
