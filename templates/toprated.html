@@ -64,6 +64,7 @@
 </div>
 {% for result in results %}
 {%if loop.index<10%}
+<div class = "this-week page1">
 <a  class = "list-group-item" href = "#show/{{result['name']}}"> {{result['name']}}
 
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
@@ -74,11 +75,58 @@
   <input type="radio" name="rating" value="5"><i></i>
 </span>
 </a>
+</div>
+{%endif%}
+{%if loop.index>10 and loop.index<20%}
+<div style = "display:none;" class = "this-week page2">
+<a  class = "list-group-item" href = "#show/{{result['name']}}"> {{result['name']}}
+
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+</a>
+<div>
+{%endif%}
+{%if loop.index>20 and loop.index<30%}
+<div style = "display:none;" class = "this-week page3">
+<a  class = "list-group-item" href = "#show/{{result['name']}}"> {{result['name']}}
+
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+</a>
+</div}>
+{%endif%}
+{%if loop.index>30 and loop.index<40%}
+<div style = "display:none;" class = "this-week page4">
+<a  class = "list-group-item" href = "#show/{{result['name']}}"> {{result['name']}}
+
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+</a>
+</div>
 {%endif%}
 {%endfor%}
 </div>
 
-<a href = "#moreShows">more ...</a>
+</div>
+<div class = "page-turn-links">
+<a href = "#page2"   >more ...</a>
+</div>
+
 
 
 

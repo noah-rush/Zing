@@ -1080,6 +1080,10 @@ function displayzingdescript(data){
 function displaycomingsoon(data){
 	
 	$("#panelc3").html(data);
+    console.log($(".page2"));
+    if($(".page2").length == 0){
+        $(".page-turn-links").hide();
+    }
 }
 
 
@@ -1398,6 +1402,7 @@ function post(data){
 
 function publish(){
   var article = CKEDITOR.instances.editor1.getData();
+  var descript = CKEDITOR.instances.editor2.getData();
   var title = $('#post-title').val();
   var author = $('#post-author').val();
   var tags = $('.tag-drop');
@@ -1420,6 +1425,7 @@ function publish(){
   $.ajax({
     url: "/contentPost",
     data: {title: title,
+        descript: descript,
         tags: finalTags,
            author: author,
            photo: photo,
@@ -1508,8 +1514,8 @@ function inputs(){
     }
      $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
     var but = $( "input[name='topbuttons']:checked").closest("label");
-    but.css("background-color", "red");
-    lastchecked.css("background-color", "white");
+    but.addClass("active-radio");
+    lastchecked.removeClass("active-radio");
     lastchecked = but;
     }
 })
@@ -1524,6 +1530,7 @@ function show_editor(data){
     $("#panelcenter").find('.panel-body').html(data);
     autocomp();
     CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'editor2' );
     $('#addtag').on('click', function(e){
         $('.tag-drop').append('<span>' + $('#addtags').val() + '<a class = "close">x</a></span>');
         $('.close').on('click', function(e){
@@ -1694,6 +1701,11 @@ function signin(){
 
 
 
+
+
+
+
+
 function start (){
 	getzingdescript();
 	//getnowplaying();
@@ -1718,6 +1730,28 @@ $(window).hashchange( function test(){
     {
         console.log(hash.substring(5));
         post(hash.substring(5));
+    }
+     if(hash.substring(0,5) == "#page")
+    {
+        page = hash.substring(5);
+        console.log(page)
+        $(".this-week").hide()
+        $(".page" + page).show()
+        nextPage = parseInt(page) + 1
+        prevPage = parseInt(page) - 1
+        console.log(nextPage)
+        console.log($(".page" + nextPage))
+        if($(".page" + nextPage).length > 0){
+            $(".page-turn-links").html('<a href = "#page' + nextPage +'" >more ...</a> ')
+             
+        }else{
+             $(".page-turn-links").html('')
+        }
+        if(prevPage != 0){
+            $(".page-turn-links").append('<a href = "#page' + prevPage +'" >back ...</a> ')
+        }
+
+        
     }
 	console.log(hash);
 	switch(hash){
@@ -1777,6 +1811,9 @@ $(window).hashchange( function test(){
         break;
     case "#about":
     about();
+    break;
+    case "#moreShows":
+        
     break;
     
  

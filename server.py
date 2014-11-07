@@ -92,14 +92,13 @@ def home():
   blog = c.fetchall()
   
   for post in blog:
-    filename = post['article']
-    text = open('static/Posts/'+filename, 'r')
-    a = text.read()
-    if len(a)>100:
-      post['article'] = Markup(a[:100])
-    else:
-      post['article'] = Markup(a)
-    text.close()
+    post['descript'] = Markup(post['descript'])
+    c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
+                 WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
+                 AND ZINGARTICLESHOWTAGS.articleid = %s""", (post['id'],))
+    tags = c.fetchall()
+    post['tags'] = tags
+   
   print blog
   return render_template("newHomepage.html", blog = blog)
 ###returns text for username not found
@@ -112,15 +111,28 @@ def post():
   article = c.fetchall()
   print article
   article = article[0]
-  
+  c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
+                 WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
+                 AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
+  tags = c.fetchall()
+  for tag in tags:
+    c.execute("SELECT name from ZINGVENUES where id = %s", (tag['venueid'],))
+    venue = c.fetchall()[0]['name']
+    tag['venue'] = venue
+  article['tags'] = tags
   
   filename = article['article']
   text = open('static/Posts/'+filename, 'r')
   a = text.read()
+  
   article['article'] = Markup(a)
+  firstparagraph = article['article'][:article['article'].find("</p>")+4]
+  firstparagraph = Markup(firstparagraph)
+  article['article'] = article['article'][article['article'].find("</p>")+4:]
+  article['article'] = Markup(article['article'])
   text.close()
   print article
-  return render_template("post.html", article = article)
+  return render_template("post.html", article = article, firstparagraph = firstparagraph)
 ###returns text for username not found
 
 @app.route('/edit', methods=['GET', 'POST'])
@@ -203,13 +215,14 @@ def contentPost():
   author = request.args.get('author')
   article = request.args.get('article')
   tags = json.loads(request.args.get('tags'))
+  descript = request.args.get('descript')
   photo = request.args.get('photo')
   filepath = str(title)+str(author)+'.txt'
   newReview = open('static/Posts/' + filepath, 'w')
   newReview.write(article)
   newReview.close()
-  c.execute("""INSERT INTO ZINGPOSTS(author, userid,title,article,pic) 
-            VALUES(%s,%s,%s,%s,%s) RETURNING id""", (author, session['username'], title, filepath, photo))
+  c.execute("""INSERT INTO ZINGPOSTS(author, userid,title,article,pic, descript, date) 
+            VALUES(%s,%s,%s,%s,%s, %s, CURRENT_DATE) RETURNING id""", (author, session['username'], title, filepath, photo, descript))
   articleid = c.fetchall()[0]['id'];
   conn.commit()
   for tag in tags:
@@ -411,7 +424,17 @@ def comingsoon():
     results = c.fetchall()
     
 
-    print results
+   
+
+    for result in results:
+      showid = result['id']
+      c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
+      ratings = c.fetchall()
+      rating = ''
+      if len(ratings) > 0:
+        rating = float(ratings[0]['sum'])/float(ratings[0]['count'])
+        rating = convert_to_percent(rating)
+      result["rating"] = rating
 
     # while showcount < 10:
     #   c.execute("""SELECT ZINGSHOWS.name, playing, ticketlink,to_char(playingdate,'Day'), ZINGSHOWS.id from ZINGSHOWS, Fringedates2 where Fringedates2.showid = ZINGSHOWS.id and playingdate = CURRENT_DATE + %s""", (iterator,))
