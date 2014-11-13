@@ -1292,16 +1292,17 @@ function display_venue(data){
 	var address = $("#address").text();
     console.log(data);
 	console.log(address);
-	// var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
-	//   $.ajax({
- //  	url: urlsearch,
- //  	success: initialize
- //  })
+	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
+	  $.ajax({
+  	url: urlsearch,
+  	success: initialize
+  })
 
 }
 
     var map
  function initialize(data) {
+    console.log(data)
     var map_canvas = document.getElementById('map_canvas');
     var lat = data.results[0]['geometry']['location']['lat'];
 	var lng = data.results[0]['geometry']['location']['lng'];
@@ -1349,32 +1350,53 @@ function display_venue(data){
 function yelpresults(data){
 	data = jQuery.parseJSON(data);
 
+    markers = Array();
+    
+
+
+
 	for(i=0; i<data.length; i++){
 		data[i];
 		console.log(data[i]);
 		var myLatlng = new google.maps.LatLng(data[i][1],data[i][2]);
+var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      data[i][3]
+      '</div>';
 	var marker = new google.maps.Marker({
     position: myLatlng,
     map: map,
-    title:data[i][0]
+    html: contentString,
+     animation: google.maps.Animation.DROP,
+    title:data[i][0],
+  
 });
-	var contentString = '<div id="content">'+
+   var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
       '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
       '<div id="bodyContent">'+
       '</div>'+
       '</div>';
+infowindow = new google.maps.InfoWindow({
+    content: "holding..."
+})
 
-  var infowindow = new google.maps.InfoWindow({
-      content: contentString
-  });
-   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.open(map,marker);
-  });
-	marker.setMap(map);
+google.maps.event.addListener(marker, 'click', function(){
+    infowindow.setContent(this.html);
+    infowindow.open(map,this);
+})
+
+
+    markers.push(marker)
 }
+
 }
+
 function find(data){
     console.log(data);
     window.location.hash = data;

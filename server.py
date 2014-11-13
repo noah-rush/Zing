@@ -587,6 +587,7 @@ def yelp():
       address, (latitude, longitude) = geolocator.geocode(displayAddress)
       result.append(latitude)
       result.append(longitude)
+    result.append(business['rating'])  
     results.append(result)
   results= json.dumps(results)
   print results
