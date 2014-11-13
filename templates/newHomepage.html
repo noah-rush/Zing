@@ -14,7 +14,7 @@
 <br>
 <br>
 {%for tags in article['tags']%}
-<a class = "btn-primary" style = "float: left; display:block;border:1px solid black; padding: 5px" href = "#show/{{tags['name']}}"class = "blogtag"><span style = "display:block: float:left">{{tags['name']}}</span></a>
+<a class = "btn-primary" style = "float: left; display:block;border:1px solid black; padding: 5px" href = "#show/{{tags['id']}}"class = "blogtag"><span style = "display:block: float:left">{{tags['name']}}</span></a>
 {%endfor%}
 </div>
 <div class = "col-md-7" style = "padding: 0">
@@ -38,7 +38,7 @@
 <p class = "blogauthor">By {{article['author']}}</p>
 <p class = "blogdescript">{{article['descript']}}</p>
 {%for tags in article['tags']%}
-<a class = "btn-primary"style = "float:right; border:1px solid black; padding: 5px" href = "#show/{{tags['name']}}"class = "blogtag">{{tags['name']}}</a>
+<a class = "btn-primary"style = "float:right; border:1px solid black; padding: 5px" href = "#show/{{tags['id']}}"class = "blogtag">{{tags['name']}}</a>
 {%endfor%}
 
 

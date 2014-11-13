@@ -64,7 +64,7 @@
 </div>
 {% for result in results %}
 {%if loop.index<10%}
-<a  class = "list-group-item this-week page1" href = "#show/{{result['name']}}"> {{result['name']}}
+<a  class = "list-group-item this-week page1" href = "#show/{{result['id']}}"> {{result['name']}}
 {%if result['rating'] != "" %}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
@@ -77,7 +77,7 @@
 </a>
 {%endif%}
 {%if loop.index>10 and loop.index<20%}
-<a  class = "list-group-item this-week page2" style = "display:none" href = "#show/{{result['name']}}"> {{result['name']}}
+<a  class = "list-group-item this-week page2" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
 {%if result['rating'] != "" %}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
@@ -90,7 +90,7 @@
 </a>
 {%endif%}
 {%if loop.index>20 and loop.index<30%}
-<a  class = "list-group-item this-week page3" style = "display:none" href = "#show/{{result['name']}}"> {{result['name']}}
+<a  class = "list-group-item this-week page3" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
 {%if result['rating'] != "" %}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
@@ -103,7 +103,7 @@
 </a>
 {%endif%}
 {%if loop.index>30 and loop.index<40%}
-<a  class = "list-group-item this-week page4" style = "display:none" href = "#show/{{result['name']}}"> {{result['name']}}
+<a  class = "list-group-item this-week page4" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
 {%if result['rating'] != "" %}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>
@@ -116,7 +116,7 @@
 </a>
 {%endif%}
 {%if loop.index>40 and loop.index<50%}
-<a  class = "list-group-item this-week page5" style = "display:none" href = "#show/{{result['name']}}"> {{result['name']}}
+<a  class = "list-group-item this-week page5" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
 {%if result['rating'] != "" %}
 <span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
   <input type="radio" name="rating" value="1"><i></i>

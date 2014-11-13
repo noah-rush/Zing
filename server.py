@@ -11,6 +11,7 @@ from werkzeug.security import generate_password_hash, \
     check_password_hash
 from werkzeug import security
 import json
+from twitter import *
 from itsdangerous import URLSafeTimedSerializer
 ts = URLSafeTimedSerializer("""\xd6'\xdf@V\xfc\xc9\\\x05\xac
                  \x02P\xda\xa8r-\xee\xac*\xcdH\xc3\xef\x1d""")
@@ -625,15 +626,18 @@ def convert_to_percent(stars):
 
 @app.route('/show', methods=['GET', 'POST'])
 def show():
+    
+    t = Twitter(
+    auth=OAuth('2290030034-qZlpLizAAp8FqA21jumX3sWKmKc2VVAHAPw9nUZ', 'I7B4ALWQQLTNYQKzu37tKahle36JL9NsWT3RkCYCKWx2i', '8ddlpAyOG5fq2qCHoJcxQ', 'tbjoqSMYMOxKyJgeqpZ1EexqCxoOsm4OYwiizshtZY4'))
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     show = request.args.get('show')
-    if show == "What Good Has Come Out of Camden":
-      show = show + "?"
-    if show == "The Ray Charles Experience  Live!":
-      show = show + " "
-    c.execute("SELECT * from ZINGSHOWS where name = %s", (show,))
+    c.execute("SELECT * from ZINGSHOWS where id = %s", (show,))
     showdata = c.fetchall()
-    
+    tweets = t.search.tweets(q="#"+showdata[0]['name'])
+    print tweets['search_metadata']
+    for tweet in tweets['statuses']:
+      print "/n"
+      print tweet['text']
     if len(showdata)>0:
       # c.execute("""SELECT Karlactors.actorName, Karlcasting.role
       #           from Karlactors, Karlcasting
@@ -666,7 +670,7 @@ def show():
       c.execute("""SELECT * from ZINGOUTSIDESHOWTAGS, ZINGOUTSIDECONTENT where ZINGOUTSIDESHOWTAGS.showid = %s
                 and ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id""", (showdata[0]['id'],))
       articleids = c.fetchall()
-      print articleids
+      
       numReviews = len(results)
       averageRating = 0
       yourRating = 0
@@ -675,10 +679,10 @@ def show():
         data = []
         reviewtext = review['reviewtext']
         rating = review['rating']
-        print rating
+        
         c.execute("SELECT first, last from ZINGUSERS where id = %s", (review['userid'],))
         username = c.fetchall()
-        print username
+        
         reviewtext = "static/reviews/" + reviewtext
         f = open(reviewtext, 'r')
         text = f.read()
@@ -691,7 +695,7 @@ def show():
         date = date[1:2] + "/" + date[2:4] + "/" + date[4:]
         data.append(date)
         reviewtexts.append(data)
-      print reviewtexts
+      
       # showdates = []
       # for x in dates:
       #   date = {}
@@ -725,6 +729,11 @@ def show():
       description = Markup(description)
       headerDescription = Markup(headerDescription)
       showdata[0]['name'] = Markup(showdata[0]['name'])
+      twitter = showdata[0]['name'].split(' ')
+      twitterurl = twitter[0]
+      for twit in range(1, len(twitter)):
+        twitterurl = "%20" + twitter[twit]
+
       template_vars = {"showdata": showdata[0],
                       "producer": producer,
                        "description": description,
@@ -736,7 +745,8 @@ def show():
                        "yourRating": yourRating,
                        "goodadjectives": goodadjectives,
                        "badadjectives": badadjectives,
-                       "articles": articleids
+                       "articles": articleids,
+                       "twitterurl":twitterurl
                        }
       if 'username' in session:
           c.execute("""SELECT rating
@@ -794,13 +804,15 @@ def autocomplete():
   print query
   query = '%' + query + '%'
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("""SELECT name from ZINGSHOWS
+  c.execute("""SELECT name, id from ZINGSHOWS
             where name LIKE %s""", (query,))
   results = c.fetchall()
   print results
   jsonresults = []
   for result in results:
-     jsonresults.append(result['name'])
+     d = {'value': result['name'], 'data': result['id']}
+     jsonresults.append(d)
+    
   print jsonresults
   return jsonify(query = "Unit", suggestions = jsonresults)
 

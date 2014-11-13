@@ -958,7 +958,7 @@ function profile(){
 
 function autocomp(){
 	
-	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){find()}});
+	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){find(e['data'])}});
     $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
 }; 
 
@@ -1375,9 +1375,7 @@ function yelpresults(data){
 	marker.setMap(map);
 }
 }
-function find(){
-    data = $('#rate').val();
-    $('#rate').val("");
+function find(data){
     console.log(data);
     window.location.hash = data;
     $.ajax({
