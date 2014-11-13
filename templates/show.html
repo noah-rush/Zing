@@ -278,16 +278,36 @@ found this
 </div>
 </div>
         {%if articles|length > 0%}
-<b>Outside Reviews</b>
+        <b>Outside Reviews</b>
+        <div style = "text-align: left;" class = "outsideReviews">
+
 <br>
 <br>
 {% for article in articles %}
 
-<a href = "{{article['link']}}">{{article['title']}}</a>
+
+<a href = "{{article['link']}}">
+{%if article['publication'] == 'http://bsr2.dev/index.php'%}
+<img style = "max-width: 50px" src = "../static/images/logos/bsr">
+{%endif%}
+{%if article['publication'] == 'http://phindie.com'%}
+<img style = "max-width: 50px" src = "../static/images/logos/phindie.jpg">
+{%endif%}
+{%if article['publication'] == 'http://www.philadelphiaweekly.com/arts-and-culture'%}
+<img style = "max-width: 50px" src = "../static/images/logos/pw.jpg">
+{%endif%}
+{%if article['publication'] == 'http://citypaper.net'%}
+<img style = "max-width: 50px" src = "../static/images/logos/citypaper.jpeg">
+{%endif%}
+{%if article['publication'] == 'http://www.newsworks.org/'%}
+<img style = "max-width: 50px" src = "../static/images/logos/shapiro.jpg">
+{%endif%}
+<span style = "padding-left:3%"> {{article['title']}}</span></a>
 <br>
 {%endfor %}
 {%endif%}
 <br>
+</div>
 
 </div>
 

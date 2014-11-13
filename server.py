@@ -663,7 +663,7 @@ def show():
                 where showid = %s
                 GROUP BY adjective""", (showdata[0]['id'],))
       badadjectives= c.fetchall()
-      c.execute("""SELECT articleid, link, title  from ZINGOUTSIDESHOWTAGS, ZINGOUTSIDECONTENT where ZINGOUTSIDESHOWTAGS.showid = %s
+      c.execute("""SELECT * from ZINGOUTSIDESHOWTAGS, ZINGOUTSIDECONTENT where ZINGOUTSIDESHOWTAGS.showid = %s
                 and ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id""", (showdata[0]['id'],))
       articleids = c.fetchall()
       print articleids
