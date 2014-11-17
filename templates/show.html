@@ -278,7 +278,7 @@ found this
 </div>
 </div>
         {%if articles|length > 0%}
-        <b>Outside Reviews</b>
+      
         <div style = "text-align: left;" class = "outsideReviews">
 
 <br>
@@ -287,6 +287,8 @@ found this
 
 
 <a href = "{{article['link']}}">
+<div class = "row">
+<div class = "col-md-3">
 {%if article['publication'] == 'http://bsr2.dev/index.php'%}
 <img style = "max-width: 50px" src = "../static/images/logos/bsr">
 {%endif%}
@@ -302,15 +304,19 @@ found this
 {%if article['publication'] == 'http://www.newsworks.org/'%}
 <img style = "max-width: 50px" src = "../static/images/logos/shapiro.jpg">
 {%endif%}
-<span style = "padding-left:3%"> {{article['title']}}</span></a>
+</div>
+<div class = "col-md-9">
+<span style = "padding-left:3%"> {{article['title']}}</span>
+</div>
+</div>
+</a>
 <br>
 {%endfor %}
 {%endif%}
 <br>
 </div>
 
-<a class="twitter-timeline" href="https://twitter.com/search?q=%23{{twitterurl}}" data-widget-id="533000707532546048">Tweets about #{{showdata['name']}}</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 
 </div>
 

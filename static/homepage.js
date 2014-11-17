@@ -1044,7 +1044,7 @@ FB.getLoginStatus(function(response) {
         console.log('Successful login for: ' + response.name);
         console.log(JSON.stringify(response));
         var check = $("#panelheaderuser");
-        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\">\<li><a href=\"#\">Profile</a></li>\ <li><a href=\"#\">Account Settings</a></li>\  <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
+        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\"> <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
         var name = response.first_name;
         console.log(response.first_name);
         name = response.first_name;
@@ -1190,15 +1190,9 @@ function logout(){
 }
 
 function login_func(){
-	$.ajax({
-		success: login_display,
-  		url: "/signinform",
-		
-	});
+	$("#loginModal").modal();
 }
-function login_display(data){
-	$("#panelcenter").find('.panel-body').html(data);
-}
+
 
 // function create_Account(){
 // 	console.log("got here")
@@ -1290,6 +1284,14 @@ quickReview = false;
 function display_venue(data){
 	$("#panelcenter").find('.panel-body').html(data);
 	var address = $("#address").text();
+      $(".sidebar-link").hover(function(e){console.log(e)
+
+if(e['type'] == 'mouseenter'){
+    $(e['currentTarget']['lastElementChild']).slideToggle();
+}else{
+      $(e['currentTarget']['lastElementChild']).slideToggle();
+}
+});
     console.log(data);
 	console.log(address);
 	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
@@ -1353,7 +1355,7 @@ function yelpresults(data){
     markers = Array();
     
 
-
+$('#findRestaurants').on("click", function(e){
 
 	for(i=0; i<data.length; i++){
 		data[i];
@@ -1362,10 +1364,10 @@ function yelpresults(data){
 var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
+      '<a href = "' + data[i][5] + '"><h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1></a>'+
       '<div id="bodyContent">'+
       '</div>'+
-      data[i][3]
+      '<img src = "' + data[i][4]+'">'
       '</div>';
 	var marker = new google.maps.Marker({
     position: myLatlng,
@@ -1392,9 +1394,10 @@ google.maps.event.addListener(marker, 'click', function(){
 })
 
 
-    markers.push(marker)
+    
 }
 
+})
 }
 
 function find(data){
@@ -1529,6 +1532,18 @@ function inputs(){
             success: displaycomingsoon
      })
     }
+     if($("input[name='topbuttons']:checked").val() == "Editor's Picks"){
+        $.ajax({
+            url: "/picks",
+            success: displaycomingsoon
+     })
+    }
+     if($("input[name='topbuttons']:checked").val() == "Trending"){
+        $.ajax({
+            url: "/trending",
+            success: displaycomingsoon
+     })
+    }
     if($("input[name='topbuttons']:checked").val() == "This Week"){
        getcomingsoon();
     }
@@ -1544,7 +1559,16 @@ function inputs(){
 function show_container(data){
 	$("#panelcenter").find('.panel-body').html(data);
   
-    
+     $(".sidebar-link").hover(function(e){console.log(e)
+
+if(e['type'] == 'mouseenter'){
+    $(e['currentTarget']['lastElementChild']).slideToggle();
+}else{
+      $(e['currentTarget']['lastElementChild']).slideToggle();
+}
+});
+
+
 }
 function show_editor(data){
     $("#panelcenter").find('.panel-body').html(data);
@@ -1698,7 +1722,12 @@ function submit_review(){
 			bads: JSON.stringify(bads)
 		}
 	});
-     show(showname);
+     var url = window.location.href
+     console.log(url)
+     var idfirst = url.lastIndexOf("/");
+     var id = url.substring(idfirst +1);
+     console.log(id);
+     show(id);
 	  
 
 

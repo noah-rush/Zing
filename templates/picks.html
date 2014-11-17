@@ -1,0 +1,187 @@
+
+<style>
+
+
+{%for result in results%}
+
+.total-star-rating-x{{loop.index}} {
+  margin-left: 10%;
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.total-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{result['rating']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.total-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+
+#starsspot{
+  text-align: right;
+  float: right;
+}
+#starsspot4{
+  text-align: right;
+  float: right;
+}
+{%endfor%}
+
+
+
+
+</style>
+<div id = "paneltext"class="panel panel-default">
+<div class = "panel-heading">
+<h1 id = "leftBoxTitle" style = "font-size: 20pt; text-align: center"><b>Editor's Picks</b></h1>
+<div style = "text-align: right;">
+<a  href ="#fullschedule" style = "font-size: 9pt"> View Full Schedule</a>
+</div>
+</div>
+{% for result in results %}
+{%if loop.index<10%}
+<a  class = "list-group-item this-week page1" href = "#show/{{result['id']}}"> {{result['name']}}
+{%if result['rating'] != "" %}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+{%endif%}
+{%if loop.index>10 and loop.index<20%}
+<a  class = "list-group-item this-week page2" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
+{%if result['rating'] != "" %}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+{%endif%}
+{%if loop.index>20 and loop.index<30%}
+<a  class = "list-group-item this-week page3" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
+{%if result['rating'] != "" %}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+{%endif%}
+{%if loop.index>30 and loop.index<40%}
+<a  class = "list-group-item this-week page4" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
+{%if result['rating'] != "" %}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+{%endif%}
+{%if loop.index>40 and loop.index<50%}
+<a  class = "list-group-item this-week page5" style = "display:none" href = "#show/{{result['id']}}"> {{result['name']}}
+{%if result['rating'] != "" %}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+{%endif%}
+</a>
+
+{%endfor%}
+</div>
+<div class = "page-turn-links">
+<a href = "#page2"   >more ...</a>
+</div>
+
+
+
+
+
+<!-- <div class="list-group">
+{% for date in dates %}
+<h2 style = "font-size: 14pt"><i>{{date}}</i> </h2>     
+{%for results in results%}  
+{%if results[3] ==date%} 
+{%if results[1]|length < 10%}
+  <a  class = "list-group-item" href = "#show/{{results[1]}}"> 
+  {{results[1]}} 
+{%if results[2] == "none"%}
+{%else%}
+<span id = "starsspot"class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+{%endif%}
+</a>
+
+ 
+  {% else %}
+
+  <a class = "list-group-item" href = "#show/{{results[1]}}" >{{results[1]}} 
+  <br>
+  {%if results[2] == "none"%}
+{%else%}
+  <div id = "starsspot" class="total-star-rating-x{{loop.index}}">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</div>
+{%endif%}
+<br>
+  </a>
+
+{%endif%}
+{% endif%}
+ {%endfor%}
+
+
+  {% endfor %} -->
+</div>

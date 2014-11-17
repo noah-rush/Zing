@@ -9,29 +9,104 @@
 
 <div class = "panel-heading">
 <h2 id = "showname">{{venuedata['name']}}</h2>
-<h3 id = "address">{{venuedata['address']}}</h3>
+
+
 </div>
               <div class = "panel-body">
 
 
-<div id="map_canvas"></div>
- <button href = "#findRestaurants" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-Find Restaurants Nearby
-</button>
-<br>
-SHOWS
-<br>
+ <div class = "row">
+ <div class = "col-md-7"> 
+ <table>
+ <tr>
 {% for showdata in showdata%}
-<table>
-<tr>
 <td>
-<a href = "#show/{{showdata['name']}}">{{showdata['name']}} </a>
+<div>
+<a  class = "sidebar-link" href = "#show/{{showdata['id']}}" >
+<img class ="sidebar-img" src = "static/Zingimages/{{showdata['id']}}.jpg" width = "100%">
+<h3 class = "mouseOverText" >{{showdata['name']}}
+</h3>
+</a>
+</div>
 </td>
 
+{% if loop.index%2 == 0 %}
+</tr>
+<tr>
+{%endif%}
 
-{%endfor %}
+{%endfor%}
 </tr>
 </table>
+
+{% for article in articles %}
+{%if loop.length > 0 %}
+{%if loop.first %}
+
+<div id = "panelpress"class="panel panel-default">
+<div class = "panel-heading">
+<h2>Press</h2>
+</div>
+<div class = "panel-body">
+<br>
+{%endif%}
+
+<a href = "{{article['link']}}">
+<div class = "row">
+<div class = "col-md-3" style = 'padding-left:0px;'>
+{%if article['publication'] == 'http://bsr2.dev/index.php'%}
+<img style = "max-width: 50px" src = "../static/images/logos/bsr">
+{%endif%}
+{%if article['publication'] == 'http://phindie.com'%}
+<img style = "max-width: 50px" src = "../static/images/logos/phindie.jpg">
+{%endif%}
+{%if article['publication'] == 'http://www.philadelphiaweekly.com/arts-and-culture'%}
+<img style = "max-width: 50px" src = "../static/images/logos/pw.jpg">
+{%endif%}
+{%if article['publication'] == 'http://citypaper.net'%}
+<img style = "max-width: 50px" src = "../static/images/logos/citypaper.jpeg">
+{%endif%}
+{%if article['publication'] == 'http://www.newsworks.org/'%}
+<img style = "max-width: 50px" src = "../static/images/logos/shapiro.jpg">
+{%endif%}
+</div>
+<div class = "col-md-9">
+<span > {{article['title']}}</span>
+</div>
+</div>
+</a>
+<br>
+{%if loop.last %}
+
+</div>
+ </div>
+
+
+{%endif%}
+{%endif%}
+
+{%endfor %}
+ </div>
+ 
+ <div class = "col-md-5"> 
+<div class = "mapAndAddress" >
+<h3 id = "address" style = "display:none;">{{venuedata['address']}}</h3>
+
+<div id="map_canvas"></div>
+ <button id = "findRestaurants" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+Find Restaurants Nearby
+</button>
+</div>
+<br> 
+<br>
+<br>
+
+        
+        </div>
+        </div>
+        </div>
+        </div>
+<!-- 
 
 <br>
 STAFF
@@ -45,4 +120,4 @@ STAFF
 </div>
 
 
-
+ -->

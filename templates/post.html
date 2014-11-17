@@ -19,17 +19,15 @@
 
 <div class="panel-body">
 {%for tags in article['tags']%}
-<a  href = "#show/{{tags['name']}}" >
+<div><a  class = "sidebar-link" href = "#show/{{tags['id']}}" >
 <img class ="sidebar-img" src = "static/Zingimages/{{tags['id']}}.jpg" width = "100%">
-
+<h3 class = "mouseOverText" >{{tags['name']}}</h3>
 </a>
+</div>
 <br>
 <br>
-<br>
-<a href = "#venue/{{tags['venueid']}}"> {{tags['venue']}}</a>
-<br>
-<br>
-<br>
+
+
 {%endfor%}
 </div>
 </div>
