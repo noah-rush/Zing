@@ -3,7 +3,9 @@
 <head>
 
     {%block stylesheet%}
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">{%endblock%}
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/slick-1.3.11/slick/slick.css"/>
+{%endblock%}
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
 
@@ -16,10 +18,81 @@
         text-indent: 0.25%;
         color: black
     }
+    .slick{
+        border-right:4px solid gray;
+        border-left: 4px solid gray;
+        border-bottom: 4px solid gray;
+        max-height:400px;
+        background: white;
+    }
+    .slick-prev{
+        transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
+  background-image: url("static/arrow_right_1.png"); 
+ background-position: center;
+ width:50px;
+ height: 50px;
+ left:-75px;
+ background-size:50px 50px;
+ content: none !important;
+ border:1px solid #e06666;
+ border-radius:31px;
+    }
+.slick-prev:before{
+    content: none !important;
+    }
+    .slick-prev:hover{
+    border-color: black;
+    background: white;
+      background-image: url("static/arrow_right_1.png"); 
+ background-position: center;
+ background-size:50px 50px;
+    }
+    .slick-next:hover{
+    border-color: black;
+    background: white;
+      background-image: url("static/arrow_left_1.png"); 
+ background-position: center;
+ background-size:50px 50px;
+    }
+     .slick-prev:focus{
+    border-color: #e06666;
+    background: white;
+      background-image: url("static/arrow_right_1.png"); 
+ background-position: center;
+ background-size:50px 50px;
+    }
+    .slick-next:focus{
+    border-color: #e06666;
+    background: white;
+      background-image: url("static/arrow_left_1.png"); 
+ background-position: center;
+ background-size:50px 50px;
+    }
+    .slick-next{
+        transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
+        background-image: url("static/arrow_left_1.png"); 
+ background-position: center;
+width:50px;
+height:50px;
+right:-75px;
+background-size:50px 50px;
+ content: none !important;
+ border:1px solid #e06666;
+  border-radius:31px;
+    }
     .badge{
         clear:both;
         float: none;
     }
+ .blog-homepage-middle{
+    border-right:4px dashed gray;
+    border-left: 4px dashed gray;
+ }
+ .blog-homepage{
+    border-right:4px dashed white;
+    border-left: 4px dashed white;
+ }
+  
     a{
         transition: color 0.3s cubic-bezier(0, 0, 0.58, 1);
     }
@@ -161,6 +234,10 @@
     .autocomplete-selected {
         background: #F0F0F0;
     }
+    #paneldescript{
+        padding:10%;
+        box-shadow: rgba(0, 0, 0, 0.65098) 0px 6px 20px 0px;
+    }
     .autocomplete-suggestions strong {
         font-weight: normal;
         color: #3399FF;
@@ -286,6 +363,9 @@
         z-index: 2;
         position: relative;
     }
+    #logopanel{
+        box-shadow: rgba(0, 0, 0, 0.25098) 0px 6px 20px 0px;
+    }
     .star-rating input:hover + i,
     .star-rating input:checked + i {
         opacity: 1;
@@ -346,11 +426,13 @@
     }
     #panela {
         background-color: black;
+        box-shadow: rgba(224, 102, 102, 0.85098) 0px 6px 20px 0px;
     }
     #createbutton {} #panelb {
         background-color: white;
     }
     #panelheader {
+        box-shadow: rgba(224, 102, 102, 0.25098) 0px 6px 6px 0px;
         background-color: white;
         border: 0px solid;
         border-color: #e06666;
@@ -388,12 +470,14 @@
         border-color: black;
         width: 60%;
     }
+  
     #panelbig {
-      background-color: rgb(221,221,221);
-        background-repeat: no-repeat;
+   /*   background-image: url('static/images/Background Texture.png');
+     
         background-attachment: fixed;
-        background-position: center;
+        background-position: center;*/
         border: 0px solid;
+        background-color:whitesmoke;
         border-color: black;
         width: 60%;
     }
@@ -464,6 +548,9 @@
     }
     #search {
         font-size: 12pt
+    }
+    #panelcenter{
+        box-shadow: rgba(0, 0, 0, 0.85098) 0px 6px 20px 0px;
     }
     a {
         color: black;
@@ -588,7 +675,7 @@
                 </div>
 
 
-                <div class="col-lg-7 col-md-7 col-sm-7">
+                <div class="col-lg-8 col-md-8 col-sm-8" style = "width: 63.666667%">
                     <div id="panelheader" style="width: 100%" class="panel panel-default">
                         <div class="panel-body">
 
@@ -624,7 +711,7 @@
 
 
 
-                    <div id="panelcenter" style="background-color: white" class="panel panel-default">
+                    <div id="panelcenter"  class="panel panel-default">
                         <div class="panel-body">
 
                         </div>
@@ -635,7 +722,7 @@
 
 
 
-                <div class="col-lg-2 col-md-2 col-sm-2">
+                <div class="col-lg-1 col-md-1 col-sm-1" style = "width:11.3333%">
 
                     <div id="panelheader" style="width: 100%" class="panel panel-default">
                         <div class="panel-body" id="panelheaderuser">
@@ -674,12 +761,9 @@
 
                     <div id="panel" class="panel panel-default">
                         <div class="panel-body">
-                            <div id="panelb" class="panel panel-default">
+                            <div id="paneldescript" class="panel panel-default">
                                 <div class="panel-body">
-                                    <div id="panelc2" class="panel panel-default">
-                                        <div class="panel-body">
-                                        </div>
-                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -694,7 +778,7 @@
                         <div class="panel-body">
                             <a href="#about" class="btn btn-default btn-sm " type="button">
 
-                                <span class="glyphicon glyphicon-pencil"></span> About Us / Contact
+                                <span class="glyphicon glyphicon-pencil"></span> About Us
                             </a>
                         </div>
                     </div>
@@ -703,10 +787,18 @@
                         <div class="panel-body">
                             <a href="#editpage" class="btn btn-default btn-sm " type="button">
 
-                                <span class="glyphicon glyphicon-pencil"></span>Edit Page
+                                <span class="glyphicon glyphicon-pencil"></span> Edit Page
                             </a>
                         </div>
                     </div>
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#updateOutsideArticles" class="btn btn-default btn-sm " type="button">
+
+                                <span class="glyphicon glyphicon-pencil"></span> Update Articles                            </a>
+                        </div>
+                    </div>
+
                     {%endif%}
 
                 </div>
@@ -730,6 +822,8 @@
     <script src="static/jQuery-File-Upload-9.8.0/js/vendor/jquery.ui.widget.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.iframe-transport.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.fileupload.js"></script>
+    <script src="static/slick-1.3.11/slick/slick.min.js"></script>
+
     <script src="static/homepage.js"></script>
 
 

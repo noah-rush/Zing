@@ -965,7 +965,7 @@ function autocomp(){
 function newUserAuthorize(){
     console.log($("#user").text());
     if($("#user").text() ==  "Login"){
-     $("#loginModal").modal('show');
+    
     }
 }
 
@@ -1075,7 +1075,7 @@ function displaynowplaying(data){
 }
 function displayzingdescript(data){
 	
-	$("#panelc2").html(data);
+	$("#paneldescript").html(data);
 }
 function displaycomingsoon(data){
 	
@@ -1507,7 +1507,7 @@ FB.api('/me', function(response) {
 }
 function homepage(){
 	$.ajax({
-		success: show_container,
+		success: show_homepage,
 		url:"/home"
 	})
 }
@@ -1567,6 +1567,36 @@ if(e['type'] == 'mouseenter'){
       $(e['currentTarget']['lastElementChild']).slideToggle();
 }
 });
+
+
+
+
+}
+function show_homepage(data){
+    $("#panelcenter").find('.panel-body').html(data);
+  
+     $(".sidebar-link").hover(function(e){console.log(e)
+
+if(e['type'] == 'mouseenter'){
+    $(e['currentTarget']['lastElementChild']).slideToggle();
+}else{
+      $(e['currentTarget']['lastElementChild']).slideToggle();
+}
+});
+
+$('.slick').slick({
+  slidesToShow: 3,
+  slidesToScroll: 1,
+ adaptiveHeight: true,
+ onAfterChange: function(){
+    console.log("SLICK MOVED")
+    console.log($(".slick-active"));
+    $($(".slick-active")[1]).toggleClass("blog-homepage-middle")
+    $($(".slick-active")[0]).removeClass("blog-homepage-middle")
+    $($(".slick-active")[2]).removeClass("blog-homepage-middle")
+ }
+});
+
 
 
 }
@@ -1864,6 +1894,15 @@ $(window).hashchange( function test(){
     case "#moreShows":
         
     break;
+    case "#updateOutsideArticles":
+  
+        $.ajax({
+        url:"/updateArticles",
+        success: function(data){
+            alert(data)
+        }
+    })
+    
     
  
 
@@ -1887,8 +1926,6 @@ $("#modalReview").click(function(){
         quickReview = true;
        }
        );
-
-
 
 
 
