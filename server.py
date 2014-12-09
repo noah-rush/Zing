@@ -107,6 +107,8 @@ def index():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT * FROM ZINGVENUES ORDER BY id DESC")
+  venues = c.fetchall()
   c.execute("SELECT * FROM ZINGOUTSIDECONTENT ORDER BY id DESC")
   results = c.fetchall()
   bsr = []
@@ -151,7 +153,7 @@ def home():
   article['article'] = article['article'][article['article'].find("</p>")+4:]
   article['article'] = Markup(article['article'])
   text.close()
-  return render_template("reviewlist.html",phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
+  return render_template("reviewlist.html",venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
 
 
 # ##home, returns content from posts 

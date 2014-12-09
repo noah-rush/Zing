@@ -1583,6 +1583,18 @@ if(e['type'] == 'mouseenter'){
       $(e['currentTarget']['lastElementChild']).slideToggle();
 }
 });
+     $('.panel-blog-heading').on("click", function(){
+    $('#zing-blog').slideToggle();
+    console.log("a)")
+})
+     $('.panel-review-heading').on("click", function(){
+    $('#zing-reviews').slideToggle();
+    console.log("a)")
+})
+     $('.panel-venue-heading').on("click", function(){
+    $('#zing-venues').slideToggle();
+    console.log("a)")
+})
 
 $('.slick').slick({
   slidesToShow: 3,
