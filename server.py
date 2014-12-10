@@ -107,7 +107,7 @@ def index():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT * FROM ZINGVENUES ORDER BY id DESC")
+  c.execute("SELECT ZINGVENUES.* FROM ZINGVENUES, ZINGSHOWS WHERE ZINGSHOWS.venueid = ZINGVENUES.id GROUP BY ZINGVENUES.id ORDER BY ZINGVENUES.id ASC")
   venues = c.fetchall()
   c.execute("SELECT * FROM ZINGOUTSIDECONTENT ORDER BY id DESC")
   results = c.fetchall()
@@ -116,6 +116,7 @@ def home():
   pw = []
   citypaper = []
   shapiro = []
+  inq = []
   for review in results:
     if review['publication'] == "http://bsr2.dev/index.php":
       bsr.append(review)
@@ -127,6 +128,8 @@ def home():
       shapiro.append(review)
     if review['publication'] == 'http://phindie.com':
       phindie.append(review)     
+    if review['publication'] == 'http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F':
+      inq.append(review)
   print results
   c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
   blog = c.fetchall()
@@ -153,7 +156,7 @@ def home():
   article['article'] = article['article'][article['article'].find("</p>")+4:]
   article['article'] = Markup(article['article'])
   text.close()
-  return render_template("reviewlist.html",venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
+  return render_template("reviewlist.html",inq = inq, venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
 
 
 # ##home, returns content from posts 
