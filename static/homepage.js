@@ -1587,6 +1587,10 @@ if(e['type'] == 'mouseenter'){
     $('#zing-blog').slideToggle();
     console.log("a)")
 })
+      $('.panel-shows-heading').on("click", function(){
+    $('#zing-shows').slideToggle();
+    console.log("a)")
+})
      $('.panel-review-heading').on("click", function(){
     $('#zing-reviews').slideToggle();
     console.log("a)")

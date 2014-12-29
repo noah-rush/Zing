@@ -109,7 +109,25 @@ def home():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT ZINGVENUES.* FROM ZINGVENUES, ZINGSHOWS WHERE ZINGSHOWS.venueid = ZINGVENUES.id GROUP BY ZINGVENUES.id ORDER BY ZINGVENUES.id ASC")
   venues = c.fetchall()
-  c.execute("SELECT * FROM ZINGOUTSIDECONTENT ORDER BY id DESC")
+  for venue in venues:
+    venue['name'] = Markup(venue['name'])
+  c.execute("SELECT ZINGShows.* FROM ZINGSHOWS ORDER BY id ASC")
+  shows = c.fetchall()
+  c.execute("SELECT showid, COUNT(rating), SUM(rating) FROM ZINGRATINGS GROUP BY showid")
+  ratings = c.fetchall()
+  c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id")
+  outsideContent = c.fetchall()
+  for show in shows:
+    show['name'] = Markup(show['name'])
+    for rating in ratings:
+      if rating['showid'] == show['id']:
+        avg = float(rating['sum'])/float(rating['count'])
+        show['rating'] = convert_to_percent(avg)
+    show['reviews'] = []
+    for oc in outsideContent:
+      if oc['showid'] == show['id']:
+        show['reviews'].append([oc['title'], oc['link']])
+  c.execute("SELECT ZINGOUTSIDECONTENT.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZINGOUTSIDECONTENT.id ORDER BY ZINGOUTSIDECONTENT.id DESC")
   results = c.fetchall()
   bsr = []
   phindie = []
@@ -156,7 +174,7 @@ def home():
   article['article'] = article['article'][article['article'].find("</p>")+4:]
   article['article'] = Markup(article['article'])
   text.close()
-  return render_template("reviewlist.html",inq = inq, venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
+  return render_template("reviewlist.html",outsideContent = outsideContent, shows = shows,inq = inq, venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
 
 
 # ##home, returns content from posts 
@@ -433,6 +451,7 @@ def picks():
   sortedResults = []
   print results
   for result in results:
+      result['name'] = Markup(result['name'])
       showid = result['id']
       c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
       ratings = c.fetchall()
@@ -453,6 +472,7 @@ def trending():
   results = c.fetchall()
   sortedResults = []
   for result in results:
+    result['name'] = Markup(result['name'])
     count = int(result['count'])
     avg = float(result['sum'])/float(result['count'])
     temp = {"avg": convert_to_percent(avg), "name": result['name'], 'count': count, 'id': result['id']}
@@ -468,6 +488,7 @@ def toprated():
   results = c.fetchall()
   sortedResults = []
   for result in results:
+    result['name'] = Markup(result['name'])
     avg = float(result['sum'])/float(result['count'])
     temp = {"avg": avg, "name": result['name'], "id": result['id']}
     sortedResults.append(temp)
@@ -489,6 +510,7 @@ def comingsoon():
     results = c.fetchall()
     for result in results:
       showid = result['id']
+      result['name'] = Markup(result['name'])
       c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
       ratings = c.fetchall()
       rating = ''
