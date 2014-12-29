@@ -982,9 +982,11 @@ function facebook(){
       testAPI();
       
     } else if (response.status === 'not_authorized') {
+        console.log("not authorized");
       newUserAuthorize();
       
     } else {
+        console.log("other else");
       newUserAuthorize(); 
 
     }
