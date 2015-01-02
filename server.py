@@ -675,6 +675,7 @@ def venue():
     c.execute("SELECT * from ZINGVENUES where id = %s", (venue,))
     results = c.fetchall()
     results = results[0]
+    results['name'] = Markup(results['name'])
     c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
     c.execute("""SELECT name, id from ZINGSHOWS
@@ -716,6 +717,7 @@ def show():
       c.execute("""SELECT name from ZINGVENUES
                 where id = %s""", (showdata[0]['venueid'],))
       venue = c.fetchall()
+      venue[0]['name'] = Markup(venue[0]['name'])
       c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
                 from ZINGRATINGS, ZINGUSERREVIEWS

@@ -1193,6 +1193,11 @@ function logout(){
 
 function login_func(){
 	$("#loginModal").modal();
+    $("#loginModal").on('hidden.bs.modal', function () {
+        window.history.back();
+
+ 
+})
 }
 
 
@@ -1258,7 +1263,7 @@ function display_venues(data){
         },
         success: function(data){
         	json.responseData.results[0].unescapedUrl
-            console.log(data);
+            
         },
         error: function(xhr, textStatus, error){
             console.log(xhr.statusText, textStatus, error);
@@ -1276,17 +1281,17 @@ function display_show(data){
  $(".total-star-rating i").css("width", initRating +"%");
  $("input[name='stars']").change(function(){
 	stars = this.value;
-	console.log(this.value)
+	
 });
  $(".good").click(function(){
-	console.log(this.value)
+	
 });
 quickReview = false;
 };
 function display_venue(data){
 	$("#panelcenter").find('.panel-body').html(data);
 	var address = $("#address").text();
-      $(".sidebar-link").hover(function(e){console.log(e)
+      $(".sidebar-link").hover(function(e){
 
 if(e['type'] == 'mouseenter'){
     $(e['currentTarget']['lastElementChild']).slideToggle();
@@ -1294,8 +1299,7 @@ if(e['type'] == 'mouseenter'){
       $(e['currentTarget']['lastElementChild']).slideToggle();
 }
 });
-    console.log(data);
-	console.log(address);
+   
 	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
 	  $.ajax({
   	url: urlsearch,
@@ -1306,7 +1310,7 @@ if(e['type'] == 'mouseenter'){
 
     var map
  function initialize(data) {
-    console.log(data)
+  
     var map_canvas = document.getElementById('map_canvas');
     var lat = data.results[0]['geometry']['location']['lat'];
 	var lng = data.results[0]['geometry']['location']['lng'];
@@ -1361,7 +1365,7 @@ $('#findRestaurants').on("click", function(e){
 
 	for(i=0; i<data.length; i++){
 		data[i];
-		console.log(data[i]);
+		
 		var myLatlng = new google.maps.LatLng(data[i][1],data[i][2]);
 var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
@@ -1403,7 +1407,7 @@ google.maps.event.addListener(marker, 'click', function(){
 }
 
 function find(data){
-    console.log(data);
+  
     window.location.hash = data;
     $.ajax({
         url: '/show',
@@ -1432,17 +1436,14 @@ function publish(){
   var author = $('#post-author').val();
   var tags = $('.tag-drop');
   var photo = $('#photopath').val();
-  console.log(article);
-  console.log(title);
-  console.log(author);
-  console.log(photo);
+
   finalTags = []
   for(i = 0; i<tags[0].children.length; i++){
-    console.log(tags[0])
+  
     finalTags.push(tags[0]['children'][i]['firstChild']['textContent'])
-    console.log(finalTags)
+
   }
-  console.log(finalTags)
+ 
   var column = $('#addphoto').parent();
   column[0].children[0]['innerText'] = "Update";
   column[0].children[0]['href'] = "#update";
@@ -1490,7 +1491,7 @@ function display_nowPlaying(data){
 };
 function facebookLogin(){
 	 FB.login(function(response) {
-   console.log(response.status);
+   
    
 FB.api('/me', function(response) {
 	name = response.first_name;
@@ -1523,11 +1524,11 @@ function open_editor(){
 function inputs(){
     $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
     $("input[name='topbuttons']").change(function() {
-    console.log($('input[name="topbuttons"]:checked').val());
+    
     $("input[name='topbuttons']").each(function(){
     if(this.checked) {
     lastchecked.checked = false;
-    console.log($("input[name='topbuttons']:checked").val());
+   
     if($("input[name='topbuttons']:checked").val() == "Top Rated"){
         $.ajax({
             url: "/toprated",
@@ -1561,7 +1562,7 @@ function inputs(){
 function show_container(data){
 	$("#panelcenter").find('.panel-body').html(data);
   
-     $(".sidebar-link").hover(function(e){console.log(e)
+     $(".sidebar-link").hover(function(e){
 
 if(e['type'] == 'mouseenter'){
     $(e['currentTarget']['lastElementChild']).slideToggle();
@@ -1577,7 +1578,7 @@ if(e['type'] == 'mouseenter'){
 function show_homepage(data){
     $("#panelcenter").find('.panel-body').html(data);
   
-     $(".sidebar-link").hover(function(e){console.log(e)
+     $(".sidebar-link").hover(function(e){
 
 if(e['type'] == 'mouseenter'){
     $(e['currentTarget']['lastElementChild']).slideToggle();
@@ -1587,19 +1588,23 @@ if(e['type'] == 'mouseenter'){
 });
      $('.panel-blog-heading').on("click", function(){
     $('#zing-blog').slideToggle();
-    console.log("a)")
+    
 })
       $('.panel-shows-heading').on("click", function(){
     $('#zing-shows').slideToggle();
-    console.log("a)")
+   
 })
      $('.panel-review-heading').on("click", function(){
     $('#zing-reviews').slideToggle();
-    console.log("a)")
+  
+})
+     $('.panel-tickets-heading').on("click", function(){
+    window.open("http://www.goldstar.com/philadelphia/events/categories/theater-tickets");
+  
 })
      $('.panel-venue-heading').on("click", function(){
     $('#zing-venues').slideToggle();
-    console.log("a)")
+  
 })
 
 $('.slick').slick({
@@ -1607,8 +1612,7 @@ $('.slick').slick({
   slidesToScroll: 1,
  adaptiveHeight: true,
  onAfterChange: function(){
-    console.log("SLICK MOVED")
-    console.log($(".slick-active"));
+
     $($(".slick-active")[1]).toggleClass("blog-homepage-middle")
     $($(".slick-active")[0]).removeClass("blog-homepage-middle")
     $($(".slick-active")[2]).removeClass("blog-homepage-middle")
@@ -1635,7 +1639,7 @@ function show_editor(data){
         dataType: 'json',
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
-                console.log(file)
+                
                 $('#photopath').val(file);
                 $('.modal-body').html( '<img src = "static/images/' + file + '" width = "100%">');
                 $('.modal-header').html( file);
@@ -1649,7 +1653,7 @@ function show_editor(data){
     }
     )
     $('#addphoto').on('click', function(e){
-        console.log(e)
+       
         $('#fileupload').trigger('click');
     });
 
@@ -1663,7 +1667,7 @@ function about(){
 }
 
 function show_password(data){
-    console.log(data);
+    
     
     if(data[0] == "U"){
         $('#user').text(" " + data.substring(10));
@@ -1727,7 +1731,7 @@ var name
 
 function trackScrolling(){
     $( window ).scroll(function(e) {
-        console.log(e.currentTarget['scrollY'])
+       
         if(parseInt(e.currentTarget['scrollY'])>218){
             $('#panela').css({
                 "position":"fixed",
@@ -1747,19 +1751,18 @@ function submit_review(){
 
 	var goods = [];
         $('#checkboxlistgood input:checked').each(function() {
-        	console.log(this);
+        	
         	goods.push(this.name)
         });
     var bads = [];
         $('#checkboxlistbad input:checked').each(function() {
-        	console.log(this);
+        	
         	bads.push(this.name)
         });
        
 	var text = $("#writeuserreview").val();
 	var showname = $("#showname").text();
-	console.log(text);
-	console.log(stars);
+	
 	 $.ajax({
 		url: "/submitreview",
 		data: {
@@ -1770,11 +1773,10 @@ function submit_review(){
 			bads: JSON.stringify(bads)
 		}
 	});
-     var url = window.location.href
-     console.log(url)
+     var url = window.location.href;
      var idfirst = url.lastIndexOf("/");
      var id = url.substring(idfirst +1);
-     console.log(id);
+   
      show(id);
 	  
 
@@ -1815,29 +1817,28 @@ $(window).hashchange( function test(){
 	var hash = location.hash;
 	if(hash.substring(0,5) == "#show")
 	{
-		console.log(hash.substring(6));
+		
 		show(hash.substring(6));
 	}
 	if(hash.substring(0,6) == "#venue")
 	{
-		console.log(hash.substring(7));
+		
 		venue(hash.substring(7));
 	}
     if(hash.substring(0,5) == "#post")
     {
-        console.log(hash.substring(5));
+     
         post(hash.substring(5));
     }
      if(hash.substring(0,5) == "#page")
     {
         page = hash.substring(5);
-        console.log(page)
+      
         $(".this-week").hide()
         $(".page" + page).show()
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
-        console.log(nextPage)
-        console.log($(".page" + nextPage))
+   
         if($(".page" + nextPage).length > 0){
             $(".page-turn-links").html('<a href = "#page' + nextPage +'" >more ...</a> ')
              
@@ -1850,7 +1851,7 @@ $(window).hashchange( function test(){
 
         
     }
-	console.log(hash);
+
 	switch(hash){
 	case "#venues":
 		show_venues();
@@ -1949,7 +1950,7 @@ $("#modalReview").click(function(){
 
 $(window).hashchange();
  $("#submitshowreview").on("click", submit_review);
- console.log('here');
+ 
   facebook();
 autocomp();
 trackScrolling();

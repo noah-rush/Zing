@@ -181,6 +181,15 @@ body {
   <div class = "row">
   <div class = "col-md-8" >
     <h1 ><span id = "showname">{{showdata['name']}}</span> </h1>
+
+    </div>
+    <div class = "col-md-4" style = "text-align:right;  vertical-align: bottom; padding-top: 3%;">
+    <div><button class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
+  </div>
+  </div>
+  </div>
+   <div class = "row">
+   <div class = "col-md-4" >
        <span class="total-star-rating">
     <input type="radio" name="rating" value="1"><i></i>
     <input type="radio" name="rating" value="2"><i></i>
@@ -189,14 +198,17 @@ body {
     <input type="radio" name="rating" value="5"><i></i>
     </span>
    </div>
-   <div class = "col-md-4" style = "text-align:right;  vertical-align: bottom; padding-top: 3%;">
-    <div><button class="btn btn-default" data-toggle="modal" data-target="#myModal" id = "writebutton">What did you think?</button>
-  </div>
+   <div class = "col-md-8" style = "text-align:center;  ">
+  
+    
+    <div class = "producer1"><i><a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a></i></div>
+    {%if producer != venue[0]['name']%}
     <div class = "producer1"><i>{{producer}}</i></div>
-
+    {%endif%}
+    </div>
    
 </div>
-</div>
+
 </div>
         <div class = "panel-body">
         <div class = "row">
@@ -218,7 +230,7 @@ border-top: 2px dashed #aaa; text-align: center">
 {{headerDescription}}
  {% if venue[0] is defined %}
  <br>
-        at the <a href = "#venue/{{showdata['venueid']}}"> {{venue[0]['name']}}</a>
+       
         {% endif %}
         <p>{{description}}</p>
         <div class = "row">

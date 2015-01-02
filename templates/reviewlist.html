@@ -42,11 +42,11 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-blog-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-4">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
   <h1 ><span >The PhillyZing Blog</span></h1>
 <h4><i>a daily diary of the theater scene</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-8">
+<div style ="text-align:center" class = "col-md-7">
   <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
 
 </div>
@@ -151,11 +151,11 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-review-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-4">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
   <h1 ><span >Around Philadelphia</span></h1>
 <h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-8">
+<div style ="text-align:center" class = "col-md-7">
   <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
 
 </div>
@@ -167,7 +167,7 @@
 <div class = "row">
 
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:143px" src = "../static/images/logos/bsr.png">
+<img style = "width: 100%; height:100px" src = "../static/images/logos/bsr.png">
 {%for bsr in bsr%}
 <a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}</span></a>
 
@@ -176,7 +176,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:143px" src = "../static/images/logos/phindie.jpg">
+<img style = "width: 100%; height:100px" src = "../static/images/logos/phindie.jpg">
 {%for phin in phindie%}
 <a href = "{{phin['link']}}"><span style = "padding-left:3%"> {{phin['title']}}</span></a>
 
@@ -185,7 +185,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:143px" src = "../static/images/logos/pw.jpg">
+<img style = "width: 100%; height:100px" src = "../static/images/logos/pw.jpg">
 {%for pw in pw%}
 <a href = "{{pw['link']}}"><span style = "padding-left:3%"> {{pw['title']}}</span></a>
 
@@ -194,7 +194,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:143px" src = "../static/images/logos/citypaper.png">
+<img style = "width: 100%; height:100px" src = "../static/images/logos/citypaper.png">
 {%for city in citypaper%}
 <a href = "{{city['link']}}"><span style = "padding-left:3%"> {{city['title']}}</span></a>
 
@@ -203,7 +203,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray" >
-<img style = "width: 100%;height:143px" src = "../static/images/logos/shapiro.jpg">
+<img style = "width: 100%;height:100px" src = "../static/images/logos/shapiro.jpg">
 {%for shap in shapiro%}
 <a href = "{{shap['link']}}"><span style = "padding-left:3%"> {{shap['title']}}</span></a>
 
@@ -212,7 +212,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center;" >
-<img style = "width: 100%; height:143px" src = "../static/images/logos/inq.png">
+<img style = "width: 100%; height:100px" src = "../static/images/logos/inq.png">
 {%for inq in inq%}
 <a href = "{{inq['link']}}"><span style = "padding-left:3%"> {{inq['title']}}</span></a>
 
@@ -226,17 +226,33 @@
 </div>
 </div>
 
+<div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
+  <div class = "panel-heading panel-tickets-heading">
+  <div class = "row">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <h1 ><span >Tickets</span></h1>
+<h4><i>Click Here for the Cheapest seats in Town</i></h4>
+</div>
+<div style ="text-align:center" class = "col-md-7">
+  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
+
+</div>
+</div>
+</div>
+ 
+</div>
+
 
 
 
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-venue-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-4">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
   <h1 ><span >Philadelphia Theaters</span></h1>
 <h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-8">
+<div style ="text-align:center" class = "col-md-7">
   <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
 
 </div>
@@ -266,11 +282,11 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-shows-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-4">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
   <h1 ><span >Philadelphia Shows</span></h1>
 <h4><i>an aggregation of shows in Philadelphia</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-8">
+<div style ="text-align:center" class = "col-md-7">
   <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
 
 </div>
