@@ -8,13 +8,13 @@ conn=connectionBoiler.get_conn()
 target_urls = ["http://www.theatrephiladelphia.org/calendar",
 			 "http://www.theatrephiladelphia.org/calendar?page=1",
 			 "http://www.theatrephiladelphia.org/calendar?page=2",
-			 "http://www.theatrephiladelphia.org/calendar?page=3"]
+			]
 c = conn.cursor()
 
 
 show = ""
 venue = ""
-address = ""
+address = ""lastlink
 producer = ""
 description = ""
 image = ""

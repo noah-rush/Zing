@@ -167,16 +167,19 @@
 <div class = "row">
 
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:100px" src = "../static/images/logos/bsr.png">
+<img class = "website-thumb" src = "../static/images/logos/bsr.png">
 {%for bsr in bsr%}
-<a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}</span></a>
+<a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}
+<hr>
+<img class ="sidebar-img" src = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%">
+</span></a>
 
 <hr>
-
+<hr>
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:100px" src = "../static/images/logos/phindie.jpg">
+<img class = "website-thumb" src = "../static/images/logos/phindie.jpg">
 {%for phin in phindie%}
 <a href = "{{phin['link']}}"><span style = "padding-left:3%"> {{phin['title']}}</span></a>
 
@@ -185,7 +188,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:100px" src = "../static/images/logos/pw.jpg">
+<img class = "website-thumb" src = "../static/images/logos/pw.jpg">
 {%for pw in pw%}
 <a href = "{{pw['link']}}"><span style = "padding-left:3%"> {{pw['title']}}</span></a>
 
@@ -194,7 +197,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
-<img style = "width: 100%; height:100px" src = "../static/images/logos/citypaper.png">
+<img class = "website-thumb"src = "../static/images/logos/citypaper.png">
 {%for city in citypaper%}
 <a href = "{{city['link']}}"><span style = "padding-left:3%"> {{city['title']}}</span></a>
 
@@ -203,7 +206,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center; border-right: 2px double gray" >
-<img style = "width: 100%;height:100px" src = "../static/images/logos/shapiro.jpg">
+<img class = "website-thumb"src = "../static/images/logos/shapiro.jpg">
 {%for shap in shapiro%}
 <a href = "{{shap['link']}}"><span style = "padding-left:3%"> {{shap['title']}}</span></a>
 
@@ -212,7 +215,7 @@
 {%endfor%}
 </div>
 <div class = "col-md-2" style = "text-align: center;" >
-<img style = "width: 100%; height:100px" src = "../static/images/logos/inq.png">
+<img class = "website-thumb" src = "../static/images/logos/inq.png">
 {%for inq in inq%}
 <a href = "{{inq['link']}}"><span style = "padding-left:3%"> {{inq['title']}}</span></a>
 
@@ -318,10 +321,10 @@
 </h3>
 </a>
 </div>
-{%for review in show['reviews']%}
+<!-- {%for review in show['reviews']%}
 <a href = "{{review[1]}}">{{review[0]}}</a>
 <hr>
-{%endfor%}
+{%endfor%} -->
 <hr>
 </div>
 {%endfor%}

@@ -127,7 +127,7 @@ def home():
     for oc in outsideContent:
       if oc['showid'] == show['id']:
         show['reviews'].append([oc['title'], oc['link']])
-  c.execute("SELECT ZINGOUTSIDECONTENT.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZINGOUTSIDECONTENT.id ORDER BY ZINGOUTSIDECONTENT.id DESC")
+  c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.showID FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZingoutsideContent.id, ZINGOUTSIDESHOWTAGS.showID ORDER BY ZINGOUTSIDECONTENT.id DESC")
   results = c.fetchall()
   bsr = []
   phindie = []
