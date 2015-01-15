@@ -6285,6 +6285,29 @@ button.close {
     display: none !important;
   }
 }
+.radios {
+  width: 50%;
+}
+.slickReviews {
+  display: none !important;
+}
+.slickReviewsSmall {
+  display: block !important;
+}
+.reviewPhoneText {
+  padding-top: 20%;
+}
+@media (min-width: 768px) {
+  .slickReviews {
+    display: block;
+  }
+  .slickReviewsSmall {
+    display: none !important;
+  }
+  .radios {
+    width: 25%;
+  }
+}
 .shoe {
   width: 20px;
 }

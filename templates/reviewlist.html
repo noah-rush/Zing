@@ -166,6 +166,24 @@
 </div>
  <div style = "border-bottom: 4px solid gray; display:none; background:white"id = "zing-reviews"class = "panel-body">
 
+<div class = "slickReviewsSmall">
+{%for review in reviews%}
+<div class = "row">
+<div class = "col-xs-6 reviewPhoneText">
+<a href = "{{review['link']}}"><span > {{review['title']}}</span></a>
+</div>
+<div class = "col-xs-6">
+<a class="sidebar-link" href = "#show/{{review['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{review['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{review['showname']}}</h5></a>
+</div>
+</div>
+<hr>
+<hr>
+{%endfor%}
+</div>
+
+
+
 
 <div class = "slickReviews">
 
@@ -183,6 +201,7 @@
 <h5 class="mouseOverText" style="display: none;">{{bsr['showname']}}</h5></a>
 </div>
 </div>
+
 
 {%endfor%}
 </div>
