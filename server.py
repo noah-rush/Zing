@@ -338,7 +338,7 @@ def fbcreateform():
                     VALUES (%s, %s, %s)""",
                   (firstname, lastname, email))
   conn.commit()
-   token = ts.dumps(email, salt='email-confirm-key')
+  token = ts.dumps(email, salt='email-confirm-key')
   confirm_url = url_for(
             'confirm_email',
             token=token,
