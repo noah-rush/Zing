@@ -1733,8 +1733,7 @@ function show_password(data){
     }
     if(data[0] == "N"){
         $('#user').text(" " + data.substring(16));
-        $("#loginModal").find("#paneltext").html('usersurvey.html');
-        $("#loginModal").modal('show');
+        $("#loginModal").modal('hide');
     }	
 }
 

@@ -338,6 +338,19 @@ def fbcreateform():
                     VALUES (%s, %s, %s)""",
                   (firstname, lastname, email))
   conn.commit()
+   token = ts.dumps(email, salt='email-confirm-key')
+  confirm_url = url_for(
+            'confirm_email',
+            token=token,
+            _external=True)
+  html = render_template(
+            'email/activate.html',
+            confirm_url=confirm_url)
+  msg = Message("Welcome to Zing",
+                  sender="noah@codearium.com",
+                  recipients=[email])
+  msg.html = html
+  mail.send(msg)
   return "NEW USER CREATED" + firstname
 
 
