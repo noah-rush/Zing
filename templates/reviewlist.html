@@ -170,113 +170,112 @@
 <div class = "slickReviews">
 
 <div style = "text-align: center;">
+<div class = "thumb">
 <img class = "website-thumb" src = "../static/images/logos/bsr.png">
+</div>
 {%for bsr in bsr%}
 <div class = "row">
 <div class = "col-md-6">
-<a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}</span></a>
+<a href = "{{bsr['link']}}"><span > {{bsr['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{bsr['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link" href = "#show/{{bsr['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{bsr['showname']}}</h5></a>
 </div>
 </div>
 
-<hr>
-<hr>
 {%endfor%}
 </div>
 
 <div  style = "text-align: center; ">
+<div class = "thumb">
 <img class = "website-thumb" src = "../static/images/logos/phindie.jpg">
+</div>
 {%for phin in phindie%}
 <div class = "row">
 <div class = "col-md-6">
-<a  href = "{{phin['link']}}"><span style = "padding-left:3%"> {{phin['title']}}</span></a>
+<a  href = "{{phin['link']}}"><span > {{phin['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{phin['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{phin['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link" href = "#show/{{phin['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{phin['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{phin['showname']}}</h5></a>
 </div>
 </div>
-
-<hr>
-<hr>
-<hr>
 
 {%endfor%}
 </div>
 <div  style = "text-align: center; ">
+<div class = "thumb">
 <img class = "website-thumb" src = "../static/images/logos/pw.jpg">
+</div>
 {%for pw in pw%}
 <div class = "row">
 <div class = "col-md-6">
-<a  href = "{{pw['link']}}"><span style = "padding-left:3%"> {{pw['title']}}</span></a>
+<a  href = "{{pw['link']}}"><span> {{pw['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{pw['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{pw['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link" href = "#show/{{pw['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{pw['showid']}}.jpg" width = "100%">
+
+<h5 class="mouseOverText" style="display: none;">{{pw['showname']}}</h5></a>
 </div>
 </div>
 
-<hr>
-<hr>
-<hr>
 
 {%endfor%}
 </div>
 <div style = "text-align: center;">
+<div class = "thumb">
 <img class = "website-thumb"src = "../static/images/logos/citypaper.png">
+</div>
 {%for city in citypaper%}
 <div class = "row">
 <div class = "col-md-6">
-<a  href = "{{city['link']}}"><span style = "padding-left:3%"> {{city['title']}}</span></a>
+<a  href = "{{city['link']}}"><span > {{city['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{city['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{city['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link"  href = "#show/{{city['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{city['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{city['showname']}}</h5></a>
 </div>
 </div>
 
-<hr>
-<hr>
-<hr>
-
-<hr>
 
 {%endfor%}
 </div>
 <div style = "text-align: center;" >
+<div class = "thumb">
 <img class = "website-thumb"src = "../static/images/logos/shapiro.jpg">
+</div>
 {%for shap in shapiro%}
 <div class = "row">
 <div class = "col-md-6">
-<a  href = "{{shap['link']}}"><span style = "padding-left:3%"> {{shap['title']}}</span></a>
+<a    href = "{{shap['link']}}"><span> {{shap['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{shap['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{shap['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link" href = "#show/{{shap['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{shap['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{shap['showname']}}</h5></a>
 </div>
 </div>
 
-<hr>
-<hr>
-<hr>
-<hr>
 
 {%endfor%}
 </div>
 <div style = "text-align: center;" >
+<div class = "thumb">
 <img class = "website-thumb" src = "../static/images/logos/inq.png">
+</div>
 {%for inq in inq%}
 <div class = "row">
 <div class = "col-md-6">
-<a  href = "{{inq['link']}}"><span style = "padding-left:3%"> {{inq['title']}}</span></a>
+<a  href = "{{inq['link']}}"><span> {{inq['title']}}</span></a>
 </div>
 <div class = "col-md-6">
-<a href = "#show/{{inq['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{inq['showid']}}.jpg" width = "100%"></a>
+<a class="sidebar-link" href = "#show/{{inq['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{inq['showid']}}.jpg" width = "100%">
+<h5 class="mouseOverText" style="display: none;">{{inq['showname']}}</h5></a>
+
+
 </div>
 </div>
 
-<hr>
-<hr>
-<hr>
-<hr>
 
 {%endfor%}
 </div>

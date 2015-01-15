@@ -6291,6 +6291,76 @@ button.close {
 #zing-reviews {
   padding: 0 5% 0 5%;
 }
+.slick-prev {
+  top: 3% !important;
+  background: white;
+}
+li.slick-active button {
+  border: 3px solid #e06666 !important;
+}
+.slick-dots {
+  top: 110px;
+  margin-left: 11%;
+  bottom: auto !important;
+}
+.slick-dots li button:hover {
+  border: 3px solid #e06666;
+}
+.slick-dots li:nth-child(1) button {
+  background-image: url("/static/images/logos/bsr.png");
+  background-size: contain;
+}
+.slick-dots li:nth-child(2) button {
+  background-image: url("/static/images/logos/phindie.png");
+  background-size: contain;
+}
+.slick-dots li:nth-child(4) button {
+  background-image: url("/static/images/logos/citypaper.png");
+  background-size: contain;
+}
+.slick-dots li:nth-child(3) button {
+  background-image: url("/static/images/logos/pw.jpg");
+  background-size: contain;
+}
+.slick-dots li:nth-child(5) button {
+  background-image: url("/static/images/logos/shapiro.jpg");
+  background-size: contain;
+}
+.slick-dots li:nth-child(6) button {
+  background-image: url("/static/images/logos/inq.png");
+  background-size: contain;
+}
+.slick-dots li {
+  padding: 20px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+.slick-dots li button {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0px !important;
+}
+.slick-dots li button:before {
+  content: none !important;
+}
+.slick-next {
+  top: 3% !important;
+  background-image: url("static/arrow_left_1.png") !important;
+}
+.slick-slide[index=0] {
+  border-right: 2px dashed gray;
+  background-image: url("static/arrow_left_1.png") !important;
+}
+.slick-slide .row {
+  border-bottom: 4px double #e06666;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-left: 4px double #e06666;
+  border-right: 4px double #e06666;
+}
+.slick-slide .col-md-6 {
+  padding: 6%;
+}
 body {
   background-color: white;
   text-indent: 0.25%;
@@ -6298,6 +6368,10 @@ body {
 }
 #paneltext {
   border: 4px solid gray;
+}
+.slickReviews {
+  padding: 5%;
+  padding-top: 0px;
 }
 .panel-shows-heading {
   transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
@@ -6318,10 +6392,15 @@ body {
 .panel-venue-heading {
   transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
 }
+.thumb {
+  border: 4px solid gray;
+  border-top-width: 0px;
+  width: 100%;
+  height: 200px;
+}
 .website-thumb {
-  border: 2px dashed gray;
-  width: 200px;
-  height: 100%;
+  max-width: 100%;
+  max-height: 200px;
   padding: 5%;
 }
 .panel-venue-heading:hover {

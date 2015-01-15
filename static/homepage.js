@@ -1582,10 +1582,12 @@ function show_homepage(data){
 
     $("#panelcenter").find('.panel-body').html(data);
       $('.slickReviews').slick({
-      slidesToShow: 2,
+      slidesToShow: 1,
   slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 2000,
+  autoplay: false,
+  autoplaySpeed: 5000,
+  adaptiveHeight: true,
+  dots:true
     });
      $(".sidebar-link").hover(function(e){
 
@@ -1741,13 +1743,15 @@ var name
 
 function trackScrolling(){
     $( window ).scroll(function(e) {
-       
+        if($( window ).width())
         if(parseInt(e.currentTarget['scrollY'])>218){
+            if($( window ).width()>800){
             $('#panela').css({
                 "position":"fixed",
                 "top": "0",
                 "width":"23%"
             })
+        }
         }else{
             $('#panela').css({
                 "position":"relative",

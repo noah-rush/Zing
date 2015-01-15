@@ -136,6 +136,9 @@ def home():
   shapiro = []
   inq = []
   for review in results:
+    c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (review['showid'],))
+    showname = c.fetchall()[0]
+    review['showname'] = showname['name']
     if review['publication'] == "http://bsr2.dev/index.php":
       bsr.append(review)
     if review['publication'] == 'http://citypaper.net':
