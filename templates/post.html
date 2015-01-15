@@ -1,22 +1,21 @@
-
-
-
-
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <div class="modal-body">
-        <img style = "width: 100%" src = "static/images/{{article['pic']}}">
-      </div>
-    </div>
-  </div>
+<div class = "post-first-para" style = "font-size: 13pt;">
+{{firstparagraph}}
 </div>
-
-<div class = "row">
-<div class = "col-md-4">
-<div id = "postsidebar" style = "background-color: white"class="panel panel-default">
-
+{%if article['pic'] == ''%}
+{%else%}
+<a  data-toggle="modal" data-target="#imageModal" ><img style = "float:right; margin: 6%" class = "homepage-image" src = "static/images/{{article['pic']}}"></a>
+{%endif%}
+<div class = "post-article" >
+{{article['article']}}
+</div>
+</div>
+</div>
+</div>
+<div class = "col-md-3">
+<div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
+ <div class = "panel-heading">
+  <h3>In today's post...</h3>
+  </div>
 <div class="panel-body">
 {%for tags in article['tags']%}
 <div><a  class = "sidebar-link" href = "#show/{{tags['id']}}" >
@@ -31,26 +30,19 @@
 {%endfor%}
 </div>
 </div>
-</div>
-<div class = "col-md-8">
-<div id = "post" style = "background-color: white"class="panel panel-default">
-<div class = "panel-header" style = "padding: 2%;text-align: center; background:whitesmoke; border-bottom: 4px solid #e06666">
-<h1>{{article['title']}}</h1>
-<h4>{{article['author']}}</h4>
-<h4>{{article['date']}}</h4>
-</div>
-<div class="panel-body" style = "4px solid #e06666">
-<div class = "post-first-para" style = "font-size: 13pt;">
-{{firstparagraph}}
-</div>
-<a  data-toggle="modal" data-target="#imageModal" ><img style = "float:right; margin: 6%" class = "homepage-image" src = "static/images/{{article['pic']}}"></a>
-<div class = "post-article" >
-{{article['article']}}
-</div>
-</div>
-</div>
-</div>
-</div>
 
 
 
+<div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
+<div class = "panel-heading">
+  <h3>Going back..</h3>
+  </div>
+<div class="panel-body">
+{% for post in blog %}
+<div><a  class = "sidebar-link" href = "#post{{post['id']}}" >
+<img class ="sidebar-img" src = "static/images/{{post['pic']}}" width = "100%">
+<h3 class = "mouseOverText" >{{post['title']}}</h3>
+</a>
+</div>
+<br>
+<br>

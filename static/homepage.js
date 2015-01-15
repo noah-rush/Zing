@@ -1425,10 +1425,13 @@ function post(data){
         data: {
             id: id
         },
-        success: show_container
+        success: show_post
     })
 }
 
+function show_post(data){
+    $('#zing-blog').html(data);
+}
 function publish(){
   var article = CKEDITOR.instances.editor1.getData();
   var descript = CKEDITOR.instances.editor2.getData();
@@ -1576,8 +1579,14 @@ if(e['type'] == 'mouseenter'){
 
 }
 function show_homepage(data){
+
     $("#panelcenter").find('.panel-body').html(data);
-  
+      $('.slickReviews').slick({
+      slidesToShow: 2,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 2000,
+    });
      $(".sidebar-link").hover(function(e){
 
 if(e['type'] == 'mouseenter'){
@@ -1595,6 +1604,7 @@ if(e['type'] == 'mouseenter'){
    
 })
      $('.panel-review-heading').on("click", function(){
+
     $('#zing-reviews').slideToggle();
   
 })

@@ -5,8 +5,8 @@
   font-size: 0;
   white-space: nowrap;
   display: inline-block;
-  width: 150px;
-  height: 30px;
+  width: 100px;
+  height: 20px;
   overflow: hidden;
   position: relative;
   background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
@@ -42,13 +42,12 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-blog-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-6">
   <h1 ><span >The PhillyZing Blog</span></h1>
 <h4><i>a daily diary of the theater scene</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-7">
-  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
-
+<div style ="text-align:center" class = "col-md-6">
+  
 </div>
 </div>
 </div>
@@ -70,6 +69,10 @@
 
 <div class = "col-md-9">
 <div id = "post" style = "background-color: white; box-shadow: rgba(2, 0, 0, 0.35098) 0px 6px 6px 0px;"class="panel panel-default">
+<div class = "panel-heading" style = "border-bottom: 2px solid #e06666;">
+<span ><h2><i>{{article['title']}}</i></h2></span>
+<i>{{article['author']}}</i>
+</div>
 <div class="panel-body" >
 <div class = "post-first-para" style = "font-size: 13pt;">
 {{firstparagraph}}
@@ -114,7 +117,7 @@
 {% for post in blog %}
 <div><a  class = "sidebar-link" href = "#post{{post['id']}}" >
 <img class ="sidebar-img" src = "static/images/{{post['pic']}}" width = "100%">
-<h3 class = "mouseOverText" >{{post['title']}}{{post['descript']}}</h3>
+<h3 class = "mouseOverText" >{{post['title']}}</h3>
 </a>
 </div>
 <br>
@@ -151,12 +154,12 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-review-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-8">
   <h1 ><span >Around Philadelphia</span></h1>
 <h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-7">
-  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
+<div style ="text-align:center" class = "col-md-4">
+  <h1 ><span ><h1><u></u></h1></span></h1>
 
 </div>
 </div>
@@ -164,61 +167,115 @@
  <div style = "border-bottom: 4px solid gray; display:none; background:white"id = "zing-reviews"class = "panel-body">
 
 
-<div class = "row">
+<div class = "slickReviews">
 
-<div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
+<div style = "text-align: center;">
 <img class = "website-thumb" src = "../static/images/logos/bsr.png">
 {%for bsr in bsr%}
-<a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}
-<hr>
-<img class ="sidebar-img" src = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%">
-</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a href = "{{bsr['link']}}"><span style = "padding-left:3%"> {{bsr['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{bsr['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
 
 <hr>
 <hr>
 {%endfor%}
 </div>
-<div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
+
+<div  style = "text-align: center; ">
 <img class = "website-thumb" src = "../static/images/logos/phindie.jpg">
 {%for phin in phindie%}
-<a href = "{{phin['link']}}"><span style = "padding-left:3%"> {{phin['title']}}</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a  href = "{{phin['link']}}"><span style = "padding-left:3%"> {{phin['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{phin['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{phin['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
 
+<hr>
+<hr>
 <hr>
 
 {%endfor%}
 </div>
-<div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
+<div  style = "text-align: center; ">
 <img class = "website-thumb" src = "../static/images/logos/pw.jpg">
 {%for pw in pw%}
-<a href = "{{pw['link']}}"><span style = "padding-left:3%"> {{pw['title']}}</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a  href = "{{pw['link']}}"><span style = "padding-left:3%"> {{pw['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{pw['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{pw['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
 
+<hr>
+<hr>
 <hr>
 
 {%endfor%}
 </div>
-<div class = "col-md-2" style = "text-align: center; border-right: 2px double gray">
+<div style = "text-align: center;">
 <img class = "website-thumb"src = "../static/images/logos/citypaper.png">
 {%for city in citypaper%}
-<a href = "{{city['link']}}"><span style = "padding-left:3%"> {{city['title']}}</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a  href = "{{city['link']}}"><span style = "padding-left:3%"> {{city['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{city['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{city['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
+
+<hr>
+<hr>
+<hr>
 
 <hr>
 
 {%endfor%}
 </div>
-<div class = "col-md-2" style = "text-align: center; border-right: 2px double gray" >
+<div style = "text-align: center;" >
 <img class = "website-thumb"src = "../static/images/logos/shapiro.jpg">
 {%for shap in shapiro%}
-<a href = "{{shap['link']}}"><span style = "padding-left:3%"> {{shap['title']}}</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a  href = "{{shap['link']}}"><span style = "padding-left:3%"> {{shap['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{shap['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{shap['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
 
+<hr>
+<hr>
+<hr>
 <hr>
 
 {%endfor%}
 </div>
-<div class = "col-md-2" style = "text-align: center;" >
+<div style = "text-align: center;" >
 <img class = "website-thumb" src = "../static/images/logos/inq.png">
 {%for inq in inq%}
-<a href = "{{inq['link']}}"><span style = "padding-left:3%"> {{inq['title']}}</span></a>
+<div class = "row">
+<div class = "col-md-6">
+<a  href = "{{inq['link']}}"><span style = "padding-left:3%"> {{inq['title']}}</span></a>
+</div>
+<div class = "col-md-6">
+<a href = "#show/{{inq['showid']}}"><img class ="sidebar-img" src = "static/Zingimages/{{inq['showid']}}.jpg" width = "100%"></a>
+</div>
+</div>
 
+<hr>
+<hr>
+<hr>
 <hr>
 
 {%endfor%}
@@ -227,17 +284,17 @@
 
 </div>
 </div>
-</div>
+
 
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-tickets-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-6">
   <h1 ><span >Tickets</span></h1>
 <h4><i>Click Here for the Cheapest seats in Town</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-7">
-  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
+<div style ="text-align:center" class = "col-md-6">
+  <h1 ><span ><h1><u></u></h1></span></h1>
 
 </div>
 </div>
@@ -251,12 +308,12 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-venue-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-8">
   <h1 ><span >Philadelphia Theaters</span></h1>
 <h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-7">
-  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
+<div style ="text-align:center" class = "col-md-4">
+  <h1 ><span ><h1><u> </u></h1></span></h1>
 
 </div>
 </div>
@@ -285,12 +342,12 @@
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
   <div class = "panel-heading panel-shows-heading">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-5">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-6">
   <h1 ><span >Philadelphia Shows</span></h1>
 <h4><i>an aggregation of shows in Philadelphia</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-7">
-  <h1 ><span ><h1><u>{{article['title']}}</u></h1></span></h1>
+<div style ="text-align:center" class = "col-md-6">
+  <h1 ><span ><h1><u></u></h1></span></h1>
 
 </div>
 </div>
