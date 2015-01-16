@@ -91,6 +91,10 @@ def sort_array(s):
 ### index, checks for user, and checks admin privileges
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    fromEmail = False
+    if 'email' in session:
+      fromEmail = True
+      session.pop('email', None)
     if 'username' in session:
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from ZINGUSERS where id = %s", (session['username'],))
@@ -98,10 +102,9 @@ def index():
         c.execute("SELECT id from ZINGADMIN where userid = %s",(session['username'],));
         adminID = c.fetchall();
         if len(adminID)>0:
-              return render_template('layout.html', useron=name, adminPrivileges=True)
-        return render_template('layout.html', useron=name, adminPrivileges=False)
-    print 'kkkkk'
-    return render_template('layout.html', useron = 'none', adminPrivileges=False)
+              return render_template('layout.html', fromEmail = fromEmail, useron=name, adminPrivileges=True)
+        return render_template('layout.html', useron=name, fromEmail = fromEmail, adminPrivileges=False)
+    return render_template('layout.html', useron = 'none',fromEmail = fromEmail, adminPrivileges=False)
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -284,13 +287,13 @@ def signin():
     realkey = data[0]['passhash']
     userid = data[0]['id']
   else:
-    return "Email not found"
+    return "F"
   if realkey == None:
     return "Please Login with Facebook"
   else:
     if security.check_password_hash(realkey, password):
       session['username'] = userid
-      return "USER LOGIN" + testemail[0]['first']
+      return "USER LOGIN" + data[0]['first']
   return "Incorrect Password"
 
 ###ajax route for creating an original content post
@@ -364,10 +367,12 @@ def confirm_email(token):
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("UPDATE ZINGUSERS SET emailconfirm = True WHERE email = %s", (email,))
     conn.commit()
-    c.execute("SELECT id FROM ZINGUSERS WHERE email = %s", (email,))
-    userid = c.fetchall()[0]['id']
-    print userid
+    c.execute("SELECT id, first FROM ZINGUSERS WHERE email = %s", (email,))
+    results = c.fetchall()[0]
+    userid = results['id']
+    name = results['first']
     session['username'] = userid
+    session['email'] = True
     return redirect(url_for('index'))
 
 
@@ -383,6 +388,7 @@ def zingnewuser():
   testemail = c.fetchall()
   if testemail != []:
     userid = testemail[0]['id']
+    print "here"
     return "EMAIL FOUND" + testemail[0]['first']
   fullname = firstname + lastname
   you = User(fullname, password)
@@ -902,26 +908,19 @@ def autocomplete():
 def submitreview():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-    show = request.args.get('show')
+    showID = request.args.get('show')
     review = request.args.get('text')
     rating = request.args.get('stars')
     goods = request.args.get('goods')
     bads = request.args.get('bads')
     goods  = json.loads(goods)
     bads = json.loads(bads)
-    c.execute("""SELECT id from ZINGSHOWS
-              where name = %s""", (show,))
-    showID = c.fetchall()
-    showID = showID[0]
-    showID = showID['id']
+  
     userid = session['username']
     c.execute("""DELETE from ZINGUSERREVIEWS
               where userid = %s and showid = %s""",
               (userid, showID))
-    if "/" in show:
-      slash = show.find("/")
-      show = show[:slash]
-    filepath = str(userid)+str(show)+'.txt'
+    filepath = str(userid)+str(showID)+'.txt'
     newReview = open('static/reviews/' + filepath, 'w')
     newReview.write(review)
     newReview.close()
@@ -980,9 +979,76 @@ def submitreview():
 def login():
   email = request.args.get('email')
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT ID FROM ZINGUSERS WHERE EMAIL = %s", (email,))
-  session['username'] = c.fetchall()[0]['id']
-  return "session logged in Flask"
+  c.execute("SELECT ID, emailconfirm FROM ZINGUSERS WHERE EMAIL = %s", (email,))
+  results = c.fetchall()
+  print results[0]['emailconfirm']
+  if results[0]['emailconfirm']:
+    session['username'] = results[0]['id']
+    return "session logged in Flask"
+  else:
+    return "<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>"
+
+@app.route('/insession', methods=['GET', 'POST'])
+def insession():
+  if 'username' in session:
+    return 'true'
+  else:
+    return 'false'
+
+@app.route('/removeReview', methods = ['GET', 'POST'])
+def removeReview():
+   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+   showid = request.args.get('showid')
+   userid = request.args.get('userid')
+   c.execute("""DELETE FROM ZINGUSERREVIEWS WHERE 
+              userid = %s AND showid = %s""", (userid, showid))
+   c.execute("""DELETE FROM ZINGRatings WHERE 
+              userid = %s AND showid = %s""", (userid, showid))
+   c.execute("""DELETE FROM ZINGGOODADJECTIVES WHERE 
+              userid = %s AND showid = %s""", (userid, showid))
+   c.execute("""DELETE FROM ZINGBADADJECTIVES WHERE 
+              userid = %s AND showid = %s""", (userid, showid))
+   conn.commit()
+   return "did it"
+
+
+@app.route('/manageReviews', methods=['GET', 'POST'])
+def manageReviews():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("""SELECT ZINGUSERREVIEWS.id, ZINGRATINGS.id, Zingratings.showid, reviewText, ZINGUSERREVIEWS.userid, 
+                rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
+                from ZINGRATINGS, ZINGUSERREVIEWS
+                where ZINGUSERREVIEWS.showid = ZINGRATINGS.showid 
+                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid""")
+  reviewtexts = []
+  results = c.fetchall()
+  for review in results:
+        data = []
+        reviewtext = review['reviewtext']
+        rating = review['rating']
+        c.execute("""SELECT first, last, id 
+                    from ZINGUSERS where id = %s""", 
+                    (review['userid'],))
+        username = c.fetchall()
+        reviewtext = "static/reviews/" + reviewtext
+        f = open(reviewtext, 'r')
+        text = f.read()
+        f.close()
+        data.append(text)
+        rating = convert_to_percent(float(rating))
+        data.append(rating)
+        data.append(username)
+        date = review['to_char']
+        date = date[1:2] + "/" + date[2:4] + "/" + date[4:]
+        data.append(date)
+        
+        data.append(review['id'])
+        data.append(review['showid'])
+        reviewtexts.append(data)
+  print results
+  return render_template("manageReviews.html", userreviews = reviewtexts)
+
+
 
 ###return a description of Zing
 @app.route('/zingDescript')

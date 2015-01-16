@@ -904,7 +904,7 @@
 
 
 
-var stars;
+var stars = 0;
 
 function getnowplaying(){
 	$.ajax({
@@ -963,10 +963,7 @@ function autocomp(){
 }; 
 
 function newUserAuthorize(){
-    console.log($("#user").text());
-    if($("#user").text() ==  "Login"){
-    
-    }
+ 
 }
 
 function facebook(){
@@ -1070,6 +1067,11 @@ var quickReview = false;
 
 function handle_login(data){
 	console.log(data);
+    if(data.substring(0,4) == "<h3>"){
+        $("#loginModal").find("#paneltext").html(data);
+        $("#loginModal").modal();
+
+    }
 }
 function displaynowplaying(data){
 	
@@ -1189,15 +1191,24 @@ function logout(){
   		url: "/logout",
 		
 	});
+
+
+     window.history.back();
 }
 
 function login_func(){
 	$("#loginModal").modal();
-    $("#loginModal").on('hidden.bs.modal', function () {
-        window.history.back();
+   
+    $( "#signintrigger" ).trigger( "click" );
+    window.history.back()
+}
 
- 
-})
+function login_func_sidebar(){
+    $("#loginModal").modal();
+  
+    $( "#signuptrigger" ).trigger( "click" );
+     window.history.back()
+    
 }
 
 
@@ -1287,7 +1298,26 @@ function display_show(data){
 	
 });
 quickReview = false;
+
+$('#writebutton').click(function(){
+$.ajax({
+    url: "/insession",
+    success: show_modal
+})
+
+
+})
 };
+
+function show_modal(data){
+    if(data == 'true'){
+        $('#myModal').modal();
+    }else{
+        $('#loginModal').modal();
+    }
+}
+
+
 function display_venue(data){
 	$("#panelcenter").find('.panel-body').html(data);
 	var address = $("#address").text();
@@ -1523,6 +1553,34 @@ function open_editor(){
         url:"/edit"
     })
 }
+function manageReviews(){
+    $.ajax({
+        success: show_manager,
+        url:"/manageReviews"
+    })
+}
+
+function show_manager(data){
+
+$("#panelcenter").find('.panel-body').html(data);
+
+    $('.removeReview').click(function(){
+        var showid = this.value.substring(1, this.value.indexOf(","));
+        var userid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
+        console.log(this.value.substring(1, this.value.indexOf(",")));
+        console.log(this.value.substring(this.value.indexOf(",")+2, this.value.length-1 ));
+
+        $.ajax({
+            success: manageReviews,
+            data: {showid: showid, 
+                userid: userid},
+            url: "/removeReview"
+        });
+
+
+
+    })
+}
 
 function inputs(){
     $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
@@ -1669,6 +1727,9 @@ function show_editor(data){
         $('#fileupload').trigger('click');
     });
 
+
+
+
 }
 
 function about(){
@@ -1682,59 +1743,53 @@ function show_password(data){
     
     
     if(data[0] == "U"){
+        $('#panelheaderuser').html(' <div class="dropdown">\
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">\
+                                    <span class="glyphicon glyphicon-user"></span>\
+                                    <span id="user">{{useron}}</span>\
+                                    <span class="caret"></span>\
+                                </button>\
+                                <ul class="dropdown-menu" role="menu">\
+                                    <li><a href="#logout">Logout</a>\
+                                    </li>\
+                                </ul>\
+                            </div>');
         $('#user').text(" " + data.substring(10));
         $("#loginModal").modal('hide');
 
     }
      if(data[0] == "P"){
-       $('#somethingWrong').html('Please Login with Facebook');
+       $('#somethingWrong').html('Please Login with Facebook <br><hr><br>');
        $('#somethingWrong').css({"color" : "red"});
        $('#somethingWrong').show()
 
+
     }
     if(data[0] == "E"){
-       
-        $('#somethingWrong').html('An account with that email already exists. <br> Please <a id = "signinfrommodal">sign in </a> or use a different email.')
+        $('#signintrigger').trigger('click');
+        $('#somethingWrong').html('An account with that email already exists. <br> Please sign in or use a different email. <br> If you signed up with facebook, please log in with facebook <br> <hr><br>')
         $('#somethingWrong').css({"color" : "red"});
         $('#somethingWrong').show()
-        $("#signinfrommodal").on("click", function(e){
-            $("#loginModal").find("#paneltext").html("\
-                <div id = \"somethingWrong\" style = \"display: none\"></div>\
-                <br>\
-                <h2 > Sign in to Zing</h2>\
-                <br>\
-                <a style = \"background-color: #3B5998; color: white; \"  class=\"btn btn-default\" href=\"#facebookLogin\" >Sign in with Facebook</a>\
-                <br>\
-                <br>\
-                <form class = \"form-inline\" role = \"form\" >\
-                <div class=\"form-group\" style = \"width: 37.5%\">\
-                  <input  type=\"text\"  style = \"width: 100%\" id = \"loginEmail\"class=\"form-control\" placeholder=\"Email\">\
-                          </div>\
-                          <div class=\"form-group\" style = \"width: 37.5%\">\
-                  <input  type=\"password\" style = \"width: 100%\" id = \"loginPassword\" class=\"form-control\" placeholder=\"Password\">\
-                          </div>\
-                          <br>\
-                           <div class=\"form-group\"style = \"width: 75%\"> \
-                </div>\
-                <br>\
-                <a style = \"margin-bottom: 5%\"  id = \"signin2\" class=\"btn btn-default\" href=\"#signin\" >Sign in</a>\
-                </form>\
-                </div>\
-                </div>\
-                ");
-
-        })
+        window.history.back();
 
     }
     if(data[0] == "I"){
-        $('#somethingWrong').html('Incorrect Password. Try Again')
+        $('#somethingWrong').html('Incorrect Password. Try Again<br><hr><br>')
         $('#somethingWrong').css({"color" : "red"});
         $('#somethingWrong').show()
+        window.history.back();
     }
     if(data[0] == "N"){
-        $('#user').text(" " + data.substring(16));
-        $("#loginModal").modal('hide');
-    }	
+        
+        $("#loginModal").find("#paneltext").html("<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>");
+    }
+    if(data[0] == "F"){
+        
+       $('#somethingWrong').html('No account was found with that email address.<br><hr><br>');
+       $('#somethingWrong').css({"color" : "red"});
+       $('#somethingWrong').show()
+       window.history.back();
+    }   	
 }
 
 
@@ -1779,7 +1834,7 @@ function submit_review(){
 	 $.ajax({
 		url: "/submitreview",
 		data: {
-			show: showname,
+			show: $('#showid').text(),
 			text: text,
 			stars: stars,
 			goods: JSON.stringify(goods),
@@ -1878,6 +1933,9 @@ $(window).hashchange( function test(){
 	case "#login":
 		login_func();
 		break;
+    case "#login_sidebar":
+        login_func_sidebar();
+        break;
 	case "#signup":
 		signup();
 		break;
@@ -1934,6 +1992,13 @@ $(window).hashchange( function test(){
             alert(data)
         }
     })
+        break;
+    case "#manageReviews":
+    manageReviews();    
+    break;
+
+
+
     
     
  
@@ -1949,6 +2014,20 @@ $(window).hashchange( function test(){
 
 });
 
+$("#signintrigger").click(function(){
+
+    $(".signInForm").show();
+      $(".signUpForm").hide();
+    $(this).addClass("active");
+    $("#signuptrigger").removeClass("active");
+})
+$("#signuptrigger").click(function(){
+    $(".signUpForm").show();
+      $(".signInForm").hide();
+    $(this).addClass("active");
+    $("#signintrigger").removeClass("active");
+})
+
 $("#find").click(function(){
         show($('#rate').val());
        }
@@ -1959,7 +2038,9 @@ $("#modalReview").click(function(){
        }
        );
 
-
+if($('#fromEmail').text() == 'a'){
+    $('#emailModal').modal();
+}
 
 $(window).hashchange();
  $("#submitshowreview").on("click", submit_review);

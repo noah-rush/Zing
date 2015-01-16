@@ -34,37 +34,45 @@
 
 <body>
 
+{%if fromEmail%}
+<div style = "display:none" id = "fromEmail">a</div>
+{%endif%}
+
+
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div id = "paneltext" style = "text-align: center"class="panel panel-default">
-            <div id = "somethingWrong" style = "display: none"></div>
-            <div style= "color:white; background:black">
+          <br>
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active" id = "signuptrigger"><a href="#"> <h2 >Sign up</h2></a></li>
+                <li role="presentation" id = "signintrigger"><a href="#"><h2 >Log in</h2></a></li>
+            </ul>
+        
+            <br>
+            <div class = "signInForm" style = "display:none" >
+                <div id = "somethingWrong" style = "display: none"></div>
+                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" href="#facebookLogin" >Log in with Facebook</a>
                 <br>
-                <h2 > Sign in to Zing</h2>
                 <br>
-                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" href="#facebookLogin" >Sign in with Facebook</a>
-                <br>
-                <br>
-                <form class = "form-inline" role = "form" style = "color:white; background:black">
-                <div class="form-group" style = "width: 37.5%; color:white; background:black">
-                  <input  type="text"  style = "width: 100%" id = "loginEmail"class="form-control" placeholder="Email">
-                          </div>
-                          <div class="form-group" style = "width: 37.5%; color:white; background:black">
-                  <input  type="password" style = "width: 100%" id = "loginPassword" class="form-control" placeholder="Password">
-                          </div>
-                          <br>
-                           <div class="form-group"style = "width: 100%; color:white; background:black"> 
-               
-                <br>
-                <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signin" >Sign in</a>
+                <form class = "form-inline" role = "form" >
+                    <div class="form-group" style = "width: 37.5%;">
+                        <input  type="text"  style = "width: 100%" id = "loginEmail"class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group" style = "width: 37.5%;">
+                        <input  type="password" style = "width: 100%" id = "loginPassword" class="form-control" placeholder="Password">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 100%; "> 
+                        <br>
+                        <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signin" >Sign in</a>
+                    </div>
                 </form>
-                </div>
-                 </div>
-              
-                <hr>
-                <h2 > Sign up for Zing</h2>
+            </div>
+            <div class = "signUpForm">
+                <div id = "somethingWrong" style = "display: none"></div>
+                <h4>Sign up to post reviews and earn rewards.</h4>
                 <br>
                 <a style = "background-color: #3B5998; color: white; "  id = "signin2" class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
                 <br>    
@@ -91,11 +99,23 @@
                     <br>
                     <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signup" >Sign up</a>
                 </form>
+                </div>
         </div>
     </div>
 </div>
-      </div>
+</div>
+</div>
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id = "paneltext" style = "text-align: center"class="panel panel-default">
+         <h3>Thank you for verifying your account. Welcome to Zing!</h3>
+        </div>
     </div>
+</div>
+</div>
+</div>
  
 
 
@@ -252,6 +272,13 @@
                             <a href="#updateOutsideArticles" class="btn btn-default btn-sm " type="button">
 
                                 <span class="glyphicon glyphicon-pencil"></span> Update Articles                            </a>
+                        </div>
+                    </div>
+                    <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#manageReviews" class="btn btn-default btn-sm " type="button">
+
+                                <span class="glyphicon glyphicon-pencil"></span> Manage Reviews                          </a>
                         </div>
                     </div>
 

@@ -6321,6 +6321,17 @@ button.close {
 li.slick-active button {
   border: 3px solid #e06666 !important;
 }
+.nav-pills {
+  width: 100%;
+}
+.nav-pills li {
+  width: 50%;
+  margin-left: 0px !important;
+  padding: 5px;
+}
+.nav-pills li.active a {
+  background-color: #e06666 !important;
+}
 .slick-dots {
   top: 110px;
   margin-left: 11%;
