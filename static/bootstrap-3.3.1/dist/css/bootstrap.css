@@ -6330,27 +6330,27 @@ li.slick-active button {
   border: 3px solid #e06666;
 }
 .slick-dots li:nth-child(1) button {
-  background-image: url("/static/images/logos/bsr.png");
+  background-image: url("/static/logos/bsr.png");
   background-size: contain;
 }
 .slick-dots li:nth-child(2) button {
-  background-image: url("/static/images/logos/phindie.png");
+  background-image: url("/static/logos/phindie.png");
   background-size: contain;
 }
 .slick-dots li:nth-child(4) button {
-  background-image: url("/static/images/logos/citypaper.png");
+  background-image: url("/static/logos/citypaper.png");
   background-size: contain;
 }
 .slick-dots li:nth-child(3) button {
-  background-image: url("/static/images/logos/pw.jpg");
+  background-image: url("/static/logos/pw.jpg");
   background-size: contain;
 }
 .slick-dots li:nth-child(5) button {
-  background-image: url("/static/images/logos/shapiro.jpg");
+  background-image: url("/static/logos/shapiro.jpg");
   background-size: contain;
 }
 .slick-dots li:nth-child(6) button {
-  background-image: url("/static/images/logos/inq.png");
+  background-image: url("/static/logos/inq.png");
   background-size: contain;
 }
 .slick-dots li {
