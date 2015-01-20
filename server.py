@@ -981,6 +981,7 @@ def login():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT ID, emailconfirm FROM ZINGUSERS WHERE EMAIL = %s", (email,))
   results = c.fetchall()
+  print results
   print results[0]['emailconfirm']
   if results[0]['emailconfirm']:
     session['username'] = results[0]['id']

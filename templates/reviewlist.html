@@ -223,11 +223,14 @@
 
 {%endfor%}
 </div>
+{% if pw|length>0%}
 <div  style = "text-align: center; ">
 <div class = "thumb">
 <img class = "website-thumb" src = "../static/logos/pw.jpg">
 </div>
+
 {%for pw in pw%}
+
 <div class = "row">
 <div class = "col-md-6">
 <a  href = "{{pw['link']}}"><span> {{pw['title']}}</span></a>
@@ -238,10 +241,9 @@
 <h5 class="mouseOverText" style="display: none;">{{pw['showname']}}</h5></a>
 </div>
 </div>
-
-
 {%endfor%}
 </div>
+{%endif%}
 <div style = "text-align: center;">
 <div class = "thumb">
 <img class = "website-thumb"src = "../static/logos/citypaper.png">

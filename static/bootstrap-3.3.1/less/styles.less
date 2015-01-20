@@ -1,5 +1,23 @@
 
+.slick-dots{
+top: -81px;
+margin-left: -6%;
 
+li{
+
+
+    
+    padding: 0px !important;
+    width:60px !important;
+    height:60px !important;
+    margin-bottom: :20px;
+     
+    button{
+           width:60px !important;
+    height:60px !important;
+}
+}
+}
 .radios{
     width:50%;
 }
@@ -13,18 +31,106 @@
 .reviewPhoneText{
     padding-top: 20%;
 }
+.slick-next{
+  display:none !important;
+
+
+}
+.slick-prev{
+  display:none !important;
+
+
+}
+#starsspot{
+    display: block !important;
+    margin-left:0px !important;
+    float:none !important;
+}
+
+.outsideReviews{
+    margin-top:20px;
+    padding:20px;
+    border-top:2px dashed #aaa;
+ 
+}
+.userContent{
+    margin-top:20px;
+    padding: 10px;
+  
+}
+.showDescription{
+     padding: 10px;
+    margin-top:5px;
+   
+ 
+    border-bottom:2px dashed #aaa;
+}
+.showReviewLink{
+    text-align: center;
+    border: 4px double #e06666;
+    padding: 5px;
+
+}
+
+ #showContent{
+       
+    }
 
 @media (min-width: @screen-sm-min) {
+    .sidebarFooterColumn{
+        margin-left: 33.33333333%;
+    }
 .slickReviews{
     display:block;
+    margin-top:100px;
 }
 .slickReviewsSmall{
     display:none;
 }
 .radios{
-    width:25%;
+    width:50%;
+    margin-left: 0px !important;
 }
+  .mouseOverText{
+        width:80%;
+        background-color: black;
+         opacity: 0.8;
+         display:none; 
+         position: absolute; 
+         color:white; 
+          margin-top: -40%;
+           margin-left:0%;
+           font-size: 18px;
+    }
 }
+
+@media (min-width: @screen-lg-min) {
+    .sidebarFooterColumn{
+        margin-left:0%;
+    }
+    #panela{
+        .list-group-item{
+            font-size: 18px;
+        }
+    }
+    #showContent{
+        font-size:16px;
+    }
+      .mouseOverText{
+        width:70%;
+        background-color: black;
+         opacity: 0.8;
+         display:none; 
+         position: absolute; 
+         color:white; 
+          margin-top: -40%;
+           margin-left:5%
+    }
+}
+
+
+
+
 .shoe{
 	width:20px;
 }
@@ -34,6 +140,11 @@
 .slick-prev{
     top:3% !important;
     background:white;
+
+
+}
+.slick-next{
+  display:none;
 
 
 }
@@ -61,10 +172,7 @@ li{
 }
 }
 .slick-dots{
-    top: 110px;
-margin-left: 11%;
-
-bottom:auto !important;
+   
 li{
 button:hover{
      border: 3px solid #e06666;
@@ -84,43 +192,38 @@ button{
     }
     
 }
-li:nth-child(4){
+li:nth-child(3){
     button{
         background-image: url("/static/logos/citypaper.png");
         background-size: contain;
     }
 }
-li:nth-child(3){
-   button{
-        background-image: url("/static/logos/pw.jpg");
-        background-size: contain;
-    }
+// li:nth-child(3){
+//    button{
+//         background-image: url("/static/logos/pw.jpg");
+//         background-size: contain;
+//     }
     
-}
-li:nth-child(5){
+// }
+li:nth-child(4){
     button{
         background-image: url("/static/logos/shapiro.jpg");
         background-size: contain;
     }
     
 }
-li:nth-child(6){
+li:nth-child(5){
     button{
         background-image: url("/static/logos/inq.png");
         background-size: contain;
     }
 }
 
-li{
-    padding:20px !important;
-    width:40px !important;
-    height: 40px !important;
- 
-}
+
 li{
     button{
-        width:40px !important;
-        height:40px !important;
+        width:100% !important;
+        height:100% !important;
         padding:0px !important;
     }
     button:before{
@@ -129,6 +232,8 @@ li{
 }
 
 }
+
+
 .slick-next{
     top:3% !important;
     background-image: url("static/arrow_left_1.png") !important;
@@ -191,7 +296,7 @@ body {
     }
     .thumb{
             border: 4px solid gray;
-            border-top-width: 0px;
+      
             width: 100%;
 height: 200px;
     }
@@ -250,16 +355,7 @@ padding: 5%;
 
     }
 
-    .mouseOverText{
-        width:70%;
-        background-color: black;
-         opacity: 0.8;
-         display:none; 
-         position: absolute; 
-         color:white; 
-          margin-top: -40%;
-           margin-left:5%
-    }
+  
     .postPanel{
         margin-bottom: 10%
     }
