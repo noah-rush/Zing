@@ -958,7 +958,7 @@ function profile(){
 
 function autocomp(){
 	
-	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){console.log(("som");$('#rate').val('');find(e['data']); }});
+	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){$('#rate').val('');find(e['data']); }});
     $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
 }; 
 
@@ -968,8 +968,8 @@ function newUserAuthorize(){
 
 function facebook(){
 	 function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
+    // console.log('statusChangeCallback');
+    // console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
@@ -979,11 +979,11 @@ function facebook(){
       testAPI();
       
     } else if (response.status === 'not_authorized') {
-        console.log("not authorized");
+        // console.log("not authorized");
       newUserAuthorize();
       
     } else {
-        console.log("other else");
+        // console.log("other else");
       newUserAuthorize(); 
 
     }
@@ -1038,16 +1038,16 @@ FB.getLoginStatus(function(response) {
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
+    // console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
-        console.log(JSON.stringify(response));
+        // console.log('Successful login for: ' + response.name);
+        // console.log(JSON.stringify(response));
         var check = $("#panelheaderuser");
         check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\"> <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
         var name = response.first_name;
-        console.log(response.first_name);
+        // console.log(response.first_name);
         name = response.first_name;
-        console.log(user);
+        // console.log(user);
           $("#user").text(" " + response.first_name + " ");
         $.ajax({
   		url: "/login",
@@ -1066,7 +1066,7 @@ FB.getLoginStatus(function(response) {
 var quickReview = false;
 
 function handle_login(data){
-	console.log(data);
+	// console.log(data);
     if(data.substring(0,4) == "<h3>"){
         $("#loginModal").find("#paneltext").html(data);
         $("#loginModal").modal();
@@ -1087,7 +1087,7 @@ function displaycomingsoon(data){
 
 
 	$("#panelc3").html(data);
-    console.log($(".page2"));
+    // console.log($(".page2"));
     if($(".page2").length == 0){
         $(".page-turn-links").hide();
     }
@@ -1116,7 +1116,7 @@ function signup(){
 	var firstname = $("#newfirst").val();
 	var email = $("#newemail").val();
 	var password = $("#newpassword").val();
-	console.log(lastname, firstname, email, password);
+	// console.log(lastname, firstname, email, password);
 	 $.ajax({
 		url: "/zingnewuser",
 		data: {
@@ -1131,7 +1131,7 @@ function signup(){
 
 function panelMove() {
 var panel = $("#panelsignup");
-console.log(panel.css("height"));
+// console.log(panel.css("height"));
 var px = panel.css("height").indexOf('p')
 var number = parseInt(panel.css("height").substring(0, px));
 number = number +4;
@@ -1140,7 +1140,7 @@ setTimeout(panelMove,10); // call doMove() in 20 msec
 }
 
 function printmonth(){
-		console.log("anything")
+		// console.log("anything")
 		//panelMove();
 }
 
@@ -1149,13 +1149,13 @@ function show_signup(data){
 		//panelMove();
 }
 function login_rout(data){
-	console.log(data);
+	// console.log(data);
 	var str = data.substring(0,3);
 	var somethingwrong = $("#somethingWrong")
 	switch(str){
 		case "Log":
 			var user = data.substring(18);
-			console.log(user);
+			// console.log(user);
 			$("#loginscreen").hide();
 			var nouser = $("#nouser");
 			nouser.hide();
@@ -1269,7 +1269,7 @@ function show_reviews(){
 }
 
 function display_venues(data){
-	console.log(data);
+	// console.log(data);
 	$("#panelc").html(data);
 	var iURL = "http://ajax.googleapis.com/ajax/services/search/images";
     $.ajax({
@@ -1287,7 +1287,7 @@ function display_venues(data){
             
         },
         error: function(xhr, textStatus, error){
-            console.log(xhr.statusText, textStatus, error);
+            // console.log(xhr.statusText, textStatus, error);
         }
         
     });
@@ -1585,8 +1585,8 @@ $("#panelcenter").find('.panel-body').html(data);
     $('.removeReview').click(function(){
         var showid = this.value.substring(1, this.value.indexOf(","));
         var userid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
-        console.log(this.value.substring(1, this.value.indexOf(",")));
-        console.log(this.value.substring(this.value.indexOf(",")+2, this.value.length-1 ));
+        // console.log(this.value.substring(1, this.value.indexOf(",")));
+        // console.log(this.value.substring(this.value.indexOf(",")+2, this.value.length-1 ));
 
         $.ajax({
             success: manageReviews,
@@ -1669,8 +1669,8 @@ function show_homepage(data){
   lazyLoad: 'ondemand',
   draggable:false,
  onInit: function(){
-    $('.slickReviews').show();
-    console.log($($('.slick-dots').find(".slick-active")[0]));
+  
+    // console.log($($('.slick-dots').find(".slick-active")[0]));
 
  },
   responsive: [
@@ -1716,9 +1716,10 @@ if(e['type'] == 'mouseenter'){
    
 })
      $('.panel-review-heading').on("click", function(){
-
+$('.slick-dots').find('.slick-active').trigger("click");
+    $('.slickReviews').slideToggle();
     $('#zing-reviews').slideToggle();
-    $('.slick-dots').find('.slick-active').trigger("click")
+
   
 })
      $('.panel-tickets-heading').on("click", function(){

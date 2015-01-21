@@ -6467,11 +6467,9 @@ li.slick-active button {
 }
 .slick-next {
   top: 3% !important;
-  background-image: url("static/arrow_left_1.png") !important;
 }
 .slick-slide[index=0] {
   border-right: 2px dashed gray;
-  background-image: url("static/arrow_left_1.png") !important;
 }
 .slick-slide .row {
   border-bottom: 4px double #e06666;

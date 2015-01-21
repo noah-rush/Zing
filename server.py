@@ -166,26 +166,44 @@ def home():
     post['descript'] = Markup(post['descript'])
   c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC LIMIT 1")
   article = c.fetchall()
-  article = article[0]
-  c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
+
+  template_vars = {"outsideContent": outsideContent, 
+                        "shows": shows,
+                        "inq":inq, 
+                        "venues": venues,
+                        "phindie": phindie,
+                        "shapiro": shapiro, 
+                        "pw": pw, 
+                        "citypaper": citypaper, 
+                        "bsr": bsr, 
+                        "reviews": results, 
+                        "blog": blog, 
+                        "firstparagraph": "",
+                        "article": []
+                       }
+  if len(article) > 0:
+    article = article[0]
+    c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
                  WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
                  AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
-  tags = c.fetchall()
-  for tag in tags:
-    c.execute("SELECT name from ZINGVENUES where id = %s", (tag['venueid'],))
-    venue = c.fetchall()[0]['name']
-    tag['venue'] = venue
-  article['tags'] = tags
-  filename = article['article']
-  text = open('static/Posts/'+filename, 'r')
-  a = text.read()
-  article['article'] = Markup(a)
-  firstparagraph = article['article'][:article['article'].find("</p>")+4]
-  firstparagraph = Markup(firstparagraph)
-  article['article'] = article['article'][article['article'].find("</p>")+4:]
-  article['article'] = Markup(article['article'])
-  text.close()
-  return render_template("reviewlist.html",outsideContent = outsideContent, shows = shows,inq = inq, venues = venues, phindie = phindie, shapiro = shapiro, pw = pw, citypaper = citypaper, bsr = bsr, reviews = results, blog = blog, article = article, firstparagraph = firstparagraph)
+    tags = c.fetchall()
+    for tag in tags:
+      c.execute("SELECT name from ZINGVENUES where id = %s", (tag['venueid'],))
+      venue = c.fetchall()[0]['name']
+      tag['venue'] = venue
+    article['tags'] = tags
+    filename = article['article']
+    text = open('static/Posts/'+filename, 'r')
+    a = text.read()
+    article['article'] = Markup(a)
+    firstparagraph = article['article'][:article['article'].find("</p>")+4]
+    firstparagraph = Markup(firstparagraph)
+    article['article'] = article['article'][article['article'].find("</p>")+4:]
+    article['article'] = Markup(article['article'])
+    text.close()
+    template_vars['article'] = article
+    template_vars['firstparagraph'] = firstparagraph
+  return render_template("reviewlist.html", **template_vars )
 
 
 # ##home, returns content from posts 
