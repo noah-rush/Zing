@@ -53,7 +53,7 @@
 </div>
  <div style = "border-bottom: 4px solid gray; display:none; background:white"id = "zing-blog"class = "panel-body">
 
-
+{% if article|length >0%}
 <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -64,6 +64,7 @@
     </div>
   </div>
 </div>
+{%endif%}
 
 <div class = "row">
 
@@ -77,9 +78,9 @@
 <div class = "post-first-para" style = "font-size: 13pt;">
 {{firstparagraph}}
 </div>
-{%if article['pic'] == ''%}
-{%else%}
+{%if article|length>0%}
 <a  data-toggle="modal" data-target="#imageModal" ><img style = "float:right; margin: 6%" class = "homepage-image" src = "static/images/{{article['pic']}}"></a>
+{%else%}
 {%endif%}
 <div class = "post-article" >
 {{article['article']}}
