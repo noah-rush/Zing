@@ -2062,7 +2062,17 @@ $(window).hashchange( function test(){
         url:"/updateArticles",
         success: function(data){
             alert(data)
-        }
+        },
+         beforeSend: function() {
+            console.log("before");
+             $("#panelcenter").find('.panel-body').html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+    console.log("done")
+     $('#loader').hide();
+     homepage();
+  }
     })
         break;
     case "#manageReviews":
