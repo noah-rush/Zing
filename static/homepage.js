@@ -1649,14 +1649,22 @@ if(e['type'] == 'mouseenter'){
 function show_homepage(data){
 
     $("#panelcenter").find('.panel-body').html(data);
+      $('.slickReviews').hide();
       $('.slickReviews').slick({
+         centerMode: true,
    dots: true,
   speed: 300,
   slidesToShow: 3,
   slidesToScroll: 1,
   autoplaySpeed: 5000,
   adaptiveHeight: true,
- 
+  lazyLoad: 'ondemand',
+  draggable:false,
+ onInit: function(){
+    $('.slickReviews').show();
+    console.log($($('.slick-dots').find(".slick-active")[0]));
+
+ },
   responsive: [
     {
       breakpoint: 1400,
@@ -1702,6 +1710,7 @@ if(e['type'] == 'mouseenter'){
      $('.panel-review-heading').on("click", function(){
 
     $('#zing-reviews').slideToggle();
+    $('.slick-dots').find('.slick-active').trigger("click")
   
 })
      $('.panel-tickets-heading').on("click", function(){
@@ -1932,6 +1941,7 @@ function start (){
 	getcomingsoon();
 	homepage();
     inputs();
+   
 
 
 $(window).hashchange( function test(){
