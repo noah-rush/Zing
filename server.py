@@ -88,6 +88,11 @@ def sort_array(s):
         s[j+1] = val
     return s
 
+
+@app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461')
+def loaderio():
+  return render_template("loaderio-83465c8b2028a6a6aa7cc879d3d87461.txt")
+
 ### index, checks for user, and checks admin privileges
 @app.route('/', methods=['GET', 'POST'])
 def index():
