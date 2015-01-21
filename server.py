@@ -89,7 +89,7 @@ def sort_array(s):
     return s
 
 
-@app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461')
+@app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461/')
 def loaderio():
   return render_template("loaderio-83465c8b2028a6a6aa7cc879d3d87461.txt")
 
