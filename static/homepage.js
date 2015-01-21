@@ -958,7 +958,7 @@ function profile(){
 
 function autocomp(){
 	
-	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){find(e['data'])}});
+	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){console.log(("som");$('#rate').val('');find(e['data']); }});
     $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
 }; 
 
