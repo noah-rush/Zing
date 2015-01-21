@@ -239,7 +239,9 @@ def post():
   article['article'] = article['article'][article['article'].find("</p>")+4:]
   article['article'] = Markup(article['article'])
   text.close()
-  return render_template("post.html", article = article, firstparagraph = firstparagraph)
+  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
+  blog = c.fetchall()
+  return render_template("post.html", article = article, firstparagraph = firstparagraph, blog = blog)
 
 
 ###route for uploading photos in editor
@@ -959,9 +961,42 @@ def submitreview():
                   FROM ZINGRATINGS 
                   WHERE userid = %s""",
                   (userid,))
-    numUserRatings = str(c.fetchall()[0]['count'])
+    numUserRatings = c.fetchall()[0]['count']
+    suffixNum = str(numUserRatings % 10)
+    numUserRatings = str(numUserRatings)
+    if suffixNum == "0":
+      numUserRatings = numUserRatings +"th"
+    elif suffixNum == "1": 
+        numUserRatings = numUserRatings + "st"
+        if numUserRatings == "11st":
+          numUserRatings = numUserRatings[:2] +"th"
+    elif suffixNum == "2":  
+        numUserRatings = numUserRatings + "nd"
+        if numUserRatings == "12nd":
+          numUserRatings = numUserRatings[:2] +"th"
+    elif suffixNum == "3":
+        numUserRatings = numUserRatings + "rd"
+        if numUserRatings == "13rd":
+          numUserRatings = numUserRatings[:2] +"th"
+    elif suffixNum == "4": 
+        numUserRatings = numUserRatings + "th"
+    elif suffixNum == "5":
+        numUserRatings = numUserRatings + "th"
+    elif suffixNum == "6":
+        numUserRatings = numUserRatings + "th"
+    elif suffixNum == "7": 
+        numUserRatings = numUserRatings + "th"
+    elif suffixNum == "8":
+        numUserRatings = numUserRatings + "th"
+    elif suffixNum == "9": 
+        numUserRatings = numUserRatings + "th"
+
+
+      
+  
     print numUserRatings
-    print numUserRatings
+    c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (showID,))
+    show = c.fetchall()[0]['name']
     html = render_template(
             'email/review.html',
             bads = bads,

@@ -1,3 +1,28 @@
+
+
+
+
+
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <img style = "width: 100%" src = "static/images/{{article['pic']}}">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "row">
+
+<div class = "col-md-9">
+<div id = "post" style = "background-color: white; box-shadow: rgba(2, 0, 0, 0.35098) 0px 6px 6px 0px;"class="panel panel-default">
+<div class = "panel-heading" style = "border-bottom: 2px solid #e06666;">
+<span ><h2><i>{{article['title']}}</i></h2></span>
+<i>{{article['author']}}</i>
+</div>
+<div class="panel-body" >
 <div class = "post-first-para" style = "font-size: 13pt;">
 {{firstparagraph}}
 </div>
@@ -12,6 +37,7 @@
 </div>
 </div>
 <div class = "col-md-3">
+{%if article['tags']|length >0%}
 <div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
  <div class = "panel-heading">
   <h3>In today's post...</h3>
@@ -30,6 +56,7 @@
 {%endfor%}
 </div>
 </div>
+{%endif%}
 
 
 
@@ -46,3 +73,15 @@
 </div>
 <br>
 <br>
+
+
+{%endfor%}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+

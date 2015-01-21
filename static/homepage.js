@@ -1471,6 +1471,14 @@ function post(data){
 
 function show_post(data){
     $('#zing-blog').html(data);
+     $(".sidebar-link").hover(function(e){
+
+if(e['type'] == 'mouseenter'){
+    $(e['currentTarget']['lastElementChild']).slideToggle();
+}else{
+      $(e['currentTarget']['lastElementChild']).slideToggle();
+}
+});
 }
 function publish(){
   var article = CKEDITOR.instances.editor1.getData();
@@ -1843,7 +1851,7 @@ var name
 function trackScrolling(){
     $( window ).scroll(function(e) {
         
-        if(parseInt(e.currentTarget['scrollY'])>218){
+        if(parseInt(e.currentTarget['scrollY'])>350){
             if($( window ).width()>1200){
             $('#panela').css({
                 "position":"fixed",

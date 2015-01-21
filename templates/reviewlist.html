@@ -88,12 +88,14 @@
 </div>
 </div>
 <div class = "col-md-3">
+{%if article['tags']|length >0%}
 <div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
  <div class = "panel-heading">
   <h3>In today's post...</h3>
   </div>
 <div class="panel-body">
 {%for tags in article['tags']%}
+
 <div><a  class = "sidebar-link" href = "#show/{{tags['id']}}" >
 <img class ="sidebar-img" src = "static/Zingimages/{{tags['id']}}.jpg" width = "100%">
 <h3 class = "mouseOverText" >{{tags['name']}}</h3>
@@ -106,6 +108,7 @@
 {%endfor%}
 </div>
 </div>
+{%endif%}
 
 
 
