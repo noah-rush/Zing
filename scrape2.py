@@ -14,7 +14,7 @@ c = conn.cursor()
 
 show = ""
 venue = ""
-address = ""lastlink
+address = ""
 producer = ""
 description = ""
 image = ""
@@ -64,23 +64,26 @@ for target in target_urls:
 
 
 
-			c.execute("SELECT id from ZINGVENUES WHERE NAME = %s", (venue,))
-			results = c.fetchall()
-			if results == []:
-			 	c.execute("SELECT id from ZINGVENUES where name = %s", (producer,))
-			 	venueid = c.fetchall()
-			 	if venueid ==[]:
-			 		c.execute("INSERT INTO ZINGVENUES(name, address) VALUES (%s, %s)", (venue, address))
-					c.execute("SELECT id from fringevenues ORDER BY id desc LIMIT 1")
-			 		venueid = c.fetchall()[0][0]
-			 	else:
-			 		venueid = venueid[0][0]
-			else:
-			 	venueid = results[0][0]
+			#c.execute("SELECT id from ZINGVENUES WHERE NAME = %s", (venue,))
+			# results = c.fetchall()
+			# if results == []:
+			#  	#c.execute("SELECT id from ZINGVENUES where name = %s", (producer,))
+			#  	#venueid = c.fetchall()
+			#  	# if venueid ==[]:
+			#  	# 	c.execute("INSERT INTO ZINGVENUES(name, address) VALUES (%s, %s)", (venue, address))
+			# 		# c.execute("SELECT id from fringevenues ORDER BY id desc LIMIT 1")
+			#  	# 	venueid = c.fetchall()[0][0]
+			#  	# else:
+			#  	# 	venueid = venueid[0][0]
+			# else:
+			#  	# venueid = results[0][0]
 			if len(endate) > 0:
-				c.execute("""INSERT INTO ZINGSHOWS(pic, name, descript, producer, venueid, start, enddate) 
-                        	 VALUES(%s,%s,%s,%s,%s,%s,%s)""", (image, show, description, producer, venueid, startdate, endate))
-				conn.commit()
+				c.execute("SELECT id from ZINGSHOWS")
+				ids = c.fetchall()
+				if len(ids) == 0:
+					c.execute("""INSERT INTO ZINGSHOWS(pic, name, descript, producer,  start, enddate) 
+                        	 VALUES(%s,%s,%s,%s,%s,%s,%s)""", (image, show, description, producer, startdate, endate))
+					conn.commit()
 			show = line
 			showfirst = show.find(">")
 			show = show[showfirst+1:]

@@ -345,16 +345,27 @@
  <div style = "border-bottom: 4px solid gray; display:none; background:white"id = "zing-venues"class = "panel-body">
 
 
-<div class = "row">
+
 
 {%for venue in venues%}
-{%if (loop.index + 2)%4 == 0%}
-<div  class = "col-md-3"  style ="text-align:center">
-{%else%}
-<div  class = "col-md-3" style ="text-align:center">
+{% if loop.index == 1%}
+<div class = "row">
+
+{% elif (loop.index -1)%3 == 0%}
+
+</div>
+<div class = "row">
 {%endif%}
-<a href = "#venue/{{venue['id']}}" >{{venue['name']}}</a>
-<hr>
+<div style = "padding: 30px;"class = "col-lg-4">
+<div><a  class = "sidebar-link" href = "#venue/{{venue['id']}}" >
+<img class ="sidebar-img venueImage" src = "static/ZingVenueImages/{{venue['id']}}.png" width = "100%">
+<h3 class = "mouseOverText" >{{venue['name']}}<br>
+
+</h3>
+</a>
+
+</div>
+
 </div>
 {%endfor%}
 </div>

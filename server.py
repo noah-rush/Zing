@@ -115,7 +115,7 @@ def index():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT ZINGVENUES.* FROM ZINGVENUES, ZINGSHOWS WHERE ZINGSHOWS.venueid = ZINGVENUES.id GROUP BY ZINGVENUES.id ORDER BY ZINGVENUES.id ASC")
+  c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC")
   venues = c.fetchall()
   for venue in venues:
     venue['name'] = Markup(venue['name'])
@@ -188,7 +188,7 @@ def home():
                  AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
     tags = c.fetchall()
     for tag in tags:
-      c.execute("SELECT name from ZINGVENUES where id = %s", (tag['venueid'],))
+      c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
       venue = c.fetchall()[0]['name']
       tag['venue'] = venue
     article['tags'] = tags
@@ -244,7 +244,7 @@ def post():
                  AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
   tags = c.fetchall()
   for tag in tags:
-    c.execute("SELECT name from ZINGVENUES where id = %s", (tag['venueid'],))
+    c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
     venue = c.fetchall()[0]['name']
     tag['venue'] = venue
   article['tags'] = tags
@@ -719,7 +719,7 @@ def yelp():
 def venue():
     venue = request.args.get('venue')
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("SELECT * from ZINGVENUES where id = %s", (venue,))
+    c.execute("SELECT * from PhillyVenues where id = %s", (venue,))
     results = c.fetchall()
     results = results[0]
     results['name'] = Markup(results['name'])
@@ -761,7 +761,7 @@ def show():
       #           where showID = %s and Karlactors.id = Karlcasting.actorID""",
       #           (showdata[0]['id'],))
       casting = c.fetchall()
-      c.execute("""SELECT name from ZINGVENUES
+      c.execute("""SELECT name from PhillyVenues
                 where id = %s""", (showdata[0]['venueid'],))
       venue = c.fetchall()
       venue[0]['name'] = Markup(venue[0]['name'])
