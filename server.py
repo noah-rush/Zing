@@ -1070,6 +1070,44 @@ def removeReview():
    conn.commit()
    return "did it"
 
+@app.route('/removeOutReview', methods = ['GET', 'POST'])
+def removeOutReview():
+   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+   articleid = request.args.get('articleid')
+   c.execute("""DELETE FROM ZINGOUTSIDECONTENT WHERE 
+              id = %s""", (articleid,))
+   c.execute("""DELETE FROM ZINGOUTSIDESHOWTAGS WHERE 
+              articleid = %s""", (articleid,))
+   conn.commit()
+   return "did it"
+
+
+@app.route('/removeTag', methods = ['GET', 'POST'])
+def removeTag():
+   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+   articleid = request.args.get('articleid')
+   showid = request.args.get('showid')
+   c.execute("""DELETE FROM ZINGOUTSIDESHOWTAGS WHERE 
+              articleid = %s and showid = %s""", (articleid,showid))
+   conn.commit()
+   return "did it"
+
+@app.route('/manageOutReviews', methods=['GET', 'POST'])
+def manageOutReviews():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.showID FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZingoutsideContent.id, ZINGOUTSIDESHOWTAGS.showID ORDER BY ZINGOUTSIDECONTENT.id DESC")
+  results = c.fetchall()
+  for review in results:
+    c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (review['showid'],))
+    showname = c.fetchall()[0]
+    review['showname'] = showname['name']
+    c.execute("SELECT * from SNIPPETS WHERE articleid = %s", (review['id'],))
+    snippets = c.fetchall()
+    for snippet in snippets:
+      print snippet['snippet']
+    review['snippets'] = snippets
+  return render_template("manageOutsideReviews.html", results = results)
+
 
 @app.route('/manageReviews', methods=['GET', 'POST'])
 def manageReviews():

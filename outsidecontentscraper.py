@@ -25,7 +25,7 @@ def update():
 	target_urls = ["http://www.theatermania.com/rss.xml/",
 	 			   "http://www.broadstreetreview.com/rss", 
 	 			   "http://phindie.com/feed/", 
-	 			   "http://citypaper.net/rss/arts/", 
+	 			   # "http://citypaper.net/rss/arts/", 
 				   "http://feeds.feedburner.com/ShapiroOnTheater", 
 	 			   "http://feeds.feedburner.com/PW-ArtsCulture", 
 	 			   "http://www.philly.com/phillystage.rss"]
@@ -199,15 +199,19 @@ def update():
 						 		elements = len(d.entries[entry])
 						 		tags = d.entries[entry]['tags']
 						 		for i in tags:
-						 			if i['term'] == name:
+						 			if i['term'].lower() == name.lower():
 						 				c.execute("SELECT id FROM ZingOutsideShowTags where articleid = %s and showid = %s", (articleID, showid))
 						 				check2 = c.fetchall()
 						 				if len(check2) == 0:
 						 					c.execute("INSERT INTO ZingOutsideShowTags(articleid, showid) VALUES(%s,%s)", (articleID, showid))
 						 	else:
-						 		if name in data: 
+						 		if name.lower() in data.lower(): 
 						 			print showid
 						 			print name
+						 			boldStart = data.find(name)
+						 			data = data[boldStart-60:boldStart] + "<b>" + name + "</b>" + data[boldStart+len(name):boldStart+len(name)+60]
+						 			print data
+									c.execute("INSERT INTO SNIPPETS(articleid, snippet) VALUES(%s,%s)", (articleID, data))
 						 			c.execute("SELECT id FROM ZingOutsideShowTags where articleid = %s and showid = %s", (articleID, showid))
 						 			check2 = c.fetchall()
 						 			if len(check2) == 0:

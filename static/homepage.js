@@ -1577,7 +1577,46 @@ function manageReviews(){
         url:"/manageReviews"
     })
 }
+function manageOutReviews(){
+    $.ajax({
+        success: show_out_manager,
+        url:"/manageOutReviews"
+    })
+}
 
+function show_out_manager(data){
+
+$("#panelcenter").find('.panel-body').html(data);
+ $('.removeOutReview').click(function(){
+       console.log(this.value);
+
+        $.ajax({
+            success: manageOutReviews,
+            data: {articleid: this.value},
+            url: "/removeOutReview"
+        });
+
+
+
+    })
+  $('.removeTag').click(function(){
+       console.log(this.value);
+        var articleid = this.value.substring(1, this.value.indexOf(","));
+        var showid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
+        $.ajax({
+            success: manageOutReviews,
+            data: {articleid: articleid,
+                showid:showid},
+            url: "/removeTag"
+        });
+
+
+
+    })
+ 
+ 
+
+}
 function show_manager(data){
 
 $("#panelcenter").find('.panel-body').html(data);
@@ -2077,6 +2116,9 @@ $(window).hashchange( function test(){
         break;
     case "#manageReviews":
     manageReviews();    
+    break;
+    case "#manageOutReviews":
+    manageOutReviews();    
     break;
 
 

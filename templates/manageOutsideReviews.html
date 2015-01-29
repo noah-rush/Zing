@@ -1,0 +1,12 @@
+{%for result in results%}
+
+<a target = "_blank" href = "{{result['link']}}">{{result['title']}}</a> --- {{result['showname']}}
+<button class = "removeOutReview" value = "{{result['id']}}">Delete Review</button>
+<button class = "removeTag" value = "[{{result['id']}}, {{result['showid']}}]">Delete Tag</button>
+<br>
+{%for snippet in result['snippets']%}
+{{snippet['snippet']}}
+<br>
+{%endfor%}
+<hr>
+{%endfor%}
