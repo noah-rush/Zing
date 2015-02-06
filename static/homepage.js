@@ -905,7 +905,37 @@
 
 
 var stars = 0;
+function ads(){
+        $.ajax({
+        url: "/topPanel",
+        success: displayAds
+    });
+}
+function displayAds(data){
+     $('#panelads').find(".panel-body").html(data);
+      $('.slickAds').slick({
 
+   arrows:false,
+  speed: 300,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  autoplaySpeed: 2000,
+  autoplay:true,
+  adaptiveHeight: true,
+  lazyLoad: 'ondemand',
+
+
+})
+
+     $(".sidebar-link-top").hover(function(e){
+       
+if(e['type'] == 'mouseenter'){
+    $(e['currentTarget']['lastElementChild']).slideToggle();
+}else{
+      $(e['currentTarget']['lastElementChild']).slideToggle();
+}
+});
+  }
 function getnowplaying(){
 	$.ajax({
   		url: "/nowPlaying",
@@ -1696,12 +1726,12 @@ if(e['type'] == 'mouseenter'){
 function show_homepage(data){
 
     $("#panelcenter").find('.panel-body').html(data);
-      $('.slickReviews').hide();
+      
       $('.slickReviews').slick({
-         centerMode: true,
+
    dots: true,
   speed: 300,
-  slidesToShow: 3,
+  slidesToShow: 1,
   slidesToScroll: 1,
   autoplaySpeed: 5000,
   adaptiveHeight: true,
@@ -1738,8 +1768,14 @@ function show_homepage(data){
     }
   ]
     });
-     $(".sidebar-link").hover(function(e){
+       $('.newDots').html($(".slick-dots"));
+       $('.newDots').append($(".slick-prev"));
+       $('.newDots').append($(".slick-next"));
+       $('.slick-next').hide();
+       $('.slick-prev').hide();
 
+     $(".sidebar-link").hover(function(e){
+       
 if(e['type'] == 'mouseenter'){
     $(e['currentTarget']['lastElementChild']).slideToggle();
 }else{
@@ -1754,13 +1790,24 @@ if(e['type'] == 'mouseenter'){
     $('#zing-shows').slideToggle();
    
 })
-     $('.panel-review-heading').on("click", function(){
-$('.slick-dots').find('.slick-active').trigger("click");
-    $('.slickReviews').slideToggle();
-    $('#zing-reviews').slideToggle();
 
-  
+$('.panel-review-heading').on("hover",function(){
+    $('.paneltransition').trigger("hover")
 })
+
+
+
+
+     $('.panel-review-heading').on("click", function(){
+
+
+    $('#zing-reviews').slideToggle();
+    
+    $('.slick-next').slideToggle();
+       $('.slick-prev').slideToggle();
+       $('.slick-dots').find('.slick-active').find("button").trigger("click");
+})
+
      $('.panel-tickets-heading').on("click", function(){
     window.open("http://www.goldstar.com/philadelphia/events/categories/theater-tickets");
   
@@ -1821,6 +1868,50 @@ function show_editor(data){
     });
 
 
+
+
+}
+
+function survey(){
+    $.ajax({
+        url: "/getsurvey",
+        success: show_survey
+    })
+}
+function show_survey(data){
+    console.log("surverer")
+    $("#emailModal").find('#paneltext').append(data);
+    $("#emailModal").modal();
+}
+
+function donesurvey(){
+    console.log("HERERERER")
+    var preferences = [];
+    var yes = false;
+    var no = false;
+ $('#userPreferences input:checked').each(function() {
+            console.log(this.value);
+            preferences.push(this.value)
+        });
+if($('#Yes').prop('checked')){
+yes = true;
+}
+if($('#No').prop('checked')){
+    no = true;
+}
+
+console.log(yes);
+console.log(no);
+console.log(preferences);
+
+$.ajax({
+    url: "/donesurvey",
+    data: {prefs: JSON.stringify(preferences), 
+            yes: yes, 
+            no: no
+            },
+    success:  $("#emailModal").modal('hide')
+})
 
 
 }
@@ -2030,7 +2121,7 @@ $(window).hashchange( function test(){
 
         
     }
-
+    console.log(hash);
 	switch(hash){
 	case "#venues":
 		show_venues();
@@ -2120,6 +2211,10 @@ $(window).hashchange( function test(){
     case "#manageOutReviews":
     manageOutReviews();    
     break;
+    case "#doneSurvey":
+    donesurvey();
+ 
+    break;
 
 
 
@@ -2163,7 +2258,8 @@ $("#modalReview").click(function(){
        );
 
 if($('#fromEmail').text() == 'a'){
-    $('#emailModal').modal();
+   survey();
+
 }
 
 $(window).hashchange();
@@ -2172,6 +2268,7 @@ $(window).hashchange();
   facebook();
 autocomp();
 trackScrolling();
+ads();
   //  $('.slickReviews').slick({
   //     slidesToShow: 2,
   // slidesToScroll: 1,

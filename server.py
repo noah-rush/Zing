@@ -48,7 +48,7 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'noah@codearium.com',
+    MAIL_USERNAME = 'info@phillyzing.com',
     MAIL_PASSWORD = 'tomato777',
 ))
 
@@ -375,7 +375,7 @@ def fbcreateform():
             'email/activate.html',
             confirm_url=confirm_url)
   msg = Message("Welcome to Zing",
-                  sender="noah@codearium.com",
+                  sender="info@phillyzing.com",
                   recipients=[email])
   msg.html = html
   mail.send(msg)
@@ -431,7 +431,7 @@ def zingnewuser():
             'email/activate.html',
             confirm_url=confirm_url)
   msg = Message("Welcome to Zing",
-                  sender="noah@codearium.com",
+                  sender="info@phillyzing.com",
                   recipients=[email])
   msg.html = html
   mail.send(msg)
@@ -656,6 +656,13 @@ def fullschedule():
               "11": "November ", 
               "12": "December "}
     for result in results:
+      c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      venueResult = c.fetchall()
+      if len(venueResult)>0:
+        venuename = venueResult[0]['name']
+      else:
+        venuename = ""
+      result['venuename'] = Markup(venuename)
       result['name'] = Markup(result['name'])
       result['start'] = str(result['start'])
       result['enddate'] = str(result['enddate'])
@@ -1148,9 +1155,60 @@ def manageReviews():
 
 
 ###return a description of Zing
+@app.route('/topPanel')
+def topPanel():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT name, id
+                 from ZINGSHOWS
+                 WHERE (start,enddate)
+                 OVERLAPS (CURRENT_DATE, CURRENT_DATE)
+               """)
+    results = c.fetchall()
+    return render_template('ads.html', results=results)
+
+
+
 @app.route('/zingDescript')
 def zingDescript():
   return render_template('zingdescription.html')
+
+@app.route('/getsurvey')
+def getsurvey():
+  return render_template('usersurvey.html')
+
+@app.route('/donesurvey')
+def donesurvey():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  yes = request.args.get('yes')
+  no = request.args.get('no')
+  prefs = request.args.get('prefs')
+  prefs  = json.loads(prefs)
+  worksin = False
+  if yes:
+    worksin = True
+  comedy = False
+  drama = False
+  experimental = False
+  classics = False
+  musicals = False
+  for pref in prefs:
+    if pref == 'drama':
+      drama = True
+    if pref == 'comedy':
+      comedy = True
+    if pref == 'musicals':
+      musicals = True
+    if pref == 'experimental':
+      experimental = True
+    if pref == 'classics':
+      classics = True
+  c.execute("""INSERT INTO ZINGSURVEY(userid, comedy, drama, 
+            experimental, classics, musicals, worksin) 
+            VALUES(%s,%s,%s,%s, %s, %s,%s)""",
+            [session['username'], comedy, drama, 
+            experimental, classics, musicals, worksin])
+  conn.commit()
+  return redirect(url_for('index'))
 
 ###logout
 @app.route('/logout', methods=['GET', 'POST'])

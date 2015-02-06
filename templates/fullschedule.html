@@ -68,9 +68,21 @@
 <div class = "panel-body" style = "background-color: gray">
 
 
-{%for result in results%} 
-<a  class = "list-group-item" href = "#show/{{result['id']}}"> {{result['name']}}<span style = "float:right">{{result['start']}} - {{result['enddate']}}</a>
-
+{%for result in results%}
+<a  class = "list-group-item" href = "#show/{{result['id']}}">
+<div class = "row" style="text-align:center">
+<div class = "col-md-4"> 
+ <b><u>{{result['name']}}</u></b>
+ </div>
+ <div class = "col-md-4">
+ <b><i>{{result['venuename']}}</i></b>
+ </div>
+ <div class = "col-md-4">
+ <b><span >{{result['start']}} - {{result['enddate']}}
+</span></b>
+</div>
+</div>
+</a>
 {%endfor%}
 
 <!-- {% for date in dates %}

@@ -1,0 +1,9 @@
+<div class = "slickAds" style = "height:250px">
+{%for result in results%}
+<div style = "text-align: center;">
+<a class = "sidebar-link-top" href ="#show/{{result['id']}}"><img class = "sidebar-img"src = "static/Zingimages/{{result['id']}}.jpg" style = "width:90%; max-height:100%">
+<h3 class = "mouseOverText" >{{result['name']}}<br></h3></a>
+</div>
+{%endfor%}
+
+

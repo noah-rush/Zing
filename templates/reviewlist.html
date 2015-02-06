@@ -156,13 +156,13 @@
 
 
 <div style = "border: 4px solid gray; background: whitesmoke" id = "paneltext"class="panel panel-default">
-  <div class = "panel-heading panel-review-heading">
+  <div class = "panel-heading paneltransition">
   <div class = "row">
-  <div style = "border-right: 8px dashed #e06666"class = "col-md-8">
+  <div style = "border-right: 8px dashed #e06666"class = "col-md-7 panel-review-heading">
   <h1 ><span >Around Philadelphia</span></h1>
 <h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
 </div>
-<div style ="text-align:center" class = "col-md-4">
+<div style ="text-align:center" class = "col-md-5 newDots">
   <h1 ><span ><h1><u></u></h1></span></h1>
 
 </div>
@@ -192,36 +192,37 @@
 <div class = "slickReviews">
 
 <div style = "text-align: center;">
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/bsr.png">
-</div>
+
 {%for bsr in bsr%}
-<div class = "row">
-<div class = "col-md-6">
-<a href = "{{bsr['link']}}"><span > {{bsr['title']}}</span></a>
+
+<div class = "col-md-4 reviewCol">
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a target = "_blank" href = "{{bsr['link']}}"><span > {{bsr['title']}}</span></a></h4>
 </div>
-<div class = "col-md-6">
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link" href = "#show/{{bsr['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{bsr['showid']}}.jpg" width = "100%">
 <h5 class="mouseOverText" style="display: none;">{{bsr['showname']}}</h5></a>
 </div>
 </div>
-
-
+</div>
 {%endfor%}
 </div>
 
 <div  style = "text-align: center; ">
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/phindie.jpg">
-</div>
+
 {%for phin in phindie%}
-<div class = "row">
-<div class = "col-md-6">
-<a  href = "{{phin['link']}}"><span > {{phin['title']}}</span></a>
+
+<div class = "col-md-4 reviewCol">
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a  target = "_blank" href = "{{phin['link']}}"><span > {{phin['title']}}</span></a></h4>
+
 </div>
-<div class = "col-md-6">
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link" href = "#show/{{phin['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{phin['showid']}}.jpg" width = "100%">
 <h5 class="mouseOverText" style="display: none;">{{phin['showname']}}</h5></a>
+</div>
 </div>
 </div>
 
@@ -229,76 +230,78 @@
 </div>
 {% if pw|length>0%}
 <div  style = "text-align: center; ">
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/pw.jpg">
-</div>
+
 
 {%for pw in pw%}
 
-<div class = "row">
-<div class = "col-md-6">
-<a  href = "{{pw['link']}}"><span> {{pw['title']}}</span></a>
-</div>
-<div class = "col-md-6">
+
+<div class = "col-md-4 reviewCol">
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a target = "_blank" href = "{{pw['link']}}"><span> {{pw['title']}}</span></a></h4>
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link" href = "#show/{{pw['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{pw['showid']}}.jpg" width = "100%">
 
 <h5 class="mouseOverText" style="display: none;">{{pw['showname']}}</h5></a>
+</div>
+</div>
 </div>
 </div>
 {%endfor%}
 </div>
 {%endif%}
 <div style = "text-align: center;">
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/citypaper.png">
-</div>
+
 {%for city in citypaper%}
-<div class = "row">
-<div class = "col-md-6">
-<a  href = "{{city['link']}}"><span > {{city['title']}}</span></a>
+
+<div class = "col-md-4 reviewCol">
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a target = "_blank" href = "{{city['link']}}"><span > {{city['title']}}</span></a></h4>
 </div>
-<div class = "col-md-6">
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link"  href = "#show/{{city['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{city['showid']}}.jpg" width = "100%">
 <h5 class="mouseOverText" style="display: none;">{{city['showname']}}</h5></a>
 </div>
 </div>
+</div>
+
 
 
 {%endfor%}
 </div>
-<div style = "text-align: center;" >
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/shapiro.jpg">
-</div>
+<div style = "text-align: center;">
 {%for shap in shapiro%}
-<div class = "row">
-<div class = "col-md-6">
-<a    href = "{{shap['link']}}"><span> {{shap['title']}}</span></a>
+
+<div class = "col-md-4 reviewCol" >
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a  target = "_blank"  href = "{{shap['link']}}"><span> {{shap['title']}}</span></a></h4>
 </div>
-<div class = "col-md-6">
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link" href = "#show/{{shap['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{shap['showid']}}.jpg" width = "100%">
 <h5 class="mouseOverText" style="display: none;">{{shap['showname']}}</h5></a>
 </div>
 </div>
-
+</div>
 
 {%endfor%}
 </div>
-<div style = "text-align: center;" >
-<div class = "thumb">
-<img class = "website-thumb" data-lazy = "../static/logos/inq.png">
-</div>
+<div style = "text-align: center;">
 {%for inq in inq%}
-<div class = "row">
-<div class = "col-md-6">
-<a  href = "{{inq['link']}}"><span> {{inq['title']}}</span></a>
+
+<div class = "col-md-4 reviewCol">
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a target = "_blank" href = "{{inq['link']}}"><span> {{inq['title']}}</span></a></h4>
 </div>
-<div class = "col-md-6">
+<div class = "panel-body panel-review-pic">
 <a class="sidebar-link" href = "#show/{{inq['showid']}}"><img class ="sidebar-img" data-lazy = "static/Zingimages/{{inq['showid']}}.jpg" width = "100%">
 <h5 class="mouseOverText" style="display: none;">{{inq['showname']}}</h5></a>
-
-
 </div>
+</div>
+
+
 </div>
 
 
@@ -315,7 +318,7 @@
   <div class = "row">
   <div style = "border-right: 8px dashed #e06666"class = "col-md-6">
   <h1 ><span >Tickets</span></h1>
-<h4><i>Click Here for the Cheapest seats in Town</i></h4>
+<h4><i>click here for the cheapest seats in town</i></h4>
 </div>
 <div style ="text-align:center" class = "col-md-6">
   <h1 ><span ><h1><u></u></h1></span></h1>
@@ -334,7 +337,7 @@
   <div class = "row">
   <div style = "border-right: 8px dashed #e06666"class = "col-md-8">
   <h1 ><span >Philadelphia Theaters</span></h1>
-<h4><i>an aggregation of theater reviews from leading critics and publications</i></h4>
+<h4><i>stages presenting live theater</i></h4>
 </div>
 <div style ="text-align:center" class = "col-md-4">
   <h1 ><span ><h1><u> </u></h1></span></h1>

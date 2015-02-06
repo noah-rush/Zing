@@ -298,36 +298,33 @@ found this
 <br>
 <br>
 {% for article in articles %}
-
-
-<a target = "_blank"href = "{{article['link']}}">
-<div class = "row">
-<div class = "col-md-3">
+<div class = "col-md-4 ShowreviewCol" >
+<div class = "panel panel-default oneReview">
+<div class = "panel-heading">
+<h4><a  target = "_blank"  href = "{{article['link']}}"><span> {{article['title']}}</span></a></h4>
+</div>
+<div class = "panel-body panel-review-pic">
 {%if article['publication'] == 'http://bsr2.dev/index.php'%}
-<img style = "max-width: 50px" src = "../static/logos/bsr.png">
+<img style = "max-width: 100%" src = "../static/logos/bsr.png">
 {%endif%}
 {%if article['publication'] == 'http://phindie.com'%}
-<img style = "max-width: 50px" src = "../static/logos/phindie.jpg">
+<img style = "max-width: 100%" src = "../static/logos/phindie.jpg">
 {%endif%}
 {%if article['publication'] == 'http://www.philadelphiaweekly.com/arts-and-culture'%}
-<img style = "max-width: 50px" src = "../static/logos/pw.jpg">
+<img style = "max-width: 100%" src = "../static/logos/pw.jpg">
 {%endif%}
 {%if article['publication'] == 'http://citypaper.net'%}
-<img style = "max-width: 50px" src = "../static/logos/citypaper.png">
+<img style = "max-width: 100%" src = "../static/logos/citypaper.png">
 {%endif%}
 {%if article['publication'] == 'http://www.newsworks.org/'%}
-<img style = "max-width: 50px" src = "../static/logos/shapiro.jpg">
+<img style = "max-width: 100%" src = "../static/logos/shapiro.jpg">
 {%endif%}
 {%if article['publication'] == 'http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F'%}
-<img style = "max-width: 50px" src = "../static/logos/inq.png">
+<img style = "max-width: 100%" src = "../static/logos/inq.png">
 {%endif%}
 </div>
-<div class = "col-md-9 showReviewLink">
-<span style = "padding-left:3%;" > {{article['title']}}</span>
 </div>
 </div>
-</a>
-<br>
 {%endfor %}
 {%endif%}
 <br>

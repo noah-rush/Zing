@@ -6289,28 +6289,45 @@ button.close {
   width: 100%;
   max-height: 320px;
 }
+#zing-reviews {
+  height: 600px;
+  overflow: scroll;
+}
+#zing-shows {
+  height: 600px;
+  overflow: scroll;
+}
+#zing-venues {
+  height: 600px;
+  overflow: scroll;
+}
 .slick-dots {
-  top: -81px;
-  margin-left: -6%;
-  bottom: 0 !important;
-  height: 100px;
+  bottom: auto !important;
 }
 .slick-dots li {
   padding: 0px !important;
-  width: 60px !important;
-  height: 60px !important;
+  width: 65px !important;
+  height: 65px !important;
   margin-bottom: :20px;
 }
 .slick-dots li button {
-  width: 60px !important;
-  height: 60px !important;
+  width: 65px !important;
+  height: 65px !important;
+}
+.oneReview {
+  border: 2px solid gray !important;
+}
+.reviewCol {
+  padding: 20px;
+  height: 440px;
+  border: 1px dotted #e06666;
 }
 .radios {
   width: 50%;
   margin-left: 0px !important;
 }
 .slickReviews {
-  display: none;
+  display: block;
 }
 .slickReviewsSmall {
   display: block;
@@ -6318,11 +6335,36 @@ button.close {
 .reviewPhoneText {
   padding-top: 20%;
 }
-.slick-next {
-  display: none !important;
+.slick-next:before {
+  content: none !important;
 }
 .slick-prev {
-  display: none !important;
+  /* left: -25px; */
+  margin-top: 100% !important;
+  left: -140% !important;
+  display: none;
+}
+.slick-next {
+  display: none;
+  background-image: url("rightarrow.png") !important;
+  background-size: contain !important;
+  height: 40px !important;
+  width: 40px !important;
+  content: none !important;
+}
+.slick-next {
+  right: 0 !important;
+  margin-top: 100% !important;
+}
+.slick-prev:before {
+  content: none !important;
+}
+.slick-prev {
+  background-image: url("leftarrow.png") !important;
+  background-size: contain !important;
+  height: 40px !important;
+  width: 40px !important;
+  content: none !important;
 }
 #starsspot {
   display: block !important;
@@ -6367,7 +6409,7 @@ button.close {
   }
   .slickReviews {
     display: block;
-    margin-top: 100px;
+    margin-top: 40px;
   }
   .slickReviewsSmall {
     display: none;
@@ -6419,10 +6461,6 @@ button.close {
   padding: 0 5% 0 5%;
 }
 .slick-prev {
-  top: 3% !important;
-  background: white;
-}
-.slick-next {
   display: none;
 }
 li.slick-active button {
@@ -6471,7 +6509,7 @@ li.slick-active button {
   content: none !important;
 }
 .slick-next {
-  top: 3% !important;
+  display: none;
 }
 .slick-slide[index=0] {
   border-right: 2px dashed gray;
@@ -6510,6 +6548,14 @@ body {
   transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
 }
 .panel-blog-heading:hover {
+  background-color: black;
+  cursor: pointer;
+  color: white;
+}
+.paneltransition {
+  transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
+}
+.paneltransition:hover {
   background-color: black;
   cursor: pointer;
   color: white;
