@@ -102,7 +102,7 @@ def index():
       session.pop('email', None)
     if 'username' in session:
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        c.execute("SELECT first from ZINGUSERS where id = %s", (session['username'],))
+        c.execute("SELECT first from USERS where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
         c.execute("SELECT id from ZINGADMIN where userid = %s",(session['username'],));
         adminID = c.fetchall();
@@ -306,7 +306,7 @@ def signin():
   email = request.args.get('email')
   password = request.args.get('password')
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT first,id, passhash FROM ZINGUSERS where email=%s", (email,))
+  c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
   if data != []:
     realkey = data[0]['passhash']
@@ -354,7 +354,7 @@ def fbcreateform():
   email = str(request.args.get('email'))
   firstname = str(request.args.get('firstname'))
   lastname = str(request.args.get('lastname'))
-  c.execute("SELECT * from ZINGUSERS where email = %s",(email,))
+  c.execute("SELECT * from USERS where email = %s",(email,))
   testemail = c.fetchall()
   print testemail
   if testemail != []:
@@ -362,24 +362,25 @@ def fbcreateform():
     session['username'] = testemail[0]['id']
     return "USER LOGIN" + testemail[0]['first']
   lastname = str(request.args.get('lastname'))
-  c.execute("""INSERT INTO ZINGUSERS(first, last, email)
+  c.execute("""INSERT INTO USERS(first, last, email)
                     VALUES (%s, %s, %s)""",
                   (firstname, lastname, email))
   conn.commit()
-  token = ts.dumps(email, salt='email-confirm-key')
-  confirm_url = url_for(
-            'confirm_email',
-            token=token,
-            _external=True)
-  html = render_template(
-            'email/activate.html',
-            confirm_url=confirm_url)
-  msg = Message("Welcome to Zing",
-                  sender="info@phillyzing.com",
-                  recipients=[email])
-  msg.html = html
-  mail.send(msg)
-  return "NEW USER CREATED" + firstname
+  c.execute("UPDATE USERS SET emailconfirm = True WHERE email = %s", (email,))
+  # token = ts.dumps(email, salt='email-confirm-key')
+  # confirm_url = url_for(
+  #           'confirm_email',
+  #           token=token,
+  #           _external=True)
+  # html = render_template(
+  #           'email/activate.html',
+  #           confirm_url=confirm_url)
+  # msg = Message("Welcome to Zing",
+  #                 sender="info@phillyzing.com",
+  #                 recipients=[email])
+  # msg.html = html
+  # mail.send(msg)
+  return "AEW USER CREATED" + firstname
 
 
 ###email confirmation for new users 
@@ -390,9 +391,9 @@ def confirm_email(token):
     except:
         abort(404)
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("UPDATE ZINGUSERS SET emailconfirm = True WHERE email = %s", (email,))
+    c.execute("UPDATE USERS SET emailconfirm = True WHERE email = %s", (email,))
     conn.commit()
-    c.execute("SELECT id, first FROM ZINGUSERS WHERE email = %s", (email,))
+    c.execute("SELECT id, first FROM USERS WHERE email = %s", (email,))
     results = c.fetchall()[0]
     userid = results['id']
     name = results['first']
@@ -409,7 +410,10 @@ def zingnewuser():
   firstname = str(request.args.get('firstname'))
   lastname = str(request.args.get('lastname'))
   password = str(request.args.get('password'))
-  c.execute("SELECT * from ZINGUSERS where email = %s",(email,))
+  month = request.args.get('month')
+  day = request.args.get('day')
+  year = request.args.get('year')
+  c.execute("SELECT * from USERS where email = %s",(email,))
   testemail = c.fetchall()
   if testemail != []:
     userid = testemail[0]['id']
@@ -418,7 +422,7 @@ def zingnewuser():
   fullname = firstname + lastname
   you = User(fullname, password)
   passhash = you.pw_hash
-  c.execute("""INSERT INTO ZINGUSERS(first, last, email, passhash)
+  c.execute("""INSERT INTO USERS(first, last, email, passhash)
                 VALUES (%s, %s, %s, %s)""",
                 (firstname, lastname, email, passhash))
   conn.commit()
@@ -435,6 +439,11 @@ def zingnewuser():
                   recipients=[email])
   msg.html = html
   mail.send(msg)
+  c.execute("SELECT id from USERS WHERE email = %s", (email,))
+  userid = c.fetchall()[0]['id']
+  inputDate = str(month) + " " + day +", " +year
+  c.execute("INSERT INTO dobs(userid, dob) VALUES(%s, %s)", (userid, inputDate))
+  conn.commit()
   return "NEW USER CREATED" + firstname
 
 
@@ -812,7 +821,7 @@ def show():
         reviewtext = review['reviewtext']
         rating = review['rating']
         c.execute("""SELECT first, last 
-                    from ZINGUSERS where id = %s""", 
+                    from USERS where id = %s""", 
                     (review['userid'],))
         username = c.fetchall()
         reviewtext = "static/reviews/" + reviewtext
@@ -882,16 +891,16 @@ def show():
                        }
       if 'username' in session:
           c.execute("""SELECT rating
-                    from ZINGRATINGS, ZINGUSERS
+                    from ZINGRATINGS, USERS
                     where ZINGRATINGS.userid = ZINGRATINGS.id
-                    and ZINGUSERS.id = %s
+                    and USERS.id = %s
                     and ZINGRATINGS.showID = %s""",
                     (session['username'], showdata[0]['id']))
           yourRating = c.fetchall()
           if len(yourRating) == 1:
               yourRating = yourRating[0]['rating']
               yourRating = convert_to_percent(yourRating)
-          c.execute("SELECT first from ZINGUSERS where id = %s", (session['username'],))
+          c.execute("SELECT first from USERS where id = %s", (session['username'],))
           name = c.fetchall()[0]['first']
          
           template_vars['useron'] = name    
@@ -902,9 +911,9 @@ def show():
 def profile():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     username = session['username']
-    c.execute("SELECT id from ZingUsers where username = %s", (username,))
+    c.execute("SELECT id from Users where username = %s", (username,))
     userid = c.fetchall()[0]['id']
-    c.execute("""SELECT ZINGUSERS.name, reviewText, rating,
+    c.execute("""SELECT USERS.name, reviewText, rating,
               to_char(ZINGRATINGS.time, 'HHMIA.M.DayMonthDDYYY')
               from ZINGUSERREVIEWS, ZINGRATINGS, ZINGSHOWS
               where ZINGUSERREVIEWS.userid = ZINGRATINGS.userid
@@ -977,7 +986,7 @@ def submitreview():
                 VALUES(%s,%s,%s)""",
                 (showID, bad, userid))
     conn.commit()
-    c.execute("SELECT email, first FROM ZINGUSERS WHERE id = %s", (session['username'],))
+    c.execute("SELECT email, first FROM USERS WHERE id = %s", (session['username'],))
     results = c.fetchall()
     email = results[0]['email']
     first = results[0]['first']
@@ -1044,7 +1053,7 @@ def submitreview():
 def login():
   email = request.args.get('email')
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT ID, emailconfirm FROM ZINGUSERS WHERE EMAIL = %s", (email,))
+  c.execute("SELECT ID, emailconfirm FROM USERS WHERE EMAIL = %s", (email,))
   results = c.fetchall()
   print results
   print results[0]['emailconfirm']
@@ -1131,7 +1140,7 @@ def manageReviews():
         reviewtext = review['reviewtext']
         rating = review['rating']
         c.execute("""SELECT first, last, id 
-                    from ZINGUSERS where id = %s""", 
+                    from USERS where id = %s""", 
                     (review['userid'],))
         username = c.fetchall()
         reviewtext = "static/reviews/" + reviewtext
@@ -1183,6 +1192,7 @@ def donesurvey():
   no = request.args.get('no')
   prefs = request.args.get('prefs')
   prefs  = json.loads(prefs)
+  commitment = request.args.get('commitment')
   worksin = False
   if yes:
     worksin = True
@@ -1207,6 +1217,8 @@ def donesurvey():
             VALUES(%s,%s,%s,%s, %s, %s,%s)""",
             [session['username'], comedy, drama, 
             experimental, classics, musicals, worksin])
+  c.execute("""INSERT into COMMITMENT(userid, commitment)
+            VALUES(%s,%s)""", (session['username'], commitment))
   conn.commit()
   return redirect(url_for('index'))
 

@@ -916,7 +916,7 @@ function displayAds(data){
       $('.slickAds').slick({
 
    arrows:false,
-  speed: 300,
+  speed: 800,
   slidesToShow: 4,
   slidesToScroll: 4,
   autoplaySpeed: 2000,
@@ -1007,14 +1007,17 @@ function facebook(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
+      console.log("connected")
       
     } else if (response.status === 'not_authorized') {
         // console.log("not authorized");
       newUserAuthorize();
+    
       
     } else {
         // console.log("other else");
       newUserAuthorize(); 
+
 
     }
   }
@@ -1073,6 +1076,7 @@ FB.getLoginStatus(function(response) {
         // console.log('Successful login for: ' + response.name);
         // console.log(JSON.stringify(response));
         var check = $("#panelheaderuser");
+        console.log(response)
         check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\"> <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
         var name = response.first_name;
         // console.log(response.first_name);
@@ -1090,6 +1094,11 @@ FB.getLoginStatus(function(response) {
 	});
 
     });
+
+
+    
+
+
   }
 }
 
@@ -1147,13 +1156,19 @@ function signup(){
 	var email = $("#newemail").val();
 	var password = $("#newpassword").val();
 	// console.log(lastname, firstname, email, password);
+    var month = $("#month").val();
+    var day = $("#day").val();
+    var year = $("#year").val();
 	 $.ajax({
 		url: "/zingnewuser",
 		data: {
 			email:  email,
 			firstname: firstname,
 			lastname: lastname,
-			password: password
+			password: password,
+            month: month,
+            day: day, 
+            year: year
 		},
 		success: show_password
 	});
@@ -1572,22 +1587,28 @@ function display_nowPlaying(data){
 };
 function facebookLogin(){
 	 FB.login(function(response) {
-   
-   
 FB.api('/me', function(response) {
 	name = response.first_name;
-      $.ajax({
-   		success: show_password,
-		url: "/facebookcreateform",
-		data: {
-			email:  response.email,
-			firstname: response.first_name,
-			lastname: response.last_name
-		}
-	});
+    console.log(response);
+   FB.api('me?fields=age_range', function(response2){
+            console.log(response2);
+            var min = response2.age_range.min;
+            var max = response2.age_range.max;
+              $.ajax({
+        url: "/login",
+        success: handle_login,
+        data: {
+            min: min,
+            max:max,
+            firstname: response.first_name,
+            lastname: response.last_name,
+            email: response.email
+        }
+    });
+        })
   })
   
- }, {scope: 'public_profile,email'});
+ }, {scope: 'public_profile,email, age_range'});
 }
 function homepage(){
 	$.ajax({
@@ -1899,7 +1920,12 @@ yes = true;
 if($('#No').prop('checked')){
     no = true;
 }
-
+var commitment
+ $('#theatergoing input:checked').each(function() {
+            console.log(this.value);
+            commitment = this.value;
+            
+        });
 console.log(yes);
 console.log(no);
 console.log(preferences);
@@ -1908,7 +1934,8 @@ $.ajax({
     url: "/donesurvey",
     data: {prefs: JSON.stringify(preferences), 
             yes: yes, 
-            no: no
+            no: no,
+            commitment: commitment
             },
     success:  $("#emailModal").modal('hide')
 })
@@ -1966,6 +1993,10 @@ function show_password(data){
     if(data[0] == "N"){
         
         $("#loginModal").find("#paneltext").html("<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>");
+    }
+    if(data[0] == "A"){
+        
+          survey();
     }
     if(data[0] == "F"){
         
