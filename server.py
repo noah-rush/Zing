@@ -309,7 +309,7 @@ def signin():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
-  if data != []:
+  if len(data) > 0:
     realkey = data[0]['passhash']
     userid = data[0]['id']
   else:
@@ -318,6 +318,7 @@ def signin():
     return "Please Login with Facebook"
   else:
     if security.check_password_hash(realkey, password):
+      print "passsword local"
       session['username'] = userid
       return "USER LOGIN" + data[0]['first']
   return "Incorrect Password"
