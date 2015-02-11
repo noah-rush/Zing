@@ -101,6 +101,7 @@ def index():
       fromEmail = True
       session.pop('email', None)
     if 'username' in session:
+        print session['username']
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from USERS where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
@@ -308,6 +309,7 @@ def signin():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
+  print data
   if data != []:
     realkey = data[0]['passhash']
     userid = data[0]['id']
@@ -1196,22 +1198,12 @@ def donesurvey():
   worksin = False
   if yes:
     worksin = True
-  comedy = False
-  drama = False
-  experimental = False
-  classics = False
-  musicals = False
-  for pref in prefs:
-    if pref == 'drama':
-      drama = True
-    if pref == 'comedy':
-      comedy = True
-    if pref == 'musicals':
-      musicals = True
-    if pref == 'experimental':
-      experimental = True
-    if pref == 'classics':
-      classics = True
+  print session['username']
+  drama = prefs['drama']
+  comedy = prefs['comedy']
+  musicals = prefs['musicals']
+  classics = prefs['classics']
+  experimental = prefs['experimental']
   c.execute("""INSERT INTO ZINGSURVEY(userid, comedy, drama, 
             experimental, classics, musicals, worksin) 
             VALUES(%s,%s,%s,%s, %s, %s,%s)""",

@@ -7,6 +7,7 @@
     <link href="static/bootstrap-3.3.1/dist/css/bootstrap.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="static/slick-1.3.11/slick/slick.css"/>
+     <link rel="stylesheet" type="text/css" href="static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
 {%endblock%}
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
@@ -16,7 +17,42 @@
 
     <style type="text/css">
    
-    
+    #sortable1, #sortable2 {
+    border: 0px solid #eee;
+    width: 100%;
+    min-height: 200px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+  }
+  #sortable1 li, #sortable2 li {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 100%;
+    background-color: #e06666;
+    color:white;
+    cursor:pointer;
+  }
+  #sortable1 li:nth-child(1){
+    background-color: gold;
+    content: "1";
+  }
+#sortable1 li:nth-child(2){
+    background-color: silver;
+  }
+  #sortable1 li:nth-child(3){
+    background-color: #cd7f32;
+  }
+   #sortable1 li:nth-child(4){
+    background-color: #e06666;
+  }
+   #sortable1 li:nth-child(5){
+    background-color: black;
+  }
+
 
     </style>
 <script>
@@ -343,6 +379,13 @@ Birthday                   </label>
                                 <span class="glyphicon glyphicon-pencil"></span> Manage Outside Reviews                          </a>
                         </div>
                     </div>
+                     <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body">
+                            <a href="#userSurveyTest" class="btn btn-default btn-sm " type="button">
+
+                                <span class="glyphicon glyphicon-pencil"></span> User Survey Test                       </a>
+                        </div>
+                    </div>
 
                     {%endif%}
                         <div class = "footerLogo"><p style = "font-size:20px">Designed and Developed @ </p>
@@ -372,7 +415,8 @@ Birthday                   </label>
     <script src="static/jQuery-File-Upload-9.8.0/js/vendor/jquery.ui.widget.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.iframe-transport.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.fileupload.js"></script>
-    <script src="static/slick-1.3.11/slick/slick.min.js"></script>
+    <script src="static/slick-1.3.11/slick/slick.min.js"></script> 
+    <script src="static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script> 
     <script src="static/homepage.js"></script>
 <script>
 

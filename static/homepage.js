@@ -1903,17 +1903,26 @@ function show_survey(data){
     console.log("surverer")
     $("#emailModal").find('#paneltext').append(data);
     $("#emailModal").modal();
+    $( "#sortable1").sortable({
+        update: function( event, ui ) {
+$(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text().substring(3))})
+
+
+        }
+    }).disableSelection();
+$(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text())})
 }
 
 function donesurvey(){
     console.log("HERERERER")
-    var preferences = [];
+    var preferences = {};
     var yes = false;
     var no = false;
- $('#userPreferences input:checked').each(function() {
-            console.log(this.value);
-            preferences.push(this.value)
-        });
+$(".ui-state-default").each(function(e,val){
+    $(val).text((e+1)+ ") "+$(val).text())
+    console.log($(val).attr('value'))
+    preferences[$(val).attr('value')] = e+1;
+})
 if($('#Yes').prop('checked')){
 yes = true;
 }
@@ -2245,6 +2254,9 @@ $(window).hashchange( function test(){
     case "#doneSurvey":
     donesurvey();
  
+    break;
+    case "#userSurveyTest":
+    survey();
     break;
 
 
