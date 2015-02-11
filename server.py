@@ -101,7 +101,6 @@ def index():
       fromEmail = True
       session.pop('email', None)
     if 'username' in session:
-        print session['username']
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from USERS where id = %s", (session['username'],))
         name = c.fetchall()[0]['first']
@@ -305,10 +304,11 @@ def _handleUpload(files):
 @app.route('/signin')
 def signin():
   email = request.args.get('email')
-  password = request.args.get('password')
+  password = request.args.get('hidden')
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
+  print data
   if len(data) > 0:
     realkey = data[0]['passhash']
     userid = data[0]['id']

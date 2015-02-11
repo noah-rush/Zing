@@ -1248,7 +1248,6 @@ function logout(){
 	});
 
 
-     window.history.back();
 }
 
 function login_func(){
@@ -2101,7 +2100,7 @@ function signin(){
 		url:"/signin",
 		data:
 		{email:email,
-		password:password
+		hidden:password
 		},
 		success: show_password
 	})
