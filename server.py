@@ -301,10 +301,12 @@ def _handleUpload(files):
 
 
 ### zing sign in without facebook    
-@app.route('/signin')
+@app.route('/signin',  methods=[ 'POST'])
 def signin():
-  email = request.args.get('email')
-  password = request.args.get('hidden')
+  email = request.form['email']
+  password = request.form['hidden']
+  print email
+  print password
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
@@ -408,13 +410,13 @@ def confirm_email(token):
 @app.route('/zingnewuser', methods=['GET', 'POST'])
 def zingnewuser():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  email = str(request.args.get('email'))
-  firstname = str(request.args.get('firstname'))
-  lastname = str(request.args.get('lastname'))
-  password = str(request.args.get('password'))
-  month = request.args.get('month')
-  day = request.args.get('day')
-  year = request.args.get('year')
+  email = str(request.form['email'])
+  firstname = str(request.form['firstname'])
+  lastname = str(request.form['lastname'])
+  password = str(request.form['password'])
+  month = request.form['month']
+  day = request.form['day']
+  year = request.form['year']
   c.execute("SELECT * from USERS where email = %s",(email,))
   testemail = c.fetchall()
   if testemail != []:

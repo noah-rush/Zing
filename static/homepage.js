@@ -1160,6 +1160,7 @@ function signup(){
     var day = $("#day").val();
     var year = $("#year").val();
 	 $.ajax({
+        type: "POST",
 		url: "/zingnewuser",
 		data: {
 			email:  email,
@@ -2097,6 +2098,7 @@ function signin(){
 	var email = $("#loginEmail").val();
 	var password = $("#loginPassword").val();
 	$.ajax({
+        type:"POST",
 		url:"/signin",
 		data:
 		{email:email,
