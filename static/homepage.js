@@ -2096,13 +2096,13 @@ var lastchecked = $("#toprated");
 
 function signin(){
 	var email = $("#loginEmail").val();
-	var password = $("#loginPassword").val();
+	var hidden = $("#loginPassword").val();
 	$.ajax({
         type:"POST",
 		url:"/signin",
 		data:
 		{email:email,
-		hidden:password
+		hidden:hidden
 		},
 		success: show_password
 	})
