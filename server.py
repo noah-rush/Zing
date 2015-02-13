@@ -1054,7 +1054,7 @@ def submitreview():
 ####facebook to flask login 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-  email = request.args.get('email')
+  email = request.form['email']
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT ID, emailconfirm FROM USERS WHERE EMAIL = %s", (email,))
   results = c.fetchall()

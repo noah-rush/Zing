@@ -1084,6 +1084,7 @@ FB.getLoginStatus(function(response) {
         // console.log(user);
           $("#user").text(" " + response.first_name + " ");
         $.ajax({
+        type:"POST",
   		url: "/login",
   		success: handle_login,
 		data: {
@@ -1595,6 +1596,7 @@ FB.api('/me', function(response) {
             var min = response2.age_range.min;
             var max = response2.age_range.max;
               $.ajax({
+        type: "POST",
         url: "/login",
         success: handle_login,
         data: {
