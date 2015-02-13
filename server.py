@@ -310,7 +310,6 @@ def signin():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
-  print data
   if len(data) > 0:
     realkey = data[0]['passhash']
     userid = data[0]['id']
