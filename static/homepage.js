@@ -1769,7 +1769,7 @@ function show_homepage(data){
     {
       breakpoint: 1400,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1,
         infinite: true,
         dots: true
@@ -1778,7 +1778,7 @@ function show_homepage(data){
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1
       }
     },
