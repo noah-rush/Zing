@@ -784,12 +784,12 @@ def show():
                 where id = %s""", (showdata[0]['venueid'],))
       venue = c.fetchall()
       venue[0]['name'] = Markup(venue[0]['name'])
-      c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
+      c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
-                from ZINGRATINGS, ZINGUSERREVIEWS
-                where ZINGUSERREVIEWS.showid = %s 
+                from ZINGRATINGS, ZINGREVIEWS
+                where ZINGREVIEWS.showid = %s 
                 and ZINGRATINGS.showid = %s
-                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid""", (showdata[0]['id'],showdata[0]['id']))
+                and ZINGREVIEWS.userid = ZINGRATINGS.userid""", (showdata[0]['id'],showdata[0]['id']))
       userreviews = c.fetchall()
       c.execute("""SELECT SUM(rating), COUNT(rating) 
                 from ZINGRATINGS
@@ -821,16 +821,13 @@ def show():
       reviewtexts = []
       for review in userreviews:
         data = []
-        reviewtext = review['reviewtext']
+        text = review['reviewtext']
         rating = review['rating']
         c.execute("""SELECT first, last 
                     from USERS where id = %s""", 
                     (review['userid'],))
         username = c.fetchall()
-        reviewtext = "static/reviews/" + reviewtext
-        f = open(reviewtext, 'r')
-        text = f.read()
-        f.close()
+       
         data.append(text)
         rating = convert_to_percent(float(rating))
         data.append(rating)
@@ -918,11 +915,11 @@ def profile():
     userid = c.fetchall()[0]['id']
     c.execute("""SELECT USERS.name, reviewText, rating,
               to_char(ZINGRATINGS.time, 'HHMIA.M.DayMonthDDYYY')
-              from ZINGUSERREVIEWS, ZINGRATINGS, ZINGSHOWS
-              where ZINGUSERREVIEWS.userid = ZINGRATINGS.userid
+              from ZINGREVIEWS, ZINGRATINGS, ZINGSHOWS
+              where ZINGREVIEWS.userid = ZINGRATINGS.userid
               and ZINGRATINGS.userid =%s
               and ZINGSHOWS.id = ZINGRATINGS.showid
-              and ZINGSHOWS.id = ZINGUSERREVIEWS.showid""",
+              and ZINGSHOWS.id = ZINGREVIEWS.showid""",
               (userid,))
     results = c.fetchall()
     print results
@@ -961,17 +958,13 @@ def submitreview():
     bads = json.loads(bads)
   
     userid = session['username']
-    c.execute("""DELETE from ZINGUSERREVIEWS
+    c.execute("""DELETE from ZINGREVIEWS
               where userid = %s and showid = %s""",
               (userid, showID))
-    filepath = str(userid)+str(showID)+'.txt'
-    newReview = open('static/reviews/' + filepath, 'w')
-    newReview.write(review)
-    newReview.close()
     if rating != None:
       c.execute("SET TIME ZONE 'America/New_York'")
-      c.execute("""INSERT INTO ZINGUSERREVIEWS(userid, showID, reviewText)
-              VALUES(%s, %s, %s)""", (userid, showID, filepath))
+      c.execute("""INSERT INTO ZINGREVIEWS(userid, showID, reviewText)
+              VALUES(%s, %s, %s)""", (userid, showID, review))
       c.execute("""DELETE from ZINGRATINGS
               where userid = %s and showid = %s""",
               (userid, showID))
@@ -1078,7 +1071,7 @@ def removeReview():
    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
    showid = request.args.get('showid')
    userid = request.args.get('userid')
-   c.execute("""DELETE FROM ZINGUSERREVIEWS WHERE 
+   c.execute("""DELETE FROM ZINGREVIEWS WHERE 
               userid = %s AND showid = %s""", (userid, showid))
    c.execute("""DELETE FROM ZINGRatings WHERE 
               userid = %s AND showid = %s""", (userid, showid))
@@ -1131,25 +1124,22 @@ def manageOutReviews():
 @app.route('/manageReviews', methods=['GET', 'POST'])
 def manageReviews():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("""SELECT ZINGUSERREVIEWS.id, ZINGRATINGS.id, Zingratings.showid, reviewText, ZINGUSERREVIEWS.userid, 
+  c.execute("""SELECT ZINGREVIEWS.id, ZINGRATINGS.id, Zingratings.showid, reviewText, ZINGREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
-                from ZINGRATINGS, ZINGUSERREVIEWS
-                where ZINGUSERREVIEWS.showid = ZINGRATINGS.showid 
-                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid""")
+                from ZINGRATINGS, ZINGREVIEWS
+                where ZINGREVIEWS.showid = ZINGRATINGS.showid 
+                and ZINGREVIEWS.userid = ZINGRATINGS.userid""")
   reviewtexts = []
   results = c.fetchall()
   for review in results:
         data = []
-        reviewtext = review['reviewtext']
+        text = review['reviewtext']
         rating = review['rating']
         c.execute("""SELECT first, last, id 
                     from USERS where id = %s""", 
                     (review['userid'],))
         username = c.fetchall()
-        reviewtext = "static/reviews/" + reviewtext
-        f = open(reviewtext, 'r')
-        text = f.read()
-        f.close()
+     
         data.append(text)
         rating = convert_to_percent(float(rating))
         data.append(rating)
