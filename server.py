@@ -48,7 +48,7 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'info@phillyzing.com',
+    MAIL_USERNAME = 'noah@codearium.com',
     MAIL_PASSWORD = 'tomato777',
 ))
 

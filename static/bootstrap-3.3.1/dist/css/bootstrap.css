@@ -6285,6 +6285,34 @@ button.close {
     display: none !important;
   }
 }
+.column-left {
+  position: fixed;
+}
+.column-center {
+  margin-left: 25%;
+}
+.column-right {
+  position: fixed;
+  margin-left: 83% !important;
+}
+#sortable1,
+#sortable2 {
+  border: 1px solid #eee;
+  width: 142px;
+  min-height: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding: 5px 0 0 0;
+  float: left;
+  margin-right: 10px;
+}
+#sortable1 li,
+#sortable2 li {
+  margin: 0 5px 5px 5px;
+  padding: 5px;
+  font-size: 1.2em;
+  width: 120px;
+}
 .venueImage {
   width: 100%;
   max-height: 320px;
@@ -6318,9 +6346,7 @@ button.close {
   border: 2px solid gray !important;
 }
 .reviewCol {
-  padding: 20px;
-  height: 440px;
-  border: 1px dotted #e06666;
+  height: 400px;
 }
 .radios {
   width: 50%;
@@ -7081,5 +7107,9 @@ a:hover {
   margin-top: 5%;
   font-weight: 800;
   font-size: 14pt;
+}
+.panel-review-pic img {
+  width: 60%;
+  margin-left: 20%;
 }
 /*# sourceMappingURL=bootstrap.css.map */

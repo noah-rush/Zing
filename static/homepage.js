@@ -2021,42 +2021,42 @@ function show_password(data){
 
 var name
 
-function trackScrolling(){
-    $( window ).scroll(function(e) {
+// function trackScrolling(){
+//     $( window ).scroll(function(e) {
         
-        if(parseInt(e.currentTarget['scrollY'])>350){
-            if($( window ).width()>1200){
-            $('#panela').css({
-                "position":"fixed",
-                "top": "0",
-                "width":"23%"
-            })
-        }
-        else if($( window ).width()>500){
- $('#panela').css({
-                "position":"fixed",
-                "top": "0",
-                "width":"31.333%"
-            })
-        }else{
-            $('#panela').css({
-                "position":"relative",
-                "top": "0",
-                "width":"100%"
-            })
-        }
-    }else{
+//         if(parseInt(e.currentTarget['scrollY'])>350){
+//             if($( window ).width()>1200){
+//             $('#panela').css({
+//                 "position":"fixed",
+//                 "top": "0",
+//                 "width":"23%"
+//             })
+//         }
+//         else if($( window ).width()>500){
+//  $('#panela').css({
+//                 "position":"fixed",
+//                 "top": "0",
+//                 "width":"31.333%"
+//             })
+//         }else{
+//             $('#panela').css({
+//                 "position":"relative",
+//                 "top": "0",
+//                 "width":"100%"
+//             })
+//         }
+//     }else{
 
-$('#panela').css({
-                "position":"relative",
-                "top": "0",
-                "width":"100%"
-            })
+// $('#panela').css({
+//                 "position":"relative",
+//                 "top": "0",
+//                 "width":"100%"
+//             })
 
 
-    }
-}
-)}
+//     }
+// }
+// )}
 
 function submit_review(){
 
