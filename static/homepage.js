@@ -347,8 +347,17 @@ FB.getLoginStatus(function(response) {
         var name = response.first_name;
         // console.log(response.first_name);
         name = response.first_name;
-        // console.log(user);
-          $("#user").text(" " + response.first_name + " ");
+        var check = $(".loginNav");
+        check.addClass("dropdown")
+        check.html('<a data-toggle="dropdown">\
+                    <span class="glyphicon glyphicon-user"></span>\     
+                    <span id="user">{{useron}}</span>\
+                     <span class="caret"></span>\
+                    </a>\
+                    <ul class="dropdown-menu" role="menu">\
+                    <li><a href="#logout">Logout</a>\
+                    </li>\
+                    </ul>')
         $.ajax({
         type:"POST",
         url: "/login",
@@ -377,8 +386,16 @@ function handle_login(data){
         $("#loginModal").modal();
 
     }
-    window.location.reload();
+
+    check_for_admin();
 }
+
+
+
+
+
+
+
 function signup(){
     
     var lastname = $("#newlast").val();
