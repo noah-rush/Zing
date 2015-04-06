@@ -273,7 +273,7 @@ Birthday                   </label>
 						
 
 																<div class="item">
-																	<a href="#show/{{week['id']}}" style="background-image: url('static/ZingImages/{{week['id']}}.jpg')">
+																	<a href="#show/{{week['id']}}" style="background-image: url('static/Zingimages/{{week['id']}}.jpg')">
 																		<h4>{{week['name']}}</h4>
 																		<div><i class="fa fa-comment"></i>124 Comments</div>
 																	</a>
@@ -358,7 +358,7 @@ Birthday                   </label>
 						
 
 																<div class="item">
-																	<a href="#" style="background-image: url('static/ZingImages/{{review['showid']}}.jpg')">
+																	<a href="#" style="background-image: url('static/Zingimages/{{review['showid']}}.jpg')">
 																		<h4>{{review['title']}}</h4>
 																		<div><i class="fa fa-comment"></i>124 Comments</div>
 																	</a>
@@ -502,12 +502,12 @@ Birthday                   </label>
 							{%for week in thisweek%}
 							{%if loop.index < 4%}
 							<a href="#" class ="pic{{loop.index}}">
-								<div class="pic " style="background-image: url(static/ZingImages/{{week['id']}}.jpg)"></div>
+								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
 							</a>
 							{%else%}
 							<a class = "pic-hidden pic{{loop.index}}" href="#">
-								<div class="pic " style="background-image: url(static/ZingImages/{{week['id']}}.jpg)"></div>
+								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
 							</a>
 							{%endif%}
@@ -517,7 +517,7 @@ Birthday                   </label>
 						<div id="popuplar-news-2" class="items">
 						{%for trend in trending%}
 							<a href="#">
-								<div class="pic" style="background-image: url(static/ZingImages/{{trend['id']}}.jpg)"></div>
+								<div class="pic" style="background-image: url(static/Zingimages/{{trend['id']}}.jpg)"></div>
 								<span>{{trend['name']}}</span>
 							</a>
 							{%endfor%}
@@ -526,7 +526,7 @@ Birthday                   </label>
 							{%for top in toprated%}
 							{%if loop.index < 4%}
 							<a href="#">
-								<div class="pic" style="background-image: url(static/ZingImages/{{top['id']}}.jpg)"></div>
+								<div class="pic" style="background-image: url(static/Zingimages/{{top['id']}}.jpg)"></div>
 								<span>{{top['name']}}</span>
 							</a>
 							{%endif%}
