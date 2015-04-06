@@ -283,10 +283,8 @@ function facebook(){
       
     } else if (response.status === 'not_authorized') {
         // console.log("not authorized");
-      newUserAuthorize();
     } else {
         // console.log("other else");
-      newUserAuthorize(); 
     }
   }
 
@@ -379,6 +377,7 @@ function handle_login(data){
         $("#loginModal").modal();
 
     }
+    window.location.reload();
 }
 function signup(){
     
