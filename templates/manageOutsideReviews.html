@@ -1,12 +1,26 @@
-{%for result in results%}
 
+<div class = "manageOutReviews">
+
+{%for result in results%}
+<div class = "anOutReview">
+<br>
 <a target = "_blank" href = "{{result['link']}}">{{result['title']}}</a> --- {{result['showname']}}
-<button class = "removeOutReview" value = "{{result['id']}}">Delete Review</button>
-<button class = "removeTag" value = "[{{result['id']}}, {{result['showid']}}]">Delete Tag</button>
+<button class = "btn btn-danger removeOutReview" value = "{{result['id']}}">Delete Review</button>
+<button class = " btn btn-danger removeTag" value = "[{{result['id']}}, {{result['showid']}}]">Delete Tag</button>
+ <input  type="text" class="addAtag form-control" placeholder="Type a show" autocomplete = "on"><button class = "addTag btn btn-success" value = "{{result['id']}}" >Add Tag</button>
 <br>
 {%for snippet in result['snippets']%}
 {{snippet['snippet']}}
+
 <br>
+
+
+
 {%endfor%}
+<br>
+<br>
 <hr>
+</div>
 {%endfor%}
+
+</div>

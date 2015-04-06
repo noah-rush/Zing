@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<style type="text/css">
+
+#startRating{
+	display:none;
+}
+#yourRating{
+	display:none;
+}
+
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+{%for review in userreviews%}
+.person-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.person-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{review[1]}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.person-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
+
+
+
+
+</style>
+<body>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{showdata['name']}}</h4>
+      </div>
+      <div class="modal-body">
+      
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       <button onClick="submit_review()" type="button" id = "submitshowreview" data-dismiss="modal" href = "#submitreview" class="btn btn-primary" >Submit Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+			<main class="page-content">
+			
+				<div class="grid-cont" style="background-image: url(static/redbackground.png);">		
+					<div class="grid-row">
+						<div class="grid-col grid-col-8">
+							<!-- blog post -->
+							<div class="blog-post">
+							<div id = "showid" style = "display:none">{{showdata['id']}}</div>
+								<h1 class="title">{{showdata['name']}}
+								 <span class="total-star-rating">
+							}
+							}
+						    <input type="radio" name="rating" value="1"><i></i>
+						    <input type="radio" name="rating" value="2"><i></i>
+						    <input type="radio" name="rating" value="3"><i></i>
+						    <input type="radio" name="rating" value="4"><i></i>
+						    <input type="radio" name="rating" value="5"><i></i>
+						    </span></h1>
+								
+								<div class="bar">
+									<a href="#">{%if producer != venue[0]['name']%}
+    <i>{{producer}}</i>
+    {%endif%}</a> &nbsp;|&nbsp;&nbsp;<a href="#venue/{{venue[0]['id']}}">@ {{venue[0]['name']}}</a> &nbsp;|&nbsp;&nbsp;{{showdata['start']}} - {{showdata['enddate']}} &nbsp;|&nbsp;&nbsp;<a id = "sawthis" data-toggle="tooltip" data-placement="top" title="I saw this!"><i class="fa fa-eye"></i>&nbsp;<span class = "showCount">{{count}}   </span> </a>|
+    {{ratingCount}} reviews | 
+					
+
+						
+								<span style = "color: green">
+							{% for adjective in goodadjectives %}
+							{{adjective['count']}} 
+							{% if adjective['count'] >1 %}
+							people
+							{%else%}
+							person 
+							{%endif%}
+							found this 
+							{{adjective['adjective']}}
+							|
+							{%endfor %}
+
+							</span>
+
+							
+								<span style = "color:red">
+							{% for adjective in badadjectives %}
+							{{adjective['count']}} 
+							{% if adjective['count'] >1 %}
+							people
+							{%else%}
+							person 
+							{%endif%}
+							found this 
+							{{adjective['adjective']}}
+							|
+							{%endfor %}
+						
+								</span>
+								</div>
+								<div class="cont">
+									<img src="static/ZingImages/{{showdata['id']}}.jpg" width="710" height="400" alt="">
+									{{headerDescription}}
+								
+
+        							<p>{{description}}</p>
+   						<!-- <p class="caption">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat.</p> -->
+									
+								</div>
+								
+								<div class="review">
+									<div class="overview">
+									 <div class = "row reviewsRow">
+    <div class = "col-md-6 reviewCritics">
+								
+<h2>Critic's Reviews</h2>
+{% for article in articles %}
+
+<p><a  target = "_blank"  href = "{{article['link']}}"><span> {{article['title']}}</span></a></p>
+
+{%endfor%}
+
+</div>
+<div class = "col-md-6">
+<h2>User Reviews</h2>
+{% for review in userreviews %}
+<li class="list-group-item userReview" style = "text-align: left"><p>
+
+<span class="person-star-rating-x{{loop.index}}">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+
+{{review[2][0]['first']}} {{review[2][0]['last']}} -- 
+{{review[0]}}</p></li>
+{%endfor %}	
+</div>
+</div>
+									<!-- 	<h3>Review Overview</h3>
+										<table>
+											<tr>
+												<td>Quality</td>
+												<td><div class="progress"><div style="width:90%"></div></div></td>
+												<td class="value">9/10</td>
+											</tr>
+											<tr>
+												<td>Reliability</td>
+												<td><div class="progress"><div style="width:80%"></div></div></td>
+												<td class="value">8/10</td>
+											</tr>
+											<tr>
+												<td>Proin</td>
+												<td><div class="progress"><div style="width:100%"></div></div></td>
+												<td class="value">10/10</td>
+											</tr>
+											<tr>
+												<td>Vulputate</td>
+												<td><div class="progress"><div style="width:50%"></div></div></td>
+												<td class="value">5/10</td>
+											</tr>
+										</table>
+										<div class="total"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>Total <span>{{rating}}%</span>&nbsp;&nbsp;</div> -->
+										
+									</div>
+								</div>
+								
+							<!-- 	<div class="tags clearfix">
+									<i class="fa fa-tags"></i>
+									<a href="#">canatoktrtytz</a>
+									<a href="#">accumsan</a>
+									<a href="#">tellus</a>
+									<a href="#">elit</a>
+								</div> -->
+								
+								<!-- <div class="author">
+									<i class="fa fa-user"></i>
+									<div class="inner">
+										<h4><a href="#">John Doe</a></h4>
+										<div class="position">Web UI/UX Designer</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue arcu, fringilla non pulvinar sit amet, tempus ut risus. Sed semper lacus eget neque imperdiet.</p>
+									</div>
+								</div> -->
+							</div>
+							<!--/ blog post -->
+							
+							<!-- <div class="grid-row">
+								<div class="grid-col grid-col-6">							
+									<div class="related-posts">
+										<div class="head">Previous Post</div>
+										<ul>
+											<li class="clearfix">
+												<a href="#" class="pic">
+													<img src="http://placehold.it/100x80" width="100" height="80" alt="">
+												</a>
+												<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+												<h3><a href="#">This is Photoshop's version  of Lorem Ipsum.</a></h3>
+											</li>
+										</ul>
+									</div>
+								</div>
+								
+								<div class="grid-col grid-col-6">							
+									<div class="related-posts">
+										<div class="head">Next Post</div>
+										<ul>
+											<li class="clearfix">
+												<a href="#" class="pic">
+													<img src="http://placehold.it/100x80" width="100" height="80" alt="">
+												</a>
+												<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+												<h3><a href="#">This is Photoshop's version  of Lorem Ipsum.</a></h3>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>  -->
+							
+							<!-- related posts -->
+							<div class="related-posts">
+								<div class="head">Shows @ {{venue[0]['name']}}</div>
+								<ul>
+								{%for venueshow in venueShows%}
+								{%if venueshow['id'] != showdata['id']%}
+									<li class="clearfix">
+										<a href="#show/{{venueshow['id']}}" class="pic">
+											<img src="static/ZingImages/{{venueshow['id']}}.jpg" width="100" height="80" alt="">
+										</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{venueshow['start']}} - {{venueshow['enddate']}} </div>
+										<h2>
+<a href="#show/{{venueshow['id']}}" >
+											{{venueshow['name']}}
+										</a>
+										</h2>
+										<h3> {{venueshow['descript']}}</h3>
+									</li>
+									{%endif%}
+								{%endfor%}
+									
+								</ul>
+							</div>
+							<!--/ related posts -->
+							
+							<!-- blog comments -->
+							<!-- <div class="blog-comments">
+								<div class="head">Comments</div>
+								<ul>
+									<li class="clearfix">
+										<a href="#" class="pic">
+											<img src="http://placehold.it/100x100" width="100" height="100" alt="">
+										</a>
+										<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+										<h3><a href="#">John Doe</a></h3>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+										<a href="#" class="fa fa-warning"></a>
+										<a href="#" class="fa fa-share fa-flip-vertical"></a>
+									</li>
+									<li class="reply clearfix">
+										<a href="#" class="pic">
+											<img src="http://placehold.it/100x100" width="100" height="100" alt="">
+										</a>
+										<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+										<h3><a href="#">John Doe</a></h3>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+										<a href="#" class="fa fa-warning"></a>
+										<a href="#" class="fa fa-share fa-flip-vertical"></a>
+									</li>
+									<li class="clearfix">
+										<a href="#" class="pic">
+											<img src="http://placehold.it/100x100" width="100" height="100" alt="">
+										</a>
+										<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+										<h3><a href="#">John Doe</a></h3>
+										<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in.</p>
+										<a href="#" class="fa fa-warning"></a>
+										<a href="#" class="fa fa-share fa-flip-vertical"></a>
+									</li>
+									<li class="clearfix">
+										<a href="#" class="pic">
+											<img src="http://placehold.it/100x100" width="100" height="100" alt="">
+										</a>
+										<div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+										<h3><a href="#">John Doe</a></h3>										
+										<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+										<a href="#" class="fa fa-warning"></a>
+										<a href="#" class="fa fa-share fa-flip-vertical"></a>
+									</li>
+								</ul>
+							</div> -->
+							<!--/ blog comments -->
+							
+							<!-- add comment -->
+							<!-- <div class="add-comment">
+								<div class="head">Leave a comment</div>
+								<div class="grid-row">
+									<div class="grid-col grid-col-4"><input type="text" placeholder="Name"></div>
+									<div class="grid-col grid-col-4"><input type="email" placeholder="E-mail"></div>
+									<div class="grid-col grid-col-4"><input type="url" placeholder="Website"></div>
+								</div>
+								<textarea cols="30" rows="6"></textarea>
+								<input type="submit" value="submit a reply">
+							</div> -->
+							<!--/ add comment -->
+						</div>
+						
+						<div class="witgets-holder grid-col grid-col-4">
+							<button type="button" id="widgets-switcher" class="widgets-switcher fa fa-chevron-right"></button>
+							
+							<!-- widget socials -->
+
+
+
+							{% if useron !=  "none" %}
+							<div class="widget widget-popular">
+
+						<div class="head">What did you think?</div>
+								
+								<!-- <span class="star-rating">
+      
+      
+							    <input type="radio" name="stars" value="1"><i></i>
+							    <input type="radio" name="stars" value="2"><i></i>
+							    <input type="radio" name="stars" value="3"><i></i>
+							    <input type="radio" name="stars" value="4"><i></i>
+							    <input type="radio" name="stars" value="5"><i></i>
+							    </span>
+    
+							
+									<a href="#" class=" submitRating btn btn-success glyphicon glyphicon-ok"></a>
+									
+
+								<a class = "btn btn-success reviewSubmit" href="#">Write a Review!<span class = "glyphicon glyphicon-pencil"></span></a> -->
+									
+									
+								 
+
+								   By  <span id="user">{{useron}}</span>
+        <br>
+        <br>
+        Which one of these words apply?
+        <br>
+        <br>
+        <div class = "row">
+          <div class = "col-md-6">
+            <div class = "checkboxlistgood" id = "checkboxlistgood">
+              <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
+              <br>
+              <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
+              <br>
+              <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
+              <br>
+              <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
+              <br>
+              <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
+              <br>
+              <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
+              <br>
+              <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
+              <br>
+              <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
+              <br>
+              <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
+              <br>
+              <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
+          </div>
+        </div>
+      <div class = "col-md-6">
+        <div class = "checkboxlistbad" id = "checkboxlistbad">
+            <input type = "checkbox" name = "Overly long"> Overly long</input>
+            <br>
+            <input type = "checkbox" name = "Boring"> Boring</input>
+            <br>
+            <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
+            <br>
+            <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
+            <br>
+            <input type = "checkbox" name = "Insulting"> Insulting</input>
+            <br>
+            <input type = "checkbox" name = "A dud"> A dud</input>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    Any extra thoughts...?
+    <br>
+
+
+    <textarea id = "writeuserreview"cols="30" rows="7"></textarea>
+
+    <br>
+    <br>
+    Your rating?
+    <br>
+    <br>
+    <span class="star-rating">
+      
+      
+    <input type="radio" name="stars" value="1"><i></i>
+    <input type="radio" name="stars" value="2"><i></i>
+    <input type="radio" name="stars" value="3"><i></i>
+    <input type="radio" name="stars" value="4"><i></i>
+    <input type="radio" name="stars" value="5"><i></i>
+    </span>
+
+
+       <button onClick="submit_review()" type="button" id = "submitshowreview"  href = "#submitreview" class="btn btn-primary" >Submit Review</button>
+
+									</div>
+									{%endif%}
+									
+
+								
+						
+							<!--/ widget socials -->
+							
+							<!-- widget events -->
+							<div class="widget widget-events widget-show-descript">
+							
+							</div>
+							<!--/ widget events -->
+							
+							<!-- widget weather -->
+							<div class="widget widget-weather">
+								<a href = "#venue/{{venue[0]['id']}}" ><div class="head">{{venue[0]['name']}}</div></a>
+								<div class="cont">
+									<img src="static/ZingVenueImages/{{venue[0]['id']}}.png" width="104" height="91" alt="">
+									<div >{{venue[0]['description']}}</div>
+									<p><br>{{venue[0]['address']}}<br><br><a target="_blank" href = "{{venue[0]['website']}}"> {{venue[0]['website']}}</a></p>
+									
+								
+								</div>
+							</div>
+							<!--/ widget weather -->
+							
+							<!-- widget tags -->
+						<!-- 	<div class="widget widget-tags">
+								<div class="cont"> -->
+									<!-- <a href="#">Lorem</a> -->
+								
+						
+							<!--/ widget tags -->
+							
+							<!-- widget poll -->
+							
+							<!--/ widget poll -->
+							
+							<!-- widget instagram -->
+						<!-- 	<div class="widget widget-instagram">
+								<div class="head">instagram</div>
+								<div class="cont">
+									<ul>
+										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+										
+									</ul>
+									<a href="#" class="button">follow</a>
+								</div>
+							</div> --> 
+							<!--/ widget instagram -->
+							
+							<!-- widget comments -->
+						<!-- 	<div class="widget widget-comments">
+								<div class="head">recent comments</div>
+								<div class="cont">
+									<ul>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget comments -->
+							
+							<!-- widget categories -->
+							<!-- <div class="widget widget-categories">
+								<div class="head">categories</div>
+								<div class="cont">
+									<ul>
+										<li><a href="#"><span>129</span>World</a></li>
+										<li><a href="#"><span>82</span>Business</a></li>
+										<li><a href="#"><span>24</span>Finance</a></li>
+										<li><a href="#"><span>48</span>Sports</a></li>
+										<li><a href="#"><span>36</span>Technology</a></li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget categories -->
+							
+							<!-- widget popular -->
+						<!-- 	<div id="widget-popular" class="widget widget-popular">
+								<div class="head"><a href="#widget-popular-tab1" class="active">popular</a><a href="#widget-popular-tab2">latest</a></div>
+								<div class="cont">
+									<ul id="widget-popular-tab1" class="active">
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+									</ul>
+									<ul id="widget-popular-tab2">
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget popular -->
+							
+							<!-- widget sponsor -->
+							<!-- <div class="widget widget-sponsor">
+								<div class="head">our sponsor</div>
+								<div class="cont">
+									<a href="#"><img src="http://placehold.it/300x250" width="300" height="250" alt=""></a>
+								</div>
+							</div> -->
+							<!--/ widget popular -->
+						</div>
+					</div>
+				</div>
+			<div id="startRating" >{{rating}}</div>
+			</main>
+			</body>
+	

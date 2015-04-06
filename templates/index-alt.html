@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zing</title>
+		
+		<!-- metas -->
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<!--/ metas -->
+		
+		<!-- styles -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		   <link href="static/bootstrap-3.3.1/dist/css/bootstrap.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="static/css/owl.carousel.css">
+		<link rel="stylesheet" href="static/css/main.css">
+		<link rel="stylesheet" href="static/css/color.css">
+		<link rel="stylesheet" href="static/css/custom.css">
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
+		 <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
+		{%block stylesheet%}
+
+   <!-- <link rel="stylesheet" type="text/css" href="static/slick-1.3.11/slick/slick.css"/>
+     <link rel="stylesheet" type="text/css" href="static/jquery-ui-1.11.2.custom/jquery-ui.min.css"/>
+{%endblock%}
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
+		<!--/ styles -->
+	</head>
+	
+	<body>
+		<!-- page -->
+		
+		<div class="page">
+			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id = "paneltext" style = "text-align: center"class="panel panel-default">
+          <br>
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active" id = "signuptrigger"><a href="#"> <h2 >Sign up</h2></a></li>
+                <li role="presentation" id = "signintrigger"><a href="#"><h2 >Log in</h2></a></li>
+            </ul>
+        
+            <br>
+            <div class = "signInForm" style = "display:none" >
+                <div id = "somethingWrong" style = "display: none"></div>
+                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" href="#facebookLogin" >Log in with Facebook</a>
+                <br>
+                <br>
+                <form class = "form-inline" role = "form" >
+                    <div class="form-group" style = "width: 37.5%;">
+                        <input  type="text"  style = "width: 100%" id = "loginEmail"class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group" style = "width: 37.5%;">
+                        <input  type="password" style = "width: 100%" id = "loginPassword" class="form-control" placeholder="Password">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 100%; "> 
+                        <br>
+                        <a style = "margin-bottom: 5%"  id = "signinbutton" class="btn btn-default"  >Sign in</a>
+                    </div>
+                </form>
+            </div>
+            <div class = "signUpForm">
+                <div id = "somethingWrong" style = "display: none"></div>
+                <h4>Sign up to post reviews and earn rewards.</h4>
+                <br>
+                <a style = "background-color: #3B5998; color: white; "  id = "signin2" class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
+                <br>    
+                Don't worry, we never post without your permission.
+                <br>
+                <p> or create an account </p>
+                <br>
+                <form class = "form-inline" role = "form" >
+                    <div class="form-group" style = "width: 37.5%">
+                        <input  type="text"  style = "width: 100%" id = "newfirst"class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group" style = "width: 37.5%">
+                        <input  type="text" style = "width: 100%" id = "newlast"class="form-control" placeholder="Last Name">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 75%"> 
+                        <input style = "width: 100%" type="text" id = "newemail" class="form-control" placeholder="Email">
+                    </div>
+                    <br>
+                    <div class="form-group"style = "width: 75%" >
+                        <input style = "width: 100%" margin-bottom = "0px" margin-top = "0px"type="password" id = "newpassword" class="form-control" placeholder="Password">
+                    </div>
+
+              <!--       <div class = "birthday" style= "margin-top: 3%">
+                   <label>
+Birthday                   </label>
+<br>
+<select id = "month" style = "width: 25%"class="form-control" placeholder = "Month">
+<option value="" selected disabled>Month</option>
+  {%for month in ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
+  
+    <option>{{month}}</option>>
+ {%endfor%}
+ 
+</select>
+
+
+ <select id = "day" style = "width: 25%; "class="form-control">
+  <option value="" selected disabled>Day</option>
+  {%for month in range(31)%}
+ 
+    <option>{{month}}</option>>
+ {%endfor%}
+
+</select>
+
+
+<select id = "year" style = "width: 25%; "class="form-control">
+<option value="" selected disabled>Year</option>
+  {%for month in range(2000, 1930, -1)%}
+  
+    <option>{{month}}</option>>
+ {%endfor%}
+</select>
+</div> -->
+  
+                    <br>
+                    <br>
+                    <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signup" >Sign up</a>
+                </form>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+			<!-- page header -->
+
+			<header class="page-header">
+				
+				<!-- page header top -->
+				<div class="page-header-top">
+					
+					<div class="grid-cont">
+						<div class="grid-row">
+							<div class="grid-col grid-col-1">
+								<!-- logo -->
+								<a href="/" class="logo logo-alt"><img src="static/chair.png" width="68" height="61" alt=""></a>
+								<!--/ logo -->
+							</div>
+							<div class="grid-col grid-col-2">
+								<!-- slogan -->
+								<a href="/" class="slogan slogan-alt"><span>Zing.</span></a>
+								<!--/ slogan -->
+							</div>
+							
+							<div class="grid-col grid-col-9">							
+								<!-- secondary nav -->
+								{%if adminPrivileges%}
+								<nav class="secondary-nav" style="text-align:left">
+								{%else%}
+								<nav class="secondary-nav">
+								{%endif%}
+									<ul>
+										<li>
+											<a href="index.html" class="active">home</a>
+										</li>
+										<li>
+											<a href="blog-list.html">blog</a>
+										</li>
+										<li>
+											<a href="#about">about us</a>
+										</li>
+										
+										{%if useron == "none"%}
+                           				<li>
+											<a data-toggle="modal" data-target="#loginModal" class="alt">Login</a>
+										</li>
+                            {%else%}
+                            <li class="dropdown">
+                                <a data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    
+
+                                    <span id="user">{{useron}}</span>
+
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li><a href="#logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {%endif%}
+
+										
+										  {%if adminPrivileges%}
+								}
+                   <li>
+                            <a href="#editpage"  type="button">
+
+                                Edit Page
+                            </a>
+                 </li>
+                 <li>
+                            <a href="#updateOutsideArticles"  type="button">
+
+                              Update Articles                            </a>
+                      </li>
+                   <li>
+                            <a href="#manageReviews" >
+
+                               Manage User Reviews                          </a>
+                      </li>
+                        <li>
+                            <a href="#manageOutReviews" >
+
+                                 Manage Outside Reviews                          </a>
+             </li>
+                          
+
+                 
+
+                    {%endif%}
+									</ul>
+								</nav>
+								<!--/ secondary nav -->
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<!-- page header top -->
+				
+				<!-- page header middle -->
+				<div class="page-header-middle">
+					
+					<div class="grid-cont">
+						<div class="grid-row">
+						<div class="grid-col grid-col-2 logo-col">
+						<a href="/" class="logo logo-alt logo-fixed"><img src="static/chair.png" width="68" height="61" alt=""></a>
+						</div>							
+							<div class="grid-col grid-col-5">
+								<!-- main nav -->
+								<nav id="main-nav" class="main-nav">
+									<a href="#" class="switcher"><i class="fa fa-bars"></i></a>
+									<ul>
+										<li class="has-dropdown">
+											<a href="#fullschedule">shows</a>
+											<div class="dropdown dropdown-large">
+												<div class="grid-row">
+													<div class="grid-col grid-col-3">
+														<ul class="subnav">
+															
+															<li><a href="#fullschedule">All Shows</a></li>
+															<li><a href="#">Comedy</a></li>
+															<li><a href="#">Experimental</a></li>
+															<li><a href="#">Drama</a></li>
+															<li><a href="#">Classics</a></li>
+															<li><a href="#">Musicals</a></li>
+														</ul>
+													</div>
+													<div class="grid-col grid-col-9">
+														<div class="latest">
+															<p>
+																<a href="#" class="fa fa-chevron-right next"></a>
+																<a href="#"  class="fa fa-chevron-left prev"></a>
+																On tap
+															</p>
+															<div class="carousel">
+															{%for week in thisweek%}
+						
+
+																<div class="item">
+																	<a href="#show/{{week['id']}}" style="background-image: url(static/ZingImages/{{week['id']}}.jpg)">
+																		<h4>{{week['name']}}</h4>
+																		<div><i class="fa fa-comment"></i>124 Comments</div>
+																	</a>
+																</div>
+
+																{%endfor%}
+																
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="has-dropdown">
+											<a href="#fulltheatres">theatres</a>
+											<div class="dropdown dropdown-large">
+												<div class="grid-row">
+													<div class="grid-col grid-col-3">
+														<ul class="subnav">
+															
+															<li><a href="#fulltheatres">All Theatres</a></li>
+															<li><a href="#">Comedy</a></li>
+															<li><a href="#">Experimental</a></li>
+															<li><a href="#">Drama</a></li>
+															<li><a href="#">Classics</a></li>
+															<li><a href="#">Musicals</a></li>
+														</ul>
+													</div>
+													<div class="grid-col grid-col-9">
+														<div class="latest">
+															<p>
+																<a href="#" class="fa fa-chevron-right next"></a>
+																<a href="#"  class="fa fa-chevron-left prev"></a>
+															Theatres
+															</p>
+															<div class="carousel">
+															{%for theatre in theatres%}
+						
+
+																<div class="item">
+																	<a href="#venue/{{theatre['id']}}" style="background-image: url(static/ZingVenueImages/{{theatre['id']}}.png)">
+																		<h4>{{theatre['name']}}</h4>
+																		<div><i class="fa fa-comment"></i>124 Comments</div>
+																	</a>
+																</div>
+
+																{%endfor%}
+																
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="has-dropdown">
+											<a href="#fullreviews">reviews</a>
+											<div class="dropdown dropdown-large">
+												<div class="grid-row">
+													<div class="grid-col grid-col-3">
+														<ul class="subnav">
+															
+															<li><a href="#reviews/inq">Inquirer Theatre Blog</a></li>
+															<li><a href="#reviews/phin">Phindie</a></li>
+															<li><a href="#reviews/how-shap">Howard Shapiro's Theatre Blog</a></li>
+															<li><a href="#reviews/bsr">Broad Street Review</a></li>
+															<li><a href="#reviews/city-paper">City Paper</a></li>
+															<li><a href="#reviews/phil-week">Philadelphia Weekly</a></li>
+															
+														</ul>
+													</div>
+													<div class="grid-col grid-col-9">
+														<div class="latest">
+															<p>
+																<a href="#" class="fa fa-chevron-right next"></a>
+																<a href="#"  class="fa fa-chevron-left prev"></a>
+															Newest Reviews
+															</p>
+															<div class="carousel">
+															{%for review in reviews%}
+						
+
+																<div class="item">
+																	<a href="#" style="background-image: url(static/ZingImages/{{review['showid']}}.jpg)">
+																		<h4>{{review['title']}}</h4>
+																		<div><i class="fa fa-comment"></i>124 Comments</div>
+																	</a>
+																</div>
+
+																{%endfor%}
+																
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</li>
+										
+									
+									</ul>
+								</nav>
+								<!--/ main nav -->
+							</div>
+							
+							
+							<div class="grid-col grid-col-4">
+								<!-- search -->
+								<form action="#" class="search">
+									<input type="text" placeholder="search" autocomplete="off">
+									<button type="submit" class="fa fa-search"></button>
+								</form>
+								<!--/ search -->
+							</div>
+							<div class ="grid-col grid-col-3 col-title" style = "background:white">
+							<div class="page-title">
+							
+						<img class= "img-header" src = "static/zingheadernew.png">
+						
+						
+						<!-- <a href="#" class="subscribe subscribe-alt"><i class="fa fa-rss"></i>subscribe to this category</a> -->
+					</div>
+						</div>
+					</div>					
+				</div>
+				<div></div>
+				<!-- page header middle -->
+				
+			</header>
+			<!--/ page header -->
+			
+			<!-- page content -->
+			<main class="page-content">
+			
+				<div class="grid-cont">
+					<!-- featured news -->
+					<div class="widget-first-row widget  widget-descript">
+								<div class="head">Welcome</div>
+								<p style = " text-align: left"><b>Here's how PhillyZing works:</b></p>
+								<br>
+
+								<a href = "#login_sidebar">1) Register to be a reviewer. </a>
+								<br>
+
+								2) Share your authentic experience at a live show. 
+								<br>
+
+								3) We count your review, and the best shows rise to the top. 
+								</p>
+
+						</div>
+
+						<div class="widget widget-first-row  widget-glance">
+								<div class="head">Trending</div>
+							
+								{%for trend in trending%}
+							<a href="#show/{{trend['id']}}">
+								
+								<div>{{trend['avg']}}% -- {{trend['name']}}</div>
+							</a>
+							{%endfor%}
+
+						</div>
+						<div class="widget widget-first-row  widget-glance">
+								<div class="head">This Week</div>
+							
+								{%for thisweek in thisweek%}
+							<a href="#show/{{thisweek['id']}}">
+								
+								<div>{{thisweek['rating']}}% -- {{thisweek['name']}}</div>
+							</a>
+							{%endfor%}
+
+						</div>
+						<div class="widget widget-first-row  widget-glance">
+								<div class="head">Top Rated</div>
+							
+								{%for toprated in toprated%}
+							<a href="#show/{{toprated['id']}}">
+								
+								<div>{{toprated['avg']}}% -- {{toprated['name']}}</div>
+							</a>
+							{%endfor%}
+
+						</div>
+						<div class="widget widget-first-row  widget-glance">
+								<div class="head">At a Glance</div>
+							
+								{%for trend in trending%}
+							<a href="#show/{{trend['id']}}">
+								
+								<div>{{trend['avg']}}% -- {{trend['name']}}</div>
+							</a>
+							{%endfor%}
+
+						</div>
+						
+							
+					
+
+					<!-- <div id="featured-news" class="featured-news">
+						<a href="#" class="item">
+							<span class="pic" style="background-image: url(http://placehold.it/1050x220)"></span>
+							<h2>Lorem Ipsum gravida nibh vel velit auctor ipsum gravida nibh</h2>
+						</a>
+						<a href="#" class="item">
+							<span class="pic" style="background-image: url(http://placehold.it/1050x220)"></span>
+							<h2>Lorem Ipsum gravida nibh vel velit auctor ipsum gravida nibh</h2>
+						</a>
+						<a href="#" class="item">
+							<span class="pic" style="background-image: url(http://placehold.it/1050x220)"></span>
+							<h2>Lorem Ipsum gravida nibh vel velit auctor ipsum gravida nibh</h2>
+						</a>
+					</div> -->
+					<!--/ featured news -->
+					
+					<!-- popuplar news -->
+					<div id="popular-news" class="popular-news">
+						<div class="tabs">
+							<a href="#popuplar-news-1" class="active">this week</a>
+							<a href="#popuplar-news-2">trending</a>
+							<a href="#popuplar-news-3">top rated</a>
+						</div>
+						<div id="popuplar-news-1" class="items items-visible">
+							{%for week in thisweek%}
+							{%if loop.index < 4%}
+							<a href="#" class ="pic{{loop.index}}">
+								<div class="pic " style="background-image: url(static/ZingImages/{{week['id']}}.jpg)"></div>
+								<span>{{week['name']}}</span>
+							</a>
+							{%else%}
+							<a class = "pic-hidden pic{{loop.index}}" href="#">
+								<div class="pic " style="background-image: url(static/ZingImages/{{week['id']}}.jpg)"></div>
+								<span>{{week['name']}}</span>
+							</a>
+							{%endif%}
+							{%endfor%}
+
+						</div>
+						<div id="popuplar-news-2" class="items">
+						{%for trend in trending%}
+							<a href="#">
+								<div class="pic" style="background-image: url(static/ZingImages/{{trend['id']}}.jpg)"></div>
+								<span>{{trend['name']}}</span>
+							</a>
+							{%endfor%}
+						</div>
+						<div id="popuplar-news-3" class="items">
+							{%for top in toprated%}
+							{%if loop.index < 4%}
+							<a href="#">
+								<div class="pic" style="background-image: url(static/ZingImages/{{top['id']}}.jpg)"></div>
+								<span>{{top['name']}}</span>
+							</a>
+							{%endif%}
+							{%endfor%}
+						</div>
+						<a href="#" class="fa fa-chevron-right"></a>
+					</div>
+					<!--/ popuplar news -->
+					
+					<div class="grid-row">
+						<div class="grid-col grid-col-8">
+							<!-- blog list -->
+							<div class="blog-list">
+								<div class="head">latest posts</div>
+								{%for post in blog%}
+								<div class="item">
+									<a href="#" class="pic">
+										<img src="http://placehold.it/770x300" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+									<div class="bar">
+										<a href="#" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>16 Mar, 2014</div>
+										<a href="#"><i class="fa fa-pencil fa-flip-horizontal"></i>John Doe</a>
+									</div>
+								</div>
+								{%endfor%}
+							<!--/ blog list -->
+							
+							<!-- pager -->
+							<div class="pager">
+								<a href="#" class="prev fa fa-chevron-left"></a>
+								<a href="#" class="next fa fa-chevron-right"></a>
+								<a href="#" class="active">1</a>
+								<a href="#">2</a>
+								<a href="#">3</a>
+								<div>
+									<input type="text" maxlength="2" placeholder="...">
+									<div class="tip"><span>type page number</span></div>
+								</div>
+								<a href="#">25</a>
+							</div>
+							<!--/ pager -->
+						</div>
+						</div>
+						
+						<div class="grid-col grid-col-4">
+							<!-- widget socials -->
+							<div class="widget widget-socials">
+								<div class="head">socialize</div>
+								<div class="cont">
+									<a href="#" class="fa fa-twitter"></a><!--
+									--><a href="#" class="fa fa-pinterest"></a><!--
+									--><a href="#" class="fa fa-linkedin"></a><!--
+									--><a href="#" class="fa fa-instagram"></a><!--
+									--><a href="#" class="fa fa-facebook"></a>
+								</div>
+							</div>
+							<!--/ widget socials -->
+							
+							<!-- widget weather -->
+							<div class="widget widget-weather">
+								<div class="head">Springfield</div>
+								<div class="cont">
+									<img src="img/clouds.png" width="104" height="91" alt="">
+									<div class="temp">17<span>&nbsp;°C</span></div>
+									<p>cloudy<br>12% chance of rain</p>
+									<p class="min">MIN:&nbsp;14&nbsp;°C &nbsp;&nbsp;&nbsp; MAX:&nbsp;23&nbsp;°C</p>
+									<button type="button">change</button>
+								</div>
+							</div>
+							<!--/ widget weather -->
+							
+							<!-- widget tags -->
+							<div class="widget widget-tags">
+								<div class="cont">
+									<a href="#">Lorem</a><!--
+									--><a href="#">Dolorsitamet</a><!--
+									--><a href="#">Simpli</a><!--
+									--><a href="#">Aliquetanco</a><!--
+									--><a href="#">Lectura</a><!--
+									--><a href="#">Lorem</a><!--
+									--><a href="#">Dolorsi</a><!--
+									--><a href="#">Simpli</a><!--
+									--><a href="#">Alnisco</a>
+								</div>
+							</div>
+							<!--/ widget tags -->
+							
+							<!-- widget poll -->
+							
+							<!--/ widget poll -->
+							
+							<!-- widget instagram -->
+						<!-- 	<div class="widget widget-instagram">
+								<div class="head">instagram</div>
+								<div class="cont">
+									<ul>
+										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+									<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+										-<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li><
+										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+									</ul>
+									<a href="#" class="button">follow</a>
+								</div>
+							</div> -->
+							<!--/ widget instagram -->
+							
+							<!-- widget comments -->
+						<!-- 	<div class="widget widget-comments">
+								<div class="head">recent comments</div>
+								<div class="cont">
+									<ul>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget comments -->
+							
+							<!-- widget categories -->
+						<!-- 	<div class="widget widget-categories">
+								<div class="head">categories</div>
+								<div class="cont">
+									<ul>
+										<li><a href="#"><span>129</span>World</a></li>
+										<li><a href="#"><span>82</span>Business</a></li>
+										<li><a href="#"><span>24</span>Finance</a></li>
+										<li><a href="#"><span>48</span>Sports</a></li>
+										<li><a href="#"><span>36</span>Technology</a></li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget categories -->
+							
+							<!-- widget popular -->
+							<!-- <div id="widget-popular" class="widget widget-popular">
+								<div class="head"><a href="#widget-popular-tab1" class="active">popular</a><a href="#widget-popular-tab2">latest</a></div>
+								<div class="cont">
+									<ul id="widget-popular-tab1" class="active">
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+									</ul>
+									<ul id="widget-popular-tab2">
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+											<p>68 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+										<li>
+											<a href="#" class="pic">
+												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
+											</a>
+											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+											<p>124 Comments</p>
+										</li>
+									</ul>
+								</div>
+							</div> -->
+							<!--/ widget popular -->
+							
+							<!-- widget sponsor -->
+							<!-- <div class="widget widget-sponsor">
+								<div class="head">our sponsor</div>
+								<div class="cont">
+									<a href="#"><img src="http://placehold.it/336x280" width="336" height="280" alt=""></a>
+								</div>
+							</div> -->
+							<!--/ widget popular -->
+						</div>
+					</div>
+				</div>
+			
+			</main>
+			<!--/ page content -->
+			
+			<!-- page footer -->
+			<footer class="page-footer">
+				<div class="grid-cont">
+					<div class="grid-row">
+						<div class="grid-col grid-col-2">
+							<!-- about -->
+							<div class="widget-about">
+								<a href="index.html" class="slogan"><span>Zing.</span></a>
+								<a href="/" class="logo logo-alt"><img src="static/chair.png" width="68" height="61" alt=""></a>
+								<h4>About Zing.</h4>
+								<p>Zing aims to please</p>
+								<a href="#" class="more">read more<i class="fa fa-share fa-flip-vertical"></i></a>
+							</div>
+							<!--/ about -->
+						</div>
+						
+						<div class="grid-col grid-col-3-33">
+							<!-- latest tweets -->
+							<div class="widget-tweets">
+								<h4>Latest Tweets</h4>
+								<div class="item">
+									<i class="fa fa-twitter"></i>
+									<p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Version of Lorem Ipsum. Proin gravida <a href="#">#Aenean</a></p>
+								</div>
+								<div class="bar"><a href="#">@johndoe</a>2 hours ago</div>
+							</div>
+							<!--/ latest tweets -->
+						</div>
+						
+						<div class="grid-col grid-col-3-33">
+							<!-- subscribe -->
+							<div class="widget-subscribe">
+								<h4>Subscribe</h4>
+								<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean gravida aliquet</p>
+								<form action="#">
+									<div class="input"><input type="text"><i class="fa fa-envelope-o"></i></div>
+									<button type="submit">subscribe to news</button>
+								</form>
+							</div>
+							<!--/ subscribe -->
+						</div>
+						
+					
+				
+					</div>
+				</div>
+				
+				<!-- copyrights -->
+				<div class="copyrights">
+					2015 &copy; All rights reserved to WEGODESIGN &nbsp;|&nbsp; <a href="contacts.html">Contact Us</a>
+				</div>
+				<!--/ copyrights -->
+			</footer>
+			<!--/ page footer -->
+			
+			<button type="button" id="scroll-top" class="scroll-top fa fa-chevron-up"></button>
+		</div>
+		<!--/ page -->
+		
+		<!-- scripts -->
+		<script src="static/js/jquery-2.1.1.min.js"></script>
+		<script src="static/js/owl.carousel.min.js"></script>
+		<script src="static/js/jquery.validate.min.js"></script>
+		<script src="static/js/jquery.form.min.js"></script>
+		<script src="static/js/main.js"></script>
+
+   		 <script src="static/js/bootstrap.min.js"></script>
+   		 <script src="static/autocomplete.js"></script>-
+   		   <script src="static/homepage.js"></script>-
+    	<script src="static/jquery.ba-hashchange.min.js"></script>
+   	 <script src="static/jQuery-File-Upload-9.8.0/js/vendor/jquery.ui.widget.js"></script>
+    <script src="static/jQuery-File-Upload-9.8.0/js/jquery.iframe-transport.js"></script>
+    <script src="static/jQuery-File-Upload-9.8.0/js/jquery.fileupload.js"></script>
+   
+    <!--<script src="static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script> -->
+  
+	
+	</body>
+</html>

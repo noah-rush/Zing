@@ -1,0 +1,419 @@
+.page-title{
+   
+   
+display:inline-block;
+padding:0;
+
+}
+.fullschedule{
+    margin:auto;
+    width:100%;
+}
+.fullreviews{
+    margin:auto;
+    width:100%;
+}
+.fullschedule img{
+    width:100%;
+}
+.fullschedule .showAtVenueImage{
+    width:25%;
+}
+.fullschedule .showAtVenueTitle h4{
+    font-size:1.57em;
+    font-weight: bold;
+}
+.fullreviews .showAtVenueTitle h4{
+    font-size:1.57em;
+    font-weight: bold;
+}
+.fullschedule .showAtVenueTitle{
+ width:72%;
+}
+.manageOutReviews{
+    width:50%;
+    margin:auto;
+}
+.manageUserReviews{
+    width:50%;
+    margin:auto;
+}
+.showAtVenue{
+    background:black;
+    color:white;
+    padding:10px;
+    margin-top:10px;
+   overflow:auto;
+   color:white;
+}
+.showAtVenueDescript{
+    color:white;
+}
+.showAtVenueImage{
+   margin-right:20px;
+   width:35%;
+}
+.showAtVenueTitle{
+   width:60%;
+}
+.criticsReviews{
+    text-align: center;
+    padding:20px;
+    border-bottom:15px solid #e06666;
+}
+.showAtVenue a{
+float:left;
+
+
+}
+.blog-post .cont .field-content p{
+    
+    text-indent: 0px;
+}
+.cont{
+    overflow:auto;
+}
+.blog-post .cont img {
+    width:50%;
+    margin:auto;
+    float:left;
+    margin-right:50px;
+}
+
+.blog-post .cont .showAtVenue a img{
+    margin:0 !important; 
+    
+    width:100%;
+
+}
+header.page-header{
+    margin-top: 0px !important;
+    padding-bottom:0px;
+    border-bottom:none;
+}
+.page-title img{
+    width:100%;
+}
+
+.secondary-nav li a {
+ 
+  white-space: nowrap;
+}
+.logo-col{
+    width:0;
+    padding:0;
+}
+.widget-descript{
+	display:inline-block;
+   
+    vertical-align: top;
+    margin-top:0px;
+    padding-left:0px;
+    background: black;
+    color:white;
+}
+.widget-glance{
+    display:inline-block;
+  
+    vertical-align: top;
+    margin-top:0px;
+    padding-left:0px;
+    background:white;
+    
+}
+.widget-first-row {
+    width:19%;
+    border-right:1px solid black;
+    padding:10px;
+}
+.widget-first-row:nth-child(5) {
+    width:19%;
+    border-right:0px solid black;
+    padding:10px;
+}
+.widget-good{
+    background:white;
+}
+.widget-bad{
+    background:white;
+}
+.page-header-middle{
+    border-bottom:0px;
+}
+.page-title:before{
+opacity:0;
+    
+}
+.popular-news .items a {
+	width:32.9%;
+}
+.pic-hidden{
+	display:none !important;
+}
+.logo-fixed{
+    display:none;
+    width:100%;
+
+}
+.widget-first-row .head{
+    color:#3f3f3f;
+
+}
+.widget-show-descript{
+    color:white;
+    width:100%;
+}
+.widget-descript .head{
+    color:white;
+}
+.total-star-rating {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 125px;
+        height: 25px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+        color:#ffcc39;
+    }
+    .total-star-rating i {
+        opacity: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .total-star-rating input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+#startRating{
+    display:none;
+}
+.widget-rating{
+    background:black;
+    color:white;
+}
+.widget-rating h2{
+    display:inline-block;
+    font-size:20px;
+    margin-left:10%;
+}
+.editor{
+    margin:auto;
+    width:65%;
+}
+
+.
+
+.fullreviews .showAtVenue img{
+    width:25%;
+}
+.fullreviews .showAtVenueImage img{
+    width:100%;
+}
+.fullreviews .showAtVenueImage{
+    width:25%;
+}
+.blog-post .cont .fullreviews img{
+    width:25%;
+    float:left !important;
+   margin-right:0px;
+  
+}
+.fullreviews .showAtVenueTitle{
+    width:70%;
+    margin-left: 10px;
+  
+}
+.reviewAuthor{
+    margin-left:10px;
+   float:left;
+    width:70%;
+}
+.reviewTags {
+      margin-left:10px;
+   float:left;
+    width:70%;
+    margin-bottom:20px;
+}
+.reviewDescript{
+     margin-left:10px;
+   float:left;
+    width:70%;
+}
+.blog-post .cont .reviewDescript p{
+    color:white;
+}
+.blog-post .cont .showAtVenueDescript{
+    color:white;
+}
+.reviewLogo{
+    width:100%;
+}
+.widget-weather{
+    width:100%;
+    overflow:hidden;
+}
+.widget a {
+ 
+  font-size: 14px;
+
+ 
+
+  transition: opacity 0.3s;
+}
+.widget-socials{
+    width:100%;
+}
+.widget .cont{
+    overflow:hidden;
+}
+.widget-your-rating{
+    background:white;
+   border-right:1px solid #e06666;
+}
+.submitRating{
+    margin-bottom:40px;
+    margin-left:15px;
+    font-size:25px;
+}
+.widget-popular .reviewSubmit{
+     font-size:25px;
+     color:white;
+}
+.checkboxlistgood input{
+    display:inline-block;
+}
+.checkboxlistbad input{
+    display:inline-block;
+}
+.blog-post .bar{
+    overflow:auto;
+    line-height: 2em;
+    height:auto;
+}
+
+.blog-post .cont .field-content p {
+    margin-top:0px;
+}
+.blog-post .review p {
+
+    margin-top:5px;
+}
+.userReview{
+color:rgb(255, 204, 57);    
+background:black;
+}
+#writeuserreview{
+    color:black;
+    background:white;
+}
+#submitshowreview{
+    margin-top:10px;
+    border-color:#6a385b;
+}
+#submitshowreview:hover{
+background:#e06666;
+border-color:white;
+}
+
+.related-posts h2 {
+  margin-left: 120px;
+
+}
+.hidden{
+    height:0;
+}
+.cont .showAtVenue p{
+    color:white;
+}
+.widget-weather button {
+position:relative;
+right: 0px;
+bottom:0px;
+}
+.widget-weather{
+    background : #ffcc39
+}
+.widget-socials{
+    background:#56a3d9;
+   color:white;
+}
+.tweet{
+ color:white;
+    padding: 10px;
+}
+.widget .fa-twitter{
+    font-size: 30px;
+}
+.widget-socials a {
+  /width: 0;
+  height: 0;
+
+  line-height:0;
+  text-align: center;
+  color: #fff;
+  transition: opacity 0.3s;
+}
+#map_canvas{
+    color:black;
+}
+hr{
+      border-top: 1px solid #000000 !important
+}
+#sawthis:hover{
+    text-decoration:none;
+}
+.tooltip{
+    width:100px;
+}
+.img-header{
+    cursor:pointer;
+}
+.page-title{
+    cursor:pointer;
+}
+.dropdown{
+    background:#ffcc39;
+ 
+}
+.dropdown  a{
+   
+    padding-left: 10px;
+    padding-right:10px;
+}
+nav #user{
+    color:black;
+}
+.dropdown .glyphicon{
+    color:black;
+}
+.dropdown .caret{
+    color:black;
+}
+.dropdown-menu{
+    background:black;
+    color:white;
+    border:1px solid white;
+}
+.dropdown-menu li a:hover{
+    background:black;
+}
+.widget-weather{
+    color:black;
+}

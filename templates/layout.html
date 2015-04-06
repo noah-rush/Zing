@@ -76,106 +76,7 @@
 {%endif%}
 
 
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div id = "paneltext" style = "text-align: center"class="panel panel-default">
-          <br>
-            <ul class="nav nav-pills">
-                <li role="presentation" class="active" id = "signuptrigger"><a href="#"> <h2 >Sign up</h2></a></li>
-                <li role="presentation" id = "signintrigger"><a href="#"><h2 >Log in</h2></a></li>
-            </ul>
-        
-            <br>
-            <div class = "signInForm" style = "display:none" >
-                <div id = "somethingWrong" style = "display: none"></div>
-                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" href="#facebookLogin" >Log in with Facebook</a>
-                <br>
-                <br>
-                <form class = "form-inline" role = "form" >
-                    <div class="form-group" style = "width: 37.5%;">
-                        <input  type="text"  style = "width: 100%" id = "loginEmail"class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group" style = "width: 37.5%;">
-                        <input  type="password" style = "width: 100%" id = "loginPassword" class="form-control" placeholder="Password">
-                    </div>
-                    <br>
-                    <div class="form-group"style = "width: 100%; "> 
-                        <br>
-                        <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signin" >Sign in</a>
-                    </div>
-                </form>
-            </div>
-            <div class = "signUpForm">
-                <div id = "somethingWrong" style = "display: none"></div>
-                <h4>Sign up to post reviews and earn rewards.</h4>
-                <br>
-                <a style = "background-color: #3B5998; color: white; "  id = "signin2" class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
-                <br>    
-                Don't worry, we never post without your permission.
-                <br>
-                <p> or create an account </p>
-                <br>
-                <form class = "form-inline" role = "form" >
-                    <div class="form-group" style = "width: 37.5%">
-                        <input  type="text"  style = "width: 100%" id = "newfirst"class="form-control" placeholder="First Name">
-                    </div>
-                    <div class="form-group" style = "width: 37.5%">
-                        <input  type="text" style = "width: 100%" id = "newlast"class="form-control" placeholder="Last Name">
-                    </div>
-                    <br>
-                    <div class="form-group"style = "width: 75%"> 
-                        <input style = "width: 100%" type="text" id = "newemail" class="form-control" placeholder="Email">
-                    </div>
-                    <br>
-                    <div class="form-group"style = "width: 75%" >
-                        <input style = "width: 100%" margin-bottom = "0px" margin-top = "0px"type="password" id = "newpassword" class="form-control" placeholder="Password">
-                    </div>
 
-                    <div class = "birthday" style= "margin-top: 3%">
-                   <label>
-Birthday                   </label>
-<br>
-<select id = "month" style = "width: 25%"class="form-control" placeholder = "Month">
-<option value="" selected disabled>Month</option>
-  {%for month in ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
-  
-    <option>{{month}}</option>>
- {%endfor%}
- 
-</select>
-
-
- <select id = "day" style = "width: 25%; "class="form-control">
-  <option value="" selected disabled>Day</option>
-  {%for month in range(31)%}
- 
-    <option>{{month}}</option>>
- {%endfor%}
-
-</select>
-
-
-<select id = "year" style = "width: 25%; "class="form-control">
-<option value="" selected disabled>Year</option>
-  {%for month in range(2000, 1930, -1)%}
-  
-    <option>{{month}}</option>>
- {%endfor%}
-</select>
-</div>
-  
-                    <br>
-                    <br>
-                    <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signup" >Sign up</a>
-                </form>
-                </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
 <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -191,18 +92,132 @@ Birthday                   </label>
 
 
 
+<!-- <div class = "zing-logo-fixed" >
 
-    <div class="row">
-        <div id="panelbig" style="width: 100%" class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-lg-3 col-md-4 col-sm-4 column-left">
-                    <div id="logopanel" style="width: 100%" class="panel panel-default">
+                           <div class = "center-logo">
+                                <img src="static/zingdots.png" alt="..." class="img-dots">
+                                <img src="static/zingdots.png" alt="..." class="img-dots">
+                                 <a href="#home">
+                                <img src="static/zing-long.png" alt="..." class="img-thumbnail">
+                                 </a>
+                                <img src="static/zingdots.png" alt="..." class="img-dots">
+                                <img src="static/zingdots.png" alt="..." class="img-dots">
+                            </div>
+                           
+          <div id="panelheader" style="width: 100%" class="panel panel-default">
+                        <div class="panel-body" id="panelheaderuser">
+
+
+
+                            {%if useron == "none"%}
+                            <a href="#login">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" >
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span id="user">Login</span>
+                                </button>
+                            </a>
+                            {%else%}
+                            <div class="dropdown">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    
+
+                                    <span id="user">{{useron}}</span>
+
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li><a href="#logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {%endif%}
+
+                        </div>
+                    </div>             
+</div> -->
+<div class = "row row1">
+<a href="#home">
+                                <img src="static/zingheadernew.png" alt="..." class="img-logo">
+                            </a>
+                            </div>
+    <div class="row row2">
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  <a>Top Rated</a>  |  <a>This Week</a>  |  <a>Blog</a>  |  <a>Comedies</a>  |  <a>Experimental</a>  |  <a>Editor's Picks</a>
+
+    </div>
+        <div class = "wrapper">
+                <div class="col-lg-2 col-md-4 col-sm-4 column-left">
+                 <div id="panel" class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="paneldescript" class="panel panel-default">
+                                <div class="panel-body">
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                   <!--  <div id="logopanel" style="width: 100%" class="panel panel-default">
                         <div class="panel-body">
                             <a href="#home">
                                 <img src="static/zingheadernew.png" alt="..." class="img-thumbnail">
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 <!--      <div id="homepanel" style="width: 100%" class="panel panel-default">
                         <div class="panel-body">
                             <a href="#home">
@@ -260,19 +275,19 @@ Birthday                   </label>
                 </div>
 
 
-                <div class="col-lg-7 col-md-8 col-sm-8 column-center" >
+                <div class="col-lg-8 col-md-8 col-sm-8 column-center" >
                     
 
 
 
 
 
-                    <div style = "width: 100%; height: 250px; background-color:whitesmoke;"id="panelads"  class="panel panel-default">
+                 <!--    <div style = "width: 100%; height: 250px; background-color:whitesmoke;"id="panelads"  class="panel panel-default">
                         <div class="panel-body">
                         <h1> Advertisement</h1>
                         </div>
                     </div>
-
+ -->
 
 
 
@@ -326,16 +341,7 @@ Birthday                   </label>
 
 
 
-                    <div id="panel" class="panel panel-default">
-                        <div class="panel-body">
-                            <div id="paneldescript" class="panel panel-default">
-                                <div class="panel-body">
-                                  
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                   
 
 
 
@@ -349,55 +355,14 @@ Birthday                   </label>
                             </a>
                         </div>
                     </div>
-                    {%if adminPrivileges%}
-                    <div id="panelheader" style="width: 100%" class="panel panel-default">
-                        <div class="panel-body">
-                            <a href="#editpage" class="btn btn-default btn-sm " type="button">
-
-                                <span class="glyphicon glyphicon-pencil"></span> Edit Page
-                            </a>
-                        </div>
-                    </div>
-                    <div id="panelheader" style="width: 100%" class="panel panel-default">
-                        <div class="panel-body">
-                            <a href="#updateOutsideArticles" class="btn btn-default btn-sm " type="button">
-
-                                <span class="glyphicon glyphicon-pencil"></span> Update Articles                            </a>
-                        </div>
-                    </div>
-                    <div id="panelheader" style="width: 100%" class="panel panel-default">
-                        <div class="panel-body">
-                            <a href="#manageReviews" class="btn btn-default btn-sm " type="button">
-
-                                <span class="glyphicon glyphicon-pencil"></span> Manage User Reviews                          </a>
-                        </div>
-                    </div>
-                     <div id="panelheader" style="width: 100%" class="panel panel-default">
-                        <div class="panel-body">
-                            <a href="#manageOutReviews" class="btn btn-default btn-sm " type="button">
-
-                                <span class="glyphicon glyphicon-pencil"></span> Manage Outside Reviews                          </a>
-                        </div>
-                    </div>
-                     <div id="panelheader" style="width: 100%" class="panel panel-default">
-                        <div class="panel-body">
-                            <a href="#userSurveyTest" class="btn btn-default btn-sm " type="button">
-
-                                <span class="glyphicon glyphicon-pencil"></span> User Survey Test                       </a>
-                        </div>
-                    </div>
-
-                    {%endif%}
+                  
      <!--                    <div class = "footerLogo"><p style = "font-size:20px">Designed and Developed @ </p>
 <a href = "http://www.codearium.com/" target = "_blank"><img style = "padding-bottom: 5%; width:100%" src = "/static/codearium 2.png"></a>
 </div> -->
 
                 </div>
             </div>
-        </div>
-    </div>
-
- 
+  
 
 
 

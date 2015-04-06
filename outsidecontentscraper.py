@@ -70,16 +70,17 @@ def update():
 				check = c.fetchall()
 				if len(check) == 0:
 					pwTheatre = True
-					if d['feed']['link'] == 'http://www.philadelphiaweekly.com/arts-and-culture':
-						testurl = link[link.rfind("/"):]
-						goto = "http://www.philadelphiaweekly.com/arts-and-culture/stage" + testurl
-						try:
-							handle = urllib2.urlopen(goto)
-    						# and open it to return a handle on the url
-						except urllib2.HTTPError, e:
-							print 'We failed with error code - %s.' % e.code
-    						if e.code == 404:
-  								pwTheatre = False
+					# if d['feed']['link'] == 'http://www.philadelphiaweekly.com/arts-and-culture':
+					# 	testurl = link[link.rfind("/"):]
+					# 	goto = "http://www.philadelphiaweekly.com/arts-and-culture/stage" + testurl
+					# 	try:
+					# 		handle = urllib2.urlopen(goto)
+    	# 					# and open it to return a handle on the url
+					# 	except urllib2.HTTPError, e:
+					# 		print 'We failed with error code - %s.' % e.code
+					# 		print 'We failed with error code - %s.' % urllib2.HTTPError
+    	# 					if e.code == 404:
+  			# 					pwTheatre = False
 
    					if d['feed']['link'] == 'http://www.philadelphiaweekly.com/arts-and-culture':
    						if pwTheatre:

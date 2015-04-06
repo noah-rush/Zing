@@ -1,0 +1,354 @@
+<style>
+
+
+{%for rating in ratings%}
+
+
+.border-left2, .border-right2 { position: relative; }
+.border-left2:before, .border-right2:after {
+    position: absolute;
+    content:'';
+    height: auto;
+    top: 0px;
+    bottom: 0px;
+    border-right: 1px solid white;
+   
+    width: 0;
+}
+.border-left2:before { left: 0px; }
+.border-right2:after { right: 0px; }
+.border-left2:before { left: 0px; }
+.border-right2:before { right: 0px; }
+.total-star-rating-x{{loop.index}} {
+  margin-left: 10%;
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.total-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{rating}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.total-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+
+{%endfor%}
+
+
+
+
+</style>
+<!DOCTYPE html>
+<style type="text/css">
+
+#startRating{
+  display:none;
+}
+#yourRating{
+  display:none;
+}
+
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+{%for show in results%}
+.total-star-rating-{{loop.index}} {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 125px;
+        height: 25px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+        color:#ffcc39;
+    }
+    .total-star-rating-{{loop.index}} i {
+        opacity: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: {{show['rating']}}%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .total-star-rating-{{loop.index}} input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+
+{%endfor%}
+
+
+</style>
+<body>
+  
+      <main class="page-content">
+      
+        <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
+          <div class="grid-row">
+            <div class="grid-col grid-col-8">
+              <!-- blog post -->
+              <div class="blog-post">
+               <h1 class="title">{{title}}</h1>
+                
+         <!--        <div class="bar">
+            
+                </div> -->
+                
+                <div class="cont">
+
+              
+<div class = "fullreviews">
+{% for showdata in results%}
+
+<div class = "showAtVenue">
+<!-- <a class = "showAtVenueImage" href = "#show/{{showdata['showid']}}" >
+<img  src = "static/Zingimages/{{showdata['showid']}}.jpg" >
+</a> -->
+
+<a class = "showAtVenueTitle" target = "_blank" href = "{{showdata['link']}}" >
+<h4>{{showdata['title']}}</h4>
+</a>
+<hr>
+
+
+{%if showdata['author'] != "unspecified"%}
+<div class = "reviewAuthor">
+<h5>{{showdata['author']}}</h5>
+</div>
+{%endif%}
+<div class = "reviewTags">
+{% for tags in showdata['showtags']%}
+<a href = "#show/{{tags['showid']}}">   //     
+<i>{{tags['name']}}</i>
+</a>
+ 
+
+{%endfor%}
+</div>
+<br>
+<br>
+<br>
+<div class = "reviewDescript">
+{{showdata['descript']}}
+</div>
+</div>
+
+
+
+{%endfor%}
+
+
+</div>
+</div>
+</div>
+</div>
+       <div class="witgets-holder grid-col grid-col-4">
+                <div class="widget  widget-rating">
+                <a target = "_blank" href = "{{results[0]['publication']}}">
+                  <img class = "reviewLogo" src ="static/logos/{{image}}">
+                  </a>
+        </div>
+              </div>
+              </div>              
+
+
+
+
+
+            <!-- <p class="caption">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat.</p> -->
+   
+                
+                <!-- <div class="review">
+                  <div class="overview">
+                    <h3>Review Overview</h3>
+                    <table>
+                      <tr>
+                        <td>Quality</td>
+                        <td><div class="progress"><div style="width:90%"></div></div></td>
+                        <td class="value">9/10</td>
+                      </tr>
+                      <tr>
+                        <td>Reliability</td>
+                        <td><div class="progress"><div style="width:80%"></div></div></td>
+                        <td class="value">8/10</td>
+                      </tr>
+                      <tr>
+                        <td>Proin</td>
+                        <td><div class="progress"><div style="width:100%"></div></div></td>
+                        <td class="value">10/10</td>
+                      </tr>
+                      <tr>
+                        <td>Vulputate</td>
+                        <td><div class="progress"><div style="width:50%"></div></div></td>
+                        <td class="value">5/10</td>
+                      </tr>
+                    </table>
+                    <div class="total"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>Total <span>%</span>&nbsp;&nbsp;</div>
+                    
+                  </div>
+                </div> -->
+                
+              <!--  <div class="tags clearfix">
+                  <i class="fa fa-tags"></i>
+                  <a href="#">canatoktrtytz</a>
+                  <a href="#">accumsan</a>
+                  <a href="#">tellus</a>
+                  <a href="#">elit</a>
+                </div> -->
+                
+                <!-- <div class="author">
+                  <i class="fa fa-user"></i>
+                  <div class="inner">
+                    <h4><a href="#">John Doe</a></h4>
+                    <div class="position">Web UI/UX Designer</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue arcu, fringilla non pulvinar sit amet, tempus ut risus. Sed semper lacus eget neque imperdiet.</p>
+                  </div>
+                </div> -->
+             
+              <!--/ blog post -->
+              
+            
+
+
+
+<!-- {% for date in dates %}
+<div class = "row">
+<div class = "col-md-8">
+<h2 style = "font-size: 14pt"><b><i>{{date}}</b></i> </h2>
+</div>
+<div class = "col-md-4">
+<h2 style = "font-size: 14pt"><b><i>Tickets</b></i> </h2>
+</div>
+</div>
+
+<div class = "row">
+<div class="list-group"> 
+
+{%for results in results%}  
+{%if results['to_char'] ==date%} 
+<div class = "col-md-8">
+  <a  class = "list-group-item" href = "#show/{{results['name']}}"> 
+  {{results['name']}}
+  
+  
+<br>
+
+<div class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</div>
+</a>
+</div>
+<div class = "col-md-4 border-left2">
+
+<a  class = "list-group-item" href = "{{results['ticketlink']}}"> 
+  {{results['timeofshow']}} 
+  </a>
+  </div>
+{%endif%}
+{%endfor%}
+
+</div>
+</div>
+{%endfor%}
+</div>
+</div>
+
+
+ -->
+
+<!-- {% for date in dates %}
+<div class = "row">
+<div class = "col-md-8">
+<h2 style = "font-size: 14pt"><b><i>{{date}}</b></i> </h2>
+</div>
+<div class = "col-md-4">
+<h2 style = "font-size: 14pt"><b><i>Tickets</b></i> </h2>
+</div>
+</div>
+
+<div class = "row">
+<div class="list-group"> 
+
+{%for results in results%}  
+{%if results['to_char'] ==date%} 
+<div class = "col-md-8">
+  <a  class = "list-group-item" href = "#show/{{results['name']}}"> 
+  {{results['name']}}
+  
+  
+<br>
+
+<div class="total-star-rating-x{{loop.index}}" >
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</div>
+</a>
+</div>
+<div class = "col-md-4 border-left2">
+
+<a  class = "list-group-item" href = "{{results['ticketlink']}}"> 
+  {{results['timeofshow']}} 
+  </a>
+  </div>
+{%endif%}
+{%endfor%}
+
+</div>
+</div>
+{%endfor%}
+</div>
+</div>
+
+
+ -->

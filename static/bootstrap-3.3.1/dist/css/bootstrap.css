@@ -6068,10 +6068,6 @@ button.close {
   background-color: transparent;
   border: 0;
 }
-.hidden {
-  display: none !important;
-  visibility: hidden !important;
-}
 .affix {
   position: fixed;
 }
@@ -6285,15 +6281,48 @@ button.close {
     display: none !important;
   }
 }
-.column-left {
-  position: fixed;
+.navbar {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding-left: 30%;
+  padding-right: 30%;
 }
-.column-center {
-  margin-left: 25%;
+.img-logo {
+  width: 20%;
 }
-.column-right {
+.row1 {
+  background: white;
+  text-align: center;
+}
+.row2 {
+  background: white;
+  text-align: center;
+}
+.row2 a {
+  font-size: 16px;
+}
+body {
+  background-color: white;
+}
+.wrapper {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.zing-logo-fixed {
+  display: none;
   position: fixed;
-  margin-left: 83% !important;
+  background: white;
+  height: 60px;
+  z-index: 100;
+  text-align: center;
+  top: 0px;
+  width: 100%;
+}
+.zing-logo-fixed img {
+  width: 19%;
+  height: 50px;
+}
+.img-dots {
+  height: 20px !important;
 }
 #sortable1,
 #sortable2 {
@@ -6669,10 +6698,6 @@ a {
   border-color: #e06666;
   border-width: 4px;
 }
-#panelsearch > .panel-body {
-  padding: 6px;
-  border-radius: 0px;
-}
 #panelsearch > .panel-body > input {
   border-radius: 0px;
 }
@@ -6685,7 +6710,6 @@ a {
   border-bottom-left-radius: 0px;
 }
 .tag-drop > span {
-  border-radius: 10px;
   border: 1px solid black;
   padding-left: 3%;
   padding-right: 3%;
@@ -6762,7 +6786,6 @@ a {
 }
 #paneldescript {
   padding: 10%;
-  box-shadow: rgba(0, 0, 0, 0.65098) 0px 6px 20px 0px;
 }
 .autocomplete-suggestions strong {
   font-weight: normal;
@@ -6888,9 +6911,6 @@ a {
   z-index: 2;
   position: relative;
 }
-#logopanel {
-  box-shadow: rgba(0, 0, 0, 0.25098) 0px 6px 20px 0px;
-}
 .star-rating input:hover + i,
 .star-rating input:checked + i {
   opacity: 1;
@@ -6951,13 +6971,11 @@ a {
 }
 #panela {
   background-color: black;
-  box-shadow: rgba(224, 102, 102, 0.85098) 0px 6px 20px 0px;
 }
 #panelb {
   background-color: white;
 }
 #panelheader {
-  box-shadow: rgba(224, 102, 102, 0.25098) 0px 6px 6px 0px;
   background-color: white;
   border: 0px solid;
   border-color: #e06666;
@@ -6974,7 +6992,6 @@ a {
 }
 .panel {
   border: 0px;
-  border-radius: 10px;
 }
 h1 {
   font-weight: 600;
@@ -6999,12 +7016,9 @@ h1 {
         background-attachment: fixed;
         background-position: center;*/
   border: 0px solid;
-  background-color: whitesmoke;
+  background-color: white;
   border-color: black;
   width: 60%;
-}
-body {
-  background-color: #f0f0f0;
 }
 #signup:hover {
   background-color: black;
@@ -7040,9 +7054,6 @@ body {
 #variable {
   display: none;
 }
-.form-control {
-  border-radius: 20px;
-}
 #logout {
   display: none;
 }
@@ -7070,9 +7081,6 @@ body {
 }
 #search {
   font-size: 12pt;
-}
-#panelcenter {
-  box-shadow: rgba(0, 0, 0, 0.85098) 0px 6px 20px 0px;
 }
 a {
   color: black;

@@ -1,962 +1,71 @@
-
-(function (factory) {
-    'use strict';
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-    'use strict';
-
-    var
-        utils = (function () {
-            return {
-                escapeRegExChars: function (value) {
-                    return value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-                },
-                createNode: function (containerClass) {
-                    var div = document.createElement('div');
-                    div.className = containerClass;
-                    div.style.position = 'absolute';
-                    div.style.display = 'none';
-                    return div;
-                }
-            };
-        }()),
-
-        keys = {
-            ESC: 27,
-            TAB: 9,
-            RETURN: 13,
-            LEFT: 37,
-            UP: 38,
-            RIGHT: 39,
-            DOWN: 40
-        };
-
-    function Autocomplete(el, options) {
-        var noop = function () { },
-            that = this,
-            defaults = {
-                autoSelectFirst: false,
-                appendTo: 'body',
-                serviceUrl: null,
-                lookup: null,
-                onSelect: null,
-                width: 'auto',
-                minChars: 1,
-                maxHeight: 300,
-                deferRequestBy: 0,
-                params: {},
-                formatResult: Autocomplete.formatResult,
-                delimiter: null,
-                zIndex: 9999,
-                type: 'GET',
-                noCache: false,
-                onSearchStart: noop,
-                onSearchComplete: noop,
-                onSearchError: noop,
-                containerClass: 'autocomplete-suggestions',
-                tabDisabled: false,
-                dataType: 'text',
-                currentRequest: null,
-                triggerSelectOnValidInput: true,
-                lookupFilter: function (suggestion, originalQuery, queryLowerCase) {
-                    return suggestion.value.toLowerCase().indexOf(queryLowerCase) !== -1;
-                },
-                paramName: 'query',
-                transformResult: function (response) {
-                    return typeof response === 'string' ? $.parseJSON(response) : response;
-                }
-            };
-
-        // Shared variables:
-        that.element = el;
-        that.el = $(el);
-        that.suggestions = [];
-        that.badQueries = [];
-        that.selectedIndex = -1;
-        that.currentValue = that.element.value;
-        that.intervalId = 0;
-        that.cachedResponse = {};
-        that.onChangeInterval = null;
-        that.onChange = null;
-        that.isLocal = false;
-        that.suggestionsContainer = null;
-        that.options = $.extend({}, defaults, options);
-        that.classes = {
-            selected: 'autocomplete-selected',
-            suggestion: 'autocomplete-suggestion'
-        };
-        that.hint = null;
-        that.hintValue = '';
-        that.selection = null;
-
-        // Initialize and set options:
-        that.initialize();
-        that.setOptions(options);
-    }
-
-    Autocomplete.utils = utils;
-
-    $.Autocomplete = Autocomplete;
-
-    Autocomplete.formatResult = function (suggestion, currentValue) {
-        var pattern = '(' + utils.escapeRegExChars(currentValue) + ')';
-
-        return suggestion.value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>');
-    };
-
-    Autocomplete.prototype = {
-
-        killerFn: null,
-
-        initialize: function () {
-            var that = this,
-                suggestionSelector = '.' + that.classes.suggestion,
-                selected = that.classes.selected,
-                options = that.options,
-                container;
-
-            // Remove autocomplete attribute to prevent native suggestions:
-            that.element.setAttribute('autocomplete', 'off');
-
-            that.killerFn = function (e) {
-                if ($(e.target).closest('.' + that.options.containerClass).length === 0) {
-                    that.killSuggestions();
-                    that.disableKillerFn();
-                }
-            };
-
-            that.suggestionsContainer = Autocomplete.utils.createNode(options.containerClass);
-
-            container = $(that.suggestionsContainer);
-
-            container.appendTo(options.appendTo);
-
-            // Only set width if it was provided:
-            if (options.width !== 'auto') {
-                container.width(options.width);
-            }
-
-            // Listen for mouse over event on suggestions list:
-            container.on('mouseover.autocomplete', suggestionSelector, function () {
-                that.activate($(this).data('index'));
-            });
-
-            // Deselect active element when mouse leaves suggestions container:
-            container.on('mouseout.autocomplete', function () {
-                that.selectedIndex = -1;
-                container.children('.' + selected).removeClass(selected);
-            });
-
-            // Listen for click event on suggestions list:
-            container.on('click.autocomplete', suggestionSelector, function () {
-                that.select($(this).data('index'));
-            });
-
-            that.fixPosition();
-
-            that.fixPositionCapture = function () {
-                if (that.visible) {
-                    that.fixPosition();
-                }
-            };
-
-            $(window).on('resize.autocomplete', that.fixPositionCapture);
-
-            that.el.on('keydown.autocomplete', function (e) { that.onKeyPress(e); });
-            that.el.on('keyup.autocomplete', function (e) { that.onKeyUp(e); });
-            that.el.on('blur.autocomplete', function () { that.onBlur(); });
-            that.el.on('focus.autocomplete', function () { that.onFocus(); });
-            that.el.on('change.autocomplete', function (e) { that.onKeyUp(e); });
-        },
-
-        onFocus: function () {
-            var that = this;
-            that.fixPosition();
-            if (that.options.minChars <= that.el.val().length) {
-                that.onValueChange();
-            }
-        },
-
-        onBlur: function () {
-            this.enableKillerFn();
-        },
-
-        setOptions: function (suppliedOptions) {
-            var that = this,
-                options = that.options;
-
-            $.extend(options, suppliedOptions);
-
-            that.isLocal = $.isArray(options.lookup);
-
-            if (that.isLocal) {
-                options.lookup = that.verifySuggestionsFormat(options.lookup);
-            }
-
-            // Adjust height, width and z-index:
-            $(that.suggestionsContainer).css({
-                'max-height': options.maxHeight + 'px',
-                'width': options.width + 'px',
-                'z-index': options.zIndex
-            });
-        },
-
-        clearCache: function () {
-            this.cachedResponse = {};
-            this.badQueries = [];
-        },
-
-        clear: function () {
-            this.clearCache();
-            this.currentValue = '';
-            this.suggestions = [];
-        },
-
-        disable: function () {
-            var that = this;
-            that.disabled = true;
-            if (that.currentRequest) {
-                that.currentRequest.abort();
-            }
-        },
-
-        enable: function () {
-            this.disabled = false;
-        },
-
-        fixPosition: function () {
-            var that = this,
-                offset,
-                styles;
-
-            // Don't adjsut position if custom container has been specified:
-            if (that.options.appendTo !== 'body') {
-                return;
-            }
-
-            offset = that.el.offset();
-
-            styles = {
-                top: (offset.top + that.el.outerHeight()) + 'px',
-                left: offset.left + 'px'
-            };
-
-            if (that.options.width === 'auto') {
-                styles.width = (that.el.outerWidth() - 2) + 'px';
-            }
-
-            $(that.suggestionsContainer).css(styles);
-        },
-
-        enableKillerFn: function () {
-            var that = this;
-            $(document).on('click.autocomplete', that.killerFn);
-        },
-
-        disableKillerFn: function () {
-            var that = this;
-            $(document).off('click.autocomplete', that.killerFn);
-        },
-
-        killSuggestions: function () {
-            var that = this;
-            that.stopKillSuggestions();
-            that.intervalId = window.setInterval(function () {
-                that.hide();
-                that.stopKillSuggestions();
-            }, 50);
-        },
-
-        stopKillSuggestions: function () {
-            window.clearInterval(this.intervalId);
-        },
-
-        isCursorAtEnd: function () {
-            var that = this,
-                valLength = that.el.val().length,
-                selectionStart = that.element.selectionStart,
-                range;
-
-            if (typeof selectionStart === 'number') {
-                return selectionStart === valLength;
-            }
-            if (document.selection) {
-                range = document.selection.createRange();
-                range.moveStart('character', -valLength);
-                return valLength === range.text.length;
-            }
-            return true;
-        },
-
-        onKeyPress: function (e) {
-            var that = this;
-
-            // If suggestions are hidden and user presses arrow down, display suggestions:
-            if (!that.disabled && !that.visible && e.which === keys.DOWN && that.currentValue) {
-                that.suggest();
-                return;
-            }
-
-            if (that.disabled || !that.visible) {
-                return;
-            }
-
-            switch (e.which) {
-                case keys.ESC:
-                    that.el.val(that.currentValue);
-                    that.hide();
-                    break;
-                case keys.RIGHT:
-                    if (that.hint && that.options.onHint && that.isCursorAtEnd()) {
-                        that.selectHint();
-                        break;
-                    }
-                    return;
-                case keys.TAB:
-                    if (that.hint && that.options.onHint) {
-                        that.selectHint();
-                        return;
-                    }
-                    // Fall through to RETURN
-                case keys.RETURN:
-                    if (that.selectedIndex === -1) {
-                        that.hide();
-                        return;
-                    }
-                    that.select(that.selectedIndex);
-                    if (e.which === keys.TAB && that.options.tabDisabled === false) {
-                        return;
-                    }
-                    break;
-                case keys.UP:
-                    that.moveUp();
-                    break;
-                case keys.DOWN:
-                    that.moveDown();
-                    break;
-                default:
-                    return;
-            }
-
-            // Cancel event if function did not return:
-            e.stopImmediatePropagation();
-            e.preventDefault();
-        },
-
-        onKeyUp: function (e) {
-            var that = this;
-
-            if (that.disabled) {
-                return;
-            }
-
-            switch (e.which) {
-                case keys.UP:
-                case keys.DOWN:
-                    return;
-            }
-
-            clearInterval(that.onChangeInterval);
-
-            if (that.currentValue !== that.el.val()) {
-                that.findBestHint();
-                if (that.options.deferRequestBy > 0) {
-                    // Defer lookup in case when value changes very quickly:
-                    that.onChangeInterval = setInterval(function () {
-                        that.onValueChange();
-                    }, that.options.deferRequestBy);
-                } else {
-                    that.onValueChange();
-                }
-            }
-        },
-
-        onValueChange: function () {
-            var that = this,
-                options = that.options,
-                value = that.el.val(),
-                query = that.getQuery(value),
-                index;
-
-            if (that.selection) {
-                that.selection = null;
-                (options.onInvalidateSelection || $.noop).call(that.element);
-            }
-
-            clearInterval(that.onChangeInterval);
-            that.currentValue = value;
-            that.selectedIndex = -1;
-
-            // Check existing suggestion for the match before proceeding:
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(query);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
-            }
-
-            if (query.length < options.minChars) {
-                that.hide();
-            } else {
-                that.getSuggestions(query);
-            }
-        },
-
-        findSuggestionIndex: function (query) {
-            var that = this,
-                index = -1,
-                queryLowerCase = query.toLowerCase();
-
-            $.each(that.suggestions, function (i, suggestion) {
-                if (suggestion.value.toLowerCase() === queryLowerCase) {
-                    index = i;
-                    return false;
-                }
-            });
-
-            return index;
-        },
-
-        getQuery: function (value) {
-            var delimiter = this.options.delimiter,
-                parts;
-
-            if (!delimiter) {
-                return value;
-            }
-            parts = value.split(delimiter);
-            return $.trim(parts[parts.length - 1]);
-        },
-
-        getSuggestionsLocal: function (query) {
-            var that = this,
-                options = that.options,
-                queryLowerCase = query.toLowerCase(),
-                filter = options.lookupFilter,
-                limit = parseInt(options.lookupLimit, 10),
-                data;
-
-            data = {
-                suggestions: $.grep(options.lookup, function (suggestion) {
-                    return filter(suggestion, query, queryLowerCase);
-                })
-            };
-
-            if (limit && data.suggestions.length > limit) {
-                data.suggestions = data.suggestions.slice(0, limit);
-            }
-
-            return data;
-        },
-
-        getSuggestions: function (q) {
-            var response,
-                that = this,
-                options = that.options,
-                serviceUrl = options.serviceUrl,
-                data,
-                cacheKey;
-
-            options.params[options.paramName] = q;
-            data = options.ignoreParams ? null : options.params;
-
-            if (that.isLocal) {
-                response = that.getSuggestionsLocal(q);
-            } else {
-                if ($.isFunction(serviceUrl)) {
-                    serviceUrl = serviceUrl.call(that.element, q);
-                }
-                cacheKey = serviceUrl + '?' + $.param(data || {});
-                response = that.cachedResponse[cacheKey];
-            }
-
-            if (response && $.isArray(response.suggestions)) {
-                that.suggestions = response.suggestions;
-                that.suggest();
-            } else if (!that.isBadQuery(q)) {
-                if (options.onSearchStart.call(that.element, options.params) === false) {
-                    return;
-                }
-                if (that.currentRequest) {
-                    that.currentRequest.abort();
-                }
-                that.currentRequest = $.ajax({
-                    url: serviceUrl,
-                    data: data,
-                    type: options.type,
-                    dataType: options.dataType
-                }).done(function (data) {
-                    that.currentRequest = null;
-                    that.processResponse(data, q, cacheKey);
-                    options.onSearchComplete.call(that.element, q);
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    options.onSearchError.call(that.element, q, jqXHR, textStatus, errorThrown);
-                });
-            }
-        },
-
-        isBadQuery: function (q) {
-            var badQueries = this.badQueries,
-                i = badQueries.length;
-
-            while (i--) {
-                if (q.indexOf(badQueries[i]) === 0) {
-                    return true;
-                }
-            }
-
-            return false;
-        },
-
-        hide: function () {
-            var that = this;
-            that.visible = false;
-            that.selectedIndex = -1;
-            $(that.suggestionsContainer).hide();
-            that.signalHint(null);
-        },
-
-        suggest: function () {
-            if (this.suggestions.length === 0) {
-                this.hide();
-                return;
-            }
-
-            var that = this,
-                options = that.options,
-                formatResult = options.formatResult,
-                value = that.getQuery(that.currentValue),
-                className = that.classes.suggestion,
-                classSelected = that.classes.selected,
-                container = $(that.suggestionsContainer),
-                beforeRender = options.beforeRender,
-                html = '',
-                index,
-                width;
-
-            if (options.triggerSelectOnValidInput) {
-                index = that.findSuggestionIndex(value);
-                if (index !== -1) {
-                    that.select(index);
-                    return;
-                }
-            }
-
-            // Build suggestions inner HTML:
-            $.each(that.suggestions, function (i, suggestion) {
-                html += '<div class="' + className + '" data-index="' + i + '">' + formatResult(suggestion, value) + '</div>';
-            });
-
-            // If width is auto, adjust width before displaying suggestions,
-            // because if instance was created before input had width, it will be zero.
-            // Also it adjusts if input width has changed.
-            // -2px to account for suggestions border.
-            if (options.width === 'auto') {
-                width = that.el.outerWidth() - 2;
-                container.width(width > 0 ? width : 300);
-            }
-
-            container.html(html);
-
-            // Select first value by default:
-            if (options.autoSelectFirst) {
-                that.selectedIndex = 0;
-                container.children().first().addClass(classSelected);
-            }
-
-            if ($.isFunction(beforeRender)) {
-                beforeRender.call(that.element, container);
-            }
-
-            container.show();
-            that.visible = true;
-
-            that.findBestHint();
-        },
-
-        findBestHint: function () {
-            var that = this,
-                value = that.el.val().toLowerCase(),
-                bestMatch = null;
-
-            if (!value) {
-                return;
-            }
-
-            $.each(that.suggestions, function (i, suggestion) {
-                var foundMatch = suggestion.value.toLowerCase().indexOf(value) === 0;
-                if (foundMatch) {
-                    bestMatch = suggestion;
-                }
-                return !foundMatch;
-            });
-
-            that.signalHint(bestMatch);
-        },
-
-        signalHint: function (suggestion) {
-            var hintValue = '',
-                that = this;
-            if (suggestion) {
-                hintValue = that.currentValue + suggestion.value.substr(that.currentValue.length);
-            }
-            if (that.hintValue !== hintValue) {
-                that.hintValue = hintValue;
-                that.hint = suggestion;
-                (this.options.onHint || $.noop)(hintValue);
-            }
-        },
-
-        verifySuggestionsFormat: function (suggestions) {
-            // If suggestions is string array, convert them to supported format:
-            if (suggestions.length && typeof suggestions[0] === 'string') {
-                return $.map(suggestions, function (value) {
-                    return { value: value, data: null };
-                });
-            }
-
-            return suggestions;
-        },
-
-        processResponse: function (response, originalQuery, cacheKey) {
-            var that = this,
-                options = that.options,
-                result = options.transformResult(response, originalQuery);
-
-            result.suggestions = that.verifySuggestionsFormat(result.suggestions);
-
-            // Cache results if cache is not disabled:
-            if (!options.noCache) {
-                that.cachedResponse[cacheKey] = result;
-                if (result.suggestions.length === 0) {
-                    that.badQueries.push(cacheKey);
-                }
-            }
-
-            // Return if originalQuery is not matching current query:
-            if (originalQuery !== that.getQuery(that.currentValue)) {
-                return;
-            }
-
-            that.suggestions = result.suggestions;
-            that.suggest();
-        },
-
-        activate: function (index) {
-            var that = this,
-                activeItem,
-                selected = that.classes.selected,
-                container = $(that.suggestionsContainer),
-                children = container.children();
-
-            container.children('.' + selected).removeClass(selected);
-
-            that.selectedIndex = index;
-
-            if (that.selectedIndex !== -1 && children.length > that.selectedIndex) {
-                activeItem = children.get(that.selectedIndex);
-                $(activeItem).addClass(selected);
-                return activeItem;
-            }
-
-            return null;
-        },
-
-        selectHint: function () {
-            var that = this,
-                i = $.inArray(that.hint, that.suggestions);
-
-            that.select(i);
-        },
-
-        select: function (i) {
-            var that = this;
-            that.hide();
-            that.onSelect(i);
-        },
-
-        moveUp: function () {
-            var that = this;
-
-            if (that.selectedIndex === -1) {
-                return;
-            }
-
-            if (that.selectedIndex === 0) {
-                $(that.suggestionsContainer).children().first().removeClass(that.classes.selected);
-                that.selectedIndex = -1;
-                that.el.val(that.currentValue);
-                that.findBestHint();
-                return;
-            }
-
-            that.adjustScroll(that.selectedIndex - 1);
-        },
-
-        moveDown: function () {
-            var that = this;
-
-            if (that.selectedIndex === (that.suggestions.length - 1)) {
-                return;
-            }
-
-            that.adjustScroll(that.selectedIndex + 1);
-        },
-
-        adjustScroll: function (index) {
-            var that = this,
-                activeItem = that.activate(index),
-                offsetTop,
-                upperBound,
-                lowerBound,
-                heightDelta = 25;
-
-            if (!activeItem) {
-                return;
-            }
-
-            offsetTop = activeItem.offsetTop;
-            upperBound = $(that.suggestionsContainer).scrollTop();
-            lowerBound = upperBound + that.options.maxHeight - heightDelta;
-
-            if (offsetTop < upperBound) {
-                $(that.suggestionsContainer).scrollTop(offsetTop);
-            } else if (offsetTop > lowerBound) {
-                $(that.suggestionsContainer).scrollTop(offsetTop - that.options.maxHeight + heightDelta);
-            }
-
-            that.el.val(that.getValue(that.suggestions[index].value));
-            that.signalHint(null);
-        },
-
-        onSelect: function (index) {
-            var that = this,
-                onSelectCallback = that.options.onSelect,
-                suggestion = that.suggestions[index];
-
-            that.currentValue = that.getValue(suggestion.value);
-            that.el.val(that.currentValue);
-            that.signalHint(null);
-            that.suggestions = [];
-            that.selection = suggestion;
-
-            if ($.isFunction(onSelectCallback)) {
-                onSelectCallback.call(that.element, suggestion);
-            }
-        },
-
-        getValue: function (value) {
-            var that = this,
-                delimiter = that.options.delimiter,
-                currentValue,
-                parts;
-
-            if (!delimiter) {
-                return value;
-            }
-
-            currentValue = that.currentValue;
-            parts = currentValue.split(delimiter);
-
-            if (parts.length === 1) {
-                return value;
-            }
-
-            return currentValue.substr(0, currentValue.length - parts[parts.length - 1].length) + value;
-        },
-
-        dispose: function () {
-            var that = this;
-            that.el.off('.autocomplete').removeData('autocomplete');
-            that.disableKillerFn();
-            $(window).off('resize.autocomplete', that.fixPositionCapture);
-            $(that.suggestionsContainer).remove();
+//////////////Page Nav/Component Ajax Requests
+function autocomp(){
+
+
+ 
+    $('.search').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            window.location.href = '#venue/'+e['data']
+        }else{
+            window.location.href = '#show/'+e['data']
         }
-    };
-
-    // Create chainable jQuery plugin:
-    $.fn.autocomplete = function (options, args) {
-        var dataKey = 'autocomplete';
-        // If function invoked without argument return
-        // instance of the first matched element:
-        if (arguments.length === 0) {
-            return this.first().data(dataKey);
+    
+        $('.search').find('input').val('')
         }
-
-        return this.each(function () {
-            var inputElement = $(this),
-                instance = inputElement.data(dataKey);
-
-            if (typeof options === 'string') {
-                if (instance && typeof instance[options] === 'function') {
-                    instance[options](args);
-                }
-            } else {
-                // If instance already exists, destroy it:
-                if (instance && instance.dispose) {
-                    instance.dispose();
-                }
-                instance = new Autocomplete(this, options);
-                inputElement.data(dataKey, instance);
-            }
-        });
-    };
-}));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////END OF AUTOCOMPLETE PLUGIN
-
-
-
-
-
-
-var stars = 0;
-function ads(){
-        $.ajax({
-        url: "/topPanel",
-        success: displayAds
-    });
-}
-function displayAds(data){
-     $('#panelads').find(".panel-body").html(data);
-      $('.slickAds').slick({
-
-   arrows:false,
-  speed: 800,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  autoplaySpeed: 2000,
-  autoplay:true,
-  adaptiveHeight: true,
-  lazyLoad: 'ondemand',
-
-
-})
-
-     $(".sidebar-link-top").hover(function(e){
-       
-if(e['type'] == 'mouseenter'){
-    $(e['currentTarget']['lastElementChild']).slideToggle();
-}else{
-      $(e['currentTarget']['lastElementChild']).slideToggle();
-}
-});
+    }); 
+}; 
+
+function updateOutsideArticles(){
+
+$.ajax({
+        url:"/updateArticles",
+        success: function(data){
+            alert(data)
+        },
+         beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+    console.log("done")
+     $('#loader').hide();
+     homepage();
   }
+    })
+
+}
+
+
+
 function getnowplaying(){
-	$.ajax({
-  		url: "/nowPlaying",
-		success: displaynowplaying
-	});
+    $.ajax({
+        url: "/nowPlaying",
+        success: displaynowplaying
+    });
 
 };
 function getzingdescript(){
-	$.ajax({
-  		url: "/zingDescript",
-		success: displayzingdescript
-	});
+    $.ajax({
+        url: "/zingDescript",
+        success: displayzingdescript
+    });
 
 };
 function getcomingsoon(){
-	$.ajax({
-  		url: "/comingsoon",
-		success: displaycomingsoon
-	});
+    $.ajax({
+        url: "/comingsoon",
+        success: displaycomingsoon
+    });
 
 };
+function about(){
+   $.ajax({
+    url: "/about",
+    success: show_post
+   })
+}
+
 function get_all_shows(){
     $.ajax({
         url: "/allshows",
@@ -967,37 +76,200 @@ function get_all_shows(){
 function full_schedule(){
     $.ajax({
         url: "/fullschedule",
-        success: display_full_schedule
+        success: show_post,
+         beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
     });
 
 };
-function display_all_shows(data){
-    $("#panelc").find('.panel-body').html(data);
-}
-function display_full_schedule(data){
-    $("#panelcenter").find('.panel-body').html(data);
+function full_theater(){
+    $.ajax({
+        url: "/fulltheater",
+        success: show_post,
+         beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function full_reviews(){
+    $.ajax({
+        url: "/fullreviews",
+        success: show_full_reviews,
+         beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function ads(){
+        $.ajax({
+        url: "/topPanel",
+        success: displayAds
+    });
 }
 
 function profile(){
-	$.ajax({
-  		url: "/nowPlaying",
-		success: displaycomingsoon
-	});
+    $.ajax({
+        url: "/nowPlaying",
+        success: displaycomingsoon
+    });
 
 };
 
-function autocomp(){
-	
-	$('#rate').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){$('#rate').val('');find(e['data']); }});
-    $('#addtags').autocomplete({serviceUrl: '/autocomplete/allshows'});
-}; 
-
-function newUserAuthorize(){
- 
+function show_venues(){
+    $.ajax({
+        url: "/venues",
+        success: display_venues
+    });
 }
 
+function show_nowPlaying(){
+    $.ajax({
+        url: "/nowPlaying",
+        success: display_nowPlaying
+    });
+}
+
+function find(data){
+  
+    window.location.hash = data;
+    $.ajax({
+        url: '/show',
+        data: {
+            show: data
+        },
+        success: display_show
+    })
+}
+function post(data){
+    id = data
+    window.location.hash = data;
+    $.ajax({
+        url: '/post',
+        data: {
+            id: id
+        },
+        success: show_post
+    })
+}
+function reviews(data){
+    pub = data
+    
+    $.ajax({
+        url: '/source',
+        data: {
+            pub: pub
+        },
+        success: show_full_reviews
+    })
+}
+
+function show(data){
+
+    $.ajax({
+        url: '/show',
+        data: {
+            show: data
+        },
+        success: display_show
+    })
+};
+function venue(data){
+    $.ajax({
+        url: '/venue',
+        data: {
+            venue: data
+        },
+        success: display_venue
+    })
+};
+
+function homepage(){
+    $.ajax({
+        success: show_homepage,
+        url:"/home"
+    })
+}
+function open_editor(){
+    $.ajax({
+        success: show_editor,
+        url:"/edit"
+    })
+}
+function manageReviews(){
+    $.ajax({
+        success: show_manager,
+        url:"/manageReviews"
+    })
+}
+function manageOutReviews(){
+    $.ajax({
+       
+        url:"/manageOutReviews",
+        beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+    console.log("done")
+     $('#loader').hide();
+     show_out_manager();
+  },
+  success:show_out_manager
+    })
+}
+function survey(){
+    $.ajax({
+        url: "/getsurvey",
+        success: show_survey
+    })
+}
+function signin(){
+    var email = $("#loginEmail").val();
+    var hidden = $("#loginPassword").val();
+    $.ajax({
+        type:"POST",
+        url:"/signin",
+        data:
+        {email:email,
+        hidden:hidden
+        },
+        success: show_password
+    })
+}
+//////////////////////End Ajax Page Requests 
+
+
+
+//////////////////////Login/Logout User Data
+
+////////Facebook loading api asynchrously
 function facebook(){
-	 function statusChangeCallback(response) {
+     function statusChangeCallback(response) {
     // console.log('statusChangeCallback');
     // console.log(response);
     // The response object is returned with a status field that lets the
@@ -1012,13 +284,9 @@ function facebook(){
     } else if (response.status === 'not_authorized') {
         // console.log("not authorized");
       newUserAuthorize();
-    
-      
     } else {
         // console.log("other else");
       newUserAuthorize(); 
-
-
     }
   }
 
@@ -1085,14 +353,14 @@ FB.getLoginStatus(function(response) {
           $("#user").text(" " + response.first_name + " ");
         $.ajax({
         type:"POST",
-  		url: "/login",
-  		success: handle_login,
-		data: {
-			firstname: response.first_name,
-			lastname: response.last_name,
-			email: response.email
-		}
-	});
+        url: "/login",
+        success: handle_login,
+        data: {
+            firstname: response.first_name,
+            lastname: response.last_name,
+            email: response.email
+        }
+    });
 
     });
 
@@ -1102,158 +370,103 @@ FB.getLoginStatus(function(response) {
 
   }
 }
-
-var quickReview = false;
+///////////////////////////
 
 function handle_login(data){
-	// console.log(data);
+    // console.log(data);
     if(data.substring(0,4) == "<h3>"){
         $("#loginModal").find("#paneltext").html(data);
         $("#loginModal").modal();
 
     }
 }
-function displaynowplaying(data){
-	
-	$("#panelc2").html(data);
-}
-function displayzingdescript(data){
-	
-	$("#paneldescript").html(data);
-}
-function displaycomingsoon(data){
-	
-
-
-
-	$("#panelc3").html(data);
-    // console.log($(".page2"));
-    if($(".page2").length == 0){
-        $(".page-turn-links").hide();
-    }
-    //    if($($(".list-group-item")[0]).width()<300){
-    //     console.log("yup");
-    //     $("#starsspot").hide();
-    // }
-    // if($($(".list-group-item")[0]).width()>300){
-    //     console.log("yup");
-    // }
-}
-
-
-
-function do_stuff() {
-	var hiddenBox = $("#blank" );
-	var login = $("#submit");
-	login.hide();
-	var hiddenBox = $("#blank" );
-  hiddenBox.hide();
-
-}
 function signup(){
-	
+    
     var lastname = $("#newlast").val();
-	var firstname = $("#newfirst").val();
-	var email = $("#newemail").val();
-	var password = $("#newpassword").val();
-	// console.log(lastname, firstname, email, password);
+    var firstname = $("#newfirst").val();
+    var email = $("#newemail").val();
+    var password = $("#newpassword").val();
+    // console.log(lastname, firstname, email, password);
     var month = $("#month").val();
     var day = $("#day").val();
     var year = $("#year").val();
-	 $.ajax({
+     $.ajax({
         type: "POST",
-		url: "/zingnewuser",
-		data: {
-			email:  email,
-			firstname: firstname,
-			lastname: lastname,
-			password: password,
+        url: "/zingnewuser",
+        data: {
+            email:  email,
+            firstname: firstname,
+            lastname: lastname,
+            password: password,
             month: month,
             day: day, 
             year: year
-		},
-		success: show_password
-	});
+        },
+        success: show_password
+    });
 }
 
-function panelMove() {
-var panel = $("#panelsignup");
-// console.log(panel.css("height"));
-var px = panel.css("height").indexOf('p')
-var number = parseInt(panel.css("height").substring(0, px));
-number = number +4;
-panel.css("height", number + "px"); // pseudo-property code: Move right by 10px
-setTimeout(panelMove,10); // call doMove() in 20 msec
-}
-
-function printmonth(){
-		// console.log("anything")
-		//panelMove();
-}
-
-function show_signup(data){
-		$("#jumbo").html(data);
-		//panelMove();
-}
 function login_rout(data){
-	// console.log(data);
-	var str = data.substring(0,3);
-	var somethingwrong = $("#somethingWrong")
-	switch(str){
-		case "Log":
-			var user = data.substring(18);
-			// console.log(user);
-			$("#loginscreen").hide();
-			var nouser = $("#nouser");
-			nouser.hide();
-			var logout = $("#logout");
-			var name = $("#name");
-			var yesuser = $("#yesuser");
-			yesuser.text(user)
-			yesuser.show();
+    // console.log(data);
+    var str = data.substring(0,3);
+    var somethingwrong = $("#somethingWrong")
+    switch(str){
+        case "Log":
+            var user = data.substring(18);
+            // console.log(user);
+            $("#loginscreen").hide();
+            var nouser = $("#nouser");
+            nouser.hide();
+            var logout = $("#logout");
+            var name = $("#name");
+            var yesuser = $("#yesuser");
+            yesuser.text(user)
+            yesuser.show();
 
-			logout.show();
-			name.show();
-			break;
-		case "Use":
-			somethingwrong.show();
-			somethingwrong.text("Username not found. Try again.");
-			window.location.href = "/";
-			break;
-		case "Inc":
-			somethingwrong.show();
-			somethingwrong.text("Incorrect Password. Try again.");
-			window.location.href = "/";
-			break;
-		}
+            logout.show();
+            name.show();
+            break;
+        case "Use":
+            somethingwrong.show();
+            somethingwrong.text("Username not found. Try again.");
+            window.location.href = "/";
+            break;
+        case "Inc":
+            somethingwrong.show();
+            somethingwrong.text("Incorrect Password. Try again.");
+            window.location.href = "/";
+            break;
+        }
 }
 function logout(){
-	var fbresponse = false
-	FB.getLoginStatus(function(response) {
+    var fbresponse = false
+    FB.getLoginStatus(function(response) {
      if (response.status === 'connected') {
       // Logged into your app and Facebook.
       fbresponse = true 
       
     }
   });
-	if(fbresponse){
-	FB.logout(function(response) {
+    if(fbresponse){
+    FB.logout(function(response) {
     });
-	}
+    }
     var check = $("#user");
     check.text(" Login ");
     var check = $("#panelheaderuser");
     check.html( "<a class=\"btn btn-default btn-sm\" href = \"#login\" type=\"button\" ><span class = \"glyphicon glyphicon-user\"></span><span id = \"user\" >  Login</span></a>");
-	$.ajax({
-  		url: "/logout",
-		
-	});
+    $.ajax({
+        url: "/logout",
+        success:function(){window.location.href = ""}
+        
+    });
+
 
 
 }
 
 function login_func(){
-	$("#loginModal").modal();
+    $("#loginModal").modal();
    
     $( "#signintrigger" ).trigger( "click" );
     window.history.back()
@@ -1267,104 +480,6 @@ function login_func_sidebar(){
     
 }
 
-
-// function create_Account(){
-// 	console.log("got here")
-// 	var day = $("#day").val();
-// 	var year = $("#year").val();
-// 	console.log(year);
-// 	console.log(day);
-// 	var firstname = $("#first").val();
-// 	var lastname = $("#last").val();
-// 	var password = $("#password").val();
-// 	var passConfirm = $("#confPassword").val();
-// 	var email = $("#email").val();
-// 	var month = $("#month").val();
-// 	$.ajax({
-// 		success: show_signup,
-//   		url: "/usercreate",
-// 		data: {
-// 			firstname: firstname,
-// 			lastname: lastname,
-// 			password: password,
-// 			passwordConfirm: passConfirm,
-// 			email: email,
-// 			month: month,
-// 			day: day,
-// 			year: year
-// 		}
-// 	});
-// }
-
-function show_venues(){
-	$.ajax({
-  		url: "/venues",
-		success: display_venues
-	});
-}
-
-function show_nowPlaying(){
-	$.ajax({
-  		url: "/nowPlaying",
-		success: display_nowPlaying
-	});
-}
-
-function show_reviews(){
-	$("#writeuserreview").show();
-}
-
-function display_venues(data){
-	// console.log(data);
-	$("#panelc").html(data);
-	var iURL = "http://ajax.googleapis.com/ajax/services/search/images";
-    $.ajax({
-        url: iURL,
-        type: 'GET',
-        dataType: 'jsonp',
-        data: {
-            v:  '1.0',
-            q:  '',
-            format: 'json',
-            jsoncallback:  '?'
-        },
-        success: function(data){
-        	json.responseData.results[0].unescapedUrl
-            
-        },
-        error: function(xhr, textStatus, error){
-            // console.log(xhr.statusText, textStatus, error);
-        }
-        
-    });
-
-};
-
-function display_show(data){
-	$("#panelcenter").find('.panel-body').html(data);
-
-
-	 var initRating = $("#startRating").text();
- $(".total-star-rating i").css("width", initRating +"%");
- $("input[name='stars']").change(function(){
-	stars = this.value;
-	
-});
- $(".good").click(function(){
-	
-});
-quickReview = false;
-
-$('#writebutton').click(function(){
-$.ajax({
-    url: "/insession",
-    success: show_modal
-})
-
-
-})
-};
-
 function show_modal(data){
     if(data == 'true'){
         $('#myModal').modal();
@@ -1373,533 +488,28 @@ function show_modal(data){
     }
 }
 
-
-function display_venue(data){
-	$("#panelcenter").find('.panel-body').html(data);
-	var address = $("#address").text();
-      $(".sidebar-link").hover(function(e){
-
-if(e['type'] == 'mouseenter'){
-    $(e['currentTarget']['lastElementChild']).slideToggle();
-}else{
-      $(e['currentTarget']['lastElementChild']).slideToggle();
-}
-});
-   
-	var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
-	  $.ajax({
-  	url: urlsearch,
-  	success: initialize
-  })
-
-}
-
-    var map
- function initialize(data) {
-  
-    var map_canvas = document.getElementById('map_canvas');
-    var lat = data.results[0]['geometry']['location']['lat'];
-	var lng = data.results[0]['geometry']['location']['lng'];
-    var map_options = {
-      center: new google.maps.LatLng(lat, lng),
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    map = new google.maps.Map(map_canvas, map_options);
-    var myLatlng = new google.maps.LatLng(lat,lng);
-   var marker = new google.maps.Marker({
-    position: myLatlng,
-    map: map,
-    title: $("#showname").text()
-});
-   var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +$("#showname").text() + '</h1>'+
-      '<div id="bodyContent">'+
-      '</div>'+
-      '</div>';
-
-  var infowindow = new google.maps.InfoWindow({
-      content: contentString
-  });
-   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.open(map,marker);
-  });
-	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-   marker.setMap(map);
-  
-   $.ajax({
-   	url: "/yelp",
-   	data: {
-   		lat: lat,
-   		lng: lng
-   	},
-   	success: yelpresults
-
-
-  })
-}
-
-function yelpresults(data){
-	data = jQuery.parseJSON(data);
-
-    markers = Array();
-    
-
-$('#findRestaurants').on("click", function(e){
-
-	for(i=0; i<data.length; i++){
-		data[i];
-		
-		var myLatlng = new google.maps.LatLng(data[i][1],data[i][2]);
-var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<a href = "' + data[i][5] + '"><h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1></a>'+
-      '<div id="bodyContent">'+
-      '</div>'+
-      '<img src = "' + data[i][4]+'">'
-      '</div>';
-	var marker = new google.maps.Marker({
-    position: myLatlng,
-    map: map,
-    html: contentString,
-     animation: google.maps.Animation.DROP,
-    title:data[i][0],
-  
-});
-   var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
-      '<div id="bodyContent">'+
-      '</div>'+
-      '</div>';
-infowindow = new google.maps.InfoWindow({
-    content: "holding..."
-})
-
-google.maps.event.addListener(marker, 'click', function(){
-    infowindow.setContent(this.html);
-    infowindow.open(map,this);
-})
-
-
-    
-}
-
-})
-}
-
-function find(data){
-  
-    window.location.hash = data;
-    $.ajax({
-        url: '/show',
-        data: {
-            show: data
-        },
-        success: display_show
-    })
-}
-function post(data){
-    id = data
-    window.location.hash = data;
-    $.ajax({
-        url: '/post',
-        data: {
-            id: id
-        },
-        success: show_post
-    })
-}
-
-function show_post(data){
-    $('#zing-blog').html(data);
-     $(".sidebar-link").hover(function(e){
-
-if(e['type'] == 'mouseenter'){
-    $(e['currentTarget']['lastElementChild']).slideToggle();
-}else{
-      $(e['currentTarget']['lastElementChild']).slideToggle();
-}
-});
-}
-function publish(){
-  var article = CKEDITOR.instances.editor1.getData();
-  var descript = CKEDITOR.instances.editor2.getData();
-  var title = $('#post-title').val();
-  var author = $('#post-author').val();
-  var tags = $('.tag-drop');
-  var photo = $('#photopath').val();
-
-  finalTags = []
-  for(i = 0; i<tags[0].children.length; i++){
-  
-    finalTags.push(tags[0]['children'][i]['firstChild']['textContent'])
-
-  }
- 
-  var column = $('#addphoto').parent();
-  column[0].children[0]['innerText'] = "Update";
-  column[0].children[0]['href'] = "#update";
-  finalTags = JSON.stringify(finalTags)
-  $.ajax({
-    url: "/contentPost",
-    data: {title: title,
-        descript: descript,
-        tags: finalTags,
-           author: author,
-           photo: photo,
-            article: article}
-  })
-
-}
-
-function show(data){
-	$.ajax({
-		url: '/show',
-		data: {
-			show: data
-		},
-		success: display_show
-	})
-};
-function venue(data){
-	$.ajax({
-		url: '/venue',
-		data: {
-			venue: data
-		},
-		success: display_venue
-	})
-};
-function show_reviews(){
-	$("#writeuserreview").show();
-	$("#submitreview").show();
-	
-}
-
-
-function display_nowPlaying(data){
-	
-	$("#venuel").html(data);
-};
 function facebookLogin(){
-	 FB.login(function(response) {
+     FB.login(function(response) {
 FB.api('/me', function(response) {
-	name = response.first_name;
+    name = response.first_name;
     console.log(response);
-   FB.api('me?fields=age_range', function(response2){
-            console.log(response2);
-            var min = response2.age_range.min;
-            var max = response2.age_range.max;
+ 
+        
               $.ajax({
         type: "POST",
         url: "/login",
         success: handle_login,
         data: {
-            min: min,
-            max:max,
+           
             firstname: response.first_name,
             lastname: response.last_name,
             email: response.email
         }
     });
-        })
+       
   })
   
- }, {scope: 'public_profile,email, age_range'});
-}
-function homepage(){
-	$.ajax({
-		success: show_homepage,
-		url:"/home"
-	})
-}
-function open_editor(){
-    $.ajax({
-        success: show_editor,
-        url:"/edit"
-    })
-}
-function manageReviews(){
-    $.ajax({
-        success: show_manager,
-        url:"/manageReviews"
-    })
-}
-function manageOutReviews(){
-    $.ajax({
-        success: show_out_manager,
-        url:"/manageOutReviews"
-    })
-}
-
-function show_out_manager(data){
-
-$("#panelcenter").find('.panel-body').html(data);
- $('.removeOutReview').click(function(){
-       console.log(this.value);
-
-        $.ajax({
-            success: manageOutReviews,
-            data: {articleid: this.value},
-            url: "/removeOutReview"
-        });
-
-
-
-    })
-  $('.removeTag').click(function(){
-       console.log(this.value);
-        var articleid = this.value.substring(1, this.value.indexOf(","));
-        var showid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
-        $.ajax({
-            success: manageOutReviews,
-            data: {articleid: articleid,
-                showid:showid},
-            url: "/removeTag"
-        });
-
-
-
-    })
- 
- 
-
-}
-function show_manager(data){
-
-$("#panelcenter").find('.panel-body').html(data);
-
-    $('.removeReview').click(function(){
-        var showid = this.value.substring(1, this.value.indexOf(","));
-        var userid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
-        // console.log(this.value.substring(1, this.value.indexOf(",")));
-        // console.log(this.value.substring(this.value.indexOf(",")+2, this.value.length-1 ));
-
-        $.ajax({
-            success: manageReviews,
-            data: {showid: showid, 
-                userid: userid},
-            url: "/removeReview"
-        });
-
-
-
-    })
-}
-
-function inputs(){
-    $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
-    $("input[name='topbuttons']").change(function() {
-    
-    $("input[name='topbuttons']").each(function(){
-    if(this.checked) {
-    lastchecked.checked = false;
-   
-    if($("input[name='topbuttons']:checked").val() == "Top Rated"){
-        $.ajax({
-            url: "/toprated",
-            success: displaycomingsoon
-     })
-    }
-     if($("input[name='topbuttons']:checked").val() == "Editor's Picks"){
-        $.ajax({
-            url: "/picks",
-            success: displaycomingsoon
-     })
-    }
-     if($("input[name='topbuttons']:checked").val() == "Trending"){
-        $.ajax({
-            url: "/trending",
-            success: displaycomingsoon
-     })
-    }
-    if($("input[name='topbuttons']:checked").val() == "This Week"){
-       getcomingsoon();
-    }
-     $("#leftBoxTitle").text($("input[name='topbuttons']:checked").val());
-    var but = $( "input[name='topbuttons']:checked").closest("label");
-    but.addClass("active-radio");
-    lastchecked.removeClass("active-radio");
-    lastchecked = but;
-    }
-})
-});
-};
-function show_container(data){
-	$("#panelcenter").find('.panel-body').html(data);
-  
-     $(".sidebar-link").hover(function(e){
-
-if(e['type'] == 'mouseenter'){
-    $(e['currentTarget']['lastElementChild']).slideToggle();
-}else{
-      $(e['currentTarget']['lastElementChild']).slideToggle();
-}
-});
-
-
-
-
-}
-function show_homepage(data){
-
-    $("#panelcenter").find('.panel-body').html(data);
-      
-      $('.slickReviews').slick({
-
-   dots: true,
-  speed: 300,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplaySpeed: 5000,
-  adaptiveHeight: true,
-  lazyLoad: 'ondemand',
-  draggable:false,
- onInit: function(){
-  
-    // console.log($($('.slick-dots').find(".slick-active")[0]));
-
- },
-  responsive: [
-    {
-      breakpoint: 1400,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        dots: true
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-    });
-       $('.newDots').html($(".slick-dots"));
-       $('.newDots').append($(".slick-prev"));
-       $('.newDots').append($(".slick-next"));
-       $('.slick-next').hide();
-       $('.slick-prev').hide();
-
-     $(".sidebar-link").hover(function(e){
-       
-if(e['type'] == 'mouseenter'){
-    $(e['currentTarget']['lastElementChild']).slideToggle();
-}else{
-      $(e['currentTarget']['lastElementChild']).slideToggle();
-}
-});
-     $('.panel-blog-heading').on("click", function(){
-    $('#zing-blog').slideToggle();
-    
-})
-      $('.panel-shows-heading').on("click", function(){
-    $('#zing-shows').slideToggle();
-   
-})
-
-$('.panel-review-heading').on("hover",function(){
-    $('.paneltransition').trigger("hover")
-})
-
-
-
-
-     $('.panel-review-heading').on("click", function(){
-
-
-    $('#zing-reviews').slideToggle();
-    
-    $('.slick-next').slideToggle();
-       $('.slick-prev').slideToggle();
-       $('.slick-dots').find('.slick-active').find("button").trigger("click");
-})
-
-     $('.panel-tickets-heading').on("click", function(){
-    window.open("http://www.goldstar.com/philadelphia/events/categories/theater-tickets");
-  
-})
-     $('.panel-venue-heading').on("click", function(){
-    $('#zing-venues').slideToggle();
-  
-})
-
-// $('.slick').slick({
-//   slidesToShow: 3,
-//   slidesToScroll: 1,
-//  adaptiveHeight: true,
-//  onAfterChange: function(){
-
-//     $($(".slick-active")[1]).toggleClass("blog-homepage-middle")
-//     $($(".slick-active")[0]).removeClass("blog-homepage-middle")
-//     $($(".slick-active")[2]).removeClass("blog-homepage-middle")
-//  }
-// });
-
-
-
-}
-function show_editor(data){
-    $("#panelcenter").find('.panel-body').html(data);
-    autocomp();
-    CKEDITOR.replace( 'editor1' );
-    CKEDITOR.replace( 'editor2' );
-    $('#addtag').on('click', function(e){
-        $('.tag-drop').append('<span>' + $('#addtags').val() + '<a class = "close">x</a></span>');
-        $('.close').on('click', function(e){
-      e.currentTarget.parentElement.remove();
-    }
-    )
-    }
-    )
-    $('#fileupload').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                
-                $('#photopath').val(file);
-                $('.modal-body').html( '<img src = "static/images/' + file + '" width = "100%">');
-                $('.modal-header').html( file);
-                $("#imageModal").modal('show');
-                var column = $("#addphoto").parent()
-                column.append('<br><br><a data-toggle="modal" data-target="#imageModal" class = "btn btn-info">View Photo</a>')
-                $('#addphoto').text("Change Photo")
-               
-            });
-        }
-    }
-    )
-    $('#addphoto').on('click', function(e){
-       
-        $('#fileupload').trigger('click');
-    });
-
-
-
-
-}
-
-function survey(){
-    $.ajax({
-        url: "/getsurvey",
-        success: show_survey
-    })
+ }, {scope: 'public_profile,email'});
 }
 function show_survey(data){
     console.log("surverer")
@@ -1954,12 +564,22 @@ $.ajax({
 
 }
 
-function about(){
-   $.ajax({
-    url: "/about",
-    success: show_container
-   })
+function setLoginModal(){
+$("#signintrigger").click(function(){
+
+    $(".signInForm").show();
+      $(".signUpForm").hide();
+    $(this).addClass("active");
+    $("#signuptrigger").removeClass("active");
+})
+$("#signuptrigger").click(function(){
+    $(".signUpForm").show();
+      $(".signInForm").hide();
+    $(this).addClass("active");
+    $("#signintrigger").removeClass("active");
+})
 }
+
 
 function show_password(data){
     
@@ -1978,6 +598,7 @@ function show_password(data){
                             </div>');
         $('#user').text(" " + data.substring(10));
         $("#loginModal").modal('hide');
+        window.location.reload();
 
     }
      if(data[0] == "P"){
@@ -2015,48 +636,434 @@ function show_password(data){
        $('#somethingWrong').css({"color" : "red"});
        $('#somethingWrong').show()
        window.history.back();
-    }   	
+    }       
+}
+////////////////////////End of Login Stuff
+
+
+
+
+
+/////////////////Retrieval From Ajax, this can be compressed
+function display_show(data){
+    jQuery('body').animate({"scrollTop":0})
+    $(".page-content").html(data);
+    $('a[href="/barrymore-awards/2015/recommended"]').remove();
+    $('[data-toggle="tooltip"]').tooltip()
+    $("#sawthis").on("click", 
+      function(){
+        $.ajax({
+          url : "/sawthis",
+          data: {id: $("#showid").text()},
+          success: function(data){
+            $('.showCount').text(data)
+          }
+        })
+      })
+    var initRating = $("#startRating").text();
+    $(".total-star-rating i").css("width", initRating +"%");
+    $('.bar').append(Math.round( initRating) + "%");
+     $("input[name='stars']").change(function(){
+  stars = this.value;
+  
+});
+    $('#widgets-switcher').on('click', function()
+  {
+    console.log(this);
+    if( $(this).parent().hasClass('hidden') )
+    {
+      $(this).removeClass('fa-flip-horizontal');
+      $(this).parent().prev().removeClass('grid-col-11').addClass('grid-col-8');      
+      $(this).parent().removeClass('hidden').removeClass('grid-col-1').addClass('grid-col-4');
+    }
+    else
+    {
+      $(this).addClass('fa-flip-horizontal');
+      $(this).parent().prev().removeClass('grid-col-8').addClass('grid-col-11');
+      $(this).parent().addClass('hidden').removeClass('grid-col-4').addClass('grid-col-1');
+    }
+    return false;
+  });
+};
+
+function display_venue(data){
+    jQuery('body').animate({"scrollTop":0})
+    $(".page-content").html(data);
+    $('a[href="/barrymore-awards/2015/recommended"]').remove();
+    var address = $("#address").text();
+ $('#widgets-switcher').on('click', function()
+  {
+    console.log(this);
+    if( $(this).parent().hasClass('hidden') )
+    {
+      $(this).removeClass('fa-flip-horizontal');
+      $(this).parent().prev().removeClass('grid-col-11').addClass('grid-col-8');      
+      $(this).parent().removeClass('hidden').removeClass('grid-col-1').addClass('grid-col-4');
+    }
+    else
+    {
+      $(this).addClass('fa-flip-horizontal');
+      $(this).parent().prev().removeClass('grid-col-8').addClass('grid-col-11');
+      $(this).parent().addClass('hidden').removeClass('grid-col-4').addClass('grid-col-1');
+    }
+    return false;
+  });
+    var urlsearch = 'https://maps.googleapis.com/maps/api/geocode/json?address=' +address + '&key=AIzaSyAIlo8iZZm7IfAlLbbqPV42jeGHxanPgyg'
+    $.ajax({
+    url: urlsearch,
+    success: initialize
+    })
+}
+function initialize(data) {
+    // console.log(data);
+    var map_canvas = document.getElementById('map_canvas');
+    var lat = data.results[0]['geometry']['location']['lat'];
+    var lng = data.results[0]['geometry']['location']['lng'];
+    var map_options = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(map_canvas, map_options);
+    var myLatlng = new google.maps.LatLng(lat,lng);
+    var marker = new google.maps.Marker({
+    position: myLatlng,
+    map: map,
+    title: $("#showname").text()
+    });
+    var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +$("#showname").text() + '</h1>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      '</div>';
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+    });
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+    marker.setMap(map);
+    $.ajax({
+    url: "/yelp",
+    data: {
+        lat: lat,
+        lng: lng
+    },
+    success: yelpresults
+    })
+}
+function yelpresults(data){
+    data = jQuery.parseJSON(data);
+
+    markers = Array();
+    
+
+$('#findRestaurants').on("click", function(e){
+
+    for(i=0; i<data.length; i++){
+        data[i];
+        
+        var myLatlng = new google.maps.LatLng(data[i][1],data[i][2]);
+var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<a href = "' + data[i][5] + '"><h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1></a>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      '<img src = "' + data[i][4]+'">'
+      '</div>';
+    var marker = new google.maps.Marker({
+    position: myLatlng,
+    map: map,
+    html: contentString,
+     animation: google.maps.Animation.DROP,
+    title:data[i][0],
+  
+});
+   var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +data[i][0] + '</h1>'+
+      '<div id="bodyContent">'+
+      '</div>'+
+      '</div>';
+infowindow = new google.maps.InfoWindow({
+    content: "holding..."
+})
+
+google.maps.event.addListener(marker, 'click', function(){
+    infowindow.setContent(this.html);
+    infowindow.open(map,this);
+})
+
+
+    
+}
+
+})
+}
+function show_post(data){
+     $(".page-content").html(data);
+     jQuery('body').animate({"scrollTop":0})
+      $('a[href="/barrymore-awards/2015/recommended"]').remove();
+
+ 
+}
+function show_full_reviews(data){
+     $(".page-content").html(data);
+     jQuery('body').animate({"scrollTop":0})
+     jQuery('.showAtVenue').each(function(){
+        $(this).prepend($(this).find('img'))
+     
+     })
+      jQuery('img').each(function(){
+        if($(this).attr('src').indexOf('~ff')>0){
+            $(this).remove();
+        }
+
+        if($(this).attr('src').indexOf('feedburner')>0){
+            $(this).remove();
+        }
+     })
+ jQuery('.showAtVenue').each(function(){
+       
+        if($(this).find('img').length==0){
+            console.log(this);
+            $(this).find('.showAtVenueTitle').css({"width":"90%"
+            })
+            $(this).find('.reviewDescript').css({"width":"90%"
+            })
+        }
+     })
+
+ 
+}
+function show_out_manager(data){
+    jQuery('body').animate({"scrollTop":0})
+    $(".page-content").html(data);
+    var addingTagID
+   
+     $('.anOutReview').each(function(){
+      $(this).find('.addAtag').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            
+        }else{
+        
+        $(this).val(e['value'])
+        $(this).parent().find('.addTag').val(e['data'])
+        }
+  }
+}
+)
+$(this).find('.addTag').click(function(){
+  var showid = $(this).val()
+  var reviewid = $(this).parent().find('.removeOutReview').val()
+  console.log(showid);
+  console.log(reviewid)
+  $.ajax({
+    url: "/addtag",
+    data: {
+      showid: showid,
+      reviewid: reviewid
+    },
+    success:
+    manageOutReviews
+  })
+})
+
+
+}
+)
+ 
+    $('.removeOutReview').click(function(){
+         $.ajax({
+            success: manageOutReviews,
+            data: {articleid: this.value},
+            url: "/removeOutReview"
+        });
+    })
+    $('.removeTag').click(function(){
+        var articleid = this.value.substring(1, this.value.indexOf(","));
+        var showid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
+        $.ajax({
+            success: manageOutReviews,
+            data: {articleid: articleid,
+                showid:showid},
+            url: "/removeTag"
+        });
+    })
+}
+
+function show_manager(data){
+    jQuery('body').animate({"scrollTop":0})
+    $(".page-content").html(data);
+    autocomp();
+    $('.removeReview').click(function(){
+        var showid = this.value.substring(1, this.value.indexOf(","));
+        var userid = this.value.substring(this.value.indexOf(",")+2, this.value.length-1 );
+        // console.log(this.value.substring(1, this.value.indexOf(",")));
+        // console.log(this.value.substring(this.value.indexOf(",")+2, this.value.length-1 ));
+        $.ajax({
+            success: manageReviews,
+            data: {showid: showid, 
+                userid: userid},
+            url: "/removeReview"
+        });
+    })
+}
+function show_editor(data){
+    jQuery('body').animate({"scrollTop":0})
+    $(".page-content").html(data);
+    autocomp();
+    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace( 'editor2' );
+    $('#addtag').on('click', function(e){
+        $('.tag-drop').append('<span>' + $('#addtags').val() + '<a class = "close">x</a></span>');
+        $('.close').on('click', function(e){
+      e.currentTarget.parentElement.remove();
+    }
+    )
+    }
+    )
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                
+                $('#photopath').val(file);
+                $('.modal-body').html( '<img src = "static/images/' + file + '" width = "100%">');
+                $('.modal-header').html( file);
+                $("#imageModal").modal('show');
+                var column = $("#addphoto").parent()
+                column.append('<br><br><a data-toggle="modal" data-target="#imageModal" class = "btn btn-info">View Photo</a>')
+                $('#addphoto').text("Change Photo")
+               
+            });
+        }
+    }
+    )
+    $('#addphoto').on('click', function(e){
+       
+        $('#fileupload').trigger('click');
+    });
+
+
+
+
+}
+var stars = 0;
+
+// function displayAds(data){
+//      $('#panelads').find(".panel-body").html(data);
+   
+
+//      $(".sidebar-link-top").hover(function(e){
+       
+// if(e['type'] == 'mouseenter'){
+//     $(e['currentTarget']['lastElementChild']).slideToggle();
+// }else{
+//       $(e['currentTarget']['lastElementChild']).slideToggle();
+// }
+// });
+//   }
+// function displaynowplaying(data){
+	
+// 	$("#panelc2").html(data);
+// }
+// function displayzingdescript(data){
+	
+// 	$("#paneldescript").html(data);
+// }
+// function displaycomingsoon(data){
+	
+
+
+
+// 	$("#panelc3").html(data);
+//     // console.log($(".page2"));
+//     if($(".page2").length == 0){
+//         $(".page-turn-links").hide();
+//     }
+//     //    if($($(".list-group-item")[0]).width()<300){
+//     //     console.log("yup");
+//     //     $("#starsspot").hide();
+//     // }
+//     // if($($(".list-group-item")[0]).width()>300){
+//     //     console.log("yup");
+//     // }
+// }
+
+
+
+
+
+
+
+
+
+function show_reviews(){
+	$("#writeuserreview").show();
 }
 
 
-var name
-
-// function trackScrolling(){
-//     $( window ).scroll(function(e) {
-        
-//         if(parseInt(e.currentTarget['scrollY'])>350){
-//             if($( window ).width()>1200){
-//             $('#panela').css({
-//                 "position":"fixed",
-//                 "top": "0",
-//                 "width":"23%"
-//             })
-//         }
-//         else if($( window ).width()>500){
-//  $('#panela').css({
-//                 "position":"fixed",
-//                 "top": "0",
-//                 "width":"31.333%"
-//             })
-//         }else{
-//             $('#panela').css({
-//                 "position":"relative",
-//                 "top": "0",
-//                 "width":"100%"
-//             })
-//         }
-//     }else{
-
-// $('#panela').css({
-//                 "position":"relative",
-//                 "top": "0",
-//                 "width":"100%"
-//             })
 
 
-//     }
-// }
-// )}
+
+
+
+
+
+function publish(){
+  var article = CKEDITOR.instances.editor1.getData();
+  var descript = CKEDITOR.instances.editor2.getData();
+  var title = $('#post-title').val();
+  var author = $('#post-author').val();
+  var tags = $('.tag-drop');
+  var photo = $('#photopath').val();
+
+  finalTags = []
+  for(i = 0; i<tags[0].children.length; i++){
+  
+    finalTags.push(tags[0]['children'][i]['firstChild']['textContent'])
+
+  }
+ 
+  var column = $('#addphoto').parent();
+  column[0].children[0]['innerText'] = "Update";
+  column[0].children[0]['href'] = "#update";
+  finalTags = JSON.stringify(finalTags)
+  $.ajax({
+    url: "/contentPost",
+    data: {title: title,
+        descript: descript,
+        tags: finalTags,
+           author: author,
+           photo: photo,
+            article: article}
+  })
+
+}
+
+
+function show_reviews(){
+	$("#writeuserreview").show();
+	$("#submitreview").show();
+	
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function submit_review(){
 
@@ -2073,7 +1080,8 @@ function submit_review(){
        
 	var text = $("#writeuserreview").val();
 	var showname = $("#showname").text();
-	
+	var showid = $('#showid').text();
+  console.log(showid);
 	 $.ajax({
 		url: "/submitreview",
 		data: {
@@ -2082,55 +1090,40 @@ function submit_review(){
 			stars: stars,
 			goods: JSON.stringify(goods),
 			bads: JSON.stringify(bads)
-		}
+		},
+    beforeSend: function() {
+            console.log("before");
+             $(".widget-popular").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+
+    success: function(){
+    
+      
+      show(showid);
+    }
 	});
      var url = window.location.href;
      var idfirst = url.lastIndexOf("/");
      var id = url.substring(idfirst +1);
-     getcomingsoon();
-     show(id);
+    
+    window.location.href = "#show/"+id;
 	  
 
 
 }
 
-var lastchecked = $("#toprated");
-
-function signin(){
-	var email = $("#loginEmail").val();
-	var hidden = $("#loginPassword").val();
-	$.ajax({
-        type:"POST",
-		url:"/signin",
-		data:
-		{email:email,
-		hidden:hidden
-		},
-		success: show_password
-	})
-}
-
-
-
-
-
-
-
-
 function start (){
-	getzingdescript();
+	// getzingdescript();
 	//getnowplaying();
-	getcomingsoon();
-	homepage();
-    inputs();
-   
-
-
+	// getcomingsoon();
+	// homepage();
+    // inputs();
 $(window).hashchange( function test(){
 	var hash = location.hash;
 	if(hash.substring(0,5) == "#show")
 	{
-		
+		console.log(hash);
 		show(hash.substring(6));
 	}
 	if(hash.substring(0,6) == "#venue")
@@ -2142,6 +1135,11 @@ $(window).hashchange( function test(){
     {
      
         post(hash.substring(5));
+    }
+     if(hash.substring(0,8) == "#reviews")
+    {
+        console.log("here")
+        reviews(hash.substring(9));
     }
      if(hash.substring(0,5) == "#page")
     {
@@ -2211,110 +1209,76 @@ $(window).hashchange( function test(){
     case "#fullschedule":
         full_schedule()
         break;
+    case "#fulltheatres":
+        full_theater()
+        break;
+    case "#fullreviews":
+        full_reviews()
+        break;
     case "#editpage":
-    open_editor();
-        
+        open_editor();
         break;
     case "#publish":
-    publish();
-        
+        publish();
         break;
     case "#update":
-    publish();
-        
+        publish(); 
         break;
     case "#about":
-    about();
-    break;
+        about();
+        break;
     case "#moreShows":
-        
-    break;
+        break;
     case "#updateOutsideArticles":
-  
-        $.ajax({
-        url:"/updateArticles",
-        success: function(data){
-            alert(data)
-        },
-         beforeSend: function() {
-            console.log("before");
-             $("#panelcenter").find('.panel-body').html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
-     $('#loader').show();
-  },
-  complete: function(){
-    console.log("done")
-     $('#loader').hide();
-     homepage();
-  }
-    })
+        updateOutsideArticles()
         break;
     case "#manageReviews":
-    manageReviews();    
-    break;
+        manageReviews();    
+        break;
     case "#manageOutReviews":
-    manageOutReviews();    
-    break;
+        manageOutReviews();    
+        break;
     case "#doneSurvey":
-    donesurvey();
- 
-    break;
+        donesurvey();
+        break;
     case "#userSurveyTest":
-    survey();
-    break;
+        survey();
+        break;
 
 
-
-    
-    
- 
-
-
-
-
-    
-
-
-
+                                                            
 	}
-
 });
 
-$("#signintrigger").click(function(){
-
-    $(".signInForm").show();
-      $(".signUpForm").hide();
-    $(this).addClass("active");
-    $("#signuptrigger").removeClass("active");
-})
-$("#signuptrigger").click(function(){
-    $(".signUpForm").show();
-      $(".signInForm").hide();
-    $(this).addClass("active");
-    $("#signintrigger").removeClass("active");
-})
-
-$("#find").click(function(){
-        show($('#rate').val());
-       }
-       );
-$("#modalReview").click(function(){
-        show($('#rate').val());
-        quickReview = true;
-       }
-       );
+// $("#find").click(function(){
+//         show($('#rate').val());
+//        }
+//        );
+// $("#modalReview").click(function(){
+//         show($('#rate').val());
+//         quickReview = true;
+//        }
+//        );
 
 if($('#fromEmail').text() == 'a'){
    survey();
 
 }
-
 $(window).hashchange();
- $("#submitshowreview").on("click", submit_review);
- 
-  facebook();
+$("#submitshowreview").on("click", submit_review); 
+facebook();
 autocomp();
-trackScrolling();
-ads();
+setLoginModal();
+$('.page-title').click(function(){
+  window.location.href = ""
+})
+$('#signinbutton').click(function(){
+  console.log("signing in")
+  signin()
+})
+
+// trackScrolling();
+// ads();
   //  $('.slickReviews').slick({
   //     slidesToShow: 2,
   // slidesToScroll: 1,
@@ -2325,5 +1289,7 @@ ads();
   //   });
 // $("#venues").on("click", show_venues);
 // $("#NowPlaying").on( "click", show_nowPlaying);
+// $("#panela").hide();
 }
+
 $(document).ready(start);

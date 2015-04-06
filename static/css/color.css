@@ -1,0 +1,137 @@
+.logo {
+	background: #ffcc39;
+}
+.slogan:before {
+	background: #ffcc39;
+}
+.main-nav > ul > li:hover > a {
+	border-top-color: #ffcc39;
+}
+.main-nav .latest p a:hover {
+	color: #ffcc39;
+}
+.main-nav .latest .item a:hover:before {
+	box-shadow: inset 0 -4px 0 #ffcc39;
+}
+.main-nav .switcher i {
+	background: #ffcc39;
+}
+.search button {
+	color: #ffcc39;
+}
+.secondary-nav li a.active {
+	box-shadow: inset 0 4px #ffcc39;
+	color: #ffcc39;
+}
+.secondary-nav li .alt {
+	background: #ffcc39;
+}
+.page-title:before {
+	background: white;
+}
+.page-title-nav .active:after {
+	border-top-color: #ffcc39;
+}
+.hot-news a:hover h2 {
+	color: #ffcc39;
+}
+.hot-news a:hover h3 {
+	color: #ffcc39;
+}
+.hot-news a:hover h4 {
+	color: #ffcc39;
+}
+.hot-news h5 {
+	background: #ffcc39;
+}
+.hot-news i {
+	background: #ffcc39;
+}
+.featured-news a:hover h2 {
+	color: #ffcc39;
+}
+.featured-news .owl-prev {
+	background: #ffcc39;
+}
+.featured-news .owl-next {
+	background: #ffcc39;
+}
+.featured-news .owl-prev:hover,
+.featured-news .owl-next:hover {
+	color: #ffcc39;
+}
+.popular-news .fa {
+	color: #ffcc39;
+}
+.popular-news .fa:hover {
+	background: #ffcc39;
+}
+.popular-news .tabs a.active {
+	box-shadow: inset 4px 0 #ffcc39;
+}
+.popular-news .items a:hover {
+	color: #ffcc39;
+}
+.recent-news .tabs a.active {
+	box-shadow: inset 0 -4px #ffcc39;
+}
+.recent-news .tabs .all {
+	background: #ffcc39;
+}
+.recent-news .tabs .all:hover {
+	color: #ffcc39;
+}
+.recent-news .item-medium .info {
+	box-shadow: inset 4px 0 #ffcc39;
+}
+.recent-news .item-medium .bar .comments {
+	background: #ffcc39;
+}
+.recent-news .item-medium .bar .fa-share {
+	background: #ffcc39;
+}
+.video-player .title {
+	background: #ffcc39;
+}
+.video-player .playlist i {
+	background: #ffcc39;
+}
+.blog-list .bar .comments {
+	background: #ffcc39;
+}
+.blog-list .bar .fa-share {
+	background: #ffcc39;
+}
+.blog-post .bar {
+	background: #ffcc39;
+}
+.blog-post .review span {
+	color: #ffcc39;
+}
+.blog-post .review .progress div {
+	background: #ffcc39;
+}
+.blog-post .review .total i {
+	color: #ffcc39;
+}
+.blog-post .gallery .owl-prev {
+	background: #ffcc39;
+}
+.blog-post .gallery .owl-next {
+	background: #ffcc39;
+}
+.blog-post .cont blockquote {
+	border-left: 0.5em solid #ffcc39;
+}
+.error-404 {
+	background: #ffcc39;
+}
+.widgets-switcher:hover {
+	color: #ffcc39;
+}
+.scroll-top {
+	color: #ffcc39;
+}
+.scroll-top:hover {
+	background: #ffcc39;
+}

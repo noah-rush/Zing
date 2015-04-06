@@ -73,7 +73,7 @@ def convertDate(date):
 def convert_to_percent(stars):
     percent = stars/5
     percent = percent*100
-    percent = str(percent)
+    percent = percent
     return percent
 
 
@@ -88,6 +88,82 @@ def sort_array(s):
         s[j+1] = val
     return s
 
+def trending():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("""SELECT ZINGSHOWS.name,Zingshows.id, SUM(rating), COUNT(rating) from ZINGRATINGS, ZINGSHOWS
+                WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.name, ZINGSHOWS.id ORDER BY COUNT DESC""")
+  results = c.fetchall()
+  sortedResults = []
+  for result in results:
+    result['name'] = Markup(result['name'])
+    count = int(result['count'])
+    avg = float(result['sum'])/float(result['count'])
+    temp = {"avg": int(convert_to_percent(avg)), "name": result['name'], 'count': count, 'id': result['id']}
+    sortedResults.append(temp)
+  return sortedResults
+
+def toprated():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.id,ZINGSHOWS.name")
+  results = c.fetchall()
+  sortedResults = []
+  for result in results:
+    result['name'] = Markup(result['name'])
+    avg = float(result['sum'])/float(result['count'])
+    temp = {"avg": avg, "name": result['name'], "id": result['id']}
+    sortedResults.append(temp)
+  sortedResults = sort_array(sortedResults)
+  for tops in sortedResults:
+    tops['avg'] = int(convert_to_percent(tops['avg']))
+  return sortedResults
+
+def comingsoon():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT name, id
+                 from ZINGSHOWS
+                 WHERE (start,enddate)
+                 OVERLAPS (CURRENT_DATE, CURRENT_DATE)
+               """)
+    results = c.fetchall()
+    for result in results:
+      showid = result['id']
+      result['name'] = Markup(result['name'])
+      c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
+      ratings = c.fetchall()
+      rating = ''
+      if len(ratings) > 0:
+        rating = float(ratings[0]['sum'])/float(ratings[0]['count'])
+        rating = int(convert_to_percent(rating))
+      result["rating"] = rating
+    return results
+
+def allposts():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
+  blog = c.fetchall()
+  for post in blog:
+    post['descript'] = Markup(post['descript'])
+  return blog
+
+def venueMenu():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC LIMIT 10")
+  venues = c.fetchall()
+  for venue in venues:
+    venue['name'] = Markup(venue['name'])
+  return venues
+
+def reviewMenu():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("""SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.showID 
+               FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS 
+               where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id 
+               GROUP BY ZingoutsideContent.id, ZINGOUTSIDESHOWTAGS.showID 
+               ORDER BY ZINGOUTSIDECONTENT.id DESC
+               LIMIT 10""")
+  results = c.fetchall()
+  print results
+  return results
 
 @app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461/')
 def loaderio():
@@ -97,8 +173,24 @@ def loaderio():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     fromEmail = False
+    trendingResults = trending()
+    topResults = toprated()
+    thisweek = comingsoon()
+    blog = allposts()
+    venues = venueMenu()
+    reviews = reviewMenu()
+    template_vars = {"toprated": topResults, 
+                        "trending": trendingResults,
+                        "thisweek":thisweek, 
+                        "blog": blog,
+                        "adminPrivileges": False,
+                        "fromEmail": False,
+                        "theatres": venues,
+                        "reviews":reviews,
+                        "useron": 'none'
+                       }
     if 'email' in session:
-      fromEmail = True
+      template_vars['fromEmail'] = True
       session.pop('email', None)
     if 'username' in session:
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -106,10 +198,14 @@ def index():
         name = c.fetchall()[0]['first']
         c.execute("SELECT id from ZINGADMIN where userid = %s",(session['username'],));
         adminID = c.fetchall();
+        template_vars['useron'] = name
         if len(adminID)>0:
-              return render_template('layout.html', fromEmail = fromEmail, useron=name, adminPrivileges=True)
-        return render_template('layout.html', useron=name, fromEmail = fromEmail, adminPrivileges=False)
-    return render_template('layout.html', useron = 'none',fromEmail = fromEmail, adminPrivileges=False)
+          template_vars['adminPrivileges'] = True
+          return render_template('index-alt.html',**template_vars)
+        return render_template('index-alt.html',**template_vars)
+   
+    return render_template('index-alt.html',**template_vars)
+
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -159,7 +255,6 @@ def home():
       phindie.append(review)     
     if review['publication'] == 'http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F':
       inq.append(review)
-  print results
   c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
   blog = c.fetchall()
   for post in blog:
@@ -413,9 +508,6 @@ def zingnewuser():
   firstname = str(request.form['firstname'])
   lastname = str(request.form['lastname'])
   password = str(request.form['password'])
-  month = request.form['month']
-  day = request.form['day']
-  year = request.form['year']
   c.execute("SELECT * from USERS where email = %s",(email,))
   testemail = c.fetchall()
   if testemail != []:
@@ -444,8 +536,6 @@ def zingnewuser():
   mail.send(msg)
   c.execute("SELECT id from USERS WHERE email = %s", (email,))
   userid = c.fetchall()[0]['id']
-  inputDate = str(month) + " " + day +", " +year
-  c.execute("INSERT INTO dobs(userid, dob) VALUES(%s, %s)", (userid, inputDate))
   conn.commit()
   return "NEW USER CREATED" + firstname
 
@@ -523,61 +613,49 @@ def picks():
 
 
 ##returns shows with most user reviews
-@app.route('/trending')
-def trending():
-  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("""SELECT ZINGSHOWS.name,Zingshows.id, SUM(rating), COUNT(rating) from ZINGRATINGS, ZINGSHOWS
-                WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.name, ZINGSHOWS.id ORDER BY COUNT DESC""")
-  results = c.fetchall()
-  sortedResults = []
-  for result in results:
-    result['name'] = Markup(result['name'])
-    count = int(result['count'])
-    avg = float(result['sum'])/float(result['count'])
-    temp = {"avg": convert_to_percent(avg), "name": result['name'], 'count': count, 'id': result['id']}
-    sortedResults.append(temp)
-  return render_template('trending.html', results = sortedResults)
+
+
 
 
 ##returns the top rated shows
-@app.route('/toprated')
-def toprated():
-  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.id,ZINGSHOWS.name")
-  results = c.fetchall()
-  sortedResults = []
-  for result in results:
-    result['name'] = Markup(result['name'])
-    avg = float(result['sum'])/float(result['count'])
-    temp = {"avg": avg, "name": result['name'], "id": result['id']}
-    sortedResults.append(temp)
-  sortedResults = sort_array(sortedResults)
-  for tops in sortedResults:
-    tops['avg'] = convert_to_percent(tops['avg'])
-  return render_template('toprated.html', results = sortedResults)
+# @app.route('/toprated')
+# def toprated():
+#   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+#   c.execute("SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.id,ZINGSHOWS.name")
+#   results = c.fetchall()
+#   sortedResults = []
+#   for result in results:
+#     result['name'] = Markup(result['name'])
+#     avg = float(result['sum'])/float(result['count'])
+#     temp = {"avg": avg, "name": result['name'], "id": result['id']}
+#     sortedResults.append(temp)
+#   sortedResults = sort_array(sortedResults)
+#   for tops in sortedResults:
+#     tops['avg'] = convert_to_percent(tops['avg'])
+#   return render_template('toprated.html', results = sortedResults)
 
 
 ###returns currently playing shows// init states // coming soon is a misnomer
-@app.route('/comingsoon')
-def comingsoon():
-    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("""SELECT name, id
-                 from ZINGSHOWS
-                 WHERE (start,enddate)
-                 OVERLAPS (CURRENT_DATE, CURRENT_DATE)
-               """)
-    results = c.fetchall()
-    for result in results:
-      showid = result['id']
-      result['name'] = Markup(result['name'])
-      c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
-      ratings = c.fetchall()
-      rating = ''
-      if len(ratings) > 0:
-        rating = float(ratings[0]['sum'])/float(ratings[0]['count'])
-        rating = convert_to_percent(rating)
-      result["rating"] = rating
-    return render_template('comingsoon.html', results=results)
+# @app.route('/comingsoon')
+# def comingsoon():
+#     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+#     c.execute("""SELECT name, id
+#                  from ZINGSHOWS
+#                  WHERE (start,enddate)
+#                  OVERLAPS (CURRENT_DATE, CURRENT_DATE)
+#                """)
+#     results = c.fetchall()
+#     for result in results:
+#       showid = result['id']
+#       result['name'] = Markup(result['name'])
+#       c.execute("SELECT SUM(rating), COUNT(rating), showid FROM ZINGRATINGS WHERE showid = %s GROUP BY showid", (showid,))
+#       ratings = c.fetchall()
+#       rating = ''
+#       if len(ratings) > 0:
+#         rating = float(ratings[0]['sum'])/float(ratings[0]['count'])
+#         rating = convert_to_percent(rating)
+#       result["rating"] = rating
+#     return render_template('comingsoon.html', results=results)
 
     ### OLD CODE FOR FRINGE 2014 WHERE SHOWS HAD SPECIFIC DATES IN A DATE DATABASE
 
@@ -640,6 +718,124 @@ def comingsoon():
     # print datedata
     # return render_template('comingsoon.html', results=results, dates = dates, alldates = alldates)
  
+@app.route('/source')
+def source():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    pub = request.args.get('pub')
+    print pub
+    publication = ""
+    img = ""
+    if pub == "inq":
+      publication = "http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F"
+      title = "Inquirer Theater Blog"
+      img = "inq.png"
+    if pub == "how-shap":
+      publication = "http://www.newsworks.org/"
+      title = "Howard Shapiro's Theater Blog"
+      img = "shapiro.jpg"
+    if pub == "bsr":
+      title = "Broad Street Review"
+      publication = "http://bsr2.dev/index.php"
+      img = "bsr.png"
+    if pub == "city-paper":
+      publication = "http://citypaper.net"
+      title = "City Paper"
+      img = "citypaper.png"
+    if pub == "phin":
+      publication = "http://phindie.com"
+      title = "Phindie"
+      img = "phindie.png"
+    if pub == "phil-week":
+      publication = "http://www.philadelphiaweekly.com/arts-and-culture"
+      title = "Philadelphia Weekly"
+      img = "pw.jpg"
+    print publication
+    c.execute("""SELECT ZINGOUTSIDECONTENT.*
+                FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
+                WHERE ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id
+                AND ZINGOUTSIDECONTENT.publication = %s
+                GROUP BY ZINGOUTSIDECONTENT.id, ZINGOUTSIDESHOWTAGS.articleid
+                ORDER BY ZINGOUTSIDECONTENT.id DESC""",
+                (publication,))
+    results = c.fetchall()
+    for result in results:
+      result['descript'] = Markup(result['descript'])
+      c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
+                  ZINGShows.*
+                  FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
+                  WHERE articleid = %s
+                  AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
+      showtags = c.fetchall()
+      result['showtags'] = showtags
+      print showtags
+    return render_template('fullreviews.html', results=results, title = title, image =img)
+
+
+
+@app.route('/fullreviews')
+def fullreviews():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT ZINGOUTSIDECONTENT.*
+                FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
+                WHERE ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id
+                GROUP BY ZINGOUTSIDECONTENT.id, ZINGOUTSIDESHOWTAGS.articleid
+                ORDER BY ZINGOUTSIDECONTENT.id DESC""")
+    results = c.fetchall()
+    for result in results:
+      result['descript'] = Markup(result['descript'])
+      c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
+                  ZINGShows.*
+                  FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
+                  WHERE articleid = %s
+                  AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
+      showtags = c.fetchall()
+      result['showtags'] = showtags
+      
+    return render_template('fullreviews.html', results=results, title = "All Reviews")
+
+
+
+@app.route('/fulltheater')
+def fulltheater():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    # c.execute("""SELECT Karlshows2.name, SUM(rating), COUNT(rating)
+    #              from Karlshows2, ShowRatings4
+    #              WHERE (CURRENT_DATE, CURRENT_DATE)
+    #              OVERLAPS (start_date, end_date)
+    #              and ShowRatings4.showid = Karlshows2.id
+    #              GROUP BY Karlshows2.name""")
+    c.execute("SELECT * FROM PHILLYVENUES ")
+    results = c.fetchall()
+    for result in results:
+      result['description'] = Markup(result['description'])
+      # c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      # venueResult = c.fetchall()
+      # if len(venueResult)>0:
+      #   venuename = venueResult[0]['name']
+      # else:
+      #   venuename = ""
+      # result['venuename'] = Markup(venuename)
+      result['name'] = Markup(result['name'])
+      # result['start'] = str(result['start'])
+      # result['enddate'] = str(result['enddate'])
+      # monthfirst = result['start'].find("-")
+      # monthlast = result['start'].rfind("-")
+      # month = result['start'][monthfirst+1:monthlast]
+      # day = result['start'][monthlast+1:]
+      # year = result['start'][:4]
+      # if day[0] == "0":
+      #   day = day[1:]
+      # result['start'] = months[month] + day 
+      # monthfirst = result['enddate'].find("-")
+      # monthlast = result['enddate'].rfind("-")
+      # month = result['enddate'][monthfirst+1:monthlast]
+      # day = result['enddate'][monthlast+1:]
+      # if day[0] == "0":
+      #   day = day[1:]
+      # year = result['enddate'][:4]
+      # result['enddate'] = months[month] + day + ", " +  year
+ 
+    return render_template('fulltheatre.html', results=results)
 
 
  ###returns a fullschedule of shows--duh
@@ -652,7 +848,7 @@ def fullschedule():
     #              OVERLAPS (start_date, end_date)
     #              and ShowRatings4.showid = Karlshows2.id
     #              GROUP BY Karlshows2.name""")
-    c.execute("SELECT * FROM ZINGSHOWS ORDER BY start")
+    c.execute("SELECT * FROM ZINGSHOWS ORDER BY start ASC")
     results = c.fetchall()
     print results
     months = {"01": "January ",
@@ -668,6 +864,12 @@ def fullschedule():
               "11": "November ", 
               "12": "December "}
     for result in results:
+      result['descript'] = Markup(result['descript'])
+      c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
+                    WHERE showid = %s""", (result['id'],))
+      for a in c.fetchall():
+        if a['sum'] != None:
+          result['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
       c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
       venueResult = c.fetchall()
       if len(venueResult)>0:
@@ -736,28 +938,75 @@ def yelp():
 ## to venue page - TAKES AN ID
 @app.route('/venue', methods=['GET', 'POST'])
 def venue():
+    t = Twitter(
+    auth=OAuth('2290030034-qZlpLizAAp8FqA21jumX3sWKmKc2VVAHAPw9nUZ', 'I7B4ALWQQLTNYQKzu37tKahle36JL9NsWT3RkCYCKWx2i', '8ddlpAyOG5fq2qCHoJcxQ', 'tbjoqSMYMOxKyJgeqpZ1EexqCxoOsm4OYwiizshtZY4'))
     venue = request.args.get('venue')
+    # tweets = t.search.tweets(q="#"+showdata[0]['name'])
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("SELECT * from PhillyVenues where id = %s", (venue,))
     results = c.fetchall()
     results = results[0]
     results['name'] = Markup(results['name'])
+    twitterHandle = results['twitter']
+    twitterHandle = twitterHandle[twitterHandle.rfind("/")+1:]
+    print twitterHandle
+    tweets = t.statuses.user_timeline(screen_name=twitterHandle)
+
+    for tweet in tweets:
+      tweetText = tweet['text']
+      testText = tweetText
+      numHttps = [n for n in xrange(len(tweetText)) if tweetText.find('http', n) == n]
+      print numHttps
+      tweetLinks = []
+      tweet['created_at'] = tweet['created_at'][:tweet['created_at'].rfind("+")]
+      for x in numHttps:
+        link = tweetText[x:]
+        if link.find(" ") > -1:
+          link = link[:1+ link.find(" ")]
+        print link
+        tweetLinks.append(link)
+      for x in numHttps:
+        link = tweetText[x:]
+        if link.find(" ") > -1:
+          link = link[:1+ link.find(" ")]
+          truncate = 1 + link.find(" ") + x 
+          tweetText = tweetText[x:truncate]
+        else: 
+          tweetText = tweetText[:x]
+        
+        tweet['text'] = tweetText
+
+      tweet['links'] = tweetLinks
+      # while testText.find("http")>0:
+      #   truncatenum = testText.find("http")
+      #   link = testText[truncatenum:]
+      #   truncatenum = truncatenum + link.find(" ")
+      #   link = link[:link.find(" ")]
+      #   print link
+      #   testText = testText[truncatenum:]
+      #   print testText
+
+   
+      print "\n"
+    results['description'] = Markup(results['description'])
     c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
-    c.execute("""SELECT name, id from ZINGSHOWS
+    c.execute("""SELECT * from ZINGSHOWS
                  where venueid = %s """, (venue,))
     shows = c.fetchall()
     articles = []
     for show in shows:
       show['name'] = Markup(show['name'])
-      c.execute("""SELECT ZINGOUTSIDECONTENT.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS
-                    WHERE ZINGOUTSIDECONTENT.id = ZINGOUTSIDESHOWTAGS.articleid
-                    AND ZINGOUTSIDESHOWTAGS.showid = %s""", (show['id'],))
+      show['descript'] = Markup(show['descript'])
+      c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
+                    WHERE showid = %s""", (show['id'],))
       for a in c.fetchall():
-        articles.append(a)
-    return render_template('venue.html', venuedata=results,
+        if a['sum'] != None:
+          show['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
+    return render_template('blog-post-venue.html', venuedata=results,
                            staff=employees, useron='none',
-                           showdata=shows, articles = articles)
+                           showdata=shows, articles = articles,
+                           tweets = tweets)
 
 # To A SHOW -- TAKES AN ID, right now connects to twitter but am doing nothing with it 
 @app.route('/show', methods=['GET', 'POST'])
@@ -775,15 +1024,72 @@ def show():
     #   print tweet['text']
     #   print tweet['source']
     if len(showdata)>0:
+      months = {"01": "January ",
+              "02": "February ",
+              "03": "March ",
+              "04": "April ",
+              "05": "May ",
+              "06": "June ",
+              "07": "July ", 
+              "08": "August ",
+              "09": "September ", 
+              "10": "October ", 
+              "11": "November ", 
+              "12": "December "}
+      for result in showdata:
+      
+        result['start'] = str(result['start'])
+        result['enddate'] = str(result['enddate'])
+        monthfirst = result['start'].find("-")
+        monthlast = result['start'].rfind("-")
+        month = result['start'][monthfirst+1:monthlast]
+        day = result['start'][monthlast+1:]
+        year = result['start'][:4]
+        if day[0] == "0":
+          day = day[1:]
+        result['start'] = months[month] + day 
+        monthfirst = result['enddate'].find("-")
+        monthlast = result['enddate'].rfind("-")
+        month = result['enddate'][monthfirst+1:monthlast]
+        day = result['enddate'][monthlast+1:]
+        if day[0] == "0":
+          day = day[1:]
+        year = result['enddate'][:4]
+        result['enddate'] = months[month] + day + ", " +  year
       # c.execute("""SELECT Karlactors.actorName, Karlcasting.role
       #           from Karlactors, Karlcasting
       #           where showID = %s and Karlactors.id = Karlcasting.actorID""",
       #           (showdata[0]['id'],))
       casting = c.fetchall()
-      c.execute("""SELECT name from PhillyVenues
+      c.execute("SELECT * FROM ZINGSHOWS where venueid =%s", (showdata[0]['venueid'],))
+      venueShows = c.fetchall()
+      for venueshow in venueShows:
+        venueshow['name'] = Markup(venueshow['name'])
+        venueshow['descript'] = Markup(venueshow['descript'])
+        venueshow['start'] = str(venueshow['start'])
+        venueshow['enddate'] = str(venueshow['enddate'])
+        monthfirst = venueshow['start'].find("-")
+        monthlast = venueshow['start'].rfind("-")
+        month = venueshow['start'][monthfirst+1:monthlast]
+        day = venueshow['start'][monthlast+1:]
+        year = venueshow['start'][:4]
+        if day[0] == "0":
+          day = day[1:]
+        venueshow['start'] = months[month] + day 
+        monthfirst = venueshow['enddate'].find("-")
+        monthlast = venueshow['enddate'].rfind("-")
+        month = venueshow['enddate'][monthfirst+1:monthlast]
+        day = venueshow['enddate'][monthlast+1:]
+        if day[0] == "0":
+          day = day[1:]
+        year = venueshow['enddate'][:4]
+        venueshow['enddate'] = months[month] + day + ", " +  year
+      c.execute("""SELECT * from PhillyVenues
                 where id = %s""", (showdata[0]['venueid'],))
+
       venue = c.fetchall()
       venue[0]['name'] = Markup(venue[0]['name'])
+      venue[0]['description'] = Markup(venue[0]['description'])
       c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
                 from ZINGRATINGS, ZINGREVIEWS
@@ -874,12 +1180,17 @@ def show():
       twitterurl = twitter[0]
       for twit in range(1, len(twitter)):
         twitterurl = "%20" + twitter[twit]
-
+      c.execute("""SELECT COUNT(*) 
+                FROM SHOWCOUNT
+                WHERE showid = %s""", (show,))
+      count = str(c.fetchall()[0]['count'])
       template_vars = {"showdata": showdata[0],
                       "producer": producer,
                        "description": description,
                        "headerDescription": headerDescription,
                        "useron": 'none',
+                       "count": count,
+                       "ratingCount": int(results[0]['count']),
                        "cast": casting, "venue": venue,
                        "userreviews": reviewtexts,
                        "rating": averageRating,
@@ -887,7 +1198,8 @@ def show():
                        "goodadjectives": goodadjectives,
                        "badadjectives": badadjectives,
                        "articles": articleids,
-                       "twitterurl":twitterurl
+                       "twitterurl":twitterurl,
+                       "venueShows": venueShows
                        }
       if 'username' in session:
           c.execute("""SELECT rating
@@ -904,7 +1216,7 @@ def show():
           name = c.fetchall()[0]['first']
          
           template_vars['useron'] = name    
-      return render_template("show.html", **template_vars)
+      return render_template("blog-post.html", **template_vars)
     return render_template("error.html")
 
 @app.route('/profile')
@@ -932,17 +1244,44 @@ def profile():
 @app.route('/autocomplete/allshows', methods=['GET', 'POST'] )
 def autocomplete():
   query = request.args.get('query')
-  query = '%' + query + '%'
+  query = '%' + query.lower() + '%'
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("""SELECT name, id from ZINGSHOWS
-            where name LIKE %s""", (query,))
+            where lower(name) LIKE %s""", (query,))
   results = c.fetchall()
+  c.execute("""SELECT name, id from PHILLYVENUES
+            where lower(name) LIKE %s""", (query,))
+  results2 = c.fetchall()
   jsonresults = []
   for result in results:
-     d = {'value': result['name'], 'data': result['id']}
+     d = {'value': result['name'], 'data': result['id'], 'type':"show"}
      jsonresults.append(d)
+  for result2 in results2:
+     d = {'value': result2['name'], 'data': result2['id'], "type":"venue"}
+     jsonresults.append(d)
+
   return jsonify(query = "Unit", suggestions = jsonresults)
 
+
+
+
+@app.route('/sawthis', methods=['GET', 'POST'])
+def sawthis():
+    showID = int(request.args.get('id'))
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    userid = session['username']
+    c.execute("""DELETE FROM SHOWCOUNT 
+              WHERE userid = %s
+              AND showid = %s""", (userid, showID))
+    c.execute("""INSERT INTO SHOWCOUNT(userid, showid) 
+
+              VALUES(%s, %s)""", (userid, showID))
+    c.execute("""SELECT COUNT(*) 
+                FROM SHOWCOUNT
+                WHERE showid = %s""", (showID,))
+    count = str(c.fetchall()[0]['count'])
+  
+    return count
 
 #### handling ratings and reviews, email conf just says number of reviews with no grammar
 @app.route('/submitreview', methods=['GET', 'POST'])
@@ -971,8 +1310,13 @@ def submitreview():
       c.execute("""INSERT INTO ZINGRATINGS(userid, rating, showID, time)
               VALUES(%s, %s, %s, CURRENT_TIMESTAMP)""",
               (userid, rating, showID))
+    c.execute("""DELETE FROM ZINGGOODADJECTIVES
+                    WHERE userid= %s""", (userid,))
+    c.execute("""DELETE FROM ZINGBADADJECTIVES
+                    WHERE userid= %s""", (userid,))
     for good in goods:
       print good
+      
       c.execute("""INSERT INTO ZINGGOODADJECTIVES(showid, adjective, userid)
                 VALUES(%s,%s,%s)""",
                 (showID, good, userid))
@@ -1103,6 +1447,17 @@ def removeTag():
               articleid = %s and showid = %s""", (articleid,showid))
    conn.commit()
    return "did it"
+
+@app.route('/addtag', methods = ['GET', 'POST'])
+def addtag():
+   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+   articleid = request.args.get('reviewid')
+   showid = request.args.get('showid')
+   c.execute("""INSERT INTO ZINGOUTSIDESHOWTAGS(articleid, showid)
+              VALUES(%s, %s)""", (articleid,showid))
+   conn.commit()
+   return "did it"
+
 
 @app.route('/manageOutReviews', methods=['GET', 'POST'])
 def manageOutReviews():
