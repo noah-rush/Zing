@@ -378,7 +378,6 @@ function handle_login(data){
 
     }
 
-    check_for_admin();
 }
 
 
