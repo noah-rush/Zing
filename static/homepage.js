@@ -341,23 +341,13 @@ FB.getLoginStatus(function(response) {
     FB.api('/me', function(response) {
         // console.log('Successful login for: ' + response.name);
         // console.log(JSON.stringify(response));
-        var check = $("#panelheaderuser");
         console.log(response)
-        check.html("<div class=\"dropdown\"><button class=\"btn btn-default btn-sm dropdown-toggle\"  type=\"button\" data-toggle=\"dropdown\">\<span class =\"glyphicon glyphicon-user\"></span><span id = \"user\" >  {{useron}}</span>\<span class=\"caret\"></span>\</button><ul class=\"dropdown-menu\" role=\"menu\"> <li><a href=\"#logout\">Logout</a></li>\ </ul>\</div>");
         var name = response.first_name;
         // console.log(response.first_name);
         name = response.first_name;
         var check = $(".loginNav");
         check.addClass("dropdown")
-        check.html('<a data-toggle="dropdown"> \ 
-                    <span class="glyphicon glyphicon-user"></span>\     
-                    <span id="user"></span> \ 
-                     <span class="caret"></span> \ 
-                    </a>\ 
-                    <ul class="dropdown-menu" role="menu">\ 
-                    <li><a href="#logout">Logout</a>\ 
-                    </li> \ 
-                    </ul>')
+        check.html('<a data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span><span id="user"></span> <span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a href="#logout">Logout</a></li></ul>')
         $('nav .user').text(name);
         $.ajax({
         type:"POST",
