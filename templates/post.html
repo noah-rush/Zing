@@ -1,87 +1,418 @@
+<!DOCTYPE html>
+<style type="text/css">
+
+#startRating{
+  display:none;
+}
+#yourRating{
+  display:none;
+}
+
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+{%for review in userreviews%}
+.person-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.person-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{review[1]}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.person-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
 
 
 
 
-
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</style>
+<body>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{article['title']}}</h4>
+      </div>
       <div class="modal-body">
-        <img style = "width: 100%" src = "static/images/{{article['pic']}}">
+      
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       <button onClick="submit_review()" type="button" id = "submitshowreview" data-dismiss="modal" href = "#submitreview" class="btn btn-primary" >Submit Review</button>
       </div>
     </div>
   </div>
 </div>
+      <main class="page-content">
+      
+        <div class="grid-cont" style="background-image: url(static/images/{{article['photo']}}); background-repeat:no-repeat">  
+          <div class="grid-row">
+            <div class="grid-col grid-col-8">
+              <!-- blog post -->
+              <div class="blog-post">
+              <div id = "showid" style = "display:none"></div>
+                <h1 class="post-title title">
+                {{article['title']}}
+               </h1>
+                
+                <div class="bar">
+              By {{article['author']}} || <span class="date"><i class="fa fa-clock-o"></i>{{article['date']}}</span>
+                </div>
+                <div class="cont">
+                
+                
 
-<div class = "row">
+                      <p>{{firstparagraph}}</p>
+                      <p>{{article['content']}}</p>
+                  
+                </div>
+                
+   
+              
+              <div class="grid-row bottom-post-content">
 
-<div class = "col-md-9">
-<div id = "post" style = "background-color: white; box-shadow: rgba(2, 0, 0, 0.35098) 0px 6px 6px 0px;"class="panel panel-default">
-<div class = "panel-heading" style = "border-bottom: 2px solid #e06666;">
-<span ><h2><i>{{article['title']}}</i></h2></span>
-<i>{{article['author']}}</i>
-</div>
-<div class="panel-body" >
-<div class = "post-first-para" style = "font-size: 13pt;">
-{{firstparagraph}}
-</div>
-{%if article['pic'] == ''%}
-{%else%}
-<a  data-toggle="modal" data-target="#imageModal" ><img style = "float:right; margin: 6%" class = "homepage-image" src = "static/images/{{article['pic']}}"></a>
-{%endif%}
-<div class = "post-article" >
-{{article['article']}}
-</div>
-</div>
-</div>
-</div>
-<div class = "col-md-3">
-{%if article['tags']|length >0%}
-<div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
- <div class = "panel-heading">
-  <h3>In today's post...</h3>
-  </div>
-<div class="panel-body">
-{%for tags in article['tags']%}
-<div><a  class = "sidebar-link" href = "#show/{{tags['id']}}" >
-<img class ="sidebar-img" src = "static/Zingimages/{{tags['id']}}.jpg" width = "100%">
-<h3 class = "mouseOverText" >{{tags['name']}}</h3>
-</a>
-</div>
-<br>
-<br>
+                <div class="grid-col grid-col-6">  
+                {%if prevarticle != "none"%}           
+                  <div class="related-posts">
+                    <div class="head">Previous Post</div>
+                    <ul>
+                      <li class="clearfix">
+                        <a href="#post/{{prevarticle['id']}}" class="pic">
+                          <img src="static/images/{{prevarticle['photo']}}" width="100" height="80" alt="">
+                        </a>
+                        <div class="date"><i class="fa fa-clock-o"></i>{{prevarticle['date']}}</div>
+                        <h3><a href="#post/{{prevarticle['id']}}">{{prevarticle['title']}}</a></h3>
+                      </li>
+                    </ul>
+                  </div>
+                  {%endif%}
+                </div>
+                
+                <div class="grid-col grid-col-6">             
+                 {%if nextarticle != "none"%}           
+                  <div class="related-posts">
+                    <div class="head">Next Post</div>
+                    <ul>
+                      <li class="clearfix">
+                        <a href="#post/{{nextarticle['id']}}" class="pic">
+                          <img src="static/images/{{nextarticle['photo']}}" width="100" height="80" alt="">
+                        </a>
+                        <div class="date"><i class="fa fa-clock-o"></i>{{nextarticle['date']}}</div>
+                        <h3><a href="#post/{{nextarticle['id']}}">{{nextarticle['title']}}</a></h3>
+                      </li>
+                    </ul>
+                  </div>
+                  {%endif%}
+                </div>
+              
+              </div>
+              <!-- related posts -->
+     <!--          <div class="related-posts">
+                <div class="head"></div>
+                <ul>
+                  <li class="clearfix">
+                    <a href="#" class="pic">
+                      <img src="" width="100" height="80" alt="">
+                    </a>
+                    <div class="date"><i class="fa fa-clock-o"></i> </div>
+                    <h2>
+<a href="" >
+                    </a>
+                    </h2>
+                    <h3> </h3>
+                  </li>
+           
+                  
+                </ul>
+              </div> -->
+              
+              <!--/ related posts -->
+              
+              <!-- blog comments -->
+              <div class="blog-comments">
+                <div class="head">Comments</div>
+                <ul>
+                  <li class="clearfix">
+                    <a href="#" class="pic">
+                      <img src="http://placehold.it/100x100" width="100" height="100" alt="">
+                    </a>
+                    <div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+                    <h3><a href="#">John Doe</a></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                    <a href="#" class="fa fa-warning"></a>
+                    <a href="#" class="fa fa-share fa-flip-vertical"></a>
+                  </li>
+                  <li class="reply clearfix">
+                    <a href="#" class="pic">
+                      <img src="http://placehold.it/100x100" width="100" height="100" alt="">
+                    </a>
+                    <div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+                    <h3><a href="#">John Doe</a></h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                    <a href="#" class="fa fa-warning"></a>
+                    <a href="#" class="fa fa-share fa-flip-vertical"></a>
+                  </li>
+                  <li class="clearfix">
+                    <a href="#" class="pic">
+                      <img src="http://placehold.it/100x100" width="100" height="100" alt="">
+                    </a>
+                    <div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+                    <h3><a href="#">John Doe</a></h3>
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in.</p>
+                    <a href="#" class="fa fa-warning"></a>
+                    <a href="#" class="fa fa-share fa-flip-vertical"></a>
+                  </li>
+                  <li class="clearfix">
+                    <a href="#" class="pic">
+                      <img src="http://placehold.it/100x100" width="100" height="100" alt="">
+                    </a>
+                    <div class="date"><i class="fa fa-clock-o"></i>Mar 19, 2014</div>
+                    <h3><a href="#">John Doe</a></h3>                   
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <a href="#" class="fa fa-warning"></a>
+                    <a href="#" class="fa fa-share fa-flip-vertical"></a>
+                  </li>
+                </ul>
+              </div>
+              <!--/ blog comments -->
+              
+              <!-- add comment -->
+              <!-- <div class="add-comment">
+                <div class="head">Leave a comment</div>
+                <div class="grid-row">
+                  <div class="grid-col grid-col-4"><input type="text" placeholder="Name"></div>
+                  <div class="grid-col grid-col-4"><input type="email" placeholder="E-mail"></div>
+                  <div class="grid-col grid-col-4"><input type="url" placeholder="Website"></div>
+                </div>
+                <textarea cols="30" rows="6"></textarea>
+                <input type="submit" value="submit a reply">
+              </div> -->
+              <!--/ add comment -->
+            </div>
+            </div>
+            
+            <div class="witgets-holder grid-col grid-col-4">
+              <button type="button" id="widgets-switcher" class="widgets-switcher fa fa-chevron-right"></button>
+              
+              <!-- widget socials -->
 
 
-{%endfor%}
-</div>
-</div>
-{%endif%}
 
+           
+              <div class="widget widget-popular">
 
+           
+                  <div class="head">Welcome</div>
+                <b>Here's how PhillyZing works:</b>
+                <br>
+                <br>
+                <a href = "#login_sidebar">1) Register to be a reviewer. </a>
+                <br>
 
-<div id = "postsidebar" style = "background-color: whitesmoke; border: 6px double #e06666; box-shadow: rgba(224, 102, 102, 0.15098) 0px 6px 6px 0px;"class="panel panel-default">
-<div class = "panel-heading">
-  <h3>Going back..</h3>
-  </div>
-<div class="panel-body">
-{% for post in blog %}
-<div><a  class = "sidebar-link" href = "#post{{post['id']}}" >
-<img class ="sidebar-img" src = "static/images/{{post['pic']}}" width = "100%">
-<h3 class = "mouseOverText" >{{post['title']}}</h3>
-</a>
-</div>
-<br>
-<br>
+                2) Share your authentic experience at a live show. 
+                <br>
 
+                3) We count your review, and the best shows rise to the top. 
+                </div>
+                
+                  
 
-{%endfor%}
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-
+                
+            
+              <!--/ widget socials -->
+              
+              <!-- widget events -->
+              <div class="widget widget-events widget-show-descript">
+              
+              </div>
+              <!--/ widget events -->
+              
+              <!-- widget weather -->
+              <div class="widget widget-weather">
+                <a href = "#" ><div class="head"></div></a>
+                <div class="cont">
+                  <img src="" width="104" height="91" alt="">
+                  <div ></div>
+                  <p><br><br><br><a target="_blank" href = ""></a></p>
+                  
+                
+                </div>
+              </div>
+              <!--/ widget weather -->
+              
+              <!-- widget tags -->
+            <!--  <div class="widget widget-tags">
+                <div class="cont"> -->
+                  <!-- <a href="#">Lorem</a> -->
+                
+            
+              <!--/ widget tags -->
+              
+              <!-- widget poll -->
+              
+              <!--/ widget poll -->
+              
+              <!-- widget instagram -->
+            <!--  <div class="widget widget-instagram">
+                <div class="head">instagram</div>
+                <div class="cont">
+                  <ul>
+                    <li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
+                    
+                  </ul>
+                  <a href="#" class="button">follow</a>
+                </div>
+              </div> --> 
+              <!--/ widget instagram -->
+              
+              <!-- widget comments -->
+            <!--  <div class="widget widget-comments">
+                <div class="head">recent comments</div>
+                <div class="cont">
+                  <ul>
+                    <li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+                    <li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+                    <li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+                    <li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
+                    <li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
+                    <li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
+                  </ul>
+                </div>
+              </div> -->
+              <!--/ widget comments -->
+              
+              <!-- widget categories -->
+              <!-- <div class="widget widget-categories">
+                <div class="head">categories</div>
+                <div class="cont">
+                  <ul>
+                    <li><a href="#"><span>129</span>World</a></li>
+                    <li><a href="#"><span>82</span>Business</a></li>
+                    <li><a href="#"><span>24</span>Finance</a></li>
+                    <li><a href="#"><span>48</span>Sports</a></li>
+                    <li><a href="#"><span>36</span>Technology</a></li>
+                  </ul>
+                </div>
+              </div> -->
+              <!--/ widget categories -->
+              
+              <!-- widget popular -->
+            <!--  <div id="widget-popular" class="widget widget-popular">
+                <div class="head"><a href="#widget-popular-tab1" class="active">popular</a><a href="#widget-popular-tab2">latest</a></div>
+                <div class="cont">
+                  <ul id="widget-popular-tab1" class="active">
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+                      <p>124 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+                      <p>68 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+                      <p>124 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+                      <p>68 Comments</p>
+                    </li>
+                  </ul>
+                  <ul id="widget-popular-tab2">
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+                      <p>68 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
+                      <p>68 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
+                      <p>124 Comments</p>
+                    </li>
+                    <li>
+                      <a href="#" class="pic">
+                        <img src="http://placehold.it/50x50" width="50" height="50" alt="">
+                      </a>
+                      <h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
+                      <p>124 Comments</p>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+              <!--/ widget popular -->
+              
+              <!-- widget sponsor -->
+              <!-- <div class="widget widget-sponsor">
+                <div class="head">our sponsor</div>
+                <div class="cont">
+                  <a href="#"><img src="http://placehold.it/300x250" width="300" height="250" alt=""></a>
+                </div>
+              </div> -->
+              <!--/ widget popular -->
+            </div>
+          </div>
+        </div>
+      </main>
+      </body>
+  

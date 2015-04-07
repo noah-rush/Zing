@@ -64,6 +64,12 @@ function about(){
     url: "/about",
     success: show_post
    })
+   $('.secondary-nav li').each(function(e){
+    $(this).find('a').removeClass('active')
+    if($(this).find('a').attr('href') == "#about"){
+      $(this).find("a").addClass("active");
+    }
+   })
 }
 
 function get_all_shows(){
@@ -166,7 +172,7 @@ function find(data){
 }
 function post(data){
     id = data
-    window.location.hash = data;
+    // window.location.hash = data;
     $.ajax({
         url: '/post',
         data: {
@@ -393,9 +399,9 @@ function signup(){
     var email = $("#newemail").val();
     var password = $("#newpassword").val();
     // console.log(lastname, firstname, email, password);
-    var month = $("#month").val();
-    var day = $("#day").val();
-    var year = $("#year").val();
+    // var month = $("#month").val();
+    // var day = $("#day").val();
+    // var year = $("#year").val();
      $.ajax({
         type: "POST",
         url: "/zingnewuser",
@@ -518,7 +524,7 @@ FB.api('/me', function(response) {
  }, {scope: 'public_profile,email'});
 }
 function show_survey(data){
-    console.log("surverer")
+    
     $("#emailModal").find('#paneltext').append(data);
     $("#emailModal").modal();
     $( "#sortable1").sortable({
@@ -591,19 +597,19 @@ function show_password(data){
     
     
     if(data[0] == "U"){
-        $('#panelheaderuser').html(' <div class="dropdown">\
-                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">\
-                                    <span class="glyphicon glyphicon-user"></span>\
-                                    <span id="user">{{useron}}</span>\
-                                    <span class="caret"></span>\
-                                </button>\
-                                <ul class="dropdown-menu" role="menu">\
-                                    <li><a href="#logout">Logout</a>\
-                                    </li>\
-                                </ul>\
-                            </div>');
-        $('#user').text(" " + data.substring(10));
-        $("#loginModal").modal('hide');
+        // $('#panelheaderuser').html(' <div class="dropdown">\
+        //                         <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">\
+        //                             <span class="glyphicon glyphicon-user"></span>\
+        //                             <span id="user">{{useron}}</span>\
+        //                             <span class="caret"></span>\
+        //                         </button>\
+        //                         <ul class="dropdown-menu" role="menu">\
+        //                             <li><a href="#logout">Logout</a>\
+        //                             </li>\
+        //                         </ul>\
+        //                     </div>');
+        // $('#user').text(" " + data.substring(10));
+        // $("#loginModal").modal('hide');
         window.location.reload();
 
     }
@@ -628,10 +634,9 @@ function show_password(data){
         $('#somethingWrong').show()
         window.history.back();
     }
-    if(data[0] == "N"){
-        
-        $("#loginModal").find("#paneltext").html("<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>");
-    }
+    if(data[0] == "N"){  
+      survey() 
+   }
     if(data[0] == "A"){
         
           survey();
@@ -1016,7 +1021,18 @@ function show_reviews(){
 
 
 
-
+function pager(){
+  var pages = Math.floor($('.blog-list .item').length/5)
+  console.log(Math.floor($('.blog-list .item').length/5))
+  for(var i = 0; i<=pages; i++){
+    pagenum = i+1
+    if(pagenum ==1 ){
+      $('.pager').append('<a class = "active pager' + pagenum + '" href="#page' + pagenum+'">'+ pagenum + '</a>');
+    }else{
+    $('.pager').append('<a class = "pager' + pagenum + '" href="#page' + pagenum+'">'+ pagenum + '</a>');
+  }
+  }
+}
 
 
 
@@ -1125,6 +1141,7 @@ function start (){
 	// getcomingsoon();
 	// homepage();
     // inputs();
+    pager();
 $(window).hashchange( function test(){
 	var hash = location.hash;
 	if(hash.substring(0,5) == "#show")
@@ -1140,7 +1157,7 @@ $(window).hashchange( function test(){
     if(hash.substring(0,5) == "#post")
     {
      
-        post(hash.substring(5));
+        post(hash.substring(6));
     }
      if(hash.substring(0,8) == "#reviews")
     {
@@ -1150,20 +1167,42 @@ $(window).hashchange( function test(){
      if(hash.substring(0,5) == "#page")
     {
         page = hash.substring(5);
+        var pages = Math.floor($('.blog-list .item').length/5)
       
-        $(".this-week").hide()
+        for(var i = 0; i<=pages; i++){
+
+          pagenum = i+1
+          console.log(pagenum)
+          $('.page' + pagenum).hide();
+        }
+        for(var i = 0; i<=pages; i++){
+
+         pagenum = i+1
+          $('.pager' + pagenum).removeClass('active');
+          if(page == pagenum){
+            $('.pager' + pagenum).addClass('active');
+          }
+        }
+        
         $(".page" + page).show()
+        jQuery('body').animate({"scrollTop":jQuery('#popuplar-news-1').offset().top + $('.fixed').height()})
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
    
         if($(".page" + nextPage).length > 0){
-            $(".page-turn-links").html('<a href = "#page' + nextPage +'" >more ...</a> ')
+           $(".pager .next").show()
+            $(".pager .next").attr('href',"#page" + nextPage);
+           
              
         }else{
-             $(".page-turn-links").html('')
+             $(".pager .next").hide()
         }
         if(prevPage != 0){
-            $(".page-turn-links").append('<a href = "#page' + prevPage +'" >back ...</a> ')
+           $(".pager .prev").show();
+            $(".pager .prev").attr('href', "#page" + prevPage);
+           
+        }else{
+            $(".pager .prev").hide();
         }
 
         

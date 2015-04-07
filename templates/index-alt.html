@@ -29,10 +29,138 @@
     <script src="//cdn.ckeditor.com/4.4.5/full/ckeditor.js"></script>
 		<!--/ styles -->
 	</head>
+	    <style type="text/css">
+   {%for thisweek in thisweek%}
+.thisweek-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.thisweek-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{thisweek['rating']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.thisweek-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
+
+{%for trend in trending%}
+.trend-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.trend-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{trend['avg']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.trend-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
+{%for topx in toprated%}
+.toprated-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.toprated-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{topx['avg']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.toprated-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
+</style>
 	
 	<body>
 		<!-- page -->
 		
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id = "paneltext" style = "text-align: center"class="panel panel-default">
+         <h3>Thank you for verifying your account. Welcome to Zing!</h3>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 		<div class="page">
 			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -41,8 +169,8 @@
         <div id = "paneltext" style = "text-align: center"class="panel panel-default">
           <br>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active" id = "signuptrigger"><a href="#"> <h2 >Sign up</h2></a></li>
-                <li role="presentation" id = "signintrigger"><a href="#"><h2 >Log in</h2></a></li>
+                <li role="presentation" class="active" id = "signuptrigger"><a > <h2 >Sign up</h2></a></li>
+                <li role="presentation" id = "signintrigger"><a ><h2 >Log in</h2></a></li>
             </ul>
         
             <br>
@@ -163,10 +291,10 @@ Birthday                   </label>
 								{%endif%}
 									<ul>
 										<li>
-											<a href="index.html" class="active">home</a>
+											<a href="/" class="active">home</a>
 										</li>
 										<li>
-											<a href="blog-list.html">blog</a>
+											<a href="#blog">blog</a>
 										</li>
 										<li>
 											<a href="#about">about us</a>
@@ -411,6 +539,8 @@ Birthday                   </label>
 			
 				<div class="grid-cont">
 					<!-- featured news -->
+					<div class="grid-row">
+					<div class="grid-col grid-col-4">
 					<div class="widget-first-row widget  widget-descript">
 								<div class="head">Welcome</div>
 								<p style = " text-align: left"><b>Here's how PhillyZing works:</b></p>
@@ -426,7 +556,8 @@ Birthday                   </label>
 								</p>
 
 						</div>
-
+						</div>
+					<div class="grid-col grid-col-2">
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">Trending</div>
 							
@@ -438,6 +569,9 @@ Birthday                   </label>
 							{%endfor%}
 
 						</div>
+						</div>
+											<div class="grid-col grid-col-2">
+
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">This Week</div>
 							
@@ -449,6 +583,9 @@ Birthday                   </label>
 							{%endfor%}
 
 						</div>
+						</div>
+											<div class="grid-col grid-col-2">
+
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">Top Rated</div>
 							
@@ -460,6 +597,9 @@ Birthday                   </label>
 							{%endfor%}
 
 						</div>
+						</div>
+											<div class="grid-col grid-col-2">
+
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">At a Glance</div>
 							
@@ -471,7 +611,8 @@ Birthday                   </label>
 							{%endfor%}
 
 						</div>
-						
+						</div>
+						</div>
 							
 					
 
@@ -501,14 +642,28 @@ Birthday                   </label>
 						<div id="popuplar-news-1" class="items items-visible">
 							{%for week in thisweek%}
 							{%if loop.index < 4%}
-							<a href="#" class ="pic{{loop.index}}">
+							<a href="#" >
 								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
+								<span class="thisweek-star-rating-x{{loop.index}}">
+  								<input type="radio" name="rating" value="1"><i></i>
+  								<input type="radio" name="rating" value="2"><i></i>
+								  <input type="radio" name="rating" value="3"><i></i>
+								  <input type="radio" name="rating" value="4"><i></i>
+								  <input type="radio" name="rating" value="5"><i></i>
+								</span>
 							</a>
 							{%else%}
-							<a class = "pic-hidden pic{{loop.index}}" href="#">
+							<a class = "pic-hidden " href="#">
 								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
+								<span class="thisweek-star-rating-x{{loop.index}}">
+								  <input type="radio" name="rating" value="1"><i></i>
+								  <input type="radio" name="rating" value="2"><i></i>
+								  <input type="radio" name="rating" value="3"><i></i>
+								  <input type="radio" name="rating" value="4"><i></i>
+								  <input type="radio" name="rating" value="5"><i></i>
+								</span>
 							</a>
 							{%endif%}
 							{%endfor%}
@@ -516,10 +671,20 @@ Birthday                   </label>
 						</div>
 						<div id="popuplar-news-2" class="items">
 						{%for trend in trending%}
+						{%if loop.index < 4%}
 							<a href="#">
-								<div class="pic" style="background-image: url(static/Zingimages/{{trend['id']}}.jpg)"></div>
+								<div class="pic" style="background-image: url(static/Zingimages/{{trend['id']}}.jpg)">
+								</div>
 								<span>{{trend['name']}}</span>
+								<span class="trend-star-rating-x{{loop.index}}">
+								  <input type="radio" name="rating" value="1"><i></i>
+								  <input type="radio" name="rating" value="2"><i></i>
+								  <input type="radio" name="rating" value="3"><i></i>
+								  <input type="radio" name="rating" value="4"><i></i>
+								  <input type="radio" name="rating" value="5"><i></i>
+								</span>
 							</a>
+								{%endif%}
 							{%endfor%}
 						</div>
 						<div id="popuplar-news-3" class="items">
@@ -528,6 +693,13 @@ Birthday                   </label>
 							<a href="#">
 								<div class="pic" style="background-image: url(static/Zingimages/{{top['id']}}.jpg)"></div>
 								<span>{{top['name']}}</span>
+								<span class="toprated-star-rating-x{{loop.index}}">
+								  <input type="radio" name="rating" value="1"><i></i>
+								  <input type="radio" name="rating" value="2"><i></i>
+								  <input type="radio" name="rating" value="3"><i></i>
+								  <input type="radio" name="rating" value="4"><i></i>
+								  <input type="radio" name="rating" value="5"><i></i>
+								</span>
 							</a>
 							{%endif%}
 							{%endfor%}
@@ -542,56 +714,150 @@ Birthday                   </label>
 							<div class="blog-list">
 								<div class="head">latest posts</div>
 								{%for post in blog%}
-								<div class="item">
-									<a href="#" class="pic">
-										<img src="http://placehold.it/770x300" width="770" height="300" alt="">
+								{%if loop.index<=5%}
+								<div class="item page1">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
 									</a>
-									<h2><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a></h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+									<p>{{post['descript']}}</p>
 									<div class="bar">
-										<a href="#" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#" class="more">more</a>
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
 										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>16 Mar, 2014</div>
-										<a href="#"><i class="fa fa-pencil fa-flip-horizontal"></i>John Doe</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
 									</div>
 								</div>
+								{%endif%}
+								{%if loop.index>5 and loop.index<=10%}
+								<div class="item page2">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+									<p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
+								{%if loop.index>10 and loop.index<=15%}
+								<div class="item page3">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
+									<p>{{post['content']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
+								{%if loop.index>15 and loop.index<=20%}
+								<div class="item page4">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
+									<p>{{post['content']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
+								{%if loop.index>20 and loop.index<=25%}
+								<div class="item page5">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
+									<p>{{post['content']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
+								{%if loop.index>25 and loop.index<=30%}
+								<div class="item page6">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
+									<p>{{post['content']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
+								{%if loop.index>30 and loop.index<=35%}
+								<div class="item page7">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+									<p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+								{%endif%}
 								{%endfor%}
 							<!--/ blog list -->
 							
 							<!-- pager -->
 							<div class="pager">
+
 								<a href="#" class="prev fa fa-chevron-left"></a>
-								<a href="#" class="next fa fa-chevron-right"></a>
-								<a href="#" class="active">1</a>
-								<a href="#">2</a>
-								<a href="#">3</a>
-								<div>
-									<input type="text" maxlength="2" placeholder="...">
-									<div class="tip"><span>type page number</span></div>
-								</div>
-								<a href="#">25</a>
+								<a href="#page2" class="next fa fa-chevron-right"></a>
+							
+								
+								
 							</div>
 							<!--/ pager -->
 						</div>
 						</div>
 						
-						<div class="grid-col grid-col-4">
+						 <div class="grid-col grid-col-4">
 							<!-- widget socials -->
-							<div class="widget widget-socials">
+							<!-- <div class="widget widget-socials">
 								<div class="head">socialize</div>
 								<div class="cont">
-									<a href="#" class="fa fa-twitter"></a><!--
-									--><a href="#" class="fa fa-pinterest"></a><!--
-									--><a href="#" class="fa fa-linkedin"></a><!--
-									--><a href="#" class="fa fa-instagram"></a><!--
-									--><a href="#" class="fa fa-facebook"></a>
+									<a href="#" class="fa fa-twitter"></a>
+									<a href="#" class="fa fa-pinterest"></a>
+									<a href="#" class="fa fa-linkedin"></a>
+									<a href="#" class="fa fa-instagram"></a>
+									<a href="#" class="fa fa-facebook"></a>
 								</div>
-							</div>
+							</div> -->
 							<!--/ widget socials -->
 							
 							<!-- widget weather -->
-							<div class="widget widget-weather">
+						<!-- 	<div class="widget widget-weather">
 								<div class="head">Springfield</div>
 								<div class="cont">
 									<img src="img/clouds.png" width="104" height="91" alt="">
@@ -600,21 +866,21 @@ Birthday                   </label>
 									<p class="min">MIN:&nbsp;14&nbsp;°C &nbsp;&nbsp;&nbsp; MAX:&nbsp;23&nbsp;°C</p>
 									<button type="button">change</button>
 								</div>
-							</div>
+							</div> -->
 							<!--/ widget weather -->
 							
 							<!-- widget tags -->
 							<div class="widget widget-tags">
 								<div class="cont">
-									<a href="#">Lorem</a><!--
-									--><a href="#">Dolorsitamet</a><!--
-									--><a href="#">Simpli</a><!--
-									--><a href="#">Aliquetanco</a><!--
-									--><a href="#">Lectura</a><!--
-									--><a href="#">Lorem</a><!--
-									--><a href="#">Dolorsi</a><!--
-									--><a href="#">Simpli</a><!--
-									--><a href="#">Alnisco</a>
+									<a href="#">Lorem</a>
+									<a href="#">Dolorsitamet</a>
+									<a href="#">Simpli</a>
+									<a href="#">Aliquetanco</a>
+									<a href="#">Lectura</a>
+									<a href="#">Lorem</a>
+									<a href="#">Dolorsi</a>
+									<a href="#">Simpli</a>
+									<a href="#">Alnisco</a>
 								</div>
 							</div>
 							<!--/ widget tags -->

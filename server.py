@@ -139,10 +139,11 @@ def comingsoon():
 
 def allposts():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
+  c.execute("SELECT * from BLOGPOSTS ORDER BY id DESC")
   blog = c.fetchall()
   for post in blog:
     post['descript'] = Markup(post['descript'])
+    post['content'] = Markup(post['content'])
   return blog
 
 def venueMenu():
@@ -208,97 +209,97 @@ def index():
 
 
 
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC")
-  venues = c.fetchall()
-  for venue in venues:
-    venue['name'] = Markup(venue['name'])
-  c.execute("SELECT ZINGShows.* FROM ZINGSHOWS ORDER BY id ASC")
-  shows = c.fetchall()
-  c.execute("SELECT showid, COUNT(rating), SUM(rating) FROM ZINGRATINGS GROUP BY showid")
-  ratings = c.fetchall()
-  c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id")
-  outsideContent = c.fetchall()
-  for show in shows:
-    show['name'] = Markup(show['name'])
-    for rating in ratings:
-      if rating['showid'] == show['id']:
-        avg = float(rating['sum'])/float(rating['count'])
-        show['rating'] = convert_to_percent(avg)
-    show['reviews'] = []
-    for oc in outsideContent:
-      if oc['showid'] == show['id']:
-        show['reviews'].append([oc['title'], oc['link']])
-  c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.showID FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZingoutsideContent.id, ZINGOUTSIDESHOWTAGS.showID ORDER BY ZINGOUTSIDECONTENT.id DESC")
-  results = c.fetchall()
-  bsr = []
-  phindie = []
-  pw = []
-  citypaper = []
-  shapiro = []
-  inq = []
-  for review in results:
-    c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (review['showid'],))
-    showname = c.fetchall()[0]
-    review['showname'] = showname['name']
-    if review['publication'] == "http://bsr2.dev/index.php":
-      bsr.append(review)
-    if review['publication'] == 'http://citypaper.net':
-      citypaper.append(review)
-    if review['publication'] == 'http://www.philadelphiaweekly.com/arts-and-culture':
-      pw.append(review)
-    if review['publication'] == 'http://www.newsworks.org/':
-      shapiro.append(review)
-    if review['publication'] == 'http://phindie.com':
-      phindie.append(review)     
-    if review['publication'] == 'http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F':
-      inq.append(review)
-  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
-  blog = c.fetchall()
-  for post in blog:
-    post['descript'] = Markup(post['descript'])
-  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC LIMIT 1")
-  article = c.fetchall()
+# @app.route('/home', methods=['GET', 'POST'])
+# def home():
+#   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+#   c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC")
+#   venues = c.fetchall()
+#   for venue in venues:
+#     venue['name'] = Markup(venue['name'])
+#   c.execute("SELECT ZINGShows.* FROM ZINGSHOWS ORDER BY id ASC")
+#   shows = c.fetchall()
+#   c.execute("SELECT showid, COUNT(rating), SUM(rating) FROM ZINGRATINGS GROUP BY showid")
+#   ratings = c.fetchall()
+#   c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.* FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id")
+#   outsideContent = c.fetchall()
+#   for show in shows:
+#     show['name'] = Markup(show['name'])
+#     for rating in ratings:
+#       if rating['showid'] == show['id']:
+#         avg = float(rating['sum'])/float(rating['count'])
+#         show['rating'] = convert_to_percent(avg)
+#     show['reviews'] = []
+#     for oc in outsideContent:
+#       if oc['showid'] == show['id']:
+#         show['reviews'].append([oc['title'], oc['link']])
+#   c.execute("SELECT ZINGOUTSIDECONTENT.*, ZINGOUTSIDESHOWTAGS.showID FROM ZINGOUTSIDECONTENT, ZINGOUTSIDESHOWTAGS where ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id GROUP BY ZingoutsideContent.id, ZINGOUTSIDESHOWTAGS.showID ORDER BY ZINGOUTSIDECONTENT.id DESC")
+#   results = c.fetchall()
+#   bsr = []
+#   phindie = []
+#   pw = []
+#   citypaper = []
+#   shapiro = []
+#   inq = []
+#   for review in results:
+#     c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (review['showid'],))
+#     showname = c.fetchall()[0]
+#     review['showname'] = showname['name']
+#     if review['publication'] == "http://bsr2.dev/index.php":
+#       bsr.append(review)
+#     if review['publication'] == 'http://citypaper.net':
+#       citypaper.append(review)
+#     if review['publication'] == 'http://www.philadelphiaweekly.com/arts-and-culture':
+#       pw.append(review)
+#     if review['publication'] == 'http://www.newsworks.org/':
+#       shapiro.append(review)
+#     if review['publication'] == 'http://phindie.com':
+#       phindie.append(review)     
+#     if review['publication'] == 'http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F':
+#       inq.append(review)
+#   c.execute("SELECT * from ALLPOSTS ORDER BY id DESC")
+#   blog = c.fetchall()
+#   for post in blog:
+#     post['descript'] = Markup(post['descript'])
+#   c.execute("SELECT * from ALLPOSTS ORDER BY id DESC LIMIT 1")
+#   article = c.fetchall()
 
-  template_vars = {"outsideContent": outsideContent, 
-                        "shows": shows,
-                        "inq":inq, 
-                        "venues": venues,
-                        "phindie": phindie,
-                        "shapiro": shapiro, 
-                        "pw": pw, 
-                        "citypaper": citypaper, 
-                        "bsr": bsr, 
-                        "reviews": results, 
-                        "blog": blog, 
-                        "firstparagraph": "",
-                        "article": []
-                       }
-  if len(article) > 0:
-    article = article[0]
-    c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
-                 WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
-                 AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
-    tags = c.fetchall()
-    for tag in tags:
-      c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
-      venue = c.fetchall()[0]['name']
-      tag['venue'] = venue
-    article['tags'] = tags
-    filename = article['article']
-    text = open('static/Posts/'+filename, 'r')
-    a = text.read()
-    article['article'] = Markup(a)
-    firstparagraph = article['article'][:article['article'].find("</p>")+4]
-    firstparagraph = Markup(firstparagraph)
-    article['article'] = article['article'][article['article'].find("</p>")+4:]
-    article['article'] = Markup(article['article'])
-    text.close()
-    template_vars['article'] = article
-    template_vars['firstparagraph'] = firstparagraph
-  return render_template("reviewlist.html", **template_vars )
+#   template_vars = {"outsideContent": outsideContent, 
+#                         "shows": shows,
+#                         "inq":inq, 
+#                         "venues": venues,
+#                         "phindie": phindie,
+#                         "shapiro": shapiro, 
+#                         "pw": pw, 
+#                         "citypaper": citypaper, 
+#                         "bsr": bsr, 
+#                         "reviews": results, 
+#                         "blog": blog, 
+#                         "firstparagraph": "",
+#                         "article": []
+#                        }
+#   if len(article) > 0:
+#     article = article[0]
+#     c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
+#                  WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
+#                  AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
+#     tags = c.fetchall()
+#     for tag in tags:
+#       c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
+#       venue = c.fetchall()[0]['name']
+#       tag['venue'] = venue
+#     article['tags'] = tags
+#     filename = article['article']
+#     text = open('static/Posts/'+filename, 'r')
+#     a = text.read()
+#     article['article'] = Markup(a)
+#     firstparagraph = article['article'][:article['article'].find("</p>")+4]
+#     firstparagraph = Markup(firstparagraph)
+#     article['article'] = article['article'][article['article'].find("</p>")+4:]
+#     article['article'] = Markup(article['article'])
+#     text.close()
+#     template_vars['article'] = article
+#     template_vars['firstparagraph'] = firstparagraph
+#   return render_template("reviewlist.html", **template_vars )
 
 
 # ##home, returns content from posts 
@@ -331,30 +332,51 @@ def update():
 def post():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   articleid = request.args.get('id')
-  c.execute("SELECT * from ZINGPOSTS where id = %s", (articleid,))
+  previd = int(articleid) - 1 
+  nextid = int(articleid) + 1 
+  c.execute("SELECT * from BLOGPOSTS where id = %s", (articleid,))
   article = c.fetchall()
   article = article[0]
-  c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
-                 WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
-                 AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
-  tags = c.fetchall()
-  for tag in tags:
-    c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
-    venue = c.fetchall()[0]['name']
-    tag['venue'] = venue
-  article['tags'] = tags
-  filename = article['article']
-  text = open('static/Posts/'+filename, 'r')
-  a = text.read()
-  article['article'] = Markup(a)
-  firstparagraph = article['article'][:article['article'].find("</p>")+4]
+  c.execute("SELECT * FROM BLOGPOSTS where id = %s",(previd,))
+  prevarticle = c.fetchall()
+  if len(prevarticle) > 0:
+    prevarticle = prevarticle[0]
+  else:
+    prevarticle = "none"
+
+  c.execute("SELECT * FROM BLOGPOSTS where id = %s",(nextid,))
+  nextarticle = c.fetchall()
+  if len(nextarticle) > 0:
+    nextarticle = nextarticle[0]
+  else:
+    nextarticle = "none"
+  
+
+  # c.execute("""SELECT ZINGSHOWS.name, ZINGSHOWS.id, ZINGSHOWS.venueid FROM ZINGSHOWS, ZINGARTICLESHOWTAGS 
+  #                WHERE ZINGSHOWS.id = ZINGARTICLESHOWTAGS.showid
+  #                AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
+  # tags = c.fetchall()
+  # for tag in tags:
+  #   c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
+  #   venue = c.fetchall()[0]['name']
+  #   tag['venue'] = venue
+  # article['tags'] = tags
+  # filename = article['article']
+  # text = open('static/Posts/'+filename, 'r')
+  # a = text.read()
+  # article['article'] = Markup(a)
+  firstparagraph = article['content'][:article['content'].find("</p>")+4]
   firstparagraph = Markup(firstparagraph)
-  article['article'] = article['article'][article['article'].find("</p>")+4:]
-  article['article'] = Markup(article['article'])
-  text.close()
-  c.execute("SELECT * from ZINGPOSTS ORDER BY id DESC")
+  article['content'] = article['content'][article['content'].find("</p>")+4:]
+  article['content'] = Markup(article['content'])
+  # text.close()
+  c.execute("SELECT * from BLOGPOSTS ORDER BY id DESC")
   blog = c.fetchall()
-  return render_template("post.html", article = article, firstparagraph = firstparagraph, blog = blog)
+  return render_template("post.html", article = article, 
+                          nextarticle = nextarticle,
+                          prevarticle = prevarticle,
+                          firstparagraph = firstparagraph, 
+                          blog = blog)
 
 
 ###route for uploading photos in editor
@@ -429,12 +451,12 @@ def contentPost():
   tags = json.loads(request.args.get('tags'))
   descript = request.args.get('descript')
   photo = request.args.get('photo')
-  filepath = str(title)+str(author)+'.txt'
-  newReview = open('static/Posts/' + filepath, 'w')
-  newReview.write(article)
-  newReview.close()
-  c.execute("""INSERT INTO ZINGPOSTS(author, userid,title,article,pic, descript, date) 
-            VALUES(%s,%s,%s,%s,%s, %s, CURRENT_DATE) RETURNING id""", (author, session['username'], title, filepath, photo, descript))
+  # filepath = str(title)+str(author)+'.txt'
+  # newReview = open('static/Posts/' + filepath, 'w')
+  # newReview.write(article)
+  # newReview.close()
+  c.execute("""INSERT INTO BLOGPOSTS(author, userid,title,content,photo, descript, date) 
+            VALUES(%s,%s,%s,%s,%s, %s, CURRENT_DATE) RETURNING id""", (author, session['username'], title, article, photo, descript))
   articleid = c.fetchall()[0]['id'];
   conn.commit()
   for tag in tags:
@@ -791,7 +813,7 @@ def fullreviews():
       showtags = c.fetchall()
       result['showtags'] = showtags
       
-    return render_template('fullreviews.html', results=results, title = "All Reviews")
+    return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none")
 
 
 
@@ -1269,16 +1291,17 @@ def autocomplete():
 def sawthis():
     showID = int(request.args.get('id'))
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    userid = session['username']
-    c.execute("""DELETE FROM SHOWCOUNT 
-              WHERE userid = %s
-              AND showid = %s""", (userid, showID))
-    c.execute("""INSERT INTO SHOWCOUNT(userid, showid) 
+    if 'username' in session:
+      userid = session['username']
+      c.execute("""DELETE FROM SHOWCOUNT 
+                WHERE userid = %s
+                AND showid = %s""", (userid, showID))
+      c.execute("""INSERT INTO SHOWCOUNT(userid, showid) 
 
-              VALUES(%s, %s)""", (userid, showID))
+                VALUES(%s, %s)""", (userid, showID))
     c.execute("""SELECT COUNT(*) 
-                FROM SHOWCOUNT
-                WHERE showid = %s""", (showID,))
+                  FROM SHOWCOUNT
+                  WHERE showid = %s""", (showID,))
     count = str(c.fetchall()[0]['count'])
   
     return count

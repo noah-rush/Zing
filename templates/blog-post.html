@@ -83,7 +83,7 @@
 </div>
 			<main class="page-content">
 			
-				<div class="grid-cont" style="background-image: url(static/redbackground.png);">		
+				<div class="grid-cont" style="background-image: url(static/redbackground.png); background-repeat:no-repeat">		
 					<div class="grid-row">
 						<div class="grid-col grid-col-8">
 							<!-- blog post -->
@@ -176,7 +176,8 @@
 </span>
 
 {{review[2][0]['first']}} {{review[2][0]['last']}} -- 
-{{review[0]}}</p></li>
+{{review[0]}}
+{{review[3]}}</p></li>
 {%endfor %}	
 </div>
 </div>
@@ -450,6 +451,21 @@
        <button onClick="submit_review()" type="button" id = "submitshowreview"  href = "#submitreview" class="btn btn-primary" >Submit Review</button>
 
 									</div>
+									{%else%}
+									<div class="widget widget-popular">
+									<div class="head">Welcome</div>
+								<b>Here's how PhillyZing works:</b>
+								<br>
+								<br>
+								<a href = "#login_sidebar">1) Register to be a reviewer. </a>
+								<br>
+
+								2) Share your authentic experience at a live show. 
+								<br>
+
+								3) We count your review, and the best shows rise to the top. 
+								</p>
+								</div>
 									{%endif%}
 									
 

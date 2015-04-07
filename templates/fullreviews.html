@@ -187,11 +187,15 @@
 </div>
 </div>
        <div class="witgets-holder grid-col grid-col-4">
+        {%if image != "none"%}
                 <div class="widget  widget-rating">
                 <a target = "_blank" href = "{{results[0]['publication']}}">
+               
                   <img class = "reviewLogo" src ="static/logos/{{image}}">
+               
                   </a>
         </div>
+           {%endif%}
               </div>
               </div>              
 
