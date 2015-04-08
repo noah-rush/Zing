@@ -149,7 +149,9 @@
 	
 	<body>
 		<!-- page -->
-		
+		{%if fromEmail%}
+<div style = "display:none" id = "fromEmail">a</div>
+{%endif%}
 <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -161,6 +163,7 @@
 </div>
 </div>
 </div>
+
 		<div class="page">
 			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -279,6 +282,7 @@ Birthday                   </label>
 							<div class="grid-col grid-col-2">
 								<!-- slogan -->
 								<a href="/" class="slogan slogan-alt"><span>Zing.</span></a>
+                <div class = "mobile-header"><a href = "/"><img src = "static/zingheadernew.png"></a></div>
 								<!--/ slogan -->
 							</div>
 							
@@ -317,6 +321,8 @@ Birthday                   </label>
                                 <ul class="dropdown-menu" role="menu">
 
                                     <li><a href="#logout">Logout</a>
+                                    </li>
+                                     <li><a href="#profile">My account</a>
                                     </li>
                                 </ul>
                             </li>
@@ -557,7 +563,7 @@ Birthday                   </label>
 
 						</div>
 						</div>
-					<div class="grid-col grid-col-2">
+					<div class="col-md-2 col-xs-6 col-sm-2">
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">Trending</div>
 							
@@ -570,7 +576,7 @@ Birthday                   </label>
 
 						</div>
 						</div>
-											<div class="grid-col grid-col-2">
+											<div class="col-md-2 col-xs-6 col-sm-2">
 
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">This Week</div>
@@ -584,7 +590,7 @@ Birthday                   </label>
 
 						</div>
 						</div>
-											<div class="grid-col grid-col-2">
+											<div class="col-md-2 col-xs-6 col-sm-2">
 
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">Top Rated</div>
@@ -598,7 +604,7 @@ Birthday                   </label>
 
 						</div>
 						</div>
-											<div class="grid-col grid-col-2">
+											<div class="col-md-2 col-xs-6 col-sm-2">
 
 						<div class="widget widget-first-row  widget-glance">
 								<div class="head">At a Glance</div>
@@ -642,7 +648,7 @@ Birthday                   </label>
 						<div id="popuplar-news-1" class="items items-visible">
 							{%for week in thisweek%}
 							{%if loop.index < 4%}
-							<a href="#" >
+							<a class = "pic{{loop.index}}" href="#show/{{week['id']}}" >
 								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
 								<span class="thisweek-star-rating-x{{loop.index}}">
@@ -654,7 +660,7 @@ Birthday                   </label>
 								</span>
 							</a>
 							{%else%}
-							<a class = "pic-hidden " href="#">
+							<a class = "pic-hidden pic{{loop.index}}" href="#show/{{week['id']}}">
 								<div class="pic " style="background-image: url(static/Zingimages/{{week['id']}}.jpg)"></div>
 								<span>{{week['name']}}</span>
 								<span class="thisweek-star-rating-x{{loop.index}}">
@@ -672,7 +678,7 @@ Birthday                   </label>
 						<div id="popuplar-news-2" class="items">
 						{%for trend in trending%}
 						{%if loop.index < 4%}
-							<a href="#">
+							<a href="#show/{{trend['id']}}" class = "pic{{loop.index}}">
 								<div class="pic" style="background-image: url(static/Zingimages/{{trend['id']}}.jpg)">
 								</div>
 								<span>{{trend['name']}}</span>
@@ -684,13 +690,25 @@ Birthday                   </label>
 								  <input type="radio" name="rating" value="5"><i></i>
 								</span>
 							</a>
+              {%else%}
+              <a class = "pic-hidden pic{{loop.index}}" href="#show/{{trend['id']}}">
+                <div class="pic " style="background-image: url(static/Zingimages/{{trend['id']}}.jpg)"></div>
+                <span>{{trend['name']}}</span>
+                <span class="trend-star-rating-x{{loop.index}}">
+                  <input type="radio" name="rating" value="1"><i></i>
+                  <input type="radio" name="rating" value="2"><i></i>
+                  <input type="radio" name="rating" value="3"><i></i>
+                  <input type="radio" name="rating" value="4"><i></i>
+                  <input type="radio" name="rating" value="5"><i></i>
+                </span>
+              </a>
 								{%endif%}
 							{%endfor%}
 						</div>
 						<div id="popuplar-news-3" class="items">
 							{%for top in toprated%}
 							{%if loop.index < 4%}
-							<a href="#">
+							<a href="#show/{{top['id']}}" class = "pic{{loop.index}}" >
 								<div class="pic" style="background-image: url(static/Zingimages/{{top['id']}}.jpg)"></div>
 								<span>{{top['name']}}</span>
 								<span class="toprated-star-rating-x{{loop.index}}">
@@ -701,10 +719,22 @@ Birthday                   </label>
 								  <input type="radio" name="rating" value="5"><i></i>
 								</span>
 							</a>
+                {%else%}
+              <a class = "pic-hidden pic{{loop.index}}" href="#show/{{top['id']}}">
+                <div class="pic " style="background-image: url(static/Zingimages/{{top['id']}}.jpg)"></div>
+                <span>{{top['name']}}</span>
+                <span class="toprated-star-rating-x{{loop.index}}">
+                  <input type="radio" name="rating" value="1"><i></i>
+                  <input type="radio" name="rating" value="2"><i></i>
+                  <input type="radio" name="rating" value="3"><i></i>
+                  <input type="radio" name="rating" value="4"><i></i>
+                  <input type="radio" name="rating" value="5"><i></i>
+                </span>
+              </a>
 							{%endif%}
 							{%endfor%}
 						</div>
-						<a href="#" class="fa fa-chevron-right"></a>
+						<a  class="fa fa-chevron-right toggle-shows-right"></a>
 					</div>
 					<!--/ popuplar news -->
 					
@@ -1027,7 +1057,7 @@ Birthday                   </label>
 						<div class="grid-col grid-col-2">
 							<!-- about -->
 							<div class="widget-about">
-								<a href="index.html" class="slogan"><span>Zing.</span></a>
+								<a href="/" class="slogan"><span>Zing.</span></a>
 								<a href="/" class="logo logo-alt"><img src="static/chair.png" width="68" height="61" alt=""></a>
 								<h4>About Zing.</h4>
 								<p>Zing aims to please</p>
@@ -1086,13 +1116,16 @@ Birthday                   </label>
 		<script src="static/js/jquery.form.min.js"></script>
 		<script src="static/js/main.js"></script>
 
-   		 <script src="static/js/bootstrap.min.js"></script>
-   		 <script src="static/autocomplete.js"></script>-
-   		   <script src="static/homepage.js"></script>-
+   		 
+   		 
+       <script src="static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script> 
+       <script src="static/autocomplete.js"></script>
+   		  <script src="static/js/bootstrap.min.js"></script>
     	<script src="static/jquery.ba-hashchange.min.js"></script>
    	 <script src="static/jQuery-File-Upload-9.8.0/js/vendor/jquery.ui.widget.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.iframe-transport.js"></script>
     <script src="static/jQuery-File-Upload-9.8.0/js/jquery.fileupload.js"></script>
+     <script src="static/homepage.js"></script>-
    
     <!--<script src="static/jquery-ui-1.11.2.custom/jquery-ui.min.js"></script> -->
   

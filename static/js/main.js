@@ -9,7 +9,9 @@ $(window).scroll(function()
 	if( $(window).scrollTop() > $('.page-header-top').outerHeight() )
 	{
 		$('.page-header-middle').addClass('fixed');
+		if($(window).width()>767){
 		$('.page-content').css({"margin-top": "180px"});
+	}
 		// $('.logo-fixed').show();
 		if(!fixed){
 			$('.col-title').css({"width":"16%"});

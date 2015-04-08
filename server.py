@@ -558,6 +558,7 @@ def zingnewuser():
   mail.send(msg)
   c.execute("SELECT id from USERS WHERE email = %s", (email,))
   userid = c.fetchall()[0]['id']
+  session['username'] = userid
   conn.commit()
   return "NEW USER CREATED" + firstname
 
@@ -1224,20 +1225,25 @@ def show():
                        "venueShows": venueShows
                        }
       if 'username' in session:
-          c.execute("""SELECT rating
-                    from ZINGRATINGS, USERS
-                    where ZINGRATINGS.userid = ZINGRATINGS.id
-                    and USERS.id = %s
-                    and ZINGRATINGS.showID = %s""",
-                    (session['username'], showdata[0]['id']))
-          yourRating = c.fetchall()
-          if len(yourRating) == 1:
-              yourRating = yourRating[0]['rating']
-              yourRating = convert_to_percent(yourRating)
-          c.execute("SELECT first from USERS where id = %s", (session['username'],))
-          name = c.fetchall()[0]['first']
-         
-          template_vars['useron'] = name    
+          # c.execute("""SELECT rating
+          #           from ZINGRATINGS, USERS
+          #           where ZINGRATINGS.userid = ZINGRATINGS.id
+          #           and USERS.id = %s
+          #           and ZINGRATINGS.showID = %s""",
+          #           (session['username'], showdata[0]['id']))
+          # yourRating = c.fetchall()
+          # if len(yourRating) == 1:
+          #     yourRating = yourRating[0]['rating']
+          #     yourRating = convert_to_percent(yourRating)
+
+          c.execute("SELECT first, last, emailconfirm from USERS where id = %s", (session['username'],))
+          userinfo = c.fetchall()[0]
+          name = userinfo['first'] + " " +userinfo['last']
+          emailconfirm = userinfo['emailconfirm']
+          if emailconfirm:
+            template_vars['useron'] = name
+          else:
+            template_vars['useron'] = "confirm email"
       return render_template("blog-post.html", **template_vars)
     return render_template("error.html")
 
@@ -1245,22 +1251,70 @@ def show():
 def profile():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     username = session['username']
-    c.execute("SELECT id from Users where username = %s", (username,))
-    userid = c.fetchall()[0]['id']
-    c.execute("""SELECT USERS.name, reviewText, rating,
+    c.execute("SELECT * from Users where id = %s", (username,))
+    userdata = c.fetchall()[0]
+    c.execute("""SELECT USERS.first, reviewText, rating,
               to_char(ZINGRATINGS.time, 'HHMIA.M.DayMonthDDYYY')
-              from ZINGREVIEWS, ZINGRATINGS, ZINGSHOWS
+              from ZINGREVIEWS, ZINGRATINGS, ZINGSHOWS, USERS
               where ZINGREVIEWS.userid = ZINGRATINGS.userid
               and ZINGRATINGS.userid =%s
               and ZINGSHOWS.id = ZINGRATINGS.showid
               and ZINGSHOWS.id = ZINGREVIEWS.showid""",
-              (userid,))
+              (username,))
     results = c.fetchall()
+    c.execute("""SELECT * FROM ZINGSURVEY
+                WHERE userid = %s""", (session['username'],) )
+    surveydata = c.fetchall()[0]
+    likes = [None]*5
+    likes[surveydata['comedy'] -1 ] = "Comedy"
+    likes[surveydata['musicals'] -1 ] = "Musicals"
+    likes[surveydata['experimental'] -1 ] = "Experimental"
+    likes[surveydata['drama'] -1 ] = "Drama"
+    likes[surveydata['classics'] -1 ] = "Classics"
+
+    c.execute("""SELECT * FROM COMMITMENT
+                WHERE USERID = %s""", (session['username'],))
+    commitment = c.fetchall()[0]
     print results
-    return render_template('profile.html',
+    c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
+                rating, to_char(ZINGRATINGS.time, 'MMDDYYYY'), ZINGRATINGS.showid,
+                ZINGSHOWS.name
+                from ZINGRATINGS, ZINGREVIEWS, ZINGSHOWS
+                where ZINGREVIEWS.userid = %s
+                and ZINGREVIEWS.userid = ZINGRATINGS.userid
+                and ZINGREVIEWS.showid = ZINGRATINGS.showid
+                and ZINGREVIEWS.showid = ZINGSHOWS.id""", (session['username'],))
+    userreviews = c.fetchall()
+    for review in userreviews:
+      c.execute("""SELECT *
+                from ZINGGOODADJECTIVES 
+                where userid = %s
+                and showid = %s
+                GROUP BY showid, id
+                """, (session['username'],review['showid']))
+      review['goods'] = c.fetchall()
+      c.execute("""SELECT *
+                from ZINGBADADJECTIVES
+                where userid = %s
+                """, (session['username'],))
+      review['bads'] = c.fetchall()
+      review['rating'] = convert_to_percent(float(review['rating']))
+      date = review['to_char']
+      review['to_char'] = date[1:2] + "/" + date[2:4] + "/" + date[4:]
+    c.execute("""SELECT * FROM SHOWCOUNT, ZINGSHOWS
+                  WHERE userid = %s
+                  AND SHOWCOUNT.showid = ZINGSHOWS.id""", (session['username'],))
+    sawthis = c.fetchall()
+    return render_template('userprofile.html',
+                           commitment = commitment,
                            username=username,
+                           userdata=userdata,
+                           survey=surveydata,
                            useron=username,
-                           results=results)
+                           userreviews=userreviews,
+                           sawthis=sawthis,
+                           results=results,
+                           likes = likes)
 
 ###ajax route for search box autocomplete
 @app.route('/autocomplete/allshows', methods=['GET', 'POST'] )
@@ -1303,7 +1357,7 @@ def sawthis():
                   FROM SHOWCOUNT
                   WHERE showid = %s""", (showID,))
     count = str(c.fetchall()[0]['count'])
-  
+    conn.commit()
     return count
 
 #### handling ratings and reviews, email conf just says number of reviews with no grammar
@@ -1565,14 +1619,22 @@ def donesurvey():
   prefs  = json.loads(prefs)
   commitment = request.args.get('commitment')
   worksin = False
-  if yes:
+  print yes 
+  if yes =="true":
     worksin = True
-  print session['username']
   drama = prefs['drama']
   comedy = prefs['comedy']
   musicals = prefs['musicals']
   classics = prefs['classics']
   experimental = prefs['experimental']
+  c.execute("""SELECT * FROM ZINGSURVEY
+              WHERE userid = %s""", (session['username'],))
+  if len(c.fetchall()) > 0:
+    c.execute("DELETE FROM ZINGSURVEY WHERE userid = %s", (session['username'], ))
+  c.execute("""SELECT * FROM COMMITMENT
+              WHERE userid = %s""", (session['username'],))
+  if len(c.fetchall()) > 0:
+    c.execute("DELETE FROM COMMITMENT WHERE userid = %s", (session['username'], ))
   c.execute("""INSERT INTO ZINGSURVEY(userid, comedy, drama, 
             experimental, classics, musicals, worksin) 
             VALUES(%s,%s,%s,%s, %s, %s,%s)""",
@@ -1581,7 +1643,7 @@ def donesurvey():
   c.execute("""INSERT into COMMITMENT(userid, commitment)
             VALUES(%s,%s)""", (session['username'], commitment))
   conn.commit()
-  return redirect(url_for('index'))
+  return "survey complete"
 
 ###logout
 @app.route('/logout', methods=['GET', 'POST'])

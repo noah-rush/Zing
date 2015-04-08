@@ -1,7 +1,7 @@
 .page-title{
    
    
-display:inline-block;
+
 padding:0;
 
 }
@@ -28,7 +28,7 @@ padding:0;
     font-weight: bold;
 }
 .fullschedule .showAtVenueTitle{
- width:72%;
+ width:71%;
 }
 .manageOutReviews{
     width:50%;
@@ -123,19 +123,19 @@ header.page-header{
 }
 .widget-first-row {
     width:100%;
-    border-right:1px solid black;
+    
    
 }
 .widget-first-row .head{
     font-size:20px;
 }
-.widget-first-row:nth-child(5) {
+.widget-first-row:nth-child(4) {
+   border-right:0px solid black;
    
-    border-right:0px solid black;
 }
 .widget-first-row:nth-child(1) {
    padding:10px;
-    border-right:0px solid black;
+  
 }
 .widget-good{
     background:white;
@@ -157,8 +157,8 @@ opacity:0;
 .tabs{
     text-indent: 0%;
 }
-.pic-hidden{
-	display:none !important;
+.popular-news .items .pic-hidden{
+	display:none;
 }
 .logo-fixed{
     display:none;
@@ -491,4 +491,64 @@ main{
 }
 .pager .active{
     cursor:default;
+}
+#sortable1, #sortable2 {
+    border: 0px solid #eee;
+    width: 80%;
+    min-height: 200px;
+    list-style-type: none;
+    margin: auto;
+    padding: 5px 0 0 0;
+  }
+  #sortable1 li, #sortable2 li {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 100%;
+    background-color: #e06666;
+    color:white;
+    cursor:pointer;
+  }
+  #sortable1 li:nth-child(1){
+    background-color: gold;
+    content: "1";
+  }
+#sortable1 li:nth-child(2){
+    background-color: silver;
+  }
+  #sortable1 li:nth-child(3){
+    background-color: #cd7f32;
+  }
+   #sortable1 li:nth-child(4){
+    background-color: #e06666;
+  }
+   #sortable1 li:nth-child(5){
+    background-color: black;
+  }
+  .questions input{
+    display:inline;
+    
+  }
+  .questions{
+    width:80%;
+    margin:auto;
+  }
+  .widget-events a:before {
+    content:none;
+}
+.widget-shows-seen a{
+    padding-left:0;
+    color:white;
+}
+.user-profile .userReview p{
+    color:white;
+}
+.edit-survey{
+    float:right;
+}
+.widget-popular .ranking ul{
+    display:block;
+}
+.widget-popular .ranking li{
+min-height:0px;
 }

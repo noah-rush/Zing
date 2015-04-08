@@ -75,6 +75,16 @@ function about(){
 function get_all_shows(){
     $.ajax({
         url: "/allshows",
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: display_all_shows
     });
 
@@ -139,8 +149,8 @@ function ads(){
 
 function profile(){
     $.ajax({
-        url: "/nowPlaying",
-        success: displaycomingsoon
+        url: "/profile",
+        success: show_post
     });
 
 };
@@ -167,6 +177,16 @@ function find(data){
         data: {
             show: data
         },
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: display_show
     })
 }
@@ -178,6 +198,16 @@ function post(data){
         data: {
             id: id
         },
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: show_post
     })
 }
@@ -189,6 +219,16 @@ function reviews(data){
         data: {
             pub: pub
         },
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: show_full_reviews
     })
 }
@@ -200,6 +240,16 @@ function show(data){
         data: {
             show: data
         },
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: display_show
     })
 };
@@ -209,6 +259,16 @@ function venue(data){
         data: {
             venue: data
         },
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         success: display_venue
     })
 };
@@ -222,13 +282,33 @@ function homepage(){
 function open_editor(){
     $.ajax({
         success: show_editor,
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
         url:"/edit"
     })
 }
 function manageReviews(){
     $.ajax({
         success: show_manager,
-        url:"/manageReviews"
+        url:"/manageReviews",
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  }
     })
 }
 function manageOutReviews(){
@@ -252,6 +332,12 @@ function survey(){
     $.ajax({
         url: "/getsurvey",
         success: show_survey
+    })
+}
+function survey2(){
+    $.ajax({
+        url: "/getsurvey",
+        success: show_survey2
     })
 }
 function signin(){
@@ -410,9 +496,7 @@ function signup(){
             firstname: firstname,
             lastname: lastname,
             password: password,
-            month: month,
-            day: day, 
-            year: year
+         
         },
         success: show_password
     });
@@ -536,6 +620,21 @@ $(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text(
     }).disableSelection();
 $(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text())})
 }
+function show_survey2(data){
+    
+    $(".widget-popular").html(data)
+    $('a[href="#doneSurvey"]').text("Save");
+    $('a[href="#doneSurvey"]').attr("href", "#doneSurvey2")
+   $('.surveyDescript').hide();
+    $( "#sortable1").sortable({
+        update: function( event, ui ) {
+$(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text().substring(3))})
+
+
+        }
+    }).disableSelection();
+$(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text())})
+}
 
 function donesurvey(){
     console.log("HERERERER")
@@ -543,18 +642,18 @@ function donesurvey(){
     var yes = false;
     var no = false;
 $(".ui-state-default").each(function(e,val){
-    $(val).text((e+1)+ ") "+$(val).text())
-    console.log($(val).attr('value'))
+    // $(val).text((e+1)+ ") "+$(val).text())
+    // console.log($(val).attr('value'))
     preferences[$(val).attr('value')] = e+1;
 })
 if($('#Yes').prop('checked')){
 yes = true;
 }
 if($('#No').prop('checked')){
-    no = true;
+no = true;
 }
 var commitment
- $('#theatergoing input:checked').each(function() {
+ $('.theatergoing input:checked').each(function() {
             console.log(this.value);
             commitment = this.value;
             
@@ -570,7 +669,63 @@ $.ajax({
             no: no,
             commitment: commitment
             },
-    success:  $("#emailModal").modal('hide')
+    success:  function(){$("#emailModal").find('#paneltext').html('<h3>Thank you for signing up! Please check your email to verify your account. Welcome to Zing!</h3>');
+             
+            }
+})
+
+
+}
+
+function donesurvey2(){
+    console.log("HERERERER")
+    var preferences = {};
+    var yes = false;
+    var no = false;
+$(".ui-state-default").each(function(e,val){
+    // $(val).text((e+1)+ ") "+$(val).text())
+    // console.log($(val).attr('value'))
+    preferences[$(val).attr('value')] = e+1;
+})
+if($('#Yes').prop('checked')){
+yes = true;
+}
+if($('#No').prop('checked')){
+no = true;
+}
+var commitment
+ $('.theatergoing input:checked').each(function() {
+            console.log(this.value);
+            commitment = this.value;
+            
+        });
+console.log(yes);
+console.log(no);
+console.log(preferences);
+
+$.ajax({
+    url: "/donesurvey",
+    data: {prefs: JSON.stringify(preferences), 
+            yes: yes, 
+            no: no,
+            commitment: commitment
+            },
+            beforeSend: function() {
+            
+             $(".widget-popular").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').hide();
+     
+  },
+    success:  function(){
+              if($('.grid-cont').hasClass('user-profile')){
+                window.location.href = "#profile"
+                window.location.reload();
+              }
+            }
 })
 
 
@@ -635,10 +790,11 @@ function show_password(data){
         window.history.back();
     }
     if(data[0] == "N"){  
+      $('#loginModal').modal('hide')
       survey() 
    }
     if(data[0] == "A"){
-        
+        $('#loginModal').modal('hide')
           survey();
     }
     if(data[0] == "F"){
@@ -1034,7 +1190,70 @@ function pager(){
   }
 }
 
+function popularItems(){
+var thisweekCount = $('#popuplar-news-1').find('a').length;
+var trendcount = $('#popuplar-news-2').find('a').length;
+var topcount = $('#popuplar-news-3').find('a').length;
+console.log(thisweekCount);
+console.log(trendcount);
+console.log(topcount);
+if(thisweekCount>3){
+  $('.toggle-shows-right').click(function(){
+    if($('a[href="#popuplar-news-1"]').hasClass('active')){
+      var firsthidden = $($('#popuplar-news-1').find('.pic-hidden')[0])
+     firsthidden.css("display", "inline-block");
+     firsthidden.removeClass('pic-hidden');
+      var firstshown = $($('#popuplar-news-1').find('a')[0])
+   
+    $('#popuplar-news-1').append(firstshown);
 
+     firstshown.hide();
+     firstshown.addClass('pic-hidden');
+   
+    // firstshown.addClass('pic-hidden');
+
+    }
+  })
+}
+if(trendcount>3){
+  $('.toggle-shows-right').click(function(){
+    if($('a[href="#popuplar-news-2"]').hasClass('active')){
+      var firsthidden = $($('#popuplar-news-2').find('.pic-hidden')[0])
+     firsthidden.css("display", "inline-block");
+     firsthidden.removeClass('pic-hidden');
+      var firstshown = $($('#popuplar-news-2').find('a')[0])
+   
+    $('#popuplar-news-2').append(firstshown);
+
+     firstshown.hide();
+     firstshown.addClass('pic-hidden');
+   
+    // firstshown.addClass('pic-hidden');
+
+    }
+  })
+}
+if(topcount>3){
+  $('.toggle-shows-right').click(function(){
+    if($('a[href="#popuplar-news-3"]').hasClass('active')){
+      var firsthidden = $($('#popuplar-news-3').find('.pic-hidden')[0])
+     firsthidden.css("display", "inline-block");
+     firsthidden.removeClass('pic-hidden');
+      var firstshown = $($('#popuplar-news-3').find('a')[0])
+   
+    $('#popuplar-news-3').append(firstshown);
+
+     firstshown.hide();
+     firstshown.addClass('pic-hidden');
+   
+    // firstshown.addClass('pic-hidden');
+
+    }
+  })
+}
+
+
+}
 
 
 
@@ -1142,6 +1361,7 @@ function start (){
 	// homepage();
     // inputs();
     pager();
+    popularItems();
 $(window).hashchange( function test(){
 	var hash = location.hash;
 	if(hash.substring(0,5) == "#show")
@@ -1289,6 +1509,15 @@ $(window).hashchange( function test(){
     case "#userSurveyTest":
         survey();
         break;
+    case "#profile":
+        profile();
+        break;
+    case "#editSurvey":
+        survey2();
+        break;
+    case "#doneSurvey2":
+        donesurvey2();
+        break;
 
 
                                                             
@@ -1306,7 +1535,7 @@ $(window).hashchange( function test(){
 //        );
 
 if($('#fromEmail').text() == 'a'){
-   survey();
+   $('#emailModal').modal()
 
 }
 $(window).hashchange();

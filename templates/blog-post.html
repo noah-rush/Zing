@@ -353,8 +353,11 @@
 							<!-- widget socials -->
 
 
-
-							{% if useron !=  "none" %}
+							{%if useron == "confirm email"%}
+									<div class="widget widget-popular">
+									Please check your email to verify your identity before you can review shows. 
+									</div>
+							{%elif useron !=  "none" %}
 							<div class="widget widget-popular">
 
 						<div class="head">What did you think?</div>
@@ -451,6 +454,7 @@
        <button onClick="submit_review()" type="button" id = "submitshowreview"  href = "#submitreview" class="btn btn-primary" >Submit Review</button>
 
 									</div>
+
 									{%else%}
 									<div class="widget widget-popular">
 									<div class="head">Welcome</div>

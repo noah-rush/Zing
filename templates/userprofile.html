@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<style type="text/css">
+
+#startRating{
+	display:none;
+}
+#yourRating{
+	display:none;
+}
+
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+{%for review in userreviews%}
+.profile-star-rating-x{{loop.index}} {
+  
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.profile-star-rating-x{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{review['rating']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.profile-star-rating-x{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+{%endfor%}
+
+
+
+
+</style>
+<body>
+	
+			<main class="page-content ">
+			
+				<div class="grid-cont user-profile" style="background-image: url(static/redbackground.png); background-repeat:no-repeat">		
+					<div class="grid-row">
+						<div class="grid-col grid-col-8">
+							<!-- blog post -->
+							<div class="blog-post">
+							<div id = "showid" style = "display:none"></div>
+								<h1 class="title">{{userdata['first']}} {{userdata['last']}}
+								
+						 </h1>
+
+						 <div class="bar">
+						 	{{userdata['email']}}
+
+						 </div>
+								
+								<div class="cont">
+									<!-- <img src="" width="710" height="400" alt=""> -->
+									<div class = "col-md-12">
+									<h2>User Reviews</h2>
+									{% for review in userreviews %}
+									<div class = "col-md-6">
+									<h3>{{review['name']}}</h3>
+
+									<li class="list-group-item userReview" style = "text-align: left"><p>
+
+<span class="profile-star-rating-x{{loop.index}}">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+
+{{review['reviewtext']}}
+<span style = "color: green">
+							{% for adj in review['goods'] %}
+							
+							{{adj['adjective']}}
+							
+							{%endfor %}
+
+							</span>
+
+							
+								<span style = "color:red">
+							{% for adj in review['bads'] %}
+							
+							{{adj['adjective']}}
+							
+							{%endfor %}
+						
+								</span>
+{{review['to_char']}}</p></li>
+</div>
+{%endfor %}	
+</div>
+
+        							<p></p>
+   						<!-- <p class="caption">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat.</p> -->
+									
+								</div>
+								</div>
+								</div>
+								
+								
+					<div class="witgets-holder grid-col grid-col-4">
+						
+							<div class="widget widget-popular">
+							<a class = "edit-survey" href = "#editSurvey">edit</a>
+						
+							{% if survey['worksin'] == True%}
+							<h2>Works in Theater</h2>
+							{%endif%}
+							{% if commitment['commitment'] == "obsessed"%}
+							<h2>Obsessed with Theater</h2>
+							{% elif commitment['commitment'] == "occasional"%}
+							<h2>Occasional theatergoer</h2>
+							{% elif commitment['commitment'] == "rare"%}
+							<h2>Rare theatergoer</h2>
+							{%endif%}
+							<br>
+							<div class = "head">Preferences</div>
+							{%for like in likes%}
+							<div>{{loop.index}}) {{like}}</div>
+							{%endfor%}
+							
+
+							</div>
+								
+						
+							<!--/ widget socials -->
+							
+							<!-- widget events -->
+							<div class="widget widget-events widget-shows-seen">
+							<div class = "head">Shows Seen</div>
+							{%for saw in sawthis%}
+							<a href ="#show/{{saw['showid']}}">
+							{{saw['name']}}
+							</a>
+							{%endfor%}
+							</div>
+							<!--/ widget events -->
+							
+							<!-- widget weather -->
+							<div class="widget widget-weather">
+							
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			<div id="startRating" >{{rating}}</div>
+			</main>
+			</body>
+	
