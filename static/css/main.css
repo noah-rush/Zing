@@ -329,6 +329,7 @@ a {
 	color: #000;
 }
 .mobile-header{display:none}
+.loginMobile{display:none;}
 @media screen and (max-width: 1229px) { /* laptop */
 	.page-boxed {
 		max-width: 980px;
@@ -338,6 +339,7 @@ a {
 		padding-top: 20px;
 	}
 	.mobile-header{display:none}
+
 }
 @media screen and (max-width: 979px) { /* pad */
 	.page-boxed {
@@ -368,6 +370,14 @@ a {
 	.slogan{display:none;}
 	.page-header-top{
 		background:white;
+	}
+	.loginMobile{display:block;}
+	.form-group{
+		width:50%;
+		margin:auto;
+	}
+	.mobileNobreaks{
+		display:none;
 	}
 }
 

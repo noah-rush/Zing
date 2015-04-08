@@ -552,3 +552,8 @@ main{
 .widget-popular .ranking li{
 min-height:0px;
 }
+.form-group{
+    margin-bottom:2px !important;
+    width:180px;
+}
+
