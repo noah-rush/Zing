@@ -1267,7 +1267,7 @@ def profile():
     surveydata = c.fetchall()
     likes = [None]*5
     if len(surveydata) > 0:
-      surveydata = c.fetchall()[0]
+      surveydata = surveydata[0]
       likes[surveydata['comedy'] -1 ] = "Comedy"
       likes[surveydata['musicals'] -1 ] = "Musicals"
       likes[surveydata['experimental'] -1 ] = "Experimental"
