@@ -609,7 +609,7 @@ FB.api('/me', function(response) {
 }
 function show_survey(data){
     
-    $("#emailModal").find('#paneltext').append(data);
+    $("#emailModal").find('#paneltext').html(data);
     $("#emailModal").modal();
     $( "#sortable1").sortable({
         update: function( event, ui ) {
