@@ -599,7 +599,7 @@ FB.api('/me', function(response) {
         url: "/login",
         success: function(){
           window.location.back();
-        }
+        },
         data: {
            
             firstname: response.first_name,
