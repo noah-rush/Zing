@@ -471,7 +471,7 @@ function handle_login(data){
 
     }
     $("#loginModal").modal('hide');
-   
+
 
 }
 
@@ -597,7 +597,7 @@ FB.api('/me', function(response) {
               $.ajax({
         type: "POST",
         url: "/login",
-        success: handle_login,
+        success: window.location.reload(),
         data: {
            
             firstname: response.first_name,
