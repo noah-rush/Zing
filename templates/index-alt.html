@@ -11,6 +11,9 @@
 		<!--/ metas -->
 		
 		<!-- styles -->
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 		   <link href="static/bootstrap-3.3.1/dist/css/bootstrap.css" rel="stylesheet">
 
@@ -492,7 +495,7 @@ Birthday                   </label>
 						
 
 																<div class="item">
-																	<a href="#" style="background-image: url('static/Zingimages/{{review['showid']}}.jpg')">
+																	<a href="#show/{{review['showid']}}" style="background-image: url('static/Zingimages/{{review['showid']}}.jpg')">
 																		<h4>{{review['title']}}</h4>
 																		<div><i class="fa fa-comment"></i>124 Comments</div>
 																	</a>
@@ -1066,35 +1069,30 @@ Birthday                   </label>
 							<div class="widget-about">
 								<a href="/" class="slogan"><span>Zing.</span></a>
 								<a href="/" class="logo logo-alt"><img src="static/chair.png" width="68" height="61" alt=""></a>
-								<h4>About Zing.</h4>
-								<p>Zing aims to please</p>
-								<a href="#" class="more">read more<i class="fa fa-share fa-flip-vertical"></i></a>
+							
 							</div>
 							<!--/ about -->
 						</div>
 						
-						<div class="grid-col grid-col-3-33">
+						<!-- <div class="grid-col grid-col-3-33"> -->
 							<!-- latest tweets -->
-							<div class="widget-tweets">
+						<!-- 	<div class="widget-tweets">
 								<h4>Latest Tweets</h4>
 								<div class="item">
 									<i class="fa fa-twitter"></i>
 									<p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Version of Lorem Ipsum. Proin gravida <a href="#">#Aenean</a></p>
 								</div>
 								<div class="bar"><a href="#">@johndoe</a>2 hours ago</div>
-							</div>
+							</div> -->
 							<!--/ latest tweets -->
-						</div>
+						<!-- </div> -->
 						
 						<div class="grid-col grid-col-3-33">
 							<!-- subscribe -->
 							<div class="widget-subscribe">
-								<h4>Subscribe</h4>
-								<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean gravida aliquet</p>
-								<form action="#">
-									<div class="input"><input type="text"><i class="fa fa-envelope-o"></i></div>
-									<button type="submit">subscribe to news</button>
-								</form>
+								  <h4>About Zing.</h4>
+                <p>Zing aims to please</p>
+                <a href="#about" class="more">read more<i class="fa fa-share fa-flip-vertical"></i></a>
 							</div>
 							<!--/ subscribe -->
 						</div>
@@ -1106,7 +1104,7 @@ Birthday                   </label>
 				
 				<!-- copyrights -->
 				<div class="copyrights">
-					2015 &copy; All rights reserved to WEGODESIGN &nbsp;|&nbsp; <a href="contacts.html">Contact Us</a>
+					2015 &copy; All rights reserved to Zing &nbsp;|&nbsp; <a href="contacts.html">Contact Us</a>
 				</div>
 				<!--/ copyrights -->
 			</footer>
