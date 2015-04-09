@@ -471,7 +471,7 @@ function handle_login(data){
 
     }
     $("#loginModal").modal('hide');
-    window.location.reload();
+   
 
 }
 
