@@ -598,10 +598,7 @@ FB.api('/me', function(response) {
         type: "POST",
         url: "/login",
         success: function(){
-          console.log("fb success")
-          $("#loginModal").modal('hide');
-          window.location.href = "";
-          window.location.reload();
+          window.location.href = ""
         },
         data: {
            
