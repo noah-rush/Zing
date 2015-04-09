@@ -597,7 +597,9 @@ FB.api('/me', function(response) {
               $.ajax({
         type: "POST",
         url: "/login",
-        success: window.location.reload(),
+        success: function(){
+          window.location.back();
+        }
         data: {
            
             firstname: response.first_name,
