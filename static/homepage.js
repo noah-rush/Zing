@@ -466,9 +466,12 @@ function handle_login(data){
     // console.log(data);
     if(data.substring(0,4) == "<h3>"){
         $("#loginModal").find("#paneltext").html(data);
-        $("#loginModal").modal();
+        $("#loginModal").modal('hide');
+
 
     }
+    $("#loginModal").modal('hide');
+    window.location.reload();
 
 }
 
