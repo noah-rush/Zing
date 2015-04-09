@@ -1264,17 +1264,21 @@ def profile():
     results = c.fetchall()
     c.execute("""SELECT * FROM ZINGSURVEY
                 WHERE userid = %s""", (session['username'],) )
-    surveydata = c.fetchall()[0]
+    surveydata = c.fetchall()
     likes = [None]*5
-    likes[surveydata['comedy'] -1 ] = "Comedy"
-    likes[surveydata['musicals'] -1 ] = "Musicals"
-    likes[surveydata['experimental'] -1 ] = "Experimental"
-    likes[surveydata['drama'] -1 ] = "Drama"
-    likes[surveydata['classics'] -1 ] = "Classics"
+    if len(surveydata) > 0:
+      surveydata = c.fetchall()[0]
+      likes[surveydata['comedy'] -1 ] = "Comedy"
+      likes[surveydata['musicals'] -1 ] = "Musicals"
+      likes[surveydata['experimental'] -1 ] = "Experimental"
+      likes[surveydata['drama'] -1 ] = "Drama"
+      likes[surveydata['classics'] -1 ] = "Classics"
 
     c.execute("""SELECT * FROM COMMITMENT
                 WHERE USERID = %s""", (session['username'],))
-    commitment = c.fetchall()[0]
+    commitment = c.fetchall()
+    if len(commitment) > 0:
+      commitment = commitment[0]
     print results
     c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY'), ZINGRATINGS.showid,
