@@ -600,7 +600,7 @@ FB.api('/me', function(response) {
         success: function(){
           console.log("fb success")
           $("#loginModal").modal('hide');
-          window.history.back();
+          window.location.href = "";
           window.location.reload();
         },
         data: {
