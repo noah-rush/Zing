@@ -598,7 +598,8 @@ FB.api('/me', function(response) {
         type: "POST",
         url: "/login",
         success: function(){
-          window.location.back();
+          window.history.back();
+          window.location.reload();
         },
         data: {
            
