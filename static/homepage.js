@@ -528,12 +528,10 @@ function login_rout(data){
         case "Use":
             somethingwrong.show();
             somethingwrong.text("Username not found. Try again.");
-            window.location.href = "/";
             break;
         case "Inc":
             somethingwrong.show();
             somethingwrong.text("Incorrect Password. Try again.");
-            window.location.href = "/";
             break;
         }
 }
