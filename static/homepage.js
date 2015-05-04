@@ -466,7 +466,7 @@ function handle_login(data){
 
 
     }
-    $('html').html(data);
+    $('body').html(data);
 
 
 }
