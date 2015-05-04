@@ -205,7 +205,7 @@
             <div class = "signUpForm">
                 <h4>Sign up to post reviews and earn rewards.</h4>
                 <br>
-                <a style = "background-color: #3B5998; color: white; "  id = "signin2" class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
+                <a style = "background-color: #3B5998; color: white; "   class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
                 <br>    
                 Don't worry, we never post without your permission.
                 <br>
@@ -224,7 +224,7 @@
                     </div>
                     <div class = "mobileNobreaks"></div>
                     <div class="form-group password-form">
-                    <input margin-bottom = "0px" margin-top = "0px"type="password" id = "newpassword" class="form-control" placeholder="Password">
+                    <input  type="password" id = "newpassword" class="form-control" placeholder="Password">
                     </div>
 
               <!--       <div class = "birthday" style= "margin-top: 3%">
@@ -262,7 +262,7 @@ Birthday                   </label>
   
                     <br>
                     <br>
-                    <a style = "margin-bottom: 5%"  id = "signin2" class="btn btn-default" href="#signup" >Sign up</a>
+                    <a style = "margin-bottom: 5%"   class="btn btn-default" href="#signup" >Sign up</a>
                 </form>
                 </div>
         </div>
@@ -287,7 +287,7 @@ Birthday                   </label>
 							<div class="grid-col grid-col-2">
 								<!-- slogan -->
 								<a href="/" class="slogan slogan-alt"><span>Zing.</span></a>
-                <div class = "mobile-header"><a href = "/"><img src = "static/zingheadernew.png"></a></div>
+                <div class = "mobile-header"><a href = "/"><img alt ="mobile-header" src = "static/zingheadernew.png"></a></div>
 								<!--/ slogan -->
 							</div>
 							
@@ -538,7 +538,7 @@ Birthday                   </label>
 							<div class ="grid-col grid-col-3 col-title" style = "background:white">
 							<div class="page-title">
 							
-						<img class= "img-header" src = "static/zingheadernew.png">
+						<img class= "img-header"  alt = "desktopHeader" src = "static/zingheadernew.png">
 						
 						
 						<!-- <a href="#" class="subscribe subscribe-alt"><i class="fa fa-rss"></i>subscribe to this category</a> -->
@@ -546,7 +546,7 @@ Birthday                   </label>
 						</div>
 					</div>					
 				</div>
-				<div></div>
+        </div>
 				<!-- page header middle -->
 				
 			</header>
@@ -561,7 +561,7 @@ Birthday                   </label>
 					<div class="grid-col grid-col-3">
 					<div class="widget-first-row widget  widget-descript">
 								<div class="head">Welcome</div>
-								<p style = " text-align: left"><b>Here's how PhillyZing works:</b></p>
+								<p style = " text-align: left"><b>Here's how PhillyZing works:</b>
 								<br>
 
 								<a href = "#login_sidebar">1) Register to be a reviewer. </a>
@@ -583,7 +583,7 @@ Birthday                   </label>
                 {%for toprated in toprated%}
               <a href="#show/{{toprated['id']}}">
                 
-                <div>{{toprated['avg']}}% -- {{toprated['name']}}</div>
+                <div>{{toprated['avg']}}% - {{toprated['name']}}</div>
               </a>
               {%endfor%}
 
@@ -598,7 +598,7 @@ Birthday                   </label>
 								{%for thisweek in thisweek%}
 							<a href="#show/{{thisweek['id']}}">
 								
-								<div>{{thisweek['rating']}}% -- {{thisweek['name']}}</div>
+								<div>{{thisweek['rating']}}% - {{thisweek['name']}}</div>
 							</a>
 							{%endfor%}
 
@@ -611,7 +611,7 @@ Birthday                   </label>
                 {%for trend in trending%}
               <a href="#show/{{trend['id']}}">
                 
-                <div>{{trend['avg']}}% -- {{trend['name']}}</div>
+                <div>{{trend['avg']}}% - {{trend['name']}}</div>
               </a>
               {%endfor%}
 
