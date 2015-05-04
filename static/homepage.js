@@ -1539,7 +1539,9 @@ if($('#fromEmail').text() == 'a'){
 }
 $(window).hashchange();
 $("#submitshowreview").on("click", submit_review); 
+if($('#userInSession').text() == "none"){
 facebook();
+}
 autocomp();
 setLoginModal();
 $('.page-title').click(function(){
