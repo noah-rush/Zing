@@ -1480,7 +1480,7 @@ def fblogin():
   print results[0]['emailconfirm']
   if results[0]['emailconfirm']:
     session['username'] = results[0]['id']
-    return redirect(url_for('/'))
+    return redirect(url_for('index'))
   else:
     return "<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>"
 
