@@ -368,6 +368,7 @@ function facebook(){
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
+
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
@@ -410,9 +411,12 @@ function facebook(){
   //    your app or not.
   //
   // These three cases are handled in the callback function.
+      if($('#userInSession').text() == "none"){
+
 FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
+}
 
   };
   
@@ -1539,9 +1543,8 @@ if($('#fromEmail').text() == 'a'){
 }
 $(window).hashchange();
 $("#submitshowreview").on("click", submit_review); 
-if($('#userInSession').text() == "none"){
 facebook();
-}
+
 autocomp();
 setLoginModal();
 $('.page-title').click(function(){
