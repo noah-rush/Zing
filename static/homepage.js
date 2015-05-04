@@ -411,12 +411,13 @@ function facebook(){
   //    your app or not.
   //
   // These three cases are handled in the callback function.
-      if($('#userInSession').text() == "none"){
 
 FB.getLoginStatus(function(response) {
+  if($('#userInSession').text() == "none"){
     statusChangeCallback(response);
+  }
   });
-}
+
 
   };
   
