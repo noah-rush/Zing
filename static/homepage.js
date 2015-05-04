@@ -437,13 +437,9 @@ FB.getLoginStatus(function(response) {
         var name = response.first_name;
         // console.log(response.first_name);
         name = response.first_name;
-        var check = $(".loginNav");
-        check.addClass("dropdown")
-        check.html('<a data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span><span id="user"></span> <span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a href="#logout">Logout</a></li></ul>')
-        $('nav .user').text(name);
         $.ajax({
         type:"POST",
-        url: "/login",
+        url: "/fblogin",
         success: handle_login,
         data: {
             firstname: response.first_name,

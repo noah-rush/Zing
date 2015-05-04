@@ -1470,6 +1470,20 @@ def submitreview():
     return ""
 
 ####facebook to flask login 
+@app.route('/fblogin', methods=['GET','POST'])
+def fblogin():
+  email = request.form['email']
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT ID, emailconfirm FROM USERS WHERE EMAIL = %s", (email,))
+  results = c.fetchall()
+  print results
+  print results[0]['emailconfirm']
+  if results[0]['emailconfirm']:
+    session['username'] = results[0]['id']
+    return redirect(url_for('index'))
+  else:
+    return "<h3> A confirmation email has been sent. Please check your email and click the link to verify your account. </h3>"
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   email = request.form['email']
