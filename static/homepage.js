@@ -740,6 +740,12 @@ $("#signintrigger").click(function(){
       $(".signUpForm").hide();
     $(this).addClass("active");
     $("#signuptrigger").removeClass("active");
+
+    $("#loginPassword").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#signinbutton").click();
+    }
+});
 })
 $("#signuptrigger").click(function(){
     $(".signUpForm").show();
