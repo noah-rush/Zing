@@ -567,14 +567,12 @@ function login_func(){
     $("#loginModal").modal();
    
     $( "#signintrigger" ).trigger( "click" );
-    window.history.back()
 }
 
 function login_func_sidebar(){
     $("#loginModal").modal();
   
     $( "#signuptrigger" ).trigger( "click" );
-     window.history.back()
     
 }
 
@@ -784,14 +782,12 @@ function show_password(data){
         $('#somethingWrong').html('An account with that email already exists. <br> Please sign in or use a different email. <br> If you signed up with facebook, please log in with facebook <br> <hr><br>')
         $('#somethingWrong').css({"color" : "red"});
         $('#somethingWrong').show()
-        window.history.back();
 
     }
     if(data[0] == "I"){
         $('#somethingWrong').html('Incorrect Password. Try Again<br><hr><br>')
         $('#somethingWrong').css({"color" : "red"});
         $('#somethingWrong').show()
-        window.history.back();
     }
     if(data[0] == "N"){  
       $('#loginModal').modal('hide')
@@ -806,7 +802,6 @@ function show_password(data){
        $('#somethingWrong').html('No account was found with that email address.<br><hr><br>');
        $('#somethingWrong').css({"color" : "red"});
        $('#somethingWrong').show()
-       window.history.back();
     }       
 }
 ////////////////////////End of Login Stuff
