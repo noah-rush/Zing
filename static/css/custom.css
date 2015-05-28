@@ -5,6 +5,9 @@
 padding:0;
 
 }
+.col-title{
+    border-bottom:2px solid black;
+}
 .fullschedule{
     margin:auto;
     width:100%;
