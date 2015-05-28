@@ -616,7 +616,9 @@ Birthday                   </label>
                 {%for toprated in toprated%}
               <a href="#show/{{toprated['id']}}">
                 
-                <div class = "showsInfo">{{toprated['avg']}}% - {{toprated['name']}}</div>
+                <div class = "showsInfo">
+                <span class ="percent " >{{toprated['avg']}}% -  </span> 
+                <span class = "showInfoName" >{{toprated['name']}}</span></div>
               </a>
               {%endfor%}
 
@@ -631,7 +633,7 @@ Birthday                   </label>
 								{%for thisweek in thisweek%}
 							<a href="#show/{{thisweek['id']}}">
 								
-								<div class = "showsInfo" >{{thisweek['rating']}}% - {{thisweek['name']}}</div>
+								<div class = "showsInfo" ><span class ="percent" >{{thisweek['rating']}}% -  </span>   <span class = "showInfoName" >{{thisweek['name']}}</span></div>
 							</a>
 							{%endfor%}
 
@@ -644,7 +646,7 @@ Birthday                   </label>
                 {%for trend in trending%}
               <a href="#show/{{trend['id']}}">
                 
-                <div class = "showsInfo">{{trend['avg']}}% - {{trend['name']}}</div>
+                <div class = "showsInfo"><span class ="percent" >{{trend['avg']}}% -  </span><span class = "showInfoName" >{{trend['name']}}</span></div>
               </a>
               {%endfor%}
 
@@ -786,113 +788,64 @@ Birthday                   </label>
 					<!--/ popuplar news -->
 					
 					<div class="grid-row">
-						<div class="grid-col grid-col-8">
+						<div class="grid-col grid-col-12">
 							<!-- blog list -->
 							<div class="blog-list">
 								<div class="head">latest posts</div>
 								{%for post in blog%}
-								{%if loop.index<=5%}
+                {%if (loop.index+2)%3 == 0%}
+                <div class="grid-row">
+                {%endif%}
+								{%if loop.index<=6%}
+                <div class="grid-col grid-col-4 ">
 								<div class="item page1">
 									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+										<img src="static/images/{{post['photo']}}" alt="">
 									</a>
 									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                  <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
 									<p>{{post['descript']}}</p>
 									<div class="bar">
 										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
 										<a href="#post/{{post['id']}}" class="more">more</a>
 										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										
 										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
 									</div>
 								</div>
+                </div>
 								{%endif%}
-								{%if loop.index>5 and loop.index<=10%}
+                
+								{%if loop.index>6 and loop.index<=12%}
+                                <div class="grid-col grid-col-4">
+
 								<div class="item page2">
 									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+										<img src="static/images/{{post['photo']}}"  alt="">
 									</a>
 									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                  <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
 									<p>{{post['descript']}}</p>
 									<div class="bar">
 										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
 										<a href="#post/{{post['id']}}" class="more">more</a>
 										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										
 										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
 									</div>
 								</div>
+                </div>
 								{%endif%}
-								{%if loop.index>10 and loop.index<=15%}
+								{%if loop.index>12 and loop.index<=18%}
+                                <div class="grid-col grid-col-4">
+
 								<div class="item page3">
 									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
-									<p>{{post['content']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-								{%endif%}
-								{%if loop.index>15 and loop.index<=20%}
-								<div class="item page4">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
-									<p>{{post['content']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-								{%endif%}
-								{%if loop.index>20 and loop.index<=25%}
-								<div class="item page5">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
-									<p>{{post['content']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-								{%endif%}
-								{%if loop.index>25 and loop.index<=30%}
-								<div class="item page6">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['descript']}}</a></h2>
-									<p>{{post['content']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-								{%endif%}
-								{%if loop.index>30 and loop.index<=35%}
-								<div class="item page7">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" width="770" height="300" alt="">
+										<img src="static/images/{{post['photo']}}"  alt="">
 									</a>
 									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+
 									<p>{{post['descript']}}</p>
 									<div class="bar">
 										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
@@ -902,11 +855,102 @@ Birthday                   </label>
 										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
 									</div>
 								</div>
+                </div>
 								{%endif%}
+								{%if loop.index>18 and loop.index<=24%}
+                                <div class="grid-col grid-col-4">
+
+								<div class="item page4">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}"  alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+
+                  <p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+                </div>
+								{%endif%}
+								{%if loop.index>24 and loop.index<=30%}
+                                <div class="grid-col grid-col-4">
+
+								<div class="item page5">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}" alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+
+                  <p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+                </div>
+								{%endif%}
+								{%if loop.index>30 and loop.index<=36%}
+                                <div class="grid-col grid-col-4">
+
+								<div class="item page6">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}"alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+
+                  <p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+									</div>
+								</div>
+                </div>
+								{%endif%}
+								{%if loop.index>36 and loop.index<=42%}
+                                <div class="grid-col grid-col-4">
+
+								<div class="item page7">
+									<a href="#post/{{post['id']}}" class="pic">
+										<img src="static/images/{{post['photo']}}"  alt="">
+									</a>
+									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+
+                  <p>{{post['descript']}}</p>
+									<div class="bar">
+										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+										<a href="#post/{{post['id']}}" class="more">more</a>
+										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+									</div>
+								</div>
+                </div>
+								{%endif%}
+                {%if loop.index%3 == 0%}
+                </div>
+                {%endif%}
 								{%endfor%}
 							<!--/ blog list -->
 							
 							<!-- pager -->
+              </div>
+              </div>
+              </div>
+              </div>
 							<div class="pager">
 
 								<a href="#" class="prev fa fa-chevron-left"></a>
@@ -916,10 +960,10 @@ Birthday                   </label>
 								
 							</div>
 							<!--/ pager -->
-						</div>
-						</div>
 						
-						 <div class="grid-col grid-col-4">
+						<!-- </div> -->
+						
+						 <!-- <div class="grid-col grid-col-4"> -->
 							<!-- widget socials -->
 							<!-- <div class="widget widget-socials">
 								<div class="head">socialize</div>
@@ -947,7 +991,7 @@ Birthday                   </label>
 							<!--/ widget weather -->
 							
 							<!-- widget tags -->
-							<div class="widget widget-tags">
+							<!-- <div class="widget widget-tags">
 								<div class="cont">
 									<a href="#">Lorem</a>
 									<a href="#">Dolorsitamet</a>
@@ -958,8 +1002,8 @@ Birthday                   </label>
 									<a href="#">Dolorsi</a>
 									<a href="#">Simpli</a>
 									<a href="#">Alnisco</a>
-								</div>
-							</div>
+								</div> -->
+							<!-- </div> -->
 							<!--/ widget tags -->
 							
 							<!-- widget poll -->
@@ -1090,9 +1134,9 @@ Birthday                   </label>
 								</div>
 							</div> -->
 							<!--/ widget popular -->
-						</div>
-					</div>
-				</div>
+						<!-- </div> -->
+					<!-- </div> -->
+				<!-- </div> -->
 			
 			</main>
 			<!--/ page content -->

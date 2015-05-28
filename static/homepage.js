@@ -1193,8 +1193,8 @@ function show_reviews(){
 
 
 function pager(){
-  var pages = Math.floor($('.blog-list .item').length/5)
-  console.log(Math.floor($('.blog-list .item').length/5))
+  var pages = Math.floor($('.blog-list .item').length/6)
+  console.log(Math.floor($('.blog-list .item').length/6))
   for(var i = 0; i<=pages; i++){
     pagenum = i+1
     if(pagenum ==1 ){

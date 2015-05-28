@@ -444,7 +444,11 @@ nav #user{
     color:black !important;
 }
 .bottom-post-content .related-posts{
-    padding: 0 15px;
+    padding:0px;
+}
+.related-posts{
+    margin-top:0px;
+    padding-bottom:20px;
 }
  .blog-comments{
     padding: 0 15px;
@@ -587,8 +591,57 @@ min-height:0px;
 .showsInfo{
     padding:3px;
     border-bottom:1px solid black;
+    overflow:auto;
+    transition: all 0.3s cubic-bezier(0, 0, 0.58, 1);
+  
+}
+.page-footer{
+    margin-top:0px;
+}
+.bottom-post-content{
+    padding:30px;
+}
+.showsInfo:hover{
+    background:whitesmoke;
 }
 .widget-first-row .head{
     border-bottom: 3px solid #B11E24;
     padding-bottom:3px;
+}
+.percent{
+    float:left;
+    width:20%;
+}
+.showInfoName{
+    width:80%;
+    float:left;
+}
+.blog-list .item img{
+   width:90%;
+margin:0 auto;
+}
+.blog-list .grid-row{
+    margin:0;
+    /*border-bottom:2px solid black;*/
+}
+.blog-list .item{
+    /*border: 2px solid #B11E24;*/
+    text-align:center;
+    padding:10px;
+    overflow:auto;
+}
+.blog-list .pic{
+
+    text-align:center;
+      background: white
+}
+.blog-list .date{
+    float:none;
+}
+.blog-list .date i{
+    float:none;
+}
+.blog-list h2{
+    font-size: 24px;
+    overflow:hidden;
 }
