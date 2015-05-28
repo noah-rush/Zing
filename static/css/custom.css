@@ -127,6 +127,7 @@ header.page-header{
 }
 .widget-first-row {
     width:100%;
+    border:1px solid black;
     
    
 }
@@ -582,4 +583,12 @@ min-height:0px;
 }
 #writeuserreview{
     padding:10px;
+}
+.showsInfo{
+    padding:3px;
+    border-bottom:1px solid black;
+}
+.widget-first-row .head{
+    border-bottom: 3px solid #B11E24;
+    padding-bottom:3px;
 }

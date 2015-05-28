@@ -616,7 +616,7 @@ Birthday                   </label>
                 {%for toprated in toprated%}
               <a href="#show/{{toprated['id']}}">
                 
-                <div>{{toprated['avg']}}% - {{toprated['name']}}</div>
+                <div class = "showsInfo">{{toprated['avg']}}% - {{toprated['name']}}</div>
               </a>
               {%endfor%}
 
@@ -631,7 +631,7 @@ Birthday                   </label>
 								{%for thisweek in thisweek%}
 							<a href="#show/{{thisweek['id']}}">
 								
-								<div>{{thisweek['rating']}}% - {{thisweek['name']}}</div>
+								<div class = "showsInfo" >{{thisweek['rating']}}% - {{thisweek['name']}}</div>
 							</a>
 							{%endfor%}
 
@@ -644,7 +644,7 @@ Birthday                   </label>
                 {%for trend in trending%}
               <a href="#show/{{trend['id']}}">
                 
-                <div>{{trend['avg']}}% - {{trend['name']}}</div>
+                <div class = "showsInfo">{{trend['avg']}}% - {{trend['name']}}</div>
               </a>
               {%endfor%}
 
