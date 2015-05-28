@@ -15,7 +15,8 @@ from twitter import *
 from itsdangerous import URLSafeTimedSerializer
 ts = URLSafeTimedSerializer("""\xd6'\xdf@V\xfc\xc9\\\x05\xac
                  \x02P\xda\xa8r-\xee\xac*\xcdH\xc3\xef\x1d""")
-
+import markdown
+from BeautifulSoup import BeautifulSoup
 
 
 
@@ -782,6 +783,7 @@ def source():
                 (publication,))
     results = c.fetchall()
     for result in results:
+      print result['descript']
       result['descript'] = Markup(result['descript'])
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
                   ZINGShows.*
@@ -790,7 +792,6 @@ def source():
                   AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
       showtags = c.fetchall()
       result['showtags'] = showtags
-      print showtags
     return render_template('fullreviews.html', results=results, title = title, image =img)
 
 
@@ -806,12 +807,17 @@ def fullreviews():
     results = c.fetchall()
     for result in results:
       result['descript'] = Markup(result['descript'])
+      # soup = BeautifulSoup(Markup(result['descript']))
+      # result['descript'] = soup.get_text()
+      print result['descript']
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
                   ZINGShows.*
                   FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
                   WHERE articleid = %s
                   AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
       showtags = c.fetchall()
+      for tag in showtags:
+        tag['name'] = Markup(tag['name'])
       result['showtags'] = showtags
       
     return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none")
@@ -1143,6 +1149,16 @@ def show():
                 and ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id""", 
                 (showdata[0]['id'],))
       articleids = c.fetchall()
+      print articleids
+      outsideArticles = []
+      outsideArticleIDs = []
+      for article in articleids:
+        print article['articleid']
+        if article['articleid'] in outsideArticleIDs:
+          pass
+        else:
+          outsideArticles.append(article)
+          outsideArticleIDs.append(article['articleid'])
       
       numReviews = len(results)
       averageRating = 0
@@ -1220,7 +1236,7 @@ def show():
                        "yourRating": yourRating,
                        "goodadjectives": goodadjectives,
                        "badadjectives": badadjectives,
-                       "articles": articleids,
+                       "articles": outsideArticles,
                        "twitterurl":twitterurl,
                        "venueShows": venueShows
                        }
@@ -1567,6 +1583,7 @@ def manageOutReviews():
     snippets = c.fetchall()
     for snippet in snippets:
       print snippet['snippet']
+      snippet['snippet'] = Markup(snippet['snippet'])
     review['snippets'] = snippets
   return render_template("manageOutsideReviews.html", results = results)
 

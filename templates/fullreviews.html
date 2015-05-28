@@ -162,10 +162,12 @@
 {%endif%}
 <div class = "reviewTags">
 {% for tags in showdata['showtags']%}
-<a href = "#show/{{tags['showid']}}">   //     
+<a href = "#show/{{tags['showid']}}"> ||
 <i>{{tags['name']}}</i>
+
 </a>
- 
+ <br>
+
 
 {%endfor%}
 </div>

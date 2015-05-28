@@ -72,6 +72,7 @@ float:left;
 }
 .cont{
     overflow:auto;
+    min-height:222px;
 }
 .blog-post .cont img {
     width:50%;
@@ -560,6 +561,22 @@ min-height:0px;
 .widget-popular .form-group{
     width:100%;
 }
+.widget-cherry{
+    background:#B11E24;
+    color:white;
+}
 
-
-
+.widget-cherry .head{
+  
+    color:white;
+}
+.search2{
+    background:white;
+}
+.search2 input{
+    display:inline-block;
+    padding:10px;
+}
+#writeuserreview{
+    padding:10px;
+}

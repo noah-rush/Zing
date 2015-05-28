@@ -13,6 +13,16 @@ function autocomp(){
         $('.search').find('input').val('')
         }
     }); 
+    $('.search2').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            window.location.href = '#venue/'+e['data']
+        }else{
+            window.location.href = '#show/'+e['data']
+        }
+    
+        $('.search2').find('input').val('')
+        }
+    }); 
 }; 
 
 function updateOutsideArticles(){
