@@ -15,8 +15,6 @@ from twitter import *
 from itsdangerous import URLSafeTimedSerializer
 ts = URLSafeTimedSerializer("""\xd6'\xdf@V\xfc\xc9\\\x05\xac
                  \x02P\xda\xa8r-\xee\xac*\xcdH\xc3\xef\x1d""")
-import markdown
-from BeautifulSoup import BeautifulSoup
 
 
 
