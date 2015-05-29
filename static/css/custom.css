@@ -5,6 +5,10 @@
 padding:0;
 
 }
+#loader{
+    width:50%;
+    margin:auto;
+}
 .col-title{
     border-bottom:2px solid black;
 }
