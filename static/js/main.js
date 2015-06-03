@@ -169,7 +169,9 @@ $(function()
 	/**/
 	$('#widgets-switcher').on('click', function()
 	{
-		console.log(this);
+					$('.widgets-switcher').siblings().slideToggle();
+
+
 		if( $(this).parent().hasClass('hidden') )
 		{
 			$(this).removeClass('fa-flip-horizontal');
@@ -182,6 +184,7 @@ $(function()
 			$(this).addClass('fa-flip-horizontal');
 			$(this).parent().prev().removeClass('grid-col-8').addClass('grid-col-11');
 			$(this).parent().addClass('hidden').removeClass('grid-col-4').addClass('grid-col-1');
+
 			
 		}
 		return false;

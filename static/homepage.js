@@ -852,6 +852,8 @@ function display_show(data){
     $('#widgets-switcher').on('click', function()
   {
     console.log(this);
+              $('.widgets-switcher').siblings().slideToggle();
+
     if( $(this).parent().hasClass('hidden') )
     {
       $(this).removeClass('fa-flip-horizontal');
@@ -875,6 +877,8 @@ function display_venue(data){
     var address = $("#address").text();
  $('#widgets-switcher').on('click', function()
   {
+                  $('.widgets-switcher').siblings().slideToggle();
+
     console.log(this);
     if( $(this).parent().hasClass('hidden') )
     {
