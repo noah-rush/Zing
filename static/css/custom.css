@@ -25,6 +25,7 @@ padding:0;
 }
 .fullschedule .showAtVenueImage{
     width:25%;
+    margin-right:2%;
 }
 .fullschedule .showAtVenueTitle h4{
     font-size:1.57em;
@@ -35,7 +36,7 @@ padding:0;
     font-weight: bold;
 }
 .fullschedule .showAtVenueTitle{
- width:71%;
+ width:73%;
 }
 .manageOutReviews{
     width:50%;
