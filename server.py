@@ -781,6 +781,8 @@ def source():
                 (publication,))
     results = c.fetchall()
     for result in results:
+      result['pub-go'] = pub
+      result['pub-image'] = img
       print result['descript']
       result['descript'] = Markup(result['descript'])
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
@@ -789,8 +791,10 @@ def source():
                   WHERE articleid = %s
                   AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
       showtags = c.fetchall()
+      for tag in showtags:
+        tag['name'] = Markup(tag['name'])
       result['showtags'] = showtags
-    return render_template('fullreviews.html', results=results, title = title, image =img)
+    return render_template('fullreviews.html', results=results, title = title, image =img, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 
@@ -817,8 +821,26 @@ def fullreviews():
       for tag in showtags:
         tag['name'] = Markup(tag['name'])
       result['showtags'] = showtags
-      
-    return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none")
+      if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F":
+        result['pub-image'] = "inq.png"
+        result['pub-go'] = "inq"
+      if result['publication'] == "http://www.newsworks.org/":
+        result['pub-image'] = "shapiro.jpg"
+        result['pub-go'] = "how-shap"
+      if result['publication'] == "http://bsr2.dev/index.php":
+        result['pub-image'] = "bsr.png"
+        result['pub-go'] = "bsr"
+      if result['publication'] == "http://citypaper.net":
+        result['pub-image'] = "citypaper.png"
+        result['pub-go'] = "city-paper"
+      if result['publication'] == "http://phindie.com":
+        result['pub-image'] = "phindie.png"
+        result['pub-go'] = "phin"
+      if result['publication'] == "http://www.philadelphiaweekly.com/arts-and-culture":
+        result['pub-image'] = "pw.jpg"
+        result['pub-go'] = "phil-week"
+    print len(results)*2/3
+    return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 
@@ -862,7 +884,7 @@ def fulltheater():
       # year = result['enddate'][:4]
       # result['enddate'] = months[month] + day + ", " +  year
  
-    return render_template('fulltheatre.html', results=results)
+    return render_template('fulltheatre.html', results=results, count = int(len(results)/2))
 
 
  ###returns a fullschedule of shows--duh

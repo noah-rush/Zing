@@ -129,7 +129,6 @@
       
         <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
           <div class="grid-row">
-            <div class="grid-col grid-col-8">
               <!-- blog post -->
               <div class="blog-post">
                <h1 class="title">{{title}}</h1>
@@ -142,8 +141,21 @@
 
               
 <div class = "fullreviews">
+
 {% for showdata in results%}
 
+{%if loop.index == 1%}
+
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count1%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
 <div class = "showAtVenue">
 <!-- <a class = "showAtVenueImage" href = "#show/{{showdata['showid']}}" >
 <img  src = "static/Zingimages/{{showdata['showid']}}.jpg" >
@@ -152,8 +164,6 @@
 <a class = "showAtVenueTitle" target = "_blank" href = "{{showdata['link']}}" >
 <h4>{{showdata['title']}}</h4>
 </a>
-<hr>
-
 
 {%if showdata['author'] != "unspecified"%}
 <div class = "reviewAuthor">
@@ -162,7 +172,7 @@
 {%endif%}
 <div class = "reviewTags">
 {% for tags in showdata['showtags']%}
-<a href = "#show/{{tags['showid']}}"> ||
+<a href = "#show/{{tags['showid']}}">
 <i>{{tags['name']}}</i>
 
 </a>
@@ -171,15 +181,14 @@
 
 {%endfor%}
 </div>
-<br>
-<br>
-<br>
+
 <div class = "reviewDescript">
 {{showdata['descript']}}
 </div>
+<a href = "#reviews/{{showdata['pub-go']}}">
+<img  class = "paperlogo" src = "static/logos/{{showdata['pub-image']}}" >
+</a>
 </div>
-
-
 
 {%endfor%}
 
@@ -188,17 +197,7 @@
 </div>
 </div>
 </div>
-       <div class="witgets-holder grid-col grid-col-4">
-        {%if image != "none"%}
-                <div class="widget  widget-rating">
-                <a target = "_blank" href = "{{results[0]['publication']}}">
-               
-                  <img class = "reviewLogo" src ="static/logos/{{image}}">
-               
-                  </a>
-        </div>
-           {%endif%}
-              </div>
+      
               </div>              
 
 

@@ -47,19 +47,29 @@ padding:0;
     margin:auto;
 }
 .showAtVenue{
-    background:black;
-    color:white;
+  -webkit-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+-moz-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+   border:4px solid #ddd;
     padding:10px;
     margin-top:10px;
    overflow:auto;
-   color:white;
+   box-shadow:;
 }
+/*.cont{
+     -webkit-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+-moz-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+}*/
 .showAtVenueDescript{
-    color:white;
+    color:black;
 }
 .showAtVenueImage{
    margin-right:20px;
    width:35%;
+}
+.showAtVenueImage img{
+    padding:0px;
 }
 .showAtVenueTitle{
    width:60%;
@@ -85,10 +95,8 @@ float:left;
 .blog-post .cont img {
     width:50%;
     height:auto;
-    padding:10px;
     margin:auto;
     float:left;
-    margin-right:50px;
 }
 
 .blog-post .cont .showAtVenue a img{
@@ -251,38 +259,33 @@ opacity:0;
 .fullreviews .showAtVenueImage{
     width:25%;
 }
-.blog-post .cont .fullreviews img{
+/*.blog-post .cont .fullreviews img{
     width:25%;
     float:left !important;
    margin-right:0px;
   
-}
+}*/
 .fullreviews .showAtVenueTitle{
-    width:70%;
-    margin-left: 10px;
+   
   
 }
-.reviewAuthor{
-    margin-left:10px;
-   float:left;
-    width:70%;
+
+.venuecol{
+    float:left;
+    padding:20px;
 }
 .reviewTags {
-      margin-left:10px;
-   float:left;
-    width:70%;
-    margin-bottom:20px;
+  color:#B11E24;
+  font-weight:bold;
 }
 .reviewDescript{
-     margin-left:10px;
-   float:left;
-    width:70%;
+
 }
 .blog-post .cont .reviewDescript p{
-    color:white;
+    color:black;
 }
 .blog-post .cont .showAtVenueDescript{
-    color:white;
+    color:black;
 }
 .reviewLogo{
     width:100%;
@@ -330,8 +333,12 @@ opacity:0;
     height:auto;
 }
 
+
 .blog-post .cont .field-content p {
     margin-top:0px;
+}
+.blog-post .cont .field-content {
+    margin-left:55%;
 }
 .blog-post .review p {
 
@@ -356,13 +363,38 @@ border-color:white;
 
 .related-posts h2 {
   margin-left: 120px;
+  font-size:20px;
 
+}
+.related-posts li{
+
+  border: 4px solid #ddd;
+  border-top-width:0px;
+  padding: 20px;
+}
+.related-posts ul{
+      -webkit-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+  -moz-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+  box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
+}
+.related-posts .head{
+  
+  border: 4px solid #ddd;
+  padding: 20px;
+  text-align:center;
+}
+.related-posts li{
+
+    margin-top:0px;
 }
 .hidden{
     height:0;
 }
 .cont .showAtVenue p{
-    color:white;
+    color:black;
+}
+.cont .showAtVenue .field-content{
+    margin-left: 38%;
 }
 .widget-weather button {
 position:relative;
@@ -456,6 +488,13 @@ nav #user{
 .related-posts{
     margin-top:0px;
     padding-bottom:20px;
+   
+}
+.related-posts li .field-content{
+                  border-bottom: 1px dashed#ddd;
+
+  padding-bottom: 15px;
+
 }
  .blog-comments{
     padding: 0 15px;
@@ -651,4 +690,30 @@ margin:0 auto;
 .blog-list h2{
     font-size: 24px;
     overflow:hidden;
+}
+.field-content p{
+      font-family: 'Open Sans', Montserrat, Helvetica, Arial, sans-serif;
+}
+.cont .fullschedule .showAtVenue .field-content{
+    margin-left:27%;
+}
+.fullreviews .reviewDescript{
+    width:100%;
+    margin-left: 0px;
+    float:none;
+}
+.fullreviews .showAtVenueTitle{
+    float:none;
+    margin:0;
+    width:100%;
+    font-size:10px;
+font-style: italic;  
+text-align:center;
+}
+.reviewAuthor{
+    margin-top:10px;
+}
+.paperlogo{
+    float:right !important;
+    width:15% !important;
 }

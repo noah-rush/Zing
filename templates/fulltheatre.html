@@ -129,7 +129,7 @@
       
         <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
           <div class="grid-row">
-            <div class="grid-col grid-col-8">
+            <!-- <div class="grid-col grid-col-8"> -->
               <!-- blog post -->
               <div class="blog-post">
                <h1 class="title">All Theaters</h1>
@@ -143,6 +143,15 @@
               
 <div class = "fullschedule">
 {% for showdata in results%}
+{%if loop.index == 1%}
+
+<div class = "grid-col-6 venuecol">
+{%endif%}
+
+{%if loop.index == count%}
+</div>
+<div class = "grid-col-6 venuecol">
+{%endif%}
 
 <div class = "showAtVenue">
 <a class = "showAtVenueImage" href = "#venue/{{showdata['id']}}" >
@@ -172,6 +181,7 @@
 
 
 {%endfor%}
+</div>
 </div>
                   
 

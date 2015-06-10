@@ -830,6 +830,7 @@ function show_password(data){
 function display_show(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
+    jQuery('.field-content p br:first-child').remove()
     $('a[href="/barrymore-awards/2015/recommended"]').remove();
     $('[data-toggle="tooltip"]').tooltip()
     $("#sawthis").on("click", 
@@ -873,6 +874,7 @@ function display_show(data){
 function display_venue(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
+    jQuery('.field-content p br:first-child').remove()
     $('a[href="/barrymore-awards/2015/recommended"]').remove();
     var address = $("#address").text();
  $('#widgets-switcher').on('click', function()
@@ -993,6 +995,8 @@ google.maps.event.addListener(marker, 'click', function(){
 }
 function show_post(data){
      $(".page-content").html(data);
+         jQuery('.field-content p br:first-child').remove()
+
      jQuery('body').animate({"scrollTop":0})
       $('a[href="/barrymore-awards/2015/recommended"]').remove();
 
@@ -1000,28 +1004,30 @@ function show_post(data){
 }
 function show_full_reviews(data){
      $(".page-content").html(data);
+     $('.fullreviews .reviewDescript img').remove();
+     $('.fullreviews .reviewDescript a').attr("target", "_blank");
      jQuery('body').animate({"scrollTop":0})
-     jQuery('.showAtVenue').each(function(){
-        $(this).prepend($(this).find('img'))
+     // jQuery('.showAtVenue').each(function(){
+     //    $(this).prepend($(this).find('img'))
      
-     })
-      jQuery('img').each(function(){
-        if($(this).attr('src').indexOf('~ff')>0){
-            $(this).remove();
-        }
+     // })
+     //  jQuery('img').each(function(){
+     //    if($(this).attr('src').indexOf('~ff')>0){
+     //        $(this).remove();
+     //    }
 
-        if($(this).attr('src').indexOf('feedburner')>0){
-            $(this).remove();
-        }
-     })
+     //    if($(this).attr('src').indexOf('feedburner')>0){
+     //        $(this).remove();
+     //    }
+     // })
  jQuery('.showAtVenue').each(function(){
        
         if($(this).find('img').length==0){
             console.log(this);
-            $(this).find('.showAtVenueTitle').css({"width":"90%"
-            })
-            $(this).find('.reviewDescript').css({"width":"90%"
-            })
+            // $(this).find('.showAtVenueTitle').css({"width":"90%"
+            // })
+            // $(this).find('.reviewDescript').css({"width":"90%"
+            // })
         }
      })
 
