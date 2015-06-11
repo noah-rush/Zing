@@ -1,26 +1,64 @@
 
-<div class = "manageOutReviews">
 
-{%for result in results%}
+
+  
+      <main class="page-content">
+      
+        <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
+          <div class="grid-row">
+              <!-- blog post -->
+              <div class="blog-post">
+               <h1 class="title">Manage Outside Reviews</h1>
+                
+         <!--        <div class="bar">
+            
+                </div> -->
+                
+                <div class="cont">
+
+              
+<div class = "fullreviews">
+
+{% for result in results%}
+
+{%if loop.index == 1%}
+<div class = "grid-col-4 venuecol">
+{%endif%}
+
+{%if loop.index == count1%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+
+{%if loop.index == count2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+
+<div class = "showAtVenue">
 <div class = "anOutReview">
 <br>
-<a target = "_blank" href = "{{result['link']}}">{{result['title']}}</a> --- {{result['showname']}}
+<div class = "reviewManagerHeadline"><a target = "_blank" href = "{{result['link']}}">{{result['title']}}</a> </div><div class = "reviewTags">{{result['showname'][0]['name']}}</div>
+<br>
 <button class = "btn btn-danger removeOutReview" value = "{{result['id']}}">Delete Review</button>
 <button class = " btn btn-danger removeTag" value = "[{{result['id']}}, {{result['showid']}}]">Delete Tag</button>
  <input  type="text" class="addAtag form-control" placeholder="Type a show" autocomplete = "on"><button class = "addTag btn btn-success" value = "{{result['id']}}" >Add Tag</button>
 <br>
 {%for snippet in result['snippets']%}
 {{snippet['snippet']}}
-
 <br>
-
-
-
 {%endfor%}
 <br>
 <br>
-<hr>
+</div>
 </div>
 {%endfor%}
 
+
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>

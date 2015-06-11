@@ -169,6 +169,112 @@
 </div>
 </div>
 </div>
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+         <h1>What did you see?</h1>
+         <form action="#" class="search3">
+                  <input type="text" placeholder="search" autocomplete="off">
+            </form>
+                <div class="widget widget-popular widget-modal-review">
+
+            <div class="head">What did you think?</div>
+                
+                <!-- <span class="star-rating">
+      
+      
+                  <input type="radio" name="stars" value="1"><i></i>
+                  <input type="radio" name="stars" value="2"><i></i>
+                  <input type="radio" name="stars" value="3"><i></i>
+                  <input type="radio" name="stars" value="4"><i></i>
+                  <input type="radio" name="stars" value="5"><i></i>
+                  </span>
+    
+              
+                  <a href="#" class=" submitRating btn btn-success glyphicon glyphicon-ok"></a>
+                  
+
+                <a class = "btn btn-success reviewSubmit" href="#">Write a Review!<span class = "glyphicon glyphicon-pencil"></span></a> -->
+                  
+                  
+                 
+
+     
+        Which of these words apply?
+        <br>
+        <br>
+        <div class = "row">
+          <div class = "col-md-6 col-sm-6 col-xs-6">
+            <div class = "checkboxlistgood" id = "checkboxlistgood">
+              <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
+              <br>
+              <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
+              <br>
+              <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
+              <br>
+              <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
+              <br>
+              <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
+              <br>
+              <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
+              <br>
+              <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
+              <br>
+              <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
+              <br>
+              <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
+              <br>
+              <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
+          </div>
+        </div>
+      <div class = "col-md-6 col-sm-6 col-xs-6">
+        <div class = "checkboxlistbad" id = "checkboxlistbad">
+            <input type = "checkbox" name = "Overly long"> Overly long</input>
+            <br>
+            <input type = "checkbox" name = "Boring"> Boring</input>
+            <br>
+            <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
+            <br>
+            <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
+            <br>
+            <input type = "checkbox" name = "Insulting"> Insulting</input>
+            <br>
+            <input type = "checkbox" name = "A dud"> A dud</input>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    Any extra thoughts...?
+    <br>
+
+
+    <textarea id = "writeuserreview"cols="30" rows="7"></textarea>
+
+    <br>
+    <br>
+    Your rating?
+    <br>
+    <br>
+    <span class="star-rating">
+      
+      
+    <input type="radio" name="stars" value="1"><i></i>
+    <input type="radio" name="stars" value="2"><i></i>
+    <input type="radio" name="stars" value="3"><i></i>
+    <input type="radio" name="stars" value="4"><i></i>
+    <input type="radio" name="stars" value="5"><i></i>
+    </span>
+
+
+       <div><button onClick="modal_submit_review()" type="button" id = "modalsubmitshowreview"  class="btn btn-primary" >Submit Review</button></div>
+
+                  </div>
+            </div>
+</div>
+</div>
+</div>
 
 		<div class="page">
 			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -580,13 +686,10 @@ Birthday                   </label>
 						</div>
 
               <!-- widget socials -->
-              <div class = "widget widget-first-row  widget-cherry">
+              <div class = "widget widget-first-row widget-first-row-review widget-cherry">
 
-            <div class="head">Find and Review a show!</div>
-            <form action="#" class="search2">
-                  <input type="text" placeholder="search" autocomplete="off">
-                  <button type="submit" class="fa fa-search"></button>
-                </form>
+            <a class="btn btn-default" href = "#reviewModal" data-toggle = "reviewModal">Find and Review a show!</a>
+          
                 </div>
                 <!-- <span class="star-rating">
       

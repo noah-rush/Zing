@@ -1378,6 +1378,21 @@ def autocomplete():
 
   return jsonify(query = "Unit", suggestions = jsonresults)
 
+###ajax route for search review autocomplete
+@app.route('/autocomplete/justshows', methods=['GET', 'POST'] )
+def autocompletejustshows():
+  query = request.args.get('query')
+  query = '%' + query.lower() + '%'
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("""SELECT name, id from ZINGSHOWS
+            where lower(name) LIKE %s""", (query,))
+  results = c.fetchall()
+  jsonresults = []
+  for result in results:
+     d = {'value': result['name'], 'data': result['id'], 'type':"show"}
+     jsonresults.append(d)
+  return jsonify(query = "Unit", suggestions = jsonresults)
+
 
 
 
@@ -1597,15 +1612,18 @@ def manageOutReviews():
   results = c.fetchall()
   for review in results:
     c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (review['showid'],))
-    showname = c.fetchall()[0]
-    review['showname'] = showname['name']
+    showname = c.fetchall()
+    if len(showname)>0:
+      review['showname'] = showname
+    else:
+      review['showname'] = "No tag"
     c.execute("SELECT * from SNIPPETS WHERE articleid = %s", (review['id'],))
     snippets = c.fetchall()
     for snippet in snippets:
       print snippet['snippet']
-      snippet['snippet'] = Markup(snippet['snippet'])
+      
     review['snippets'] = snippets
-  return render_template("manageOutsideReviews.html", results = results)
+  return render_template("manageOutsideReviews.html", results = results, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 @app.route('/manageReviews', methods=['GET', 'POST'])
@@ -1637,9 +1655,14 @@ def manageReviews():
         
         data.append(review['id'])
         data.append(review['showid'])
+        c.execute("""SELECT ZINGSHOWS.name FROM ZINGSHOWS
+                  WHERE id = %s""", (review['showid'],))
+        showname = c.fetchall()
+        if len(showname) > 0:
+          data.append(Markup(showname[0]['name']))
         reviewtexts.append(data)
   print results
-  return render_template("manageReviews.html", userreviews = reviewtexts)
+  return render_template("manageReviews.html", userreviews = reviewtexts, count1 = int(len(reviewtexts)/3), count2 = int(len(reviewtexts)*2/3))
 
 
 

@@ -1326,7 +1326,47 @@ function show_reviews(){
 
 
 
+function modal_submit_review(){
+var goods = [];
+        $('#reviewModal #checkboxlistgood input:checked').each(function() {
+          
+          goods.push(this.name)
+        });
+    var bads = [];
+        $('#reviewModal #checkboxlistbad input:checked').each(function() {
+          
+          bads.push(this.name)
+        });
+       
+  var text = $("#reviewModal #writeuserreview").val();
+ var showid = $('.modalShowID').text()
+   $.ajax({
+    url: "/submitreview",
+    data: {
+      show: showid,
+      text: text,
+      stars: stars,
+      goods: JSON.stringify(goods),
+      bads: JSON.stringify(bads)
+    },
+    beforeSend: function() {
+             $(".widget-modal-review").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
 
+    success: function(){
+    
+      $('#reviewModal').modal('hide');
+      show(showid);
+    }
+  });
+    //  var url = window.location.href;
+    //  var idfirst = url.lastIndexOf("/");
+    //  var id = url.substring(idfirst +1);
+    
+    // window.location.href = "#show/"+id;
+
+}
 
 
 
@@ -1369,11 +1409,9 @@ function submit_review(){
       show(showid);
     }
 	});
-     var url = window.location.href;
-     var idfirst = url.lastIndexOf("/");
-     var id = url.substring(idfirst +1);
     
-    window.location.href = "#show/"+id;
+    
+    // window.location.href = "#show/"+id;
 	  
 
 
@@ -1542,6 +1580,36 @@ $(window).hashchange( function test(){
         break;
     case "#doneSurvey2":
         donesurvey2();
+        break;
+    case "#reviewModal":
+        $("#reviewModal").modal()
+          $("input[name='stars']").change(function(){
+  stars = this.value;
+  
+});
+         $('.search3').find('input').autocomplete({serviceUrl: '/autocomplete/justshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            // window.location.href = '#venue/'+e['data']
+        }else{
+            // window.location.href = '#show/'+e['data']
+            $('.search3').find('input').val(e['value'])
+            $('.widget-modal-review .head').html("What did you think of " + e['value'] + "?")
+
+            $('.widget-modal-review').slideToggle();
+            $('.widget-modal-review').prepend('<div class="modalShowID">' + e['data'] + '</div>');
+            $('#reviewModal').animate({"top": "0%"})
+
+            $('#reviewModal').on('hidden.bs.modal', function (e) {
+              $('.widget-modal-review').hide();
+              $('.search3').find('input').val("");
+              window.history.back();
+              $('#reviewModal').animate({"top": "25%"})
+})
+            // $('body').append('<div class = "modal-backdrop"></div>')
+        }
+    
+        }
+      }); 
         break;
 
 

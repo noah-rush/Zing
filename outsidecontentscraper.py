@@ -25,7 +25,7 @@ def update():
 	target_urls = ["http://www.theatermania.com/rss.xml/",
 	 			   "http://www.broadstreetreview.com/rss", 
 	 			   "http://phindie.com/feed/", 
-	 			   # "http://citypaper.net/rss/arts/", 
+	 			   "http://citypaper.net/rss/arts/", 
 				   "http://feeds.feedburner.com/ShapiroOnTheater", 
 	 			   "http://feeds.feedburner.com/PW-ArtsCulture", 
 	 			   "http://www.philly.com/phillystage.rss"]
@@ -55,7 +55,7 @@ def update():
 			else: 
 				author = "unspecified"
 			if 'pubdate' in d.entries[entry]:
-				date = d.entries[entry]['dc:date']
+				date = d.entries[entry]['pubdate']
 			else: 
 				date = "unspecified"
 			link = d.entries[entry]['link']

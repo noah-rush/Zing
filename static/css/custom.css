@@ -10,7 +10,7 @@ padding:0;
     margin:auto;
 }
 .col-title{
-    border-bottom:2px solid black;
+    /*border-bottom:2px solid black;*/
 }
 .fullschedule{
     margin:auto;
@@ -716,4 +716,75 @@ text-align:center;
 .paperlogo{
     float:right !important;
     width:15% !important;
+}
+.reviewManagerHeadline{
+    overflow:auto;
+}
+.anOutReview .btn{
+    margin:6px;
+}
+.anOutReview input{
+    margin:6px;
+}
+.userReviewName{
+    color:#B11E24
+}
+#writeuserreview{
+    width:100%;
+}
+@media screen and (max-width: 700px) {
+    .grid-col-4 {
+       width:100%;
+    }
+    .grid-col-6 {
+       width:100%;
+    }
+    .widgets-switcher{
+        display:none;
+    }
+}
+.widget-first-row-review{
+    text-align:center;
+}
+.widget-first-row-review .btn{
+    text-align:center;
+    width:100%;
+    padding:10px;
+}
+.search3 input{
+    border:3px solid black;
+    text-align:center;
+    width:100%;
+    padding:10px;
+    background:white;
+}
+#reviewModal .modal-body{
+    background:#B11E24;
+    color:white;
+
+}
+#reviewModal{
+    top:25%;
+    width:100%;
+}
+#reviewModal .modal-body h1{
+  font-size:24px;
+    
+}
+.widget-modal-review{
+    display:none;
+    background:black;
+    color:white;
+    width:100%;
+    text-align:center;
+}
+.widget-modal-review .checkboxlistgood{
+    color:lime;
+}
+.widget-modal-review .checkboxlistbad{
+    color:red;
+}
+.modal-backdrop {
+ 
+  height:100%;
 }

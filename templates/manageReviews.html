@@ -1,9 +1,49 @@
-<div class = "manageUserReviews"
-{% for review in userreviews %}
-<li class="list-group-item" style = "text-align: center"><p>
-{{review[2][0]['first']}} {{review[2][0]['last']}}
-{{review[0]}}</p></li>
-<button class = "removeReview" value = "[{{review[5]}}, {{review[2][0]['id']}}]">Delete Review</button>
 
-{%endfor %}
+
+      <main class="page-content">
+      
+        <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
+          <div class="grid-row">
+              <!-- blog post -->
+              <div class="blog-post">
+               <h1 class="title">Manage User Reviews</h1>
+                
+         <!--        <div class="bar">
+            
+                </div> -->
+                
+                <div class="cont">
+
+              
+<div class = "fullreviews">
+
+{%for review in userreviews %}
+
+{%if loop.index == 1%}
+
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count1%}
 </div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+<div class = "showAtVenue">
+<div class = ""> {{review[2][0]['first']}} {{review[2][0]['last']}}</div>
+<div class ="reviewTags">{{review[6]}}</div>
+<div class ="manageReviewDate">{{review[3]}}</div>
+<div class ="manageReviewText">{{review[0]}}</div>
+<button class = "removeReview btn btn-danger" value = "[{{review[5]}}, {{review[2][0]['id']}}]">Delete Review</button>
+</div>
+
+{%endfor%}
+
+
+</div>
+</div>
+</div>
+</div>
+      
