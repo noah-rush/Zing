@@ -978,6 +978,9 @@ function initialize(data) {
     });
     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
     marker.setMap(map);
+     $(window).resize(function() {
+        google.maps.event.trigger(map, 'resize');
+    });
     $.ajax({
     url: "/yelp",
     data: {
