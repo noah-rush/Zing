@@ -351,6 +351,7 @@ background:black;
 #writeuserreview{
     color:black;
     background:white;
+    border:4px solid #B11E24;
 }
 #submitshowreview{
     margin-top:10px;
@@ -787,4 +788,29 @@ text-align:center;
 .modal-backdrop {
  
   height:100%;
+}
+.dropdown-menu li {
+  padding: 10px;
+  /* margin-left: 0px; */
+  margin-left: 0px;
+  line-height: 18px;
+  text-align: center;
+}
+.autocomplete-suggestions{
+    width:350px !important;
+}
+.reviewTopMenu{
+   background:#B11E24;
+    color:white;
+margin-top:30px;
+
+}
+.page-header-middle.fixed .reviewTopMenu{
+    margin-top:0px;
+ 
+
+}
+.reviewModalCol{
+   padding-top: 14px;
+  padding-left: 32px;
 }

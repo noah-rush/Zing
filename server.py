@@ -187,7 +187,8 @@ def index():
                         "fromEmail": False,
                         "theatres": venues,
                         "reviews":reviews,
-                        "useron": 'none'
+                        "useron": 'none',
+                        "useron2": 'none'
                        }
     if 'email' in session:
       template_vars['fromEmail'] = True
@@ -198,7 +199,15 @@ def index():
         name = c.fetchall()[0]['first']
         c.execute("SELECT id from ZINGADMIN where userid = %s",(session['username'],));
         adminID = c.fetchall();
-        template_vars['useron'] = name
+        c.execute("SELECT first, last, emailconfirm from USERS where id = %s", (session['username'],))
+        userinfo = c.fetchall()[0]
+        name = userinfo['first'] + " " +userinfo['last']
+        template_vars['useron2'] = name
+        emailconfirm = userinfo['emailconfirm']
+        if emailconfirm:
+          template_vars['useron'] = name
+        else:
+          template_vars['useron'] = "confirm email"
         if len(adminID)>0:
           template_vars['adminPrivileges'] = True
           return render_template('index-alt.html',**template_vars)
@@ -1443,9 +1452,9 @@ def submitreview():
               VALUES(%s, %s, %s, CURRENT_TIMESTAMP)""",
               (userid, rating, showID))
     c.execute("""DELETE FROM ZINGGOODADJECTIVES
-                    WHERE userid= %s""", (userid,))
+                    WHERE userid= %s and showid = %s""", (userid,showID))
     c.execute("""DELETE FROM ZINGBADADJECTIVES
-                    WHERE userid= %s""", (userid,))
+                    WHERE userid= %s and showid = %s""", (userid, showID))
     for good in goods:
       print good
       

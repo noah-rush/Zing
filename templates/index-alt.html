@@ -158,6 +158,20 @@
 		{%if fromEmail%}
 <div style = "display:none" id = "fromEmail">a</div>
 {%endif%}
+
+<div class="modal fade" id="emailNotYetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id = "emailVerif" style = "text-align: center" class="panel panel-default">
+         <h3>          Please check your email to verify your identity before you can review shows. 
+</h3>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
 <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -173,11 +187,12 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
+  <div class="modalShowID" style ="display:none"></div>
          <h1>What did you see?</h1>
          <form action="#" class="search3">
                   <input type="text" placeholder="search" autocomplete="off">
             </form>
-                <div class="widget widget-popular widget-modal-review">
+                <div class="widget widget-modal-review">
 
             <div class="head">What did you think?</div>
                 
@@ -420,6 +435,23 @@ Birthday                   </label>
                            				<li class= "loginNav">
 											<a data-toggle="modal" data-target="#loginModal" class="alt">Login</a>
 										</li>
+                    {%elif useron == "confirm email"%}
+                    <li class="dropdown">
+                                <a data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    
+
+                                    <span id="user">{{useron2}}</span>
+
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li>Please verify your email before continuing
+                                    </li>
+                                   
+                                </ul>
+                            </li>
                             {%else%}
                             <li class="dropdown">
                                 <a data-toggle="dropdown">
@@ -634,14 +666,27 @@ Birthday                   </label>
 							</div>
 							
 							
-							<div class="grid-col grid-col-4">
-								<!-- search -->
-								<form action="#" class="search">
-									<input type="text" placeholder="search" autocomplete="off">
-									<button type="submit" class="fa fa-search"></button>
-								</form>
-								<!--/ search -->
-							</div>
+							 <div class="grid-col grid-col-2">
+                <!-- search -->
+                <form action="#" class="search">
+                  <input type="text" placeholder="search" autocomplete="off">
+                  <button type="submit" class="fa fa-search"></button>
+                </form>
+                <!--/ search -->
+              </div>
+               <div class="grid-col grid-col-2 reviewModalCol">
+
+
+              {%if useron == "confirm email"%}
+              <a class="btn btn-default reviewTopMenu" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
+              {%elif useron !=  "none" %}
+            <a class="btn btn-default reviewTopMenu" href = "#reviewModal" data-toggle = "reviewModal">Write a Review</a>
+             {%else%}
+             <a class="btn btn-default reviewTopMenu" href = "#login_sidebar" data-toggle = "reviewModal">Write a Review</a>
+             {%endif%}
+
+                
+              </div>
 							<div class ="grid-col grid-col-3 col-title" style = "background:white">
 							<div class="page-title">
 							
@@ -651,6 +696,7 @@ Birthday                   </label>
 						<!-- <a href="#" class="subscribe subscribe-alt"><i class="fa fa-rss"></i>subscribe to this category</a> -->
 					</div>
 						</div>
+           
 					</div>					
 				</div>
         </div>
@@ -688,8 +734,15 @@ Birthday                   </label>
               <!-- widget socials -->
               <div class = "widget widget-first-row widget-first-row-review widget-cherry">
 
+
+              {%if useron == "confirm email"%}
+              <a class="btn btn-default" href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
+              {%elif useron !=  "none" %}
             <a class="btn btn-default" href = "#reviewModal" data-toggle = "reviewModal">Find and Review a show!</a>
-          
+             {%else%}
+             <a class="btn btn-default" href = "#login_sidebar" data-toggle = "reviewModal">Find and Review a show!</a>
+             {%endif%}
+
                 </div>
                 <!-- <span class="star-rating">
       

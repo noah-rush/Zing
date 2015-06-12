@@ -23,6 +23,43 @@ function autocomp(){
         $('.search2').find('input').val('')
         }
     }); 
+
+    $(document).on("scroll", function(){
+      var searchHeight = $('.search').height() + "px"
+      if($('.search').find('input').val()!=""){
+        if($('.page-header-middle').hasClass("fixed")){
+
+          $('.autocomplete-suggestions').css({"position":"fixed", "top": searchHeight})
+        }else{
+          $('.autocomplete-suggestions').css({"position": "absolute", "top":"190px"})
+
+        }
+      }
+    })
+    $('.search').find('input').on("input", function(){
+      var searchHeight = $('.search').height() + "px"
+      if($('.search').find('input').val()!=""){
+        if($('.page-header-middle').hasClass("fixed")){
+
+          $('.autocomplete-suggestions').css({"position":"fixed", "top": searchHeight})
+        }else{
+          $('.autocomplete-suggestions').css({"position": "absolute", "top":"190px"})
+
+        }
+      }
+    })
+    $('.search').find('input').on("click", function(){
+      var searchHeight = $('.search').height() + "px"
+      if($('.search').find('input').val()!=""){
+        if($('.page-header-middle').hasClass("fixed")){
+
+          $('.autocomplete-suggestions').css({"position":"fixed", "top": searchHeight})
+        }else{
+          $('.autocomplete-suggestions').css({"position": "absolute", "top":"190px"})
+
+        }
+      }
+    })
 }; 
 
 function updateOutsideArticles(){
@@ -634,7 +671,7 @@ $(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text(
 }
 function show_survey2(data){
     
-    $(".widget-popular").html(data)
+    $(".widget-survey").html(data)
     $('a[href="#doneSurvey"]').text("Save");
     $('a[href="#doneSurvey"]').attr("href", "#doneSurvey2")
    $('.surveyDescript').hide();
@@ -1581,6 +1618,13 @@ $(window).hashchange( function test(){
     case "#doneSurvey2":
         donesurvey2();
         break;
+    case "#emailNotYet":
+        $("#emailNotYetModal").modal()
+          $('#emailNotYetModal').on('hidden.bs.modal', function (e) {
+             
+              window.history.back();
+})
+        break;
     case "#reviewModal":
         $("#reviewModal").modal()
           $("input[name='stars']").change(function(){
@@ -1596,20 +1640,21 @@ $(window).hashchange( function test(){
             $('.widget-modal-review .head').html("What did you think of " + e['value'] + "?")
 
             $('.widget-modal-review').slideToggle();
-            $('.widget-modal-review').prepend('<div class="modalShowID">' + e['data'] + '</div>');
+            $('.modalShowID').text( e['data'] );
             $('#reviewModal').animate({"top": "0%"})
 
+         
+            // $('body').append('<div class = "modal-backdrop"></div>')
+        }
+    
+        }
+      }); 
             $('#reviewModal').on('hidden.bs.modal', function (e) {
               $('.widget-modal-review').hide();
               $('.search3').find('input').val("");
               window.history.back();
               $('#reviewModal').animate({"top": "25%"})
 })
-            // $('body').append('<div class = "modal-backdrop"></div>')
-        }
-    
-        }
-      }); 
         break;
 
 
@@ -1631,6 +1676,7 @@ if($('#fromEmail').text() == 'a'){
    $('#emailModal').modal()
 
 }
+
 $(window).hashchange();
 $("#submitshowreview").on("click", submit_review); 
 facebook();
