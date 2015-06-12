@@ -1,3 +1,5 @@
+
+var map
 function mainPageAutoComp(){
    $(document).on("scroll", function(){
       var searchHeight = $('.search').height() + "px"
