@@ -63,7 +63,7 @@ function autocomp(){
         $('.search2').find('input').val('')
         }
     }); 
-    if(window.width()>700){
+    if($(window).width()>700){
 mainPageAutoComp();
 }
    
@@ -961,12 +961,12 @@ function initialize(data) {
     var marker = new google.maps.Marker({
     position: myLatlng,
     map: map,
-    title: $("#showname").text()
+    title: $(".title").text()
     });
     var contentString = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +$("#showname").text() + '</h1>'+
+      '<h1 style = "font-size: 14pt" id="firstHeading" class="firstHeading">' +$(".title").text() + '</h1>'+
       '<div id="bodyContent">'+
       '</div>'+
       '</div>';
