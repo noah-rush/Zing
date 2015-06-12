@@ -955,7 +955,7 @@ def fullschedule():
       year = result['enddate'][:4]
       result['enddate'] = months[month] + day + ", " +  year
  
-    return render_template('fullschedule.html', results=results)
+    return render_template('fullschedule.html', results=results, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 ### api call to yelp from ajax call, gets business data

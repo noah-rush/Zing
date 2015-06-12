@@ -30,14 +30,16 @@ padding:0;
 .fullschedule .showAtVenueTitle h4{
     font-size:1.57em;
     font-weight: bold;
+    padding:5px;
+    text-align:center;
 }
 .fullreviews .showAtVenueTitle h4{
     font-size:1.57em;
     font-weight: bold;
 }
 .fullschedule .showAtVenueTitle{
- width:73%;
-}
+width:100%;
+float:none;}
 .manageOutReviews{
     width:50%;
     margin:auto;
@@ -813,4 +815,27 @@ margin-top:30px;
 .reviewModalCol{
    padding-top: 14px;
   padding-left: 32px;
+}
+.post .grid-cont{
+    background-size:contain;
+}
+.post .cont img{
+    border:0px !important;
+    padding:35px;
+}
+.title{
+    text-align:center;
+}
+.fullschedule .showAtVenueImage{
+    width:100%;
+    float:none;
+}
+.fullschedule .showAtVenueImage img{
+    width:100%;
+    float:none;
+    padding:20px;
+}
+.cont .fullschedule .showAtVenue .field-content{
+    margin-left:0px;
+    padding:10px;
 }
