@@ -63,7 +63,9 @@ function autocomp(){
         $('.search2').find('input').val('')
         }
     }); 
+    if(window.width()>700){
 mainPageAutoComp();
+}
    
 }; 
 
