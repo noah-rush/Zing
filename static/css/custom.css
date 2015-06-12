@@ -799,7 +799,7 @@ text-align:center;
   text-align: center;
 }
 .autocomplete-suggestions{
-    width:350px !important;
+    width:350px;
 }
 .reviewTopMenu{
    background:#B11E24;

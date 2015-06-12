@@ -1,30 +1,5 @@
-//////////////Page Nav/Component Ajax Requests
-function autocomp(){
-
-
- 
-    $('.search').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
-        if(e['type'] == "venue"){
-            window.location.href = '#venue/'+e['data']
-        }else{
-            window.location.href = '#show/'+e['data']
-        }
-    
-        $('.search').find('input').val('')
-        }
-    }); 
-    $('.search2').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
-        if(e['type'] == "venue"){
-            window.location.href = '#venue/'+e['data']
-        }else{
-            window.location.href = '#show/'+e['data']
-        }
-    
-        $('.search2').find('input').val('')
-        }
-    }); 
-
-    $(document).on("scroll", function(){
+function mainPageAutoComp(){
+   $(document).on("scroll", function(){
       var searchHeight = $('.search').height() + "px"
       if($('.search').find('input').val()!=""){
         if($('.page-header-middle').hasClass("fixed")){
@@ -60,6 +35,36 @@ function autocomp(){
         }
       }
     })
+}
+
+
+//////////////Page Nav/Component Ajax Requests
+function autocomp(){
+
+
+ 
+    $('.search').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            window.location.href = '#venue/'+e['data']
+        }else{
+            window.location.href = '#show/'+e['data']
+        }
+    
+        $('.search').find('input').val('')
+        }
+    }); 
+    $('.search2').find('input').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            window.location.href = '#venue/'+e['data']
+        }else{
+            window.location.href = '#show/'+e['data']
+        }
+    
+        $('.search2').find('input').val('')
+        }
+    }); 
+mainPageAutoComp();
+   
 }; 
 
 function updateOutsideArticles(){
@@ -1627,6 +1632,8 @@ $(window).hashchange( function test(){
         break;
     case "#reviewModal":
         $("#reviewModal").modal()
+        $(document).unbind("scroll")
+
           $("input[name='stars']").change(function(){
   stars = this.value;
   
@@ -1650,10 +1657,12 @@ $(window).hashchange( function test(){
         }
       }); 
             $('#reviewModal').on('hidden.bs.modal', function (e) {
+              mainPageAutoComp();
               $('.widget-modal-review').hide();
               $('.search3').find('input').val("");
               window.history.back();
               $('#reviewModal').animate({"top": "25%"})
+
 })
         break;
 
