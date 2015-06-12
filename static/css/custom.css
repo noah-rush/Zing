@@ -745,6 +745,9 @@ text-align:center;
     .widgets-switcher{
         display:none;
     }
+    .showpage .widget-popular{
+        display:none;
+    }
 }
 @media screen and (min-width: 700px) {
   .mobileReviewButton{
