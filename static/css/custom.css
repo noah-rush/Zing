@@ -746,6 +746,11 @@ text-align:center;
         display:none;
     }
 }
+@media screen and (min-width: 700px) {
+  .mobileReviewButton{
+    display:none;
+  }
+}
 .widget-first-row-review{
     text-align:center;
 }
@@ -838,4 +843,14 @@ margin-top:30px;
 .cont .fullschedule .showAtVenue .field-content{
     margin-left:0px;
     padding:10px;
+}
+.showpage .blog-post .cont img {
+  width:100%;
+  height: auto;
+  margin: auto;
+  float: left;
+}
+
+.showpage .blog-post .cont .field-content {
+  margin-left: 0%;
 }

@@ -81,7 +81,7 @@
     </div>
   </div>
 </div>
-			<main class="page-content">
+			<main class="page-content showpage">
 			
 				<div class="grid-cont" style="background-image: url(static/redbackground.png); background-repeat:no-repeat">		
 					<div class="grid-row">
@@ -140,11 +140,21 @@
 								</span>
 								</div>
 								<div class="cont">
+								<div class = "col-md-6">
 									<img src="static/Zingimages/{{showdata['id']}}.jpg" width="710" height="400" alt="">
+									 {%if useron == "confirm email"%}
+              <a class="btn btn-default mobileReviewButton" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
+              {%elif useron !=  "none" %}
+            <a class="btn btn-default reviewTopMenu mobileReviewButton" href = "#reviewModal" data-toggle = "reviewModal">Write a Review</a>
+             {%else%}
+             <a class="btn btn-default reviewTopMenu mobileReviewButton" href = "#login_sidebar" data-toggle = "reviewModal">Write a Review</a>
+             {%endif%}
+             </div><div class ="col-md-6">
 									{{headerDescription}}
 								
 
         							<p>{{description}}</p>
+        							</div>
    						<!-- <p class="caption">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat.</p> -->
 									
 								</div>
