@@ -1,5 +1,40 @@
 
 var map
+function modalReview(){
+ $("#reviewModal").modal()
+        $(document).unbind("scroll")
+
+          $("input[name='stars']").change(function(){
+  stars = this.value;
+  
+});
+         $('.search3').find('input').autocomplete({serviceUrl: '/autocomplete/justshows', onSelect: function(e){
+        if(e['type'] == "venue"){
+            // window.location.href = '#venue/'+e['data']
+        }else{
+            // window.location.href = '#show/'+e['data']
+            $('.search3').find('input').val(e['value'])
+            $('.widget-modal-review .head').html("What did you think of " + e['value'] + "?")
+
+            $('.widget-modal-review').slideToggle();
+            $('.modalShowID').text( e['data'] );
+            $('#reviewModal').animate({"top": "0%"})
+
+         
+            // $('body').append('<div class = "modal-backdrop"></div>')
+        }
+    
+        }
+      }); 
+            $('#reviewModal').on('hidden.bs.modal', function (e) {
+              mainPageAutoComp();
+              $('.widget-modal-review').hide();
+              $('.search3').find('input').val("");
+              $('#reviewModal').animate({"top": "25%"})
+
+})
+}
+
 function mainPageAutoComp(){
    $(document).on("scroll", function(){
       var searchHeight = $('.search').height() + "px"
@@ -876,6 +911,19 @@ function show_password(data){
 function display_show(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
+    $('.WriteReviewMobile').click(function(){
+  modalReview()
+  $('.search3').find('input').val($('#myModalLabel').text());
+  $('.widget-modal-review .head').html("What did you think of " + $('#myModalLabel').text() + "?")
+  $('.widget-modal-review').slideToggle();
+  $('.modalShowID').text($('#showid').text());
+  $('#reviewModal').animate({"top": "0%"})
+
+
+})
+    $('.loginSidebar').click(function(){
+        login_func_sidebar();
+})
     jQuery('.field-content p br:first-child').remove()
     $('a[href="/barrymore-awards/2015/recommended"]').remove();
     $('[data-toggle="tooltip"]').tooltip()
@@ -1640,39 +1688,7 @@ $(window).hashchange( function test(){
 })
         break;
     case "#reviewModal":
-        $("#reviewModal").modal()
-        $(document).unbind("scroll")
-
-          $("input[name='stars']").change(function(){
-  stars = this.value;
-  
-});
-         $('.search3').find('input').autocomplete({serviceUrl: '/autocomplete/justshows', onSelect: function(e){
-        if(e['type'] == "venue"){
-            // window.location.href = '#venue/'+e['data']
-        }else{
-            // window.location.href = '#show/'+e['data']
-            $('.search3').find('input').val(e['value'])
-            $('.widget-modal-review .head').html("What did you think of " + e['value'] + "?")
-
-            $('.widget-modal-review').slideToggle();
-            $('.modalShowID').text( e['data'] );
-            $('#reviewModal').animate({"top": "0%"})
-
-         
-            // $('body').append('<div class = "modal-backdrop"></div>')
-        }
-    
-        }
-      }); 
-            $('#reviewModal').on('hidden.bs.modal', function (e) {
-              mainPageAutoComp();
-              $('.widget-modal-review').hide();
-              $('.search3').find('input').val("");
-              window.history.back();
-              $('#reviewModal').animate({"top": "25%"})
-
-})
+       
         break;
 
 
@@ -1709,6 +1725,21 @@ $('#signinbutton').click(function(){
   signin()
 })
 
+
+$('.loginSidebar').click(function(){
+        login_func_sidebar();
+})
+
+
+
+
+$('.writeReviewModal').click(function(){
+  modalReview()
+})
+
+$('.WriteReviewMobile').click(function(){
+  modalReview()
+})
 // trackScrolling();
 // ads();
   //  $('.slickReviews').slick({

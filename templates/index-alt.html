@@ -433,7 +433,7 @@ Birthday                   </label>
 										
 										{%if useron == "none"%}
                            				<li class= "loginNav">
-											<a data-toggle="modal" data-target="#loginModal" class="alt">Login</a>
+											<a data-toggle="modal" class="alt loginSidebar">Login</a>
 										</li>
                     {%elif useron == "confirm email"%}
                     <li class="dropdown">
@@ -651,8 +651,25 @@ Birthday                   </label>
 												</div>
 											</div>
 										</li>
+                     {%if useron ==  "none" %}
                     <li class = "loginMobile">
                       <a data-toggle="modal" data-target="#loginModal" >login</a>
+                     
+                    
+                    </li>
+                    {%else%}
+<li class = "loginMobile">
+                      <a href="#logout" >logout</a>
+  
+                    </li>
+<li class = "loginMobile">
+                      <a href="#profile" >my account</a>
+                     
+                    </li>
+{%endif%}
+
+                    <li class = "WriteReviewMobile">
+                      <a data-toggle="modal"  >write a review</a>
                      
                        
                          
@@ -678,11 +695,11 @@ Birthday                   </label>
 
 
               {%if useron == "confirm email"%}
-              <a class="btn btn-default reviewTopMenu" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
+              <a class="btn btn-default reviewTopMenu confirmEmailModal"  data-toggle = "reviewModal">Write a Review</a>
               {%elif useron !=  "none" %}
-            <a class="btn btn-default reviewTopMenu" href = "#reviewModal" data-toggle = "reviewModal">Write a Review</a>
+            <a class="btn btn-default reviewTopMenu writeReviewModal"  data-toggle = "reviewModal">Write a Review</a>
              {%else%}
-             <a class="btn btn-default reviewTopMenu" href = "#login_sidebar" data-toggle = "reviewModal">Write a Review</a>
+             <a class="btn btn-default reviewTopMenu loginSidebar" data-toggle = "reviewModal">Write a Review</a>
              {%endif%}
 
                 
@@ -717,7 +734,7 @@ Birthday                   </label>
 								<p style = " text-align: left"><b>Here's how PhillyZing works:</b>
 								<br>
                 <br>
-								<a href = "#login_sidebar">1) Register to be a reviewer. </a>
+								<a class = "loginSidebar">1) Register to be a reviewer. </a>
 								<br>
 
 								2) Share your authentic experience at a live show. 
@@ -738,9 +755,9 @@ Birthday                   </label>
               {%if useron == "confirm email"%}
               <a class="btn btn-default" href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
               {%elif useron !=  "none" %}
-            <a class="btn btn-default" href = "#reviewModal" data-toggle = "reviewModal">Find and Review a show!</a>
+            <a class="btn btn-default writeReviewModal"  data-toggle = "reviewModal">Find and Review a show!</a>
              {%else%}
-             <a class="btn btn-default" href = "#login_sidebar" data-toggle = "reviewModal">Find and Review a show!</a>
+             <a class="btn btn-default loginSidebar"  data-toggle = "reviewModal">Find and Review a show!</a>
              {%endif%}
 
                 </div>
@@ -946,11 +963,13 @@ Birthday                   </label>
 					<div class="grid-row">
 						<div class="grid-col grid-col-12">
 							<!-- blog list -->
-							<div class="blog-list">
+							<div class="blog-list postsList">
 								<div class="head">latest posts</div>
+
+
 								{%for post in blog%}
                 {%if (loop.index+2)%3 == 0%}
-                <div class="grid-row">
+                <div class="grid-row ">
                 {%endif%}
 								{%if loop.index<=6%}
                 <div class="grid-col grid-col-4 ">
@@ -1086,7 +1105,7 @@ Birthday                   </label>
 									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
                                     <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
 
-                  <p>{{post['descript']}}</p>
+                  <p >{{post['descript']}}</p>
 									<div class="bar">
 										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
 										<a href="#post/{{post['id']}}" class="more">more</a>

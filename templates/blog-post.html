@@ -145,9 +145,9 @@
 									 {%if useron == "confirm email"%}
               <a class="btn btn-default mobileReviewButton" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
               {%elif useron !=  "none" %}
-            <a class="btn btn-default reviewTopMenu mobileReviewButton" href = "#reviewModal" data-toggle = "reviewModal">Write a Review</a>
+            <a class="btn btn-default WriteReviewMobile mobileReviewButton" data-toggle = "reviewModal">Write a Review</a>
              {%else%}
-             <a class="btn btn-default reviewTopMenu mobileReviewButton" href = "#login_sidebar" data-toggle = "reviewModal">Write a Review</a>
+             <a class="btn btn-default  mobileReviewButton loginSidebar" data-toggle = "reviewModal">Write a Review</a>
              {%endif%}
              </div><div class ="col-md-6">
 									{{headerDescription}}
@@ -471,7 +471,7 @@
 								<b>Here's how PhillyZing works:</b>
 								<br>
 								<br>
-								<a href = "#login_sidebar">1) Register to be a reviewer. </a>
+								<a class = "loginSidebar">1) Register to be a reviewer. </a>
 								<br>
 
 								2) Share your authentic experience at a live show. 
