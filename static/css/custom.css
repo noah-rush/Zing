@@ -5,6 +5,26 @@
 padding:0;
 
 }
+.venuepage .showAtVenueTitle{
+float:none;
+}
+.venuepage .cont .showAtVenue .field-content{
+  margin-left:0px;
+}
+.showpage .related-posts .pic{
+  width:25%;
+  margin-right: 5%;
+}
+.showpage .related-posts .pic img{
+  width:100%;
+  height: auto;
+}
+.showpage .related-posts  h2{
+  margin-left:0px;
+}
+.showpage .related-posts  h3{
+  margin-left: 0px;
+}
 .post-content img{
   margin-right:20px !important;
   padding:0px !important;
