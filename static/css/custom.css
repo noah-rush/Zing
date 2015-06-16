@@ -789,7 +789,13 @@ text-align:center;
     .post-content{
       width:100%;
     }
+    .bottom-post-content .related-posts{
+      margin-bottom:30px;
+    }
 }
+ .bottom-post-content .related-posts h3{
+    font-size:20px;
+    }
 @media screen and (min-width: 700px) {
   .mobileReviewButton{
     display:none;
