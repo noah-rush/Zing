@@ -160,11 +160,11 @@
              </div>
              <div class ="col-md-6">
              {%if showdata['nowplaying'] == "yes"%}
-             <div class = "nowplaying"> <span class = "glyphicon glyphicon-play"></span> Now Playing</div>
+             <div class = "nowplaying desktopNowPlaying"> <span class = "glyphicon glyphicon-play"></span> Now Playing</div>
              {%elif showdata['nowplaying'] == "future"%}
-             <div class = "future"> <span class = "glyphicon glyphicon-forward"></span> Upcoming</div>
+             <div class = "future desktopNowPlaying"> <span class = "glyphicon glyphicon-forward"></span> Upcoming</div>
               {%elif showdata['nowplaying'] == "past"%}
-             <div class = "past"> <span class = "glyphicon glyphicon-backward"></span> Finished</div>
+             <div class = "past desktopNowPlaying"> <span class = "glyphicon glyphicon-backward"></span> Finished</div>
 
              {%endif%}
 									{{headerDescription}}
