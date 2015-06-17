@@ -61,7 +61,7 @@
 </style>
 <body>
 	
-			<main class="page-content">
+			<main class="page-content venuepage">
 			
 <div class="grid-cont" style="background-image: url(static/redbackground.png); background-repeat:no-repeat">	
 					<div class="grid-row">
@@ -282,7 +282,13 @@
 								<input type="submit" value="submit a reply">
 							</div> -->
 							<!--/ add comment -->
-						</div>
+
+
+
+
+</div>
+
+						
 						
 						<div class="witgets-holder grid-col grid-col-4">
 							<button type="button" id="widgets-switcher" class="widgets-switcher fa fa-chevron-right"></button>
@@ -308,160 +314,50 @@
 					Find Restaurants Nearby
 			</button>
 							</div>
-							<div class="widget widget-socials">
-								<div class="head">Tweets
-								<a target = "_blank" href="{{venuedata['twitter']}}" class="fa fa-twitter"></a></div>
-								<div class="cont">
-								
-
-									{%for tweet in tweets%}
-									<div class = "tweet">
-									<p>{{tweet['text']}}
-										{%for links in tweet['links']%}
-									<a target = "_blank" href = "{{links}}">{{links}}</a>
-									{%endfor%}
-									</p>
-									<p>{{tweet['created_at']}}</p>
-									
-									</div>
-									{%endfor%}
-								</div>
-							</div>
-							<!--/ widget weather -->
-							
-							<!-- widget tags -->
-						<!-- 	<div class="widget widget-tags">
-								<div class="cont"> -->
-									<!-- <a href="#">Lorem</a> -->
-								
 						
-							<!--/ widget tags -->
-							
-							<!-- widget poll -->
-							
-							<!--/ widget poll -->
-							
-							<!-- widget instagram -->
-						<!-- 	<div class="widget widget-instagram">
-								<div class="head">instagram</div>
-								<div class="cont">
-									<ul>
-										<li><a href="#"><img src="http://placehold.it/103x103" width="103" height="103" alt=""></a></li>
-										
-									</ul>
-									<a href="#" class="button">follow</a>
-								</div>
-							</div> --> 
-							<!--/ widget instagram -->
-							
-							<!-- widget comments -->
-						<!-- 	<div class="widget widget-comments">
-								<div class="head">recent comments</div>
-								<div class="cont">
-									<ul>
-										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
-										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
-										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
-										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet</a></li>
-										<li><i class="fa fa-comments"></i>Sarah on <a href="#">Simpletm slou traip loka poni sekaleo</a></li>
-										<li><i class="fa fa-comments"></i>John on <a href="#">Lorem ipsum dolor sit amet consect rej salo</a></li>
-									</ul>
-								</div>
-							</div> -->
-							<!--/ widget comments -->
-							
-							<!-- widget categories -->
-							<!-- <div class="widget widget-categories">
-								<div class="head">categories</div>
-								<div class="cont">
-									<ul>
-										<li><a href="#"><span>129</span>World</a></li>
-										<li><a href="#"><span>82</span>Business</a></li>
-										<li><a href="#"><span>24</span>Finance</a></li>
-										<li><a href="#"><span>48</span>Sports</a></li>
-										<li><a href="#"><span>36</span>Technology</a></li>
-									</ul>
-								</div>
-							</div> -->
-							<!--/ widget categories -->
-							
-							<!-- widget popular -->
-							<!-- <div id="widget-popular" class="widget widget-popular">
-								<div class="head"><a href="#widget-popular-tab1" class="active">popular</a><a href="#widget-popular-tab2">latest</a></div>
-								<div class="cont">
-									<ul id="widget-popular-tab1" class="active">
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
-											<p>124 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
-											<p>68 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
-											<p>124 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
-											<p>68 Comments</p>
-										</li>
-									</ul>
-									<ul id="widget-popular-tab2">
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
-											<p>68 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Simpletm slou traip loka poni sekaleo</a></h4>
-											<p>68 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Lorem loka poni sekaleo ipsum dolor sit amet</a></h4>
-											<p>124 Comments</p>
-										</li>
-										<li>
-											<a href="#" class="pic">
-												<img src="http://placehold.it/50x50" width="50" height="50" alt="">
-											</a>
-											<h4><a href="#">Lorem ipsum dolor sit amet</a></h4>
-											<p>124 Comments</p>
-										</li>
-									</ul>
-								</div>
-							</div> -->
-							<!--/ widget popular -->
-							
-							<!-- widget sponsor -->
-						<!-- 	<div class="widget widget-sponsor">
-								<div class="head">our sponsor</div>
-								<div class="cont">
-									<a href="#"><img src="http://placehold.it/300x250" width="300" height="250" alt=""></a>
-								</div>
-							</div> -->
-							<!--/ widget popular -->
 						</div>
+						</div>
+
+						<div class = "tweetTitle"> <h1>Tweets from {{venuedata['name']}}</h1></div>
+								{% for tweet in tweets%}
+
+{%if loop.index == 1%}
+
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == tweetCount1+2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == tweetCount2+2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+<!-- <a class = "showAtVenueImage" href = "#show/{{showdata['showid']}}" >
+<img  src = "static/Zingimages/{{showdata['showid']}}.jpg" >
+</a> -->
+
+<div class = "tweet">
+<p>
+{%if tweet['media'] ==""%}
+{%else%}
+<img src = "{{tweet['media']}}">
+{%endif%}
+{{tweet['text']}}
+{%for links in tweet['links']%}
+<a target = "_blank" href = "{{links}}">{{links}}</a>
+{%endfor%}
+</p>
+<p>{{tweet['created_at']}}</p>
+									
+</div>
+
+
+
+
+
+
+{%endfor%}
 					</div>
 				</div>
 			<div id="startRating" ></div>

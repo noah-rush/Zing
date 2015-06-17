@@ -54,6 +54,26 @@ app.config.update(dict(
 mail = Mail(app)
 
 ### convenience function for converting date strings to postgres readable dates, not currently in use 
+def resort(infoList):
+  newList = []
+  newList1 = []
+  newList2 = []
+  newList3 = []
+  for i in enumerate(infoList):
+    print i
+    if i[0]%3 == 0:
+      newList1.append(i[1])
+    if i[0]%3 == 1:
+      newList2.append(i[1])
+    if i[0]%3 == 2:
+      newList3.append(i[1])
+  newList = newList1 + newList2 + newList3
+  for i in newList:
+    print i
+  return newList
+
+
+
 
 def convertDate(date):
         strlength = len(date)
@@ -803,6 +823,7 @@ def source():
       for tag in showtags:
         tag['name'] = Markup(tag['name'])
       result['showtags'] = showtags
+    results = resort(results)
     return render_template('fullreviews.html', results=results, title = title, image =img, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
@@ -849,6 +870,7 @@ def fullreviews():
         result['pub-image'] = "pw.jpg"
         result['pub-go'] = "phil-week"
     print len(results)*2/3
+    results = resort(results)
     return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
@@ -896,9 +918,8 @@ def fulltheater():
     return render_template('fulltheatre.html', results=results, count = int(len(results)/2))
 
 
- ###returns a fullschedule of shows--duh
-@app.route('/fullschedule')
-def fullschedule():
+@app.route('/pastshows')
+def pastshows():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     # c.execute("""SELECT Karlshows2.name, SUM(rating), COUNT(rating)
     #              from Karlshows2, ShowRatings4
@@ -906,7 +927,7 @@ def fullschedule():
     #              OVERLAPS (start_date, end_date)
     #              and ShowRatings4.showid = Karlshows2.id
     #              GROUP BY Karlshows2.name""")
-    c.execute("SELECT * FROM ZINGSHOWS ORDER BY start ASC")
+    c.execute("SELECT * FROM ZINGSHOWS WHERE enddate < now() ORDER BY start ASC")
     results = c.fetchall()
     print results
     months = {"01": "January ",
@@ -954,8 +975,72 @@ def fullschedule():
         day = day[1:]
       year = result['enddate'][:4]
       result['enddate'] = months[month] + day + ", " +  year
- 
-    return render_template('fullschedule.html', results=results, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+    results = resort(results)
+    totalCountMod = len(results)%3
+    return render_template('fullschedule.html', results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+
+ ###returns a fullschedule of shows--duh
+
+@app.route('/fullschedule')
+def fullschedule():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    # c.execute("""SELECT Karlshows2.name, SUM(rating), COUNT(rating)
+    #              from Karlshows2, ShowRatings4
+    #              WHERE (CURRENT_DATE, CURRENT_DATE)
+    #              OVERLAPS (start_date, end_date)
+    #              and ShowRatings4.showid = Karlshows2.id
+    #              GROUP BY Karlshows2.name""")
+    c.execute("SELECT * FROM ZINGSHOWS WHERE enddate > now() ORDER BY start ASC")
+    results = c.fetchall()
+    print results
+    months = {"01": "January ",
+              "02": "February ",
+              "03": "March ",
+              "04": "April ",
+              "05": "May ",
+              "06": "June ",
+              "07": "July ", 
+              "08": "August ",
+              "09": "September ", 
+              "10": "October ", 
+              "11": "November ", 
+              "12": "December "}
+    for result in results:
+      result['descript'] = Markup(result['descript'])
+      c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
+                    WHERE showid = %s""", (result['id'],))
+      for a in c.fetchall():
+        if a['sum'] != None:
+          result['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
+      c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      venueResult = c.fetchall()
+      if len(venueResult)>0:
+        venuename = venueResult[0]['name']
+      else:
+        venuename = ""
+      result['venuename'] = Markup(venuename)
+      result['name'] = Markup(result['name'])
+      result['start'] = str(result['start'])
+      result['enddate'] = str(result['enddate'])
+      monthfirst = result['start'].find("-")
+      monthlast = result['start'].rfind("-")
+      month = result['start'][monthfirst+1:monthlast]
+      day = result['start'][monthlast+1:]
+      year = result['start'][:4]
+      if day[0] == "0":
+        day = day[1:]
+      result['start'] = months[month] + day 
+      monthfirst = result['enddate'].find("-")
+      monthlast = result['enddate'].rfind("-")
+      month = result['enddate'][monthfirst+1:monthlast]
+      day = result['enddate'][monthlast+1:]
+      if day[0] == "0":
+        day = day[1:]
+      year = result['enddate'][:4]
+      result['enddate'] = months[month] + day + ", " +  year
+    results = resort(results)
+    totalCountMod = len(results)%3
+    return render_template('fullschedule.html', results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 ### api call to yelp from ajax call, gets business data
@@ -1009,32 +1094,31 @@ def venue():
     twitterHandle = twitterHandle[twitterHandle.rfind("/")+1:]
     print twitterHandle
     tweets = t.statuses.user_timeline(screen_name=twitterHandle)
-
+    tweetsList = []
     for tweet in tweets:
+      tw = {}
+      tw['created_at'] = tweet['created_at']
+      if len(tweet['entities']['urls']) > 0:
+        tw['links'] = []
+        for x in tweet['entities']['urls']:
+          print x['url']
+          tw['links'].append(x['url'])
+      if 'media' in tweet['entities'].keys():
+        print tweet['entities']['media'][0]['media_url']
+        tw['media'] = tweet['entities']['media'][0]['media_url']
+      else:
+        tw['media'] = ""
       tweetText = tweet['text']
       testText = tweetText
-      numHttps = [n for n in xrange(len(tweetText)) if tweetText.find('http', n) == n]
-      print numHttps
-      tweetLinks = []
-      tweet['created_at'] = tweet['created_at'][:tweet['created_at'].rfind("+")]
-      for x in numHttps:
-        link = tweetText[x:]
-        if link.find(" ") > -1:
-          link = link[:1+ link.find(" ")]
-        print link
-        tweetLinks.append(link)
-      for x in numHttps:
-        link = tweetText[x:]
-        if link.find(" ") > -1:
-          link = link[:1+ link.find(" ")]
-          truncate = 1 + link.find(" ") + x 
-          tweetText = tweetText[x:truncate]
-        else: 
-          tweetText = tweetText[:x]
-        
-        tweet['text'] = tweetText
+      http = tweetText[tweetText.find("http"):]
+      http = http[:http.find(" ")]
+      print http
+      tweetText = tweetText.replace(http, "")
+      tw['text'] = tweetText
+      tweetsList.append(tw)
 
-      tweet['links'] = tweetLinks
+
+      
       # while testText.find("http")>0:
       #   truncatenum = testText.find("http")
       #   link = testText[truncatenum:]
@@ -1046,6 +1130,7 @@ def venue():
 
    
       print "\n"
+    tweetsList = resort(tweetsList)
     results['description'] = Markup(results['description'])
     c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
@@ -1061,10 +1146,13 @@ def venue():
       for a in c.fetchall():
         if a['sum'] != None:
           show['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
+
+
     return render_template('blog-post-venue.html', venuedata=results,
                            staff=employees, useron='none',
                            showdata=shows, articles = articles,
-                           tweets = tweets)
+                           tweets = tweetsList, tweetCount1 = int(len(tweets) /3)
+                           , tweetCount2 = int(len(tweets)*2 / 3))
 
 # To A SHOW -- TAKES AN ID, right now connects to twitter but am doing nothing with it 
 @app.route('/show', methods=['GET', 'POST'])
@@ -1075,6 +1163,18 @@ def show():
     show = request.args.get('show')
     c.execute("SELECT * from ZINGSHOWS where id = %s", (show,))
     showdata = c.fetchall()
+    c.execute("SELECT * FROM ZINGSHOWS where id = %s AND enddate>= now() AND start <= now() ", (show,))
+    nowplaying =c.fetchall()
+    if len(nowplaying)>0:
+      showdata[0]['nowplaying'] ="yes"
+    c.execute("SELECT * FROM ZINGSHOWS where id = %s AND start > now() ", (show,))
+    futureshow =c.fetchall()
+    if len(futureshow)>0:
+      showdata[0]['nowplaying'] ="future"
+    c.execute("SELECT * FROM ZINGSHOWS where id = %s AND enddate < now() ", (show,))
+    pastshow =c.fetchall()
+    if len(pastshow)>0:
+      showdata[0]['nowplaying'] ="past"
     tweets = t.search.tweets(q="#"+showdata[0]['name'])
     # print tweets['search_metadata']
     # for tweet in tweets['statuses']:

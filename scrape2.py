@@ -2,12 +2,13 @@
 import urllib2  # the lib that handles the url stuff
 import connectionBoiler
 import psycopg2.extras
+from xlrd import open_workbook
+from xlwt import Workbook
+
 
 conn=connectionBoiler.get_conn()
 
-target_urls = ["http://www.theatrephiladelphia.org/calendar",
-			 "http://www.theatrephiladelphia.org/calendar?page=1",
-			 "http://www.theatrephiladelphia.org/calendar?page=2",
+target_urls = ["http://www.theatrephiladelphia.org/calendar"
 			]
 c = conn.cursor()
 
@@ -21,13 +22,24 @@ image = ""
 running = ""
 startdate = ""
 endate = ""
+book = Workbook()
+sheet1 = book.add_sheet('Zingshows')
+sheet1.write(0,0,'imageLink')
+sheet1.write(0,1,'show')
+sheet1.write(0,2,'startdate')
+sheet1.write(0,3,'enddate')
+sheet1.write(0,4,'producer')
+sheet1.write(0,5,'venue')
+sheet1.write(0,6,'description')
+from flask import Markup
+count = 1
 for target in target_urls:
 	data = urllib2.urlopen(target) # it's a file like object and works just like a file
 	print "\n\n\n\n"
+
 	for line in data: # files are iterable
 		if "event" in line and "field-content" in line and not("More Details" in line)and not("Slideshow_feature" in line): 
-			c.execute("SELECT id from fringeshows where name = %s", (show,))
-			results = c.fetchall()
+			# results = c.fetchall()
 			imagefirst = image.find("<a")
 			imagelast = image.find("imagecache")
 			image = image[imagefirst + 9 :imagelast-9]
@@ -39,11 +51,11 @@ for target in target_urls:
 			endate = running[running.find("-")+2:]
 			
 
-			if endate[len(endate)-4:] == "2014":
-				startdate = startdate + ", 2014"
+			# if endate[len(endate)-4:] == "2014":
+			# 	startdate = startdate + ", 2014"
 
-			if endate[len(endate)-4:] == "2015" and startdate[len(startdate)-4:] != "2014":
-				startdate = startdate + ", 2015"
+			# if endate[len(endate)-4:] == "2015" and startdate[len(startdate)-4:] != "2014":
+			# 	startdate = startdate + ", 2015"
 
 			for num in range(0,9):
 				if len(endate) > 0:
@@ -55,9 +67,17 @@ for target in target_urls:
 			print startdate
 			print endate
 			print producer
-			print address
 			print venue
 			print description
+			if show != "":
+				sheet1.write(count,0,image)
+				sheet1.write(count,1,show)
+				sheet1.write(count,2,startdate)
+				sheet1.write(count,3,endate)
+				sheet1.write(count,4,producer)
+				sheet1.write(count,5,venue)
+				sheet1.write(count,6,description.decode('utf-8'))
+				count = count+1
 			print "_____________________________________________________"
 
 			
@@ -77,13 +97,13 @@ for target in target_urls:
 			#  	# 	venueid = venueid[0][0]
 			# else:
 			#  	# venueid = results[0][0]
-			if len(endate) > 0:
-				c.execute("SELECT id from ZINGSHOWS")
-				ids = c.fetchall()
-				if len(ids) == 0:
-					c.execute("""INSERT INTO ZINGSHOWS(pic, name, descript, producer,  start, enddate) 
-                        	 VALUES(%s,%s,%s,%s,%s,%s,%s)""", (image, show, description, producer, startdate, endate))
-					conn.commit()
+			#if len(endate) > 0:
+				# c.execute("SELECT id from ZINGSHOWS")
+				# ids = c.fetchall()
+				# if len(ids) == 0:
+					# c.execute("""INSERT INTO ZINGSHOWS(pic, name, descript, producer,  start, enddate) 
+     #                    	 VALUES(%s,%s,%s,%s,%s,%s,%s)""", (image, show, description, producer, startdate, endate))
+					# conn.commit()
 			show = line
 			showfirst = show.find(">")
 			show = show[showfirst+1:]
@@ -120,5 +140,6 @@ for target in target_urls:
 			producerlast = producer.find("<")
 			producer = producer[:producerlast]
 
+book.save('zingshows.xls')
 		
 	

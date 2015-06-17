@@ -5,11 +5,11 @@ import psycopg2.extras
 from urllib import urlretrieve
 import urlparse
 import urllib
+from xlrd import open_workbook
+from xlwt import Workbook
 conn=connectionBoiler.get_conn()
 
-target_urls = ["http://www.theatrephiladelphia.org/calendar",
-			 "http://www.theatrephiladelphia.org/calendar?page=1",
-			 "http://www.theatrephiladelphia.org/calendar?page=2",
+target_urls = ["http://www.theatrephiladelphia.org/calendar"
 			]
 c = conn.cursor()
 
@@ -23,6 +23,19 @@ image = ""
 running = ""
 startdate = ""
 endate = ""
+book = Workbook()
+
+sheet1 = book.add_sheet('PhillyVenues')
+sheet1.write(0,0,'name')
+sheet1.write(0,1,'picture')
+sheet1.write(0,2,'description')
+sheet1.write(0,3,'address')
+sheet1.write(0,4,'phone')
+sheet1.write(0,5,'email')
+sheet1.write(0,6,'site')
+sheet1.write(0,7,'fb')
+sheet1.write(0,8,'twitter')
+count = 1
 for target in target_urls:
 	data = urllib2.urlopen(target) # it's a file like object and works just like a file
 	print "\n\n\n\n"
@@ -36,14 +49,15 @@ for target in target_urls:
 			showlast = show.find("<")
 			show = show[:showlast]
 			print show
-			c.execute("SELECT id from ZINGSHOWS where name = %s", (show,))
-			showid = c.fetchall()[0][0]
+			# c.execute("SELECT id from ZINGSHOWS where name = %s", (show,))
+			# showid = c.fetchall()[0][0]
 		if "field-content" in line and "/theatres" in line:
 		
 				name = line[line.find(">")+1:]
 				
 				venuename = name[name.find(">")+1:name.find("span")-14]
 				print venuename
+				sheet1.write(count,0,venuename)
 				href = line[line.find("href")+6: line.rfind('"')]
 				link = "http://www.theatrephiladelphia.org"+href
 				data2 = urllib2.urlopen(link)
@@ -52,6 +66,7 @@ for target in target_urls:
 							desc = data2.next()
 							desc = desc[desc.find(";")+2:desc.find("<br>")]
 							print desc
+							sheet1.write(count,2,desc.decode('utf-8'))
 						if "Contact Inform" in line2:
 							address1 = data2.next()
 							address1 = address1[:address1.find("br")-1]
@@ -59,20 +74,27 @@ for target in target_urls:
 							address2 = address2[:address2.find("br") - 1 ]
 							address = address1 + ", \n" +address2
 							print address
+							sheet1.write(count,3,address)
 						if "Phone" in line2:
 							phone  = line2
 							print phone
+							phone =phone.replace("<br>", "")
+							phone =phone.replace("Phone: ", "")
+							sheet1.write(count,4,phone)
 						if "Email" in line2:
 							email  = line2[line2.find("mailto")+7:line2.find('">')]
 							print email
+							sheet1.write(count,5,email)
 						if "Website" in line2 and "target" in line2:
 							site = line2[line2.find("href") +6:line2.find('">')]
 							print site
+							sheet1.write(count,6,site)
 						if "imagecache-Headshot_Feature_imagelink" in line2:
 						
 							img = line2
 							img = img[img.find("href")+6:img.find("png")+3]
 							print img
+							sheet1.write(count,1,img)
 							urllib.urlretrieve(img, "static/ZingVenueImages/" + venuename + ".png")
 						if "Social Media Links" in line2:
 							fb = data2.next()
@@ -81,19 +103,23 @@ for target in target_urls:
 							twit = twit[twit.find("href")+6: twit.find('">')]
 							print fb
 							print twit
+							sheet1.write(count,7,fb)
+							sheet1.write(count,8,twit)
 							print "\n\n\n\n"
-							c.execute("SELECT id from PHILLYVENUES where name = %s", (venuename,))
-							results = c.fetchall()
-							if len(results) == 0:
-								c.execute("""INSERT INTO PHILLYVENUES(name, address, description,
-											website, phone, email, facebook, twitter) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
-											(venuename, address, desc, site, phone, email, fb, twit))
-								conn.commit()
-							c.execute("SELECT id from PHILLYVENUES where name = %s", (venuename,))
-							venueid = c.fetchall()[0][0]
-							c.execute("UPDATE ZINGSHOWS set venueid = %s where id = %s", (venueid, showid))
-							urllib.urlretrieve(img, "static/ZingVenueImages/" + str(venueid) + ".png")
-							conn.commit()
+				count = count +1
+book.save('zingvenues.xls')
+							# c.execute("SELECT id from PHILLYVENUES where name = %s", (venuename,))
+							# results = c.fetchall()
+							# if len(results) == 0:
+							# 	c.execute("""INSERT INTO PHILLYVENUES(name, address, description,
+							# 				website, phone, email, facebook, twitter) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
+							# 				(venuename, address, desc, site, phone, email, fb, twit))
+							# 	conn.commit()
+							# c.execute("SELECT id from PHILLYVENUES where name = %s", (venuename,))
+							# venueid = c.fetchall()[0][0]
+							# c.execute("UPDATE ZINGSHOWS set venueid = %s where id = %s", (venueid, showid))
+							# urllib.urlretrieve(img, "static/ZingVenueImages/" + str(venueid) + ".png")
+							# conn.commit()
 
 
 

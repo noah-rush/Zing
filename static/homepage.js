@@ -197,6 +197,23 @@ function full_schedule(){
     });
 
 };
+function pastshows(){
+    $.ajax({
+        url: "/pastshows",
+        success: show_post,
+         beforeSend: function() {
+            console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
 function full_theater(){
     $.ajax({
         url: "/fulltheater",
@@ -968,6 +985,7 @@ function display_show(data){
 function display_venue(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
+    jQuery('.showAtVenueDescript').remove()
     jQuery('.field-content p br:first-child').remove()
     $('a[href="/barrymore-awards/2015/recommended"]').remove();
     var address = $("#address").text();
@@ -1095,7 +1113,7 @@ google.maps.event.addListener(marker, 'click', function(){
 function show_post(data){
      $(".page-content").html(data);
          jQuery('.field-content p br:first-child').remove()
-
+jQuery('.fullschedule .showAtVenueDescript').remove()
      jQuery('body').animate({"scrollTop":0})
       $('a[href="/barrymore-awards/2015/recommended"]').remove();
 
@@ -1679,6 +1697,9 @@ $(window).hashchange( function test(){
         break;
     case "#doneSurvey2":
         donesurvey2();
+        break;
+    case "#pastshows":
+        pastshows();
         break;
     case "#emailNotYet":
         $("#emailNotYetModal").modal()

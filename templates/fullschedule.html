@@ -138,21 +138,35 @@
                 </div> -->
                 
                 <div class="cont">
-
                <div class = "fullschedule">
 {% for showdata in results%}
 {%if loop.index == 1%}
 
 <div class = "grid-col-4 venuecol">
 {%endif%}
-{%if loop.index == count1%}
+{%if totalCountMod ==0%}
+{%if loop.index == count1+1%}
 </div>
 <div class = "grid-col-4 venuecol">
 {%endif%}
-{%if loop.index == count2%}
+{%if loop.index == count2+1%}
 </div>
 <div class = "grid-col-4 venuecol">
 {%endif%}
+{%else%}
+{%if loop.index == count1+2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count2+2%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%endif%}
+
+
+
+
 <div class = "showAtVenue">
 
 <a class = "showAtVenueImage" href = "#show/{{showdata['id']}}" >

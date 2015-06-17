@@ -5,6 +5,55 @@
 padding:0;
 
 }
+.nowplaying{
+  background:green;
+  color:white;
+  padding:10px;
+  width:50%;
+  border-radius:5px;
+  font-size:16px;
+  float:right;
+  text-align: center;
+}
+.past{
+  background:black;
+  color:white;
+  padding:10px;
+  width:50%;
+  border-radius:5px;
+  font-size:16px;
+  float:right;
+    text-align: center;
+
+}
+.future{
+  background:blue;
+  color:white;
+  padding:10px;
+  width:50%;
+  border-radius:5px;
+  font-size:16px;
+  float:right;
+    text-align: center;
+
+}
+.fullschedule p.showAtVenueRating{
+  padding:10px;
+  margin-top: 0px;
+}
+.fullschedule a.showAtVenueTitle h4{
+  padding:10px;
+ text-align:left;
+}
+.showpage .title{
+  text-align:left;
+}
+.venuepage .title{
+   text-align:left;
+}
+#map_canvas img{
+  float:none;
+}
 .post-content img{
   margin-right:20px !important;
   padding:0px !important;
@@ -66,6 +115,13 @@ padding:0;
 .fullschedule .showAtVenueTitle{
 width:100%;
 float:none;}
+.venuepage .showAtVenueTitle{
+  width:100%;
+  float:none;
+}
+.venuepage .cont .showAtVenue .field-content{
+  margin-left:0px;
+}
 .manageOutReviews{
     width:50%;
     margin:auto;
@@ -73,6 +129,13 @@ float:none;}
 .manageUserReviews{
     width:50%;
     margin:auto;
+}
+.tweetTitle{
+  background:#56a3d9;
+  color:white;
+  text-align:center;
+  font-size:40px;
+  font-weight:bold;
 }
 .showAtVenue{
   -webkit-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
@@ -83,6 +146,21 @@ box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);
     margin-top:10px;
    overflow:auto;
    box-shadow:;
+}
+.tweet{
+  -webkit-box-shadow: 10px 10px 20px -12px #56a3d9;
+-moz-box-shadow: 10px 10px 20px -12px #56a3d9;
+box-shadow: 10px 10px 20px -12px #56a3d9;
+   border:4px solid #ddd;
+    padding:10px;
+    margin-top:10px;
+   overflow:auto;
+   box-shadow:;
+   color:black !important;
+   text-align:center;
+}
+.tweet img{
+  width:100%;
 }
 /*.cont{
      -webkit-box-shadow: 10px 10px 20px -12px rgba(177,30,35,1);

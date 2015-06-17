@@ -141,22 +141,22 @@
 
               
 <div class = "fullreviews">
-
 {% for showdata in results%}
 
 {%if loop.index == 1%}
 
 <div class = "grid-col-4 venuecol">
 {%endif%}
-{%if loop.index == count1%}
+{%if loop.index == count1 +2%}
 </div>
 <div class = "grid-col-4 venuecol">
 {%endif%}
-{%if loop.index == count2%}
+{%if loop.index == count2+2%}
 </div>
 <div class = "grid-col-4 venuecol">
 {%endif%}
 <div class = "showAtVenue">
+
 <!-- <a class = "showAtVenueImage" href = "#show/{{showdata['showid']}}" >
 <img  src = "static/Zingimages/{{showdata['showid']}}.jpg" >
 </a> -->
