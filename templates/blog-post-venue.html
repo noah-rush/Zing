@@ -341,11 +341,14 @@
 <p>
 {%if tweet['media'] ==""%}
 {%else%}
+
 <img src = "{{tweet['media']}}">
 {%endif%}
 {{tweet['text']}}
 {%for links in tweet['links']%}
+<div class = "twlinks">
 <a target = "_blank" href = "{{links}}">{{links}}</a>
+</div>
 {%endfor%}
 </p>
 <p>{{tweet['created_at']}}</p>
