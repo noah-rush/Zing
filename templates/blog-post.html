@@ -147,7 +147,18 @@
              {%else%}
              <a class="btn btn-default  mobileReviewButton loginSidebar" data-toggle = "reviewModal">Write a Review</a>
              {%endif%}
-             </div><div class ="col-md-6">
+             {%if showdata['nowplaying'] == "yes"%}
+             <div class = "nowplaying"> <span class = "glyphicon glyphicon-play mobileReviewButton"></span> Now Playing</div>
+             {%elif showdata['nowplaying'] == "future"%}
+             <div class = "future"> <span class = "glyphicon glyphicon-forward mobileReviewButton"></span> Upcoming</div>
+              {%elif showdata['nowplaying'] == "past"%}
+             <div class = "past"> <span class = "glyphicon glyphicon-backward mobileReviewButton"></span> Finished</div>
+
+             {%endif%}
+
+
+             </div>
+             <div class ="col-md-6">
              {%if showdata['nowplaying'] == "yes"%}
              <div class = "nowplaying"> <span class = "glyphicon glyphicon-play"></span> Now Playing</div>
              {%elif showdata['nowplaying'] == "future"%}
