@@ -868,6 +868,9 @@ text-align:center;
     padding-top:0px;
     padding-bottom: 0px;
   }
+  .desktopNowPlaying{
+    display:none;
+  }
     .grid-col-4 {
        width:100%;
     }
