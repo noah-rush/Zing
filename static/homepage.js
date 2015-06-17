@@ -1013,10 +1013,11 @@ function display_venue(data){
     url: urlsearch,
     success: initialize
     })
+    google.maps.event.trigger(map, 'resize')
 }
 function initialize(data) {
     // console.log(data);
-    var map_canvas = document.getElementById('map_canvas');
+    var map_canvas = $('#map_canvas')[0];
     var lat = data.results[0]['geometry']['location']['lat'];
     var lng = data.results[0]['geometry']['location']['lng'];
     var map_options = {
@@ -1049,8 +1050,7 @@ function initialize(data) {
     $(window).resize(function() {
         
     });
-    google.maps.event.addListener(map, 'tilesloaded', function(evt) {
-google.maps.event.trigger(map, 'resize');});
+   google.maps.event.trigger(map, 'resize')
     $.ajax({
     url: "/yelp",
     data: {
@@ -1761,6 +1761,10 @@ $('.writeReviewModal').click(function(){
 $('.WriteReviewMobile').click(function(){
   modalReview()
 })
+$(window).resize(function(){
+  console.log("asdsd")
+  google.maps.event.trigger(map_canvas, 'resize')})
+
 // trackScrolling();
 // ads();
   //  $('.slickReviews').slick({

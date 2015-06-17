@@ -5,11 +5,22 @@
 padding:0;
 
 }
+.mobileReviewButton{
+    background:#B11E24;
+    color:white;
+width:48%;
+margin-top:20px;
+margin-bottom:20px;
+font-size:16px;
+padding:10px;
+border-radius:5px;
+
+}
 .nowplaying{
   background:green;
   color:white;
   padding:10px;
-  width:50%;
+  width:48%;
   border-radius:5px;
   font-size:16px;
   float:right;
@@ -845,6 +856,13 @@ text-align:center;
     float:right !important;
     width:15% !important;
 }
+
+
+
+.gmap img
+{
+  max-width: none;
+}
 .reviewManagerHeadline{
     overflow:auto;
 }
@@ -863,10 +881,69 @@ text-align:center;
 .widget{
   font-size:14px;
 }
+@media screen and (max-width: 1000px) {
+.fullvenues{
+    font-size:14px;
+  }
+  .main-nav{
+    font-size:14px;
+  }
+  .autocomplete-suggestions{
+    font-size:14px;
+  }
+  .fullreviews{
+    font-size:14px;
+  }
+  .tweet{
+    font-size:14px;
+  }
+  .reviewCritics{
+    font-size: 14px;
+    margin-bottom:10px;
+  }
+  .blog-post .bar{
+    font-size:14px;
+  }
+    .field-content{
+    font-size:14px;
+  }
+
+  }
 @media screen and (max-width: 700px) {
+  .fullvenues{
+    font-size:14px;
+  }
+  .main-nav{
+    font-size:14px;
+  }
+  .autocomplete-suggestions{
+    font-size:14px;
+  }
+  .fullreviews{
+    font-size:14px;
+  }
+  .tweet{
+    font-size:14px;
+  }
+  .reviewCritics{
+    font-size: 14px;
+    margin-bottom:10px;
+  }
+  .blog-post .bar{
+    font-size:14px;
+  }
+  .venuecol .showAtVenue{
+    margin-top:10px !important;
+  }
+  .reviewsRow{
+    font-size:14px;
+  }
   .venuecol{
     padding-top:0px;
     padding-bottom: 0px;
+  }
+  .field-content{
+    font-size:14px;
   }
   .desktopNowPlaying{
     display:none;
@@ -975,14 +1052,7 @@ border:0px;
 .twlinks{
    color:#B11E24;
 }
-.mobileReviewButton{
-    background:#B11E24;
-    color:white;
 
-margin-top:20px;
-margin-bottom:20px;
-border:0px;
-}
 .page-header-middle.fixed .reviewTopMenu{
     margin-top:0px;
  
