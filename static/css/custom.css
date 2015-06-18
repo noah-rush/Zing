@@ -5,6 +5,9 @@
 padding:0;
 
 }
+ .desktopNowPlaying{
+   margin:10px;
+  }
 .mobileReviewButton{
     background:#B11E24;
     color:white;

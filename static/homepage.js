@@ -1059,6 +1059,9 @@ function initialize(data) {
     },
     success: yelpresults
     })
+    $(window).resize(function(){
+  console.log("asdsd")
+  google.maps.event.trigger(map_canvas, 'resize')})
 }
 function yelpresults(data){
     data = jQuery.parseJSON(data);
@@ -1761,9 +1764,7 @@ $('.writeReviewModal').click(function(){
 $('.WriteReviewMobile').click(function(){
   modalReview()
 })
-$(window).resize(function(){
-  console.log("asdsd")
-  google.maps.event.trigger(map_canvas, 'resize')})
+
 
 // trackScrolling();
 // ads();
