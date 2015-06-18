@@ -114,12 +114,12 @@ $.ajax({
             alert(data)
         },
          beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
   complete: function(){
-    console.log("done")
+    // console.log("done")
      $('#loader').hide();
      homepage();
   }
@@ -185,7 +185,7 @@ function full_schedule(){
         url: "/fullschedule",
         success: show_post,
          beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
@@ -202,7 +202,7 @@ function pastshows(){
         url: "/pastshows",
         success: show_post,
          beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
@@ -219,7 +219,7 @@ function full_theater(){
         url: "/fulltheater",
         success: show_post,
          beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
@@ -236,7 +236,7 @@ function full_reviews(){
         url: "/fullreviews",
         success: show_full_reviews,
          beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
@@ -424,12 +424,12 @@ function manageOutReviews(){
        
         url:"/manageOutReviews",
         beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
   complete: function(){
-    console.log("done")
+    // console.log("done")
      $('#loader').hide();
      show_out_manager();
   },
@@ -480,7 +480,7 @@ function facebook(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
-      console.log("connected")
+      // console.log("connected")
       
     } else if (response.status === 'not_authorized') {
         // console.log("not authorized");
@@ -546,7 +546,7 @@ FB.getLoginStatus(function(response) {
     FB.api('/me', function(response) {
         // console.log('Successful login for: ' + response.name);
         // console.log(JSON.stringify(response));
-        console.log(response)
+        // console.log(response)
         var name = response.first_name;
         // console.log(response.first_name);
         name = response.first_name;
@@ -747,7 +747,7 @@ $(".ui-state-default").each(function(e,val){$(val).text((e+1)+ ") "+$(val).text(
 }
 
 function donesurvey(){
-    console.log("HERERERER")
+    // console.log("HERERERER")
     var preferences = {};
     var yes = false;
     var no = false;
@@ -768,9 +768,9 @@ var commitment
             commitment = this.value;
             
         });
-console.log(yes);
-console.log(no);
-console.log(preferences);
+// console.log(yes);
+// console.log(no);
+// console.log(preferences);
 
 $.ajax({
     url: "/donesurvey",
@@ -788,7 +788,7 @@ $.ajax({
 }
 
 function donesurvey2(){
-    console.log("HERERERER")
+    // console.log("HERERERER")
     var preferences = {};
     var yes = false;
     var no = false;
@@ -809,9 +809,9 @@ var commitment
             commitment = this.value;
             
         });
-console.log(yes);
-console.log(no);
-console.log(preferences);
+// console.log(yes);
+// console.log(no);
+// console.log(preferences);
 
 $.ajax({
     url: "/donesurvey",
@@ -963,7 +963,7 @@ function display_show(data){
 });
     $('#widgets-switcher').on('click', function()
   {
-    console.log(this);
+    // console.log(this);
               $('.widgets-switcher').siblings().slideToggle();
 
     if( $(this).parent().hasClass('hidden') )
@@ -993,7 +993,7 @@ function display_venue(data){
   {
                   $('.widgets-switcher').siblings().slideToggle();
 
-    console.log(this);
+    // console.log(this);
     if( $(this).parent().hasClass('hidden') )
     {
       $(this).removeClass('fa-flip-horizontal');
@@ -1141,7 +1141,7 @@ function show_full_reviews(data){
  jQuery('.showAtVenue').each(function(){
        
         if($(this).find('img').length==0){
-            console.log(this);
+            // console.log(this);
             // $(this).find('.showAtVenueTitle').css({"width":"90%"
             // })
             // $(this).find('.reviewDescript').css({"width":"90%"
@@ -1171,8 +1171,8 @@ function show_out_manager(data){
 $(this).find('.addTag').click(function(){
   var showid = $(this).val()
   var reviewid = $(this).parent().find('.removeOutReview').val()
-  console.log(showid);
-  console.log(reviewid)
+  // console.log(showid);
+  // console.log(reviewid)
   $.ajax({
     url: "/addtag",
     data: {
@@ -1322,7 +1322,7 @@ function show_reviews(){
 
 function pager(){
   var pages = Math.floor($('.blog-list .item').length/6)
-  console.log(Math.floor($('.blog-list .item').length/6))
+  // console.log(Math.floor($('.blog-list .item').length/6))
   for(var i = 0; i<=pages; i++){
     pagenum = i+1
     if(pagenum ==1 ){
@@ -1337,9 +1337,9 @@ function popularItems(){
 var thisweekCount = $('#popuplar-news-1').find('a').length;
 var trendcount = $('#popuplar-news-2').find('a').length;
 var topcount = $('#popuplar-news-3').find('a').length;
-console.log(thisweekCount);
-console.log(trendcount);
-console.log(topcount);
+// console.log(thisweekCount);
+// console.log(trendcount);
+// console.log(topcount);
 if(thisweekCount>3){
   $('.toggle-shows-right').click(function(){
     if($('a[href="#popuplar-news-1"]').hasClass('active')){
@@ -1505,7 +1505,7 @@ function submit_review(){
 	var text = $("#writeuserreview").val();
 	var showname = $("#showname").text();
 	var showid = $('#showid').text();
-  console.log(showid);
+  // console.log(showid);
 	 $.ajax({
 		url: "/submitreview",
 		data: {
@@ -1516,7 +1516,7 @@ function submit_review(){
 			bads: JSON.stringify(bads)
 		},
     beforeSend: function() {
-            console.log("before");
+            // console.log("before");
              $(".widget-popular").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
      $('#loader').show();
   },
@@ -1547,7 +1547,7 @@ $(window).hashchange( function test(){
 	var hash = location.hash;
 	if(hash.substring(0,5) == "#show")
 	{
-		console.log(hash);
+		// console.log(hash);
 		show(hash.substring(6));
 	}
 	if(hash.substring(0,6) == "#venue")
@@ -1562,7 +1562,7 @@ $(window).hashchange( function test(){
     }
      if(hash.substring(0,8) == "#reviews")
     {
-        console.log("here")
+        // console.log("here")
         reviews(hash.substring(9));
     }
      if(hash.substring(0,5) == "#page")
@@ -1573,7 +1573,7 @@ $(window).hashchange( function test(){
         for(var i = 0; i<=pages; i++){
 
           pagenum = i+1
-          console.log(pagenum)
+          // console.log(pagenum)
           $('.page' + pagenum).hide();
         }
         for(var i = 0; i<=pages; i++){
@@ -1608,7 +1608,7 @@ $(window).hashchange( function test(){
 
         
     }
-    console.log(hash);
+    // console.log(hash);
 	switch(hash){
 	case "#venues":
 		show_venues();
@@ -1743,7 +1743,7 @@ $('.page-title').click(function(){
   window.location.href = ""
 })
 $('#signinbutton').click(function(){
-  console.log("signing in")
+  // console.log("signing in")
   signin()
 })
 

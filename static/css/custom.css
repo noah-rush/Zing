@@ -5,6 +5,30 @@
 padding:0;
 
 }
+.widget-first-row-review .btn{
+  background:#B11E24;
+  border:3px solid black;
+  color:white;
+}
+.widget-first-row-review .btn:hover{
+  background:#B11E24;
+  border:3px solid white;
+  color:white !important;
+}
+a:hover{
+  text-decoration: none !important;
+  color:#ddd !important;
+}
+
+.related-posts a:hover{
+  color: #B11E24 !important;
+}
+.bar a:hover{
+  color:gray !important;
+}
+.tooltip{
+  font-size:14px;
+}
 #findRestaurants{
   width:100%;
 }
@@ -231,6 +255,9 @@ float:left;
 .blog-post .cont .field-content p{
     
     text-indent: 0px;
+}
+.blog-post .review a{
+  color:#ffcc39;;
 }
 .cont{
     overflow:auto;
@@ -1052,7 +1079,16 @@ text-align:center;
    background:#B11E24;
     color:white;
 margin-top:30px;
-border:0px;
+ border:1px solid black;
+
+}
+
+.reviewTopMenu:hover{
+ border:1px solid white;
+    background:#B11E24;
+    color:white;
+margin-top:30px;
+]
 
 }
 .twlinks{
