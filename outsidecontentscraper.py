@@ -26,8 +26,7 @@ def update():
 	 			   "http://www.broadstreetreview.com/rss", 
 	 			   "http://phindie.com/feed/", 
 	 			   "http://citypaper.net/rss/arts/", 
-				   "http://feeds.feedburner.com/ShapiroOnTheater", 
-	 			   "http://feeds.feedburner.com/PW-ArtsCulture", 
+				   "http://feeds.feedburner.com/ShapiroOnTheater",  
 	 			   "http://www.philly.com/phillystage.rss"]
 
 
