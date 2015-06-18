@@ -1733,7 +1733,9 @@ if($('#fromEmail').text() == 'a'){
    $('#emailModal').modal()
 
 }
-
+$('$facebookLogin').on("click",function(){
+  facebookLogin();
+})
 $(window).hashchange();
 $("#submitshowreview").on("click", submit_review); 
 facebook();

@@ -307,7 +307,7 @@
             <div id = "somethingWrong" style = "display: none"></div>
             <div class = "signInForm" style = "display:none" >
                 
-                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" href="#facebookLogin" >Log in with Facebook</a>
+                <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default" id = "facebookLogin"  >Log in with Facebook</a>
                 <br>
                 <br>
                 <form class = "form-inline" role = "form" >
@@ -327,7 +327,7 @@
             <div class = "signUpForm">
                 <h4>Sign up to post reviews and earn rewards.</h4>
                 <br>
-                <a style = "background-color: #3B5998; color: white; "   class="btn btn-default" href="#facebookLogin" >Sign up with Facebook</a>
+                <a style = "background-color: #3B5998; color: white; "   class="btn btn-default" id = "facebookLogin" >Sign up with Facebook</a>
                 <br>    
                 Don't worry, we never post without your permission.
                 <br>
@@ -755,7 +755,7 @@ Birthday                   </label>
 
 
               {%if useron == "confirm email"%}
-              <a class="btn btn-default" href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
+              <a class="btn btn-default " href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
               {%elif useron !=  "none" %}
             <a class="btn btn-default writeReviewModal"  data-toggle = "reviewModal">Find and Review a show!</a>
              {%else%}
