@@ -1469,13 +1469,12 @@ var goods = [];
       bads: JSON.stringify(bads)
     },
     beforeSend: function() {
-             $(".widget-modal-review").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
-     $('#loader').show();
+             $('#reviewModal').modal('hide');
   },
 
     success: function(){
     
-      $('#reviewModal').modal('hide');
+      
       show(showid);
     }
   });
