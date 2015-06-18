@@ -693,6 +693,7 @@ function show_modal(data){
 }
 
 function facebookLogin(){
+  console.log("got to there ")
      FB.login(function(response) {
 FB.api('/me', function(response) {
     name = response.first_name;
@@ -1059,7 +1060,7 @@ function initialize(data) {
     },
     success: yelpresults
     })
-    
+
 }
 function yelpresults(data){
     data = jQuery.parseJSON(data);
