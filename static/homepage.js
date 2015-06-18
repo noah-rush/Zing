@@ -1126,6 +1126,10 @@ function show_full_reviews(data){
      $('.fullreviews .reviewDescript img').remove();
      $('.fullreviews .reviewDescript a').attr("target", "_blank");
      jQuery('body').animate({"scrollTop":0})
+     $('.paperlogo[href = "#reviews/philcom"]').css({"width": "30%"})
+     $('.paperlogo[href = "#reviews/city-paper"]').css({"width": "27%"})
+     $('.paperlogo[href = "#reviews/phin"]').css({"width": "32%"})
+     
      // jQuery('.showAtVenue').each(function(){
      //    $(this).prepend($(this).find('img'))
      

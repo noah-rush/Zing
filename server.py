@@ -800,6 +800,10 @@ def source():
       publication = "http://www.philadelphiaweekly.com/arts-and-culture"
       title = "Philadelphia Weekly"
       img = "pw.jpg"
+    if pub == "philcom":
+      publication = "http://www.philly.com/r?19=960&32=3796&7=195487&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fentertainment%2Farts"
+      title = "Philly.com"
+      img = "phillydotcom.png"
     print publication
     c.execute("""SELECT ZINGOUTSIDECONTENT.*
                 FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
@@ -847,10 +851,19 @@ def fullreviews():
                   FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
                   WHERE articleid = %s
                   AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
-      showtags = c.fetchall()
+      showtags = []
+      showTagResults = c.fetchall()
+      for tag in showTagResults:
+        if [tag['name'], tag['id']] in showtags:
+          pass
+        else:
+          showtags.append([tag['name'], tag['id']])
       for tag in showtags:
-        tag['name'] = Markup(tag['name'])
+        tag[0] = Markup(tag[0])
       result['showtags'] = showtags
+      if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=195487&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fentertainment%2Farts":
+        result['pub-image'] = "phillydotcom.png"
+        result['pub-go'] = "philcom"
       if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F":
         result['pub-image'] = "inq.png"
         result['pub-go'] = "inq"
