@@ -28,8 +28,8 @@ sheet1.write(0,0,'imageLink')
 sheet1.write(0,1,'show')
 sheet1.write(0,2,'startdate')
 sheet1.write(0,3,'enddate')
-sheet1.write(0,4,'producer')
-sheet1.write(0,5,'venue')
+sheet1.write(0,4,'venue')
+sheet1.write(0,5,'producer')
 sheet1.write(0,6,'description')
 from flask import Markup
 count = 1
