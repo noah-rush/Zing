@@ -1733,7 +1733,7 @@ if($('#fromEmail').text() == 'a'){
    $('#emailModal').modal()
 
 }
-$('#facebookLogin').on("click",function(){
+$('.facebookLogin').on("click",function(){
   facebookLogin();
 })
 $(window).hashchange();
