@@ -3344,9 +3344,9 @@ a {
 	text-decoration: underline;
 }
 @media screen and (max-width: 979px) { /* pad */
-	.widget-weather img {
+	/*.widget-weather img {
 		display: none;
-	}
+	}*/
 }
 
 

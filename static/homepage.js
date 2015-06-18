@@ -1059,9 +1059,7 @@ function initialize(data) {
     },
     success: yelpresults
     })
-    $(window).resize(function(){
-  console.log("asdsd")
-  google.maps.event.trigger(map_canvas, 'resize')})
+    
 }
 function yelpresults(data){
     data = jQuery.parseJSON(data);
