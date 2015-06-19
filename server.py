@@ -824,6 +824,7 @@ def source():
     for result in results:
       result['pub-go'] = pub
       result['pub-image'] = img
+      result['author'] = Markup(result['author'])
       print result['descript']
       result['descript'] = Markup(result['descript'])
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
@@ -831,9 +832,15 @@ def source():
                   FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
                   WHERE articleid = %s
                   AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
-      showtags = c.fetchall()
+      showtags = []
+      showTagResults = c.fetchall()
+      for tag in showTagResults:
+        if [tag['name'], tag['id']] in showtags:
+          pass
+        else:
+          showtags.append([tag['name'], tag['id']])
       for tag in showtags:
-        tag['name'] = Markup(tag['name'])
+        tag[0] = Markup(tag[0])
       result['showtags'] = showtags
     results = resort(results)
     return render_template('fullreviews.html', results=results, title = title, image =img, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
@@ -851,6 +858,7 @@ def fullreviews():
     results = c.fetchall()
     for result in results:
       result['descript'] = Markup(result['descript'])
+      result['author'] = Markup(result['author'])
       # soup = BeautifulSoup(Markup(result['descript']))
       # result['descript'] = soup.get_text()
       print result['descript']
