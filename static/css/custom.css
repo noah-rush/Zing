@@ -1,3 +1,19 @@
+.dropdown-menu.userOptions{
+  background:#FFCC39
+}
+.dropdown-menu.userOptions a{
+  color:black;
+}
+
+.postSidebarImg{
+  padding-left:20%;
+  padding-right:20%;
+  padding-bottom: 20%;
+  width:100%;
+}
+.user-profile .showAtVenue a{
+  float:none;
+}
 .page-title{
    
    
@@ -5,6 +21,32 @@
 padding:0;
 
 }
+.post .bottom-post-content{
+  background:white;
+}
+.post .grid-col-4{
+  background:#B11E24;
+  padding-left:0px;
+  opacity:0.8;
+}
+.post .grid-col-8{
+  padding-right:0px;
+  
+}
+.post .grid-col-4 h2{
+ color:white;
+ font-size:24px;
+ text-align:center;
+}
+.post .grid-col-4 h3{
+ color:white;
+ font-size:20px;
+ text-align:center;
+ margin-top:20px;
+}
+/*.post .post-col{
+  width:100%;
+}*/
 .widget-first-row-review .btn{
   background:#B11E24;
   border:3px solid black;
@@ -125,7 +167,7 @@ float:none;
   font-size:20px !important;
 }
 .post-content{
-  width:70%;
+  /*width:70%;*/
   
   font-size:16px !important;
   font-family: Montserrat, Helvetica, Arial, sans-serif !important; 
@@ -524,6 +566,11 @@ background:black;
     background:white;
     border:4px solid #B11E24;
 }
+#writeuserreview2{
+    color:black;
+    background:white;
+    border:4px solid #B11E24;
+}
 #submitshowreview{
     margin-top:10px;
     border-color:#6a385b;
@@ -888,6 +935,9 @@ text-align:center;
 .paperlogo{
     float:right !important;
     width:15% ;
+}
+.surveyDescript{
+  text-align: center;
 }
 
 

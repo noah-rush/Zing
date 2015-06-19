@@ -720,7 +720,7 @@ FB.api('/me', function(response) {
 }
 function show_survey(data){
     
-    $("#emailModal").find('#paneltext').html(data);
+    $("#emailModal").find('.panel').html(data);
     $("#emailModal").modal();
     $( "#sortable1").sortable({
         update: function( event, ui ) {
@@ -780,7 +780,7 @@ $.ajax({
             no: no,
             commitment: commitment
             },
-    success:  function(){$("#emailModal").find('#paneltext').html('<h3>Thank you for signing up! Please check your email to verify your account. Welcome to Zing!</h3>');
+    success:  function(){$("#emailModal").find('.panel').html('<h3>Thank you for signing up! Please check your email to verify your account. Welcome to Zing!</h3>');
              
             }
 })
@@ -833,8 +833,7 @@ $.ajax({
   },
     success:  function(){
               if($('.grid-cont').hasClass('user-profile')){
-                window.location.href = "#profile"
-                window.location.reload();
+                profile()
               }
             }
 })
@@ -1232,7 +1231,9 @@ function show_manager(data){
 function show_editor(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
-    autocomp();
+     $('#addtags').autocomplete({serviceUrl: '/autocomplete/justshows', onSelect: function(e){
+          console.log(e)
+      }}); 
     CKEDITOR.replace( 'editor1' );
     CKEDITOR.replace( 'editor2' );
     $('#addtag').on('click', function(e){
@@ -1506,7 +1507,7 @@ function submit_review(){
         	bads.push(this.name)
         });
        
-	var text = $("#writeuserreview").val();
+	var text = $("#writeuserreview2").val();
 	var showname = $("#showname").text();
 	var showid = $('#showid').text();
   // console.log(showid);
@@ -1521,8 +1522,7 @@ function submit_review(){
 		},
     beforeSend: function() {
             // console.log("before");
-             $(".widget-popular").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
-     $('#loader').show();
+         
   },
 
     success: function(){

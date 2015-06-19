@@ -84,51 +84,69 @@
 									<!-- <img src="" width="710" height="400" alt=""> -->
 									<div class = "col-md-12">
 									<h2>User Reviews</h2>
-									{% for review in userreviews %}
-									<div class = "col-md-6">
-									<h3>{{review['name']}}</h3>
 
-									<li class="list-group-item userReview" style = "text-align: left"><p>
 
-<span class="profile-star-rating-x{{loop.index}}">
+{% for review in userreviews %}
+
+{%if loop.index == 1%}
+
+<div class = "grid-col-6 venuecol">
+{%endif%}
+{%if loop.index == count+2%}
+</div>
+<div class = "grid-col-6 venuecol">
+{%endif%}
+
+<div class = "showAtVenue">
+
+
+<a class = "showAtVenueTitle"  href ="#show/{{review['showid']}}" >
+<h4>{{review['name']}}</h4>
+</a>
+
+
+<div class="profile-star-rating-x{{loop.index}}">
   <input type="radio" name="rating" value="1"><i></i>
   <input type="radio" name="rating" value="2"><i></i>
   <input type="radio" name="rating" value="3"><i></i>
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
-</span>
-
+</div>
+<div>
 {{review['reviewtext']}}
-<span style = "color: green">
+</div>
+
+<div style = "color: green">
 							{% for adj in review['goods'] %}
 							
 							{{adj['adjective']}}
-							
+							<br>
 							{%endfor %}
 
-							</span>
+							</div>
 
 							
-								<span style = "color:red">
+								<div style = "color:red">
 							{% for adj in review['bads'] %}
 							
 							{{adj['adjective']}}
-							
+							<br>
 							{%endfor %}
 						
-								</span>
-{{review['to_char']}}</p></li>
-</div>
-{%endfor %}	
+								</div>
+{{review['to_char']}}</p>
 </div>
 
-        							<p></p>
-   						<!-- <p class="caption">This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat.</p> -->
-									
-								</div>
-								</div>
-								</div>
-								
+{%endfor%}
+
+</div>
+
+
+
+</div>
+</div>
+</div>
+</div>
 								
 					<div class="witgets-holder grid-col grid-col-4">
 						

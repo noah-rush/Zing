@@ -365,6 +365,7 @@ def post():
   c.execute("SELECT * from BLOGPOSTS where id = %s", (articleid,))
   article = c.fetchall()
   article = article[0]
+  print article
   c.execute("SELECT * FROM BLOGPOSTS where id = %s",(previd,))
   prevarticle = c.fetchall()
   if len(prevarticle) > 0:
@@ -374,6 +375,7 @@ def post():
 
   c.execute("SELECT * FROM BLOGPOSTS where id = %s",(nextid,))
   nextarticle = c.fetchall()
+
   if len(nextarticle) > 0:
     nextarticle = nextarticle[0]
   else:
@@ -400,11 +402,17 @@ def post():
   # text.close()
   c.execute("SELECT * from BLOGPOSTS ORDER BY id DESC")
   blog = c.fetchall()
+  c.execute("""SELECT * FROM ZINGARTICLESHOWTAGS, ZINGSHOWS 
+                WHERE articleid =%s and 
+                 ZINGARTICLESHOWTAGS.showid = ZINGSHOWS.id""",
+                  (articleid,))
+  showtags = c.fetchall()
   return render_template("post.html", article = article, 
                           nextarticle = nextarticle,
                           prevarticle = prevarticle,
                           firstparagraph = firstparagraph, 
-                          blog = blog)
+                          blog = blog,
+                          showtags = showtags)
 
 
 ###route for uploading photos in editor
@@ -1456,9 +1464,11 @@ def profile():
                 """, (session['username'],review['showid']))
       review['goods'] = c.fetchall()
       c.execute("""SELECT *
-                from ZINGBADADJECTIVES
+                from ZINGBADADJECTIVES 
                 where userid = %s
-                """, (session['username'],))
+                and showid = %s
+                GROUP BY showid, id
+                """, (session['username'],review['showid']))
       review['bads'] = c.fetchall()
       review['rating'] = convert_to_percent(float(review['rating']))
       date = review['to_char']
@@ -1476,7 +1486,8 @@ def profile():
                            userreviews=userreviews,
                            sawthis=sawthis,
                            results=results,
-                           likes = likes)
+                           likes = likes,
+                            count = int(len(userreviews)/2))
 
 ###ajax route for search box autocomplete
 @app.route('/autocomplete/allshows', methods=['GET', 'POST'] )
@@ -1492,10 +1503,10 @@ def autocomplete():
   results2 = c.fetchall()
   jsonresults = []
   for result in results:
-     d = {'value': result['name'], 'data': result['id'], 'type':"show"}
+     d = {'value': Markup(result['name']), 'data': result['id'], 'type':"show"}
      jsonresults.append(d)
   for result2 in results2:
-     d = {'value': result2['name'], 'data': result2['id'], "type":"venue"}
+     d = {'value': Markup(result2['name']), 'data': result2['id'], "type":"venue"}
      jsonresults.append(d)
 
   return jsonify(query = "Unit", suggestions = jsonresults)
