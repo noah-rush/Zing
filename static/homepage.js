@@ -1,5 +1,20 @@
 
 var map
+function blog(){
+$.ajax({
+        url:"/blog",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  $('#loader').hide();
+   
+  }
+    })
+}
 function modalReview(){
  $("#reviewModal").modal()
         $(document).unbind("scroll")
@@ -1113,6 +1128,7 @@ google.maps.event.addListener(marker, 'click', function(){
 }
 function show_post(data){
      $(".page-content").html(data);
+     pager()
          jQuery('.field-content p br:first-child').remove()
 jQuery('.fullschedule .showAtVenueDescript').remove()
      jQuery('body').animate({"scrollTop":0})
@@ -1590,7 +1606,7 @@ $(window).hashchange( function test(){
         }
         
         $(".page" + page).show()
-        jQuery('body').animate({"scrollTop":jQuery('#popuplar-news-1').offset().top + $('.fixed').height()})
+        jQuery('body').animate({"scrollTop":jQuery('.postsList .head').offset().top - $('.fixed').height()})
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
    
@@ -1705,6 +1721,9 @@ $(window).hashchange( function test(){
         break;
     case "#pastshows":
         pastshows();
+        break;
+    case "#blog":
+        blog();
         break;
     case "#emailNotYet":
         $("#emailNotYetModal").modal()

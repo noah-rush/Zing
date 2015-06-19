@@ -347,6 +347,12 @@ def index():
    
 #   print blog
 #   return render_template("newHomepage.html", blog = blog)
+@app.route('/blog', methods=['GET', 'POST'])
+def blog():
+  blog = allposts()
+  return render_template('blog-all.html',blog = blog)
+
+
 
 @app.route('/updateArticles', methods=['GET', 'POST'])
 def update():
