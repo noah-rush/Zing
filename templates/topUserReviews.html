@@ -1,0 +1,199 @@
+<style>
+
+
+{%for showdata in results%}
+{%set outer_loop = loop.index%}
+{%for tags in showdata[0]%}
+
+
+.total-star-rating-x{{outer_loop}}-{{loop.index}} {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 75px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.total-star-rating-x{{outer_loop}}-{{loop.index}} i {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: {{tags['rating']}}%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+
+.total-star-rating-x{{outer_loop}}-{{loop.index}} input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+
+{%endfor%}
+{%endfor%}
+
+
+
+</style>
+<!DOCTYPE html>
+<style type="text/css">
+
+#startRating{
+  display:none;
+}
+#yourRating{
+  display:none;
+}
+
+.producer{
+  font-size: 14pt;
+  text-align: right;
+  float:right;
+}
+.producer1{
+  font-size: 14pt;
+  text-align: right;
+  
+}
+{%for show in results%}
+.total-star-rating-{{loop.index}} {
+        font-size: 0;
+        white-space: nowrap;
+        display: inline-block;
+        width: 125px;
+        height: 25px;
+        overflow: hidden;
+        position: relative;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+        color:#ffcc39;
+    }
+    .total-star-rating-{{loop.index}} i {
+        opacity: 1;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: {{show['rating']}}%;
+        z-index: 1;
+        background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+        background-size: contain;
+    }
+    .total-star-rating-{{loop.index}} input {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        opacity: 0;
+        display: inline-block;
+        width: 20%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+        position: relative;
+    }
+
+{%endfor%}
+
+
+</style>
+<body>
+  
+      <main class="page-content">
+      
+        <div class="grid-cont" style="background-image: url(static/redbackground.png);">    
+          <div class="grid-row">
+              <!-- blog post -->
+              <div class="blog-post">
+               <h1 class="title">{{title}}</h1>
+                
+         <!--        <div class="bar">
+            
+                </div> -->
+                
+                <div class="cont">
+
+              
+<div class = "topUserReviews">
+{% for showdata in results%}
+{%if loop.index == 1%}
+
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count1 +1%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+{%if loop.index == count2+1%}
+</div>
+<div class = "grid-col-4 venuecol">
+{%endif%}
+<div class = "showAtVenue">
+
+<!-- <a class = "showAtVenueImage" href = "#show/{{showdata['showid']}}" >
+<img  src = "static/Zingimages/{{showdata['showid']}}.jpg" >
+</a> -->
+
+<div class = "showAtVenueTitle" >
+<h4>{{showdata[1]['first']}} {{showdata[1]['last']}}</h4>
+</div>
+
+<!-- {%if showdata['author'] != "unspecified"%}
+<div class = "reviewAuthor">
+<h5>{{showdata['author']}}</h5>
+</div> -->
+{%endif%}
+<div class = "reviewTags">
+{%set outer_loop = loop.index%}
+{% for tags in showdata[0]%}
+
+<div ="userreview">
+
+<span class="total-star-rating-x{{outer_loop}}-{{loop.index}}">
+                <input type="radio" name="rating" value="1"><i></i>
+                <input type="radio" name="rating" value="2"><i></i>
+                <input type="radio" name="rating" value="3"><i></i>
+                <input type="radio" name="rating" value="4"><i></i>
+                <input type="radio" name="rating" value="5"><i></i>
+                </span>
+<a href = "#show/{{tags['showid']}}">
+
+{{tags['showname']}}
+
+</a>
+<p>{{tags['reviewtext']}}</p>
+<hr>
+</div>
+{%endfor%}
+</div>
+
+
+<!-- <a class = "paperlogo" href = "#reviews/{{showdata['pub-go']}}">
+<img   src = "static/logos/{{showdata['pub-image']}}" >
+</a> -->
+</div>
+
+{%endfor%}
+
+
+</div>
+</div>
+</div>
+</div>
+      
+              </div>              
+
+
+

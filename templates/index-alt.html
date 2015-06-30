@@ -159,6 +159,10 @@
 <div style = "display:none" id = "fromEmail">a</div>
 {%endif%}
 
+{%if password%}
+<div style = "display:none" id = "fromPassword">a</div>
+{%endif%}
+
 <div class="modal fade" id="emailNotYetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -166,7 +170,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <div id = "emailVerif" style = "text-align: center" class="panel panel-default">
          <h3>          Please check your email to verify your identity before you can review shows. 
-</h3>
+          </h3>
         </div>
     </div>
 </div>
@@ -180,6 +184,18 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <div id = "emailVerif" style = "text-align: center" class="panel panel-default">
          <h3>Thank you for verifying your account. Welcome to Zing!</h3>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="frompasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div id = "emailVerif" style = "text-align: center" class="">
+         <h3>Your password has been updated.</h3>
         </div>
     </div>
 </div>
@@ -284,7 +300,8 @@
     <input type="radio" name="stars" value="4"><i></i>
     <input type="radio" name="stars" value="5"><i></i>
     </span>
-
+                    <div class = "private">
+                    <input type = "checkbox" name = "private"> Keep Review Private? Your Rating will be added to the overall tally.</input></div>
 
        <div><button onClick="modal_submit_review()" type="button" id = "modalsubmitshowreview"  class="btn btn-primary" >Submit Review</button></div>
 
@@ -300,7 +317,7 @@
     <div class="modal-content">
       <div class="modal-body">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <div  style = "text-align: center" class="panel panel-default">
+        <div  style = "text-align: center" >
           <br>
             <ul class="nav nav-pills">
                 <li role="presentation" class="active" id = "signuptrigger"><a > <h2 >Sign up</h2></a></li>
@@ -314,7 +331,7 @@
                 <a style = "background-color: #3B5998; color: white; \"  class="btn btn-default facebookLogin" id = ""  >Log in with Facebook</a>
                 <br>
                 <br>
-                <form class = "form-inline" role = "form" >
+                <form   role = "form" >
                     <div class="form-group email-form" style = "">
                         <input  type="text"  style = "" id = "loginEmail" class="form-control" placeholder="Email">
                     </div>
@@ -326,6 +343,7 @@
                         <br>
                         <a style = ""  id = "signinbutton" class="btn btn-default"  >Sign in</a>
                     </div>
+                    <a class = "forgotPassword" href ="#forgot"> Forgot Password?</a>
                 </form>
             </div>
             <div class = "signUpForm">
@@ -523,7 +541,7 @@ Birthday                   </label>
 						<div class="grid-col grid-col-2 logo-col">
 						<a href="/" class="logo logo-alt logo-fixed"><img src="static/chair.png" width="68" height="61" alt=""></a>
 						</div>							
-							<div class="grid-col grid-col-5">
+							<div class="grid-col grid-col-4">
 								<!-- main nav -->
 								<nav id="main-nav" class="main-nav">
 									<a href="#" class="switcher"><i class="fa fa-bars"></i></a>
@@ -535,9 +553,11 @@ Birthday                   </label>
 													<div class="grid-col grid-col-3">
 														<ul class="subnav">
 															
-															<li><a href="#fullschedule">Full Schedule</a></li>
+															<li><a href="#fullschedule">Shows Tonight</a></li>
+                              <li><a href="#thisweekend">This Weekend</a></li>
                               <li><a href="#pastshows">Past Shows</a></li>
                               <li><a href="#fringe">Fringe Festival</a></li>
+                              <li><a href="#fringe">Cheap Shows</a></li>
 															<li><a href="#">Comedy</a></li>
 															<li><a href="#">Experimental</a></li>
 															<li><a href="#">Drama</a></li>
@@ -572,7 +592,7 @@ Birthday                   </label>
 												</div>
 											</div>
 										</li>
-										<li class="has-dropdown">
+					<!-- 					<li class="has-dropdown">
 											<a href="#fulltheatres">theatres</a>
 											<div class="dropdown dropdown-large">
 												<div class="grid-row">
@@ -613,14 +633,16 @@ Birthday                   </label>
 													</div>
 												</div>
 											</div>
-										</li>
+										</li> -->
 										<li class="has-dropdown">
 											<a href="#fullreviews">reviews</a>
 											<div class="dropdown dropdown-large">
 												<div class="grid-row">
-													<div class="grid-col grid-col-3">
+													<div class="grid-col grid-col-5">
 														<ul class="subnav">
-															
+															<li><a href="#byshow">By Show</a></li>
+                              <li><a href="#byreviewer">By Reviewers</a></li>
+                              <li><a href="#byusers">By Top PhillyZing Users</a></li>
 															<li><a href="#reviews/inq">Inquirer Theatre Blog</a></li>
 															<li><a href="#reviews/phin">Phindie</a></li>
 															<li><a href="#reviews/how-shap">Howard Shapiro's Theatre Blog</a></li>
@@ -631,7 +653,7 @@ Birthday                   </label>
 															
 														</ul>
 													</div>
-													<div class="grid-col grid-col-9">
+													<div class="grid-col grid-col-7">
 														<div class="latest">
 															<p>
 																<a href="#" class="fa fa-chevron-right next"></a>
@@ -690,7 +712,7 @@ Birthday                   </label>
 							</div>
 							
 							
-							 <div class="grid-col grid-col-2">
+							 <div class="grid-col grid-col-3">
                 <!-- search -->
                 <form action="#" class="search">
                   <input type="text" placeholder="search" autocomplete="off">
@@ -735,58 +757,7 @@ Birthday                   </label>
 				<div class="grid-cont">
 					<!-- featured news -->
 					<div class="grid-row">
-					<div class="grid-col grid-col-3">
-					<div class="widget-first-row widget  widget-descript">
-								<div class="head">Welcome</div>
-								<p style = " text-align: left"><b>Here's how PhillyZing works:</b>
-								<br>
-                <br>
-								<a class = "loginSidebar">1) Register to be a reviewer. </a>
-								<br>
-
-								2) Share your authentic experience at a live show. 
-								<br>
-
-								3) We count your review, and the best shows rise to the top. 
-								</p>
-                <br>
-                <br>
-                <a style = "float:right" data-toggle = "helpModal">... Need more help??</a>
-
-						</div>
-
-              <!-- widget socials -->
-              <div class = "widget widget-first-row widget-first-row-review widget-cherry">
-
-
-              {%if useron == "confirm email"%}
-              <a class="btn btn-default " href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
-              {%elif useron !=  "none" %}
-            <a class="btn btn-default writeReviewModal"  data-toggle = "reviewModal">Find and Review a show!</a>
-             {%else%}
-             <a class="btn btn-default loginSidebar"  data-toggle = "reviewModal">Find and Review a show!</a>
-             {%endif%}
-
-                </div>
-                <!-- <span class="star-rating">
-      
-      
-                  <input type="radio" name="stars" value="1"><i></i>
-                  <input type="radio" name="stars" value="2"><i></i>
-                  <input type="radio" name="stars" value="3"><i></i>
-                  <input type="radio" name="stars" value="4"><i></i>
-                  <input type="radio" name="stars" value="5"><i></i>
-                  </span>
-    
-              
-                  <a href="#" class=" submitRating btn btn-success glyphicon glyphicon-ok"></a>
-                  
-
-                <a class = "btn btn-success reviewSubmit" href="#">Write a Review!<span class = "glyphicon glyphicon-pencil"></span></a> -->
-                  
-                  
-                 
-</div>
+				
    
               <div class="col-md-3 col-xs-12 col-sm-3">
 
@@ -808,12 +779,22 @@ Birthday                   </label>
 											<div class="col-md-3 col-xs-12 col-sm-3">
 
 						<div class="widget widget-first-row  widget-glance">
-								<div class="head">This Week</div>
+								<div class="head">Today</div>
 							
 								{%for thisweek in thisweek%}
 							<a href="#show/{{thisweek['id']}}">
 								
-								<div class = "showsInfo" ><span class ="percent" >{{thisweek['rating']}}% -  </span>   <span class = "showInfoName" >{{thisweek['name']}}</span></div>
+								<div class = "showsInfo" ><span class ="percent" >{{thisweek['rating']}}% -  </span>   <span class = "showInfoName" >{{thisweek['name']}}
+                <div class = "address">
+                {{thisweek['venue']}}
+                </div>
+                 <div class = "address">
+                {{thisweek['address']}}
+
+                </div>
+                
+                </span>
+                </div>
 							</a>
 							{%endfor%}
 
@@ -821,7 +802,7 @@ Birthday                   </label>
 						</div>
               <div class="col-md-3 col-xs-12 col-sm-3">
             <div class="widget widget-first-row  widget-glance">
-                <div class="head">Trending</div>
+                <div class="head">Best By Genre</div>
               
                 {%for trend in trending%}
               <a href="#show/{{trend['id']}}">
@@ -832,6 +813,65 @@ Birthday                   </label>
 
             </div>
             </div>
+              <div class="grid-col grid-col-3">
+          <div class="widget-first-row widget  widget-descript">
+                <div class="head">Welcome</div>
+                <p style = " text-align: left"><b>Here's how PhillyZing works:</b>
+                <br>
+                <br>
+                <a class = "loginSidebar">1) Register to be a reviewer. </a>
+                <br>
+
+                2) Share your authentic experience at a live show. 
+                <br>
+
+                3) We count your review, and the best shows rise to the top. 
+                </p>
+                <br>
+                <br>
+                <a style = "float:right" data-toggle = "helpModal">... Need more help??</a>
+
+            </div>
+
+              <!-- widget socials -->
+              <div class = "widget widget-first-row widget-first-row-review widget-cherry">
+
+
+              {%if useron == "confirm email"%}
+              <a class="btn btn-default " href = "#emailNotYet" data-toggle = "reviewModal">Find and Review a show!</a>
+              {%elif useron !=  "none" %}
+            <a class="btn btn-default writeReviewModal"  data-toggle = "reviewModal">Find and Review a show!</a>
+             {%else%}
+             <a class="btn btn-default loginSidebar"  data-toggle = "reviewModal">Find and Review a show!</a>
+             {%endif%}
+
+                </div>
+                 <div class="widget-first-row widget  widget-descript">
+                <div class="head">Join the PhillyZing Email List</div>
+              
+                <input class = "emailList">
+                <a class="btn btn-default joinEmailList ">Join</a>
+
+            </div>
+                <!-- <span class="star-rating">
+      
+      
+                  <input type="radio" name="stars" value="1"><i></i>
+                  <input type="radio" name="stars" value="2"><i></i>
+                  <input type="radio" name="stars" value="3"><i></i>
+                  <input type="radio" name="stars" value="4"><i></i>
+                  <input type="radio" name="stars" value="5"><i></i>
+                  </span>
+    
+              
+                  <a href="#" class=" submitRating btn btn-success glyphicon glyphicon-ok"></a>
+                  
+
+                <a class = "btn btn-success reviewSubmit" href="#">Write a Review!<span class = "glyphicon glyphicon-pencil"></span></a> -->
+                  
+                  
+                 
+</div>
 										
 											<!-- <div class="col-md-2 col-xs-6 col-sm-2">
 
@@ -868,7 +908,7 @@ Birthday                   </label>
 					<!--/ featured news -->
 					
 					<!-- popuplar news -->
-					<div id="popular-news" class="popular-news">
+					<!-- <div id="popular-news" class="popular-news">
 						<div class="tabs">
 							<a href="#popuplar-news-1" class="active">this week</a>
 							<a href="#popuplar-news-2">trending</a>
@@ -964,7 +1004,7 @@ Birthday                   </label>
 							{%endfor%}
 						</div>
 						<a  class="fa fa-chevron-right toggle-shows-right"></a>
-					</div>
+					</div> -->
 					<!--/ popuplar news -->
 					
 					<div class="grid-row">
@@ -1141,6 +1181,27 @@ Birthday                   </label>
 								
 								
 							</div>
+
+              <div class="grid-row">
+            <div class="grid-col grid-col-12">
+              <!-- blog list -->
+              <div class="blog-list postsList">
+                <div class="head">videos & trailers</div>
+
+
+              
+              <!-- pager -->
+              </div>
+              </div>
+              </div>
+           
+              <div class="videopager">
+
+                <a href="#" class="prev fa fa-chevron-left"></a>
+                <a href="#videopage2" class="next fa fa-chevron-right"></a>
+              
+                
+                </div>
 							<!--/ pager -->
 						
 						<!-- </div> -->

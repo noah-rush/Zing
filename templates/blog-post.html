@@ -161,8 +161,10 @@
              <div class ="col-md-6">
              {%if showdata['nowplaying'] == "yes"%}
              <div class = "nowplaying desktopNowPlaying"> <span class = "glyphicon glyphicon-play"></span> Now Playing</div>
+              <div class = "desktopGetTickets"><a href ="{{venue[0]['tix']}}"><span class = "glyphicon glyphicon-usd"></span> Get Tickets</a></div>
              {%elif showdata['nowplaying'] == "future"%}
              <div class = "future desktopNowPlaying"> <span class = "glyphicon glyphicon-forward"></span> Upcoming</div>
+             <div class = "desktopGetTickets"><a href ="{{venue[0]['tix']}}"><span class = "glyphicon glyphicon-usd"></span> Get Tickets</a></div>
               {%elif showdata['nowplaying'] == "past"%}
              <div class = "past desktopNowPlaying"> <span class = "glyphicon glyphicon-backward"></span> Finished</div>
 
@@ -467,7 +469,7 @@
     Your rating?
     <br>
     <br>
-    <span class="star-rating">
+    <div class="star-rating">
       
       
     <input type="radio" name="stars" value="1"><i></i>
@@ -475,8 +477,9 @@
     <input type="radio" name="stars" value="3"><i></i>
     <input type="radio" name="stars" value="4"><i></i>
     <input type="radio" name="stars" value="5"><i></i>
-    </span>
+    </div>
 
+            <div class = "private"><input type = "checkbox" name = "private"> Keep Review Private? Your Rating will be added to the overall tally.</input></div>
 
        <div><button onClick="submit_review()" type="button" id = "submitshowreview"  href = "#submitreview" class="btn btn-primary" >Submit Review</button></div>
 
@@ -515,8 +518,8 @@
 								<a href = "#venue/{{venue[0]['id']}}" ><div class="head">{{venue[0]['name']}}</div></a>
 								<div class="cont">
 									<img src="static/ZingVenueImages/{{venue[0]['id']}}.png" width="104" height="91" alt="">
-									<div >{{venue[0]['description']}}</div>
-									<p><br>{{venue[0]['address']}}<br><br><a target="_blank" href = "{{venue[0]['website']}}"> {{venue[0]['website']}}</a></p>
+									<div >{{venue[0]['descript']}}</div>
+									<!-- <p><br>{{venue[0]['address']}}<br><br><a target="_blank" href = "{{venue[0]['site']}}"> {{venue[0]['website']}}</a></p> -->
 									
 								
 								</div>

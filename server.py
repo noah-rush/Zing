@@ -111,6 +111,7 @@ def trending():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("""SELECT ZINGSHOWS.name,Zingshows.id, SUM(rating), COUNT(rating) from ZINGRATINGS, ZINGSHOWS
                 WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.name, ZINGSHOWS.id ORDER BY COUNT DESC""")
+
   results = c.fetchall()
   sortedResults = []
   for result in results:
@@ -123,7 +124,11 @@ def trending():
 
 def toprated():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid GROUP BY ZINGSHOWS.id,ZINGSHOWS.name")
+  c.execute("""SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) 
+    from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid
+    and enddate > now()
+    and start < now() 
+    GROUP BY ZINGSHOWS.id,ZINGSHOWS.name""")
   results = c.fetchall()
   sortedResults = []
   for result in results:
@@ -138,7 +143,7 @@ def toprated():
 
 def comingsoon():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("""SELECT name, id
+    c.execute("""SELECT name, id, venueid
                  from ZINGSHOWS
                  WHERE (start,enddate)
                  OVERLAPS (CURRENT_DATE, CURRENT_DATE)
@@ -154,6 +159,10 @@ def comingsoon():
         rating = float(ratings[0]['sum'])/float(ratings[0]['count'])
         rating = int(convert_to_percent(rating))
       result["rating"] = rating
+      c.execute("SELECT address, name FROM THEATRES WHERE id = %s",(result['venueid'], ))
+      venuedata = c.fetchall()[0]
+      result["address"] = venuedata['address'] 
+      result["venue"] = venuedata['name'] 
     return results
 
 def allposts():
@@ -167,7 +176,7 @@ def allposts():
 
 def venueMenu():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC LIMIT 10")
+  c.execute("SELECT Theatres.* FROM Theatres, ZINGSHOWS WHERE ZINGSHOWS.venueid = Theatres.id GROUP BY Theatres.id ORDER BY THEATRES.id ASC LIMIT 10")
   venues = c.fetchall()
   for venue in venues:
     venue['name'] = Markup(venue['name'])
@@ -184,6 +193,30 @@ def reviewMenu():
   results = c.fetchall()
   print results
   return results
+
+@app.route('/forgot', methods=['GET','POST'])
+def forgot():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  email = request.args.get('email')
+  c.execute("SELECT * FROM USERS WHERE email = %s", (email,))
+  user = c.fetchall()
+  if len(user) > 0: 
+    token = ts.dumps(email, salt='pass-reset-key')
+    confirm_url = url_for(
+            'reset_pass',
+            token=token,
+            _external=True)
+    html = render_template(
+            'email/resetpass.html',
+            confirm_url=confirm_url)
+    msg = Message("Reset your password",
+                  sender="info@phillyzing.com",
+                  recipients=[email])
+    msg.html = html
+    mail.send(msg)
+
+  print email
+  return ""
 
 @app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461/')
 def loaderio():
@@ -205,6 +238,7 @@ def index():
                         "blog": blog,
                         "adminPrivileges": False,
                         "fromEmail": False,
+                        "password": False,
                         "theatres": venues,
                         "reviews":reviews,
                         "useron": 'none',
@@ -213,6 +247,9 @@ def index():
     if 'email' in session:
       template_vars['fromEmail'] = True
       session.pop('email', None)
+    if 'password' in session: 
+      template_vars['password'] = True
+      session.pop('password', None)
     if 'username' in session:
         c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         c.execute("SELECT first from USERS where id = %s", (session['username'],))
@@ -240,7 +277,7 @@ def index():
 # @app.route('/home', methods=['GET', 'POST'])
 # def home():
 #   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-#   c.execute("SELECT PhillyVenues.* FROM PhillyVenues, ZINGSHOWS WHERE ZINGSHOWS.venueid = PhillyVenues.id GROUP BY PhillyVenues.id ORDER BY PhillyVenues.id ASC")
+#   c.execute("SELECT Theatres.* FROM Theatres, ZINGSHOWS WHERE ZINGSHOWS.venueid = Theatres.id GROUP BY Theatres.id ORDER BY Theatres.id ASC")
 #   venues = c.fetchall()
 #   for venue in venues:
 #     venue['name'] = Markup(venue['name'])
@@ -312,7 +349,7 @@ def index():
 #                  AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
 #     tags = c.fetchall()
 #     for tag in tags:
-#       c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
+#       c.execute("SELECT name from Theatres where id = %s", (tag['venueid'],))
 #       venue = c.fetchall()[0]['name']
 #       tag['venue'] = venue
 #     article['tags'] = tags
@@ -393,7 +430,7 @@ def post():
   #                AND ZINGARTICLESHOWTAGS.articleid = %s""", (article['id'],))
   # tags = c.fetchall()
   # for tag in tags:
-  #   c.execute("SELECT name from PhillyVenues where id = %s", (tag['venueid'],))
+  #   c.execute("SELECT name from Theatres where id = %s", (tag['venueid'],))
   #   venue = c.fetchall()[0]['name']
   #   tag['venue'] = venue
   # article['tags'] = tags
@@ -562,6 +599,42 @@ def confirm_email(token):
     session['username'] = userid
     session['email'] = True
     return redirect(url_for('index'))
+
+@app.route('/reset/<token>')
+def reset_pass(token):
+    try:
+        email = ts.loads(token, salt="pass-reset-key", max_age=86400)
+    except:
+        abort(404)
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT id, first FROM USERS WHERE email = %s", (email,))
+    results = c.fetchall()[0]
+    userid = results['id']
+    name = results['first']
+    session['username'] = userid
+    session['password'] = True
+    return render_template('resetpassword.html')
+
+@app.route('/reset', methods=['GET', 'POST'])
+def reset_password():
+    reset1 = str(request.form['reset1'])
+    reset2 = str(request.form['reset2'])
+    if reset1 ==reset2:
+      c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+      c.execute("SELECT * FROM USERS WHERE id =%s", (session['username'],))
+      userData = c.fetchall()[0]
+      fullname = userData['first'] + userData['last']
+      you = User(fullname, reset1)
+      passhash = you.pw_hash
+      c.execute("""UPDATE USERS SET passhash = %s
+                    WHERE id = %s""", (passhash, session['username']))
+      conn.commit()
+      session['password'] = True
+    else:
+      return "passwords do not match"
+    return redirect(url_for('index'))
+
+
 
 
 ### CREATES A NEW USER OF TYPE ZINg (NOT FACEBOOK)// ZING USERS MUST CONFIRM BY EMAIL
@@ -908,6 +981,208 @@ def fullreviews():
     results = resort(results)
     return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
+@app.route('/reviewsbyshow')
+def reviewsbyshow():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid, ZINGOUTSIDESHOWTAGS.articleid
+                FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
+                WHERE ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id
+                GROUP BY ZINGOUTSIDESHOWTAGS.showid, ZINGOUTSIDESHOWTAGS.articleid
+                ORDER BY ZINGOUTSIDESHOWTAGS.showid ASC""")
+    results = c.fetchall()
+    byshowresults = []
+    showTags = []
+
+    for result in results:
+      if result['showid'] in showTags:
+        for x in byshowresults:
+          if x['showid'] == result['showid']:
+            x['articleids'].append(result['articleid'])
+      else:
+        showTags.append(result['showid'])
+        c.execute("SELECT * from ZINGSHOWS where id = %s", (result['showid'],))
+        name = c.fetchall()
+        if len(name) >0:
+          name = Markup(name[0]['name'])
+          temp = {"showid" : result['showid'], "articleids": [result['articleid']], "name":name }
+        else:
+          temp = {"showid" : result['showid'], "articleids": [result['articleid']] }
+        byshowresults.append(temp)
+    print byshowresults
+    for byshow in byshowresults:
+      byshow['headlines'] = []
+      byshow['links'] = []
+      for article in byshow['articleids']:
+        c.execute("""SELECT * FROM ZINGOUTSIDECONTENT
+                    WHERE id = %s""", (article,))
+        headlineData = c.fetchall()
+        if len(headlineData) > 0:
+          byshow['headlines'].append([Markup(headlineData[0]['title']), headlineData[0]['link']])
+        
+
+
+
+    #   result['descript'] = Markup(result['descript'])
+    #   result['author'] = Markup(result['author'])
+    #   # soup = BeautifulSoup(Markup(result['descript']))
+    #   # result['descript'] = soup.get_text()
+    #   print result['descript']
+    #   c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
+    #               ZINGShows.*
+    #               FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
+    #               WHERE articleid = %s
+    #               AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
+    #   showtags = []
+    #   showTagResults = c.fetchall()
+    #   for tag in showTagResults:
+    #     if [tag['name'], tag['id']] in showtags:
+    #       pass
+    #     else:
+    #       showtags.append([tag['name'], tag['id']])
+    #   for tag in showtags:
+    #     tag[0] = Markup(tag[0])
+    #   result['showtags'] = showtags
+    #   if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=195487&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fentertainment%2Farts":
+    #     result['pub-image'] = "phillydotcom.png"
+    #     result['pub-go'] = "philcom"
+    #   if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F":
+    #     result['pub-image'] = "inq.png"
+    #     result['pub-go'] = "inq"
+    #   if result['publication'] == "http://www.newsworks.org/":
+    #     result['pub-image'] = "shapiro.jpg"
+    #     result['pub-go'] = "how-shap"
+    #   if result['publication'] == "http://bsr2.dev/index.php":
+    #     result['pub-image'] = "bsr.png"
+    #     result['pub-go'] = "bsr"
+    #   if result['publication'] == "http://citypaper.net":
+    #     result['pub-image'] = "citypaper.png"
+    #     result['pub-go'] = "city-paper"
+    #   if result['publication'] == "http://phindie.com":
+    #     result['pub-image'] = "phindie.png"
+    #     result['pub-go'] = "phin"
+    #   if result['publication'] == "http://www.philadelphiaweekly.com/arts-and-culture":
+    #     result['pub-image'] = "pw.jpg"
+    #     result['pub-go'] = "phil-week"
+    # print len(results)*2/3
+    results = resort(byshowresults)
+    return render_template('byshow.html', results=byshowresults, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+
+@app.route('/reviewsbyreviewer')
+def reviewsbyreviewer():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT ZingoutsideContent.*
+                FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
+                WHERE ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id""")
+    results = c.fetchall()
+    byshowresults = []
+    showTags = []
+    articles = []
+
+    for result in results:
+      result['author'] = result['author'].strip()
+      result['author'] = result['author'].replace("  ", " ")
+      if result['author'] in showTags:
+        for x in byshowresults:
+          if x['showid'] == result['author']:
+            if result['title'] in articles:
+              pass
+            else:
+              x['headlines'].append([result['title'], result['link']])
+              articles.append(result['title'])
+
+      else:
+        showTags.append(result['author'])
+        temp = {"showid" : result['author'], "headlines": [[result['title'], result['link']]], "name" :  result['author']}
+        byshowresults.append(temp)
+    print byshowresults
+    # for byshow in byshowresults:
+    #   byshow['headlines'] = []
+    #   byshow['links'] = []
+    #   for article in byshow['articleids']:
+    #     c.execute("""SELECT * FROM ZINGOUTSIDECONTENT
+    #                 WHERE id = %s""", (article,))
+    #     headlineData = c.fetchall()
+    #     if len(headlineData) > 0:
+    #       byshow['headlines'].append([Markup(headlineData[0]['title']), headlineData[0]['link']])
+        
+
+
+
+    #   result['descript'] = Markup(result['descript'])
+    #   result['author'] = Markup(result['author'])
+    #   # soup = BeautifulSoup(Markup(result['descript']))
+    #   # result['descript'] = soup.get_text()
+    #   print result['descript']
+    #   c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
+    #               ZINGShows.*
+    #               FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
+    #               WHERE articleid = %s
+    #               AND Zingshows.id = ZINGOUTSIDESHOWTAGS.showid""", (result['id'],))
+    #   showtags = []
+    #   showTagResults = c.fetchall()
+    #   for tag in showTagResults:
+    #     if [tag['name'], tag['id']] in showtags:
+    #       pass
+    #     else:
+    #       showtags.append([tag['name'], tag['id']])
+    #   for tag in showtags:
+    #     tag[0] = Markup(tag[0])
+    #   result['showtags'] = showtags
+    #   if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=195487&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fentertainment%2Farts":
+    #     result['pub-image'] = "phillydotcom.png"
+    #     result['pub-go'] = "philcom"
+    #   if result['publication'] == "http://www.philly.com/r?19=960&32=3796&7=989523&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fblogs%2Fphillystage%2F":
+    #     result['pub-image'] = "inq.png"
+    #     result['pub-go'] = "inq"
+    #   if result['publication'] == "http://www.newsworks.org/":
+    #     result['pub-image'] = "shapiro.jpg"
+    #     result['pub-go'] = "how-shap"
+    #   if result['publication'] == "http://bsr2.dev/index.php":
+    #     result['pub-image'] = "bsr.png"
+    #     result['pub-go'] = "bsr"
+    #   if result['publication'] == "http://citypaper.net":
+    #     result['pub-image'] = "citypaper.png"
+    #     result['pub-go'] = "city-paper"
+    #   if result['publication'] == "http://phindie.com":
+    #     result['pub-image'] = "phindie.png"
+    #     result['pub-go'] = "phin"
+    #   if result['publication'] == "http://www.philadelphiaweekly.com/arts-and-culture":
+    #     result['pub-image'] = "pw.jpg"
+    #     result['pub-go'] = "phil-week"
+    # print len(results)*2/3
+    results = resort(byshowresults)
+    return render_template('byshow.html', results=byshowresults, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+
+@app.route('/reviewsbyusers')
+def reviewsbyusers():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT count(ZINGUSERREVIEWS.userid), userid
+                from ZINGUSERREVIEWS
+                GROUP BY userid
+                ORDER BY count(ZINGUSERREVIEWS.userid) DESC
+                """)
+    topUsers = c.fetchall()
+    byshowresults = []
+    for x in topUsers:
+      c.execute("""SELECT ZINGUSERREVIEWS.*, to_char(ZINGRATINGS.time, 'MMDDYYYY'), rating 
+                  FROM ZINGUSERREVIEWS,ZingRatings 
+                  where ZingRatings.showid = ZINGUSERREVIEWS.showID
+                  and ZingRatings.userid = ZINGUSERREVIEWS.userid
+                  and ZINGUSERREVIEWS.userid =%s""", (x['userid'],))
+      reviews = c.fetchall()
+      for review in reviews:
+        c.execute("SELECT name from ZINGSHOWS WHERE id =%s", (review['showid'],))
+        showname = c.fetchall()[0]['name']
+        review['showname'] = showname
+        review['rating'] = convert_to_percent(float(review['rating']))
+      c.execute("SELECT * FROM USERS where id = %s", (x['userid'],))
+      user =c.fetchall()[0]
+      byshowresults.append([reviews,user])
+    results = resort(byshowresults)
+    return render_template("topUserReviews.html", results = results,title = "Top User Reviews", count1 = int(len(results)/3), count2 = int(len(results)*2/3) )
+
+
+
 
 
 @app.route('/fulltheater')
@@ -919,11 +1194,11 @@ def fulltheater():
     #              OVERLAPS (start_date, end_date)
     #              and ShowRatings4.showid = Karlshows2.id
     #              GROUP BY Karlshows2.name""")
-    c.execute("SELECT * FROM PHILLYVENUES ")
+    c.execute("SELECT * FROM Theatres ")
     results = c.fetchall()
     for result in results:
       result['description'] = Markup(result['description'])
-      # c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      # c.execute("SELECT name FROM Theatres WHERE id = %s", (result['venueid'],))
       # venueResult = c.fetchall()
       # if len(venueResult)>0:
       #   venuename = venueResult[0]['name']
@@ -984,7 +1259,7 @@ def pastshows():
       for a in c.fetchall():
         if a['sum'] != None:
           result['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
-      c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      c.execute("SELECT name FROM Theatres WHERE id = %s", (result['venueid'],))
       venueResult = c.fetchall()
       if len(venueResult)>0:
         venuename = venueResult[0]['name']
@@ -1012,7 +1287,7 @@ def pastshows():
       result['enddate'] = months[month] + day + ", " +  year
     results = resort(results)
     totalCountMod = len(results)%3
-    return render_template('fullschedule.html', results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+    return render_template('fullschedule.html', title = "Past Shows", results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
  ###returns a fullschedule of shows--duh
 
@@ -1047,7 +1322,7 @@ def fullschedule():
       for a in c.fetchall():
         if a['sum'] != None:
           result['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
-      c.execute("SELECT name FROM PHILLYVENUES WHERE id = %s", (result['venueid'],))
+      c.execute("SELECT name FROM Theatres WHERE id = %s", (result['venueid'],))
       venueResult = c.fetchall()
       if len(venueResult)>0:
         venuename = venueResult[0]['name']
@@ -1075,7 +1350,7 @@ def fullschedule():
       result['enddate'] = months[month] + day + ", " +  year
     results = resort(results)
     totalCountMod = len(results)%3
-    return render_template('fullschedule.html', results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+    return render_template('fullschedule.html', title = "Full Schedule", results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
 
 ### api call to yelp from ajax call, gets business data
@@ -1121,11 +1396,11 @@ def venue():
     venue = request.args.get('venue')
     # tweets = t.search.tweets(q="#"+showdata[0]['name'])
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    c.execute("SELECT * from PhillyVenues where id = %s", (venue,))
+    c.execute("SELECT * from Theatres where id = %s", (venue,))
     results = c.fetchall()
     results = results[0]
     results['name'] = Markup(results['name'])
-    twitterHandle = results['twitter']
+    twitterHandle = results['tw']
     twitterHandle = twitterHandle[twitterHandle.rfind("/")+1:]
     print twitterHandle
     tweets = t.statuses.user_timeline(screen_name=twitterHandle)
@@ -1166,7 +1441,7 @@ def venue():
    
       print "\n"
     tweetsList = resort(tweetsList)
-    results['description'] = Markup(results['description'])
+    results['descript'] = Markup(results['descript'])
     c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
     c.execute("""SELECT * from ZINGSHOWS
@@ -1277,18 +1552,19 @@ def show():
           day = day[1:]
         year = venueshow['enddate'][:4]
         venueshow['enddate'] = months[month] + day + ", " +  year
-      c.execute("""SELECT * from PhillyVenues
+      c.execute("""SELECT * from Theatres
                 where id = %s""", (showdata[0]['venueid'],))
 
       venue = c.fetchall()
       venue[0]['name'] = Markup(venue[0]['name'])
-      venue[0]['description'] = Markup(venue[0]['description'])
-      c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
+      venue[0]['descript'] = Markup(venue[0]['descript'])
+      c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
-                from ZINGRATINGS, ZINGREVIEWS
-                where ZINGREVIEWS.showid = %s 
+                from ZINGRATINGS, ZINGUSERREVIEWS
+                where ZINGUSERREVIEWS.showid = %s 
                 and ZINGRATINGS.showid = %s
-                and ZINGREVIEWS.userid = ZINGRATINGS.userid""", (showdata[0]['id'],showdata[0]['id']))
+                and ZINGUSERREVIEWS.private = %s
+                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid""", (showdata[0]['id'],showdata[0]['id'], "no"))
       userreviews = c.fetchall()
       c.execute("""SELECT SUM(rating), COUNT(rating) 
                 from ZINGRATINGS
@@ -1435,11 +1711,11 @@ def profile():
     userdata = c.fetchall()[0]
     c.execute("""SELECT USERS.first, reviewText, rating,
               to_char(ZINGRATINGS.time, 'HHMIA.M.DayMonthDDYYY')
-              from ZINGREVIEWS, ZINGRATINGS, ZINGSHOWS, USERS
-              where ZINGREVIEWS.userid = ZINGRATINGS.userid
+              from ZINGUSERREVIEWS, ZINGRATINGS, ZINGSHOWS, USERS
+              where ZINGUSERREVIEWS.userid = ZINGRATINGS.userid
               and ZINGRATINGS.userid =%s
               and ZINGSHOWS.id = ZINGRATINGS.showid
-              and ZINGSHOWS.id = ZINGREVIEWS.showid""",
+              and ZINGSHOWS.id = ZINGUSERREVIEWS.showid""",
               (username,))
     results = c.fetchall()
     c.execute("""SELECT * FROM ZINGSURVEY
@@ -1460,14 +1736,14 @@ def profile():
     if len(commitment) > 0:
       commitment = commitment[0]
     print results
-    c.execute("""SELECT reviewText, ZINGREVIEWS.userid, 
+    c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY'), ZINGRATINGS.showid,
                 ZINGSHOWS.name
-                from ZINGRATINGS, ZINGREVIEWS, ZINGSHOWS
-                where ZINGREVIEWS.userid = %s
-                and ZINGREVIEWS.userid = ZINGRATINGS.userid
-                and ZINGREVIEWS.showid = ZINGRATINGS.showid
-                and ZINGREVIEWS.showid = ZINGSHOWS.id""", (session['username'],))
+                from ZINGRATINGS, ZINGUSERREVIEWS, ZINGSHOWS
+                where ZINGUSERREVIEWS.userid = %s
+                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid
+                and ZINGUSERREVIEWS.showid = ZINGRATINGS.showid
+                and ZINGUSERREVIEWS.showid = ZINGSHOWS.id""", (session['username'],))
     userreviews = c.fetchall()
     for review in userreviews:
       c.execute("""SELECT *
@@ -1512,7 +1788,7 @@ def autocomplete():
   c.execute("""SELECT name, id from ZINGSHOWS
             where lower(name) LIKE %s""", (query,))
   results = c.fetchall()
-  c.execute("""SELECT name, id from PHILLYVENUES
+  c.execute("""SELECT name, id from Theatres
             where lower(name) LIKE %s""", (query,))
   results2 = c.fetchall()
   jsonresults = []
@@ -1574,15 +1850,16 @@ def submitreview():
     bads = request.args.get('bads')
     goods  = json.loads(goods)
     bads = json.loads(bads)
+    private = request.args.get('checkPrivate')
   
     userid = session['username']
-    c.execute("""DELETE from ZINGREVIEWS
+    c.execute("""DELETE from ZINGUSERREVIEWS
               where userid = %s and showid = %s""",
               (userid, showID))
     if rating != None:
       c.execute("SET TIME ZONE 'America/New_York'")
-      c.execute("""INSERT INTO ZINGREVIEWS(userid, showID, reviewText)
-              VALUES(%s, %s, %s)""", (userid, showID, review))
+      c.execute("""INSERT INTO ZINGUSERREVIEWS(userid, showID, reviewText, private)
+              VALUES(%s, %s, %s, %s)""", (userid, showID, review, private))
       c.execute("""DELETE from ZINGRATINGS
               where userid = %s and showid = %s""",
               (userid, showID))
@@ -1708,7 +1985,7 @@ def removeReview():
    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
    showid = request.args.get('showid')
    userid = request.args.get('userid')
-   c.execute("""DELETE FROM ZINGREVIEWS WHERE 
+   c.execute("""DELETE FROM ZINGUSERREVIEWS WHERE 
               userid = %s AND showid = %s""", (userid, showid))
    c.execute("""DELETE FROM ZINGRatings WHERE 
               userid = %s AND showid = %s""", (userid, showid))
@@ -1776,11 +2053,11 @@ def manageOutReviews():
 @app.route('/manageReviews', methods=['GET', 'POST'])
 def manageReviews():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  c.execute("""SELECT ZINGREVIEWS.id, ZINGRATINGS.id, Zingratings.showid, reviewText, ZINGREVIEWS.userid, 
+  c.execute("""SELECT ZINGUSERREVIEWS.id, ZINGRATINGS.id, Zingratings.showid, reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
-                from ZINGRATINGS, ZINGREVIEWS
-                where ZINGREVIEWS.showid = ZINGRATINGS.showid 
-                and ZINGREVIEWS.userid = ZINGRATINGS.userid""")
+                from ZINGRATINGS, ZINGUSERREVIEWS
+                where ZINGUSERREVIEWS.showid = ZINGRATINGS.showid 
+                and ZINGUSERREVIEWS.userid = ZINGRATINGS.userid""")
   reviewtexts = []
   results = c.fetchall()
   for review in results:

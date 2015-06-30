@@ -1,0 +1,545 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+   <title>Walnut Street Theatre | America's Oldest</title>
+   <link rel="stylesheet" href="/style/global.css" type="text/css" />
+   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+   <script type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+   <script type="text/javascript" src="/js/global.js"></script>
+   <style type="text/css">
+
+   #header { margin-top: 0px; position: relative; }
+   #container { background-image: url('/images/home/bg-2009a.gif'); }
+   #content { width: 548px; padding: 15px 0px 60px 62px; line-height: 125%; }
+   #sidebar { width: 262px; }
+   h4.title { line-height: 20px; display: block; height: 40px; padding-top: 6px; }
+   p.buy { margin: 5px 0px 5px 0px; padding: 0px; line-height: 18px; }
+
+   /* google search 2013 */
+ 
+   #search { position: absolute; top: 30px; right: 10px; width: 170px !important; }
+   #search form { width: auto; margin: 0px; display: auto; }
+   td.gsc-search-button { width: 29px !important; overflow: hidden; position: relative; }
+   input.gsc-search-button
+   {
+      overflow: hidden; position: absolute; top: -2px; left: -21px; clip: rect(0px 49px 32px 20px);
+   }
+   .gsc-search-box-tools, .gsc-search-box, .gsc-input, td.gsc-input { padding-right: 2px !important; }
+   .cse .gsc-control-cse, .gsc-control-cse 
+   { 
+      padding: 0px !important; background-color: transparent !important; border: none !important; 
+   }
+   .gs-title, #toolbar a:gs-title { text-align: left; padding-left: 0px; margin-left: 0px; }
+   .gsc-result { text-align: left; }
+   a.gs-title { font-weight: bold; font-style: normal; }
+
+   </style>
+   <meta name="description" content="The official website of Philadelphia's most popular theatre company. Buy tickets and subscriptions, register for classes, get directions, learn about the history and much more." />
+   <meta name="title" content="Walnut Street Theatre, in Philadelphia -- America's Oldest!" />
+   <meta name="keywords" content="theatre, theater, drama, musical, theater school, acting classes, children's theater, Broadway, Philadelphia" />
+   <meta name="verify-v1" content="R3ohF34smsrJPehvmxMU7ZKovJhahN5sE/D/CO1ZVGc=" />
+   <meta name="robots" content="noydir" />
+   <link rel="apple-touch-icon" href="/m/images/apple-touch-icon.png" />
+   <meta name="msapplication-TileImage" content="/images/wst-tile.png" />
+   <meta name="msapplication-TileColor" content="#870808" />
+   <!-- BEGIN MTM CODE // DO NOT REMOVE -->
+   <script type="text/javascript" src="//nexus.ensighten.com/mogointeractive/2190/Bootstrap.js"></script>
+   <!-- END MTM CODE // DO NOT REMOVE -->
+</head>
+<body>
+<div id="header">
+   <img src="/images/home/wst-206.jpg" width="930" height="172" border="0" alt="" />
+<div id="search">
+<script>
+  (function() {
+    var cx = '010026669665491158215:q8-85ryrllg';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+</div>
+<div id="menu">
+   <!--  menu bar -->
+
+   <ul id="mainMenu" style="margin-left: 52px;">
+      <li style="width: 78px;"><a href="/season/" style="background-image: none;" 
+         onMouseOver="rollOn('season');" onMouseOut="rollOff('season');"><img 
+         name="season" src="/images/menu/season1.gif" 
+         width="78" height="25" border="0" alt="The Season" /></a>
+         <ul>
+            <li><a href="/visit/subscribe.php">Subscribe Now</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/"><b>Mainstage</b></a></li>
+            <li><a href="/season/9to5.php" class="bullet">9 to 5</a></li>
+            <li><a href="/season/mary-poppins.php" class="bullet">Mary Poppins</a></li>
+            <li><a href="/season/private-lives.php" class="bullet">Private Lives</a></li>
+            <li><a href="/season/none.php" class="bullet">And Then There Were None</a></li>
+            <li><a href="/season/memphis.php" class="bullet">Memphis</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/i-studio.php"><b>Independence Studio on 3</b></a></li>
+            <li><a href="/season/shipwrecked.php" class="bullet">Shipwrecked!</a></li>
+            <li><a href="/season/dr-ruth.php" class="bullet">Becoming Dr. Ruth</a></li>
+            <li><a href="/season/moon.php" class="bullet">A Moon for the Misbegotten</a></li>
+            <li><a href="/season/red.php" class="bullet">Red</a></li>
+            <li><a href="/season/patsy.php" class="bullet">Always... Patsy Cline</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/wst-kids.php"><b>Walnut Street Theatre for Kids</b></a></li>
+            <li><a href="/season/shrek.php" class="bullet">Shrek The Musical Jr.</a></li>
+            <li><a href="/season/carol15.php" class="bullet">Charles Dickens' A Christmas Carol</a></li>
+            <li><a href="/season/zombie-love.php" class="bullet">Zombie in Love</a></li>
+            <li><a href="/season/freckleface.php" class="bullet">Freckleface Strawberry</a></li>
+            <li><a href="/season/nelson.php" class="bullet">Miss Nelson Has a Field Day</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/ontour.php"><b>On Tour</b></a></li>
+	    <li><a href="/season/ontour.php#moon" class="bullet">A Moon for the Misbegotten</a></li>
+         </ul>
+      </li>
+      <li style="width: 68px;"><a href="/visit/" class="divider"
+         onMouseOver="rollOn('visit');" onMouseOut="rollOff('visit');"><img
+         name="visit" src="/images/menu/visit1.gif"  
+         width="68" height="25" border="0" alt="Your Visit" /></a>
+         <ul>
+      	   <li><a href="/season/">Buy Tickets</a></li>
+      	   <li><a href="/visit/premium-seating.php">Premium Seating</a></li>
+     	   <li><a href="/visit/box-office.php">Box Office</a></li>
+      	   <li><a href="/visit/subscribe.php">Subscribe Now!</a></li>
+           <li><a href="/visit/subscribers.php">Current Subscribers</a></li>
+      	   <li><a href="/visit/online-exchange.php">Subscriber Online Exchanges</a></li>
+      	   <li><a href="/visit/groups.php">Group Sales</a></li>
+           <li><a href="/visit/luxury-boxes.php">Luxury Boxes</a></li>
+      	   <li><a href="/visit/gift.php">Gift Certificates</a></li>
+       	   <li><a href="/visit/discounts.php">Ticket Discounts</a></li>
+      	   <li><a href="/visit/standby.php">Standby Tickets</a></li>
+      	   <li><a href="/visit/subscribe.php#special">Special Needs</a></li>
+      	   <li><a href="/visit/seating.php">Seating</a></li>
+      	   <li><a href="/visit/directions.php">Directions and Parking</a></li>
+      	   <li><a href="/visit/d-guide.php">Dining and Hotel Guide</a></li>
+      	   <li><a href="/visit/theatre-tour.php">Backstage Tours</a></li>
+      	   <li><a href="/theatre/tour/">Behind the Scenes Photo Tour</a></li>
+      	   <li><a href="/visit/barrymore.php">Barrymore's Caf&eacute;</a></li>
+      	   <li><a href="/visit/shop.php">Gift Shop</a></li>
+      	   <li><a href="/visit/shop.php">Purchase Show Related Merchandise</a></li>
+         </ul>
+      </li>
+      <li style="width: 70px;"><a href="/education/" class="divider"
+         onMouseOver="rollOn('education');" onMouseOut="rollOff('education');"><img
+         name="education" src="/images/menu/education1.gif"
+         width="70" height="25" border="0" alt="Education" /></a>
+         <ul>
+            <li><a href="/education/school.php">The Theatre School</a></li>
+            <li><a href="/education/camp.php">Camp Walnut</a></li>
+            <li><a href="/education/touring.php">Touring Outreach Company</a></li>
+            <li><a href="/education/residency-program.php">Residency Program</a></li>
+            <li><a href="/education/adopt.php">Adopt-A-School Program</a></li>
+            <li><a href="/education/pro-app/">Professional Apprentice Program</a></li>
+            <li><a href="/education/kids.php">Theatre for Kids Series</a></li>
+            <li><a href="/education/continuing.php">Continuing Education</a></li>
+            <!--<li><a href="/education/perspectives/">Seeing the Stage Through Our Eyes</a></li>-->
+            <li><a href="/education/education-report.php">Education Report</a></li>
+         </ul>
+      </li>
+      <li style="width: 76px;"><a href="/support/" class="divider"
+         onMouseOver="rollOn('support');" onMouseOut="rollOff('support');"><img
+         name="support" src="/images/menu/support1.gif"
+         width="76" height="25" border="0" alt="Support Us" /></a>
+         <ul>
+            <li><a href="/support/individual.php">Individual Giving</a></li>
+            <li><a href="/support/planned.php">Planned Giving</a></li>
+            <li><a href="/support/corporate.php">Corporate Giving</a></li>
+            <li><a href="/support/special.php">Special Events</a></li>
+            <li><a href="/theatre/mission.php">Mission Statement</a></li>
+		 </ul>
+      </li>
+      <li style="width: 110px;"><a href="/theatre/" class="divider"
+         onMouseOver="rollOn('theatrehistory');" onMouseOut="rollOff('theatrehistory');"><img
+         name="theatrehistory" src="/images/menu/theatrehistory1.gif"
+         width="110" height="25" border="0" alt="Theatre & History" /></a>
+         <ul>
+            <li><a href="/theatre/history.php">History</a></li>
+            <li><a href="/theatre/gallery/">Historic Photo Gallery</a></li>
+            <li><a href="/theatre/tour/">Behind the Scenes Photo Tour</a></li>
+            <li><a href="/theatre/video.php">Video: About the Walnut</a></li>
+            <li><a href="/theatre/state-theatre.php">State Theatre of Pennsylvania</a></li>
+            <li><a href="/theatre/milestones.php">Historic Milestones</a></li>
+            <li><a href="/theatre/facts.php">Fun Facts about The Walnut</a></li>
+            <li><a href="/theatre/staff.php">Staff and Board Members</a></li>
+            <li><a href="/theatre/forrest.php">Edwin Forrest Award</a></li>
+            <li><a href="/theatre/behind.php">Scenic, Property and Costume Fabrication Shops</a></li>
+            <li><a href="/theatre/rental.php">Space Rental</a></li>
+            <li><a href="/theatre/related.php">Related Organizations' Websites</a></li>
+            <li><a href="/theatre/mission.php">Mission Statement</a></li>
+			<li><a href="/season/mainstage.php">Mainstage Production History</a></li>
+			<li><a href="/season/studioon3.php">Independence Studio on 3 Production History</a></li>
+         </ul>
+      </li>
+      <li style="width: 91px;"><a href="/opportunities/" class="divider"
+         onMouseOver="rollOn('opportunities');" onMouseOut="rollOff('opportunities');"><img
+         name="opportunities" src="/images/menu/opportunities1.gif"
+         width="91" height="25" border="0" alt="Opportunities" /></a>
+         <ul>
+            <li><a href="/opportunities/casting.php">Casting</a></li>
+	    <li><a href="/auditions/">Greater Philadelphia Annual Auditions</a></li>
+            <li><a href="/opportunities/literary.php">Literary</a></li>
+            <li><a href="/opportunities/employment.php">Employment</a></li>
+            <li><a href="/opportunities/volunteer.php">Volunteers</a></li>
+            <li><a href="/education/pro-app.php">Apprenticeships</a></li>
+         </ul>
+      </li>
+      <li style="width: 89px;"><a href="/news/" class="divider"
+         onMouseOver="rollOn('news');" onMouseOut="rollOff('news');"><img
+         name="news" src="/images/menu/news1.gif"
+         width="89" height="25" border="0" alt="News & Press" /></a>
+      </li>
+      <li style="width: 79px;"><a href="/enter.php?contest=48" class="divider"
+         onMouseOver="rollOn('mail');" onMouseOut="rollOff('mail');"><img
+         name="mail" src="/images/menu/mail1.gif"
+         width="79" height="25" border="0" alt="Mailing List" /></a>
+      </li>
+      <li style="width: 39px;"><a href="/theatre/faq.php" class="divider"
+         onMouseOver="rollOn('faq');" onMouseOut="rollOff('faq');"><img
+         name="faq" src="/images/menu/faq1.gif"
+         width="39" height="25" border="0" alt="Frequently Asked Questions" /></a>
+      </li>
+      <li style="width: 66px;"><a href="/season/calendar.php" class="divider"
+         onMouseOver="rollOn('calendar');" onMouseOut="rollOff('calendar');"><img
+         name="calendar" src="/images/menu/calendar1.gif"
+         width="66" height="25" border="0" alt="Calendar" /></a>
+      </li>
+
+   </ul>
+   </div>
+
+<div id="container">
+   <div id="content">
+   <div id="announce">Celebrate the July 4th holiday week with Memphis!  Performances Tuesday - Friday at 8, Sunday at 7 with matinees Thursday, Friday and Sunday at 2. Great seats are available!</div>
+
+   <img src="/images/home/hd-whatson-2009a.gif" width="548" height="15" border="0" alt="What's On" />
+
+   <!-- What's On -->
+   <table cellpadding="10" cellspacing="0" border="0" style="margin: 10px -10px 0px -10px;">
+      <tr valign="top">
+         <td style="width: 33%;">
+            <a href="/season/memphis.php"><img
+               src="/season/images/160-memphis.jpg" width="160" height="200" border="0" alt="" /></a>
+            <h4 class="title"><a href="/season/memphis.php">Memphis</a></h4>
+	       <b class="date">NOW &ndash; Jul. 12<br />Mainstage</b>
+	    <p class="buy">
+               <a href="/season/schedule.php?event=121" class="btn">buy tickets</a> 
+               <!--<a href="https://oss.ticketmaster.com/aps/wst/EN/buy/browse?i%5B0%5D=659" target="_blank" 
+	          class="btn">buy premium seats</a>-->
+		<nobr><a href="/season/2015-2016.mainstage.php" class="btn">subscribe to 2015-2016</a></nobr>
+            </p>
+	    This Tony award-winning Best Musical has explosive dancing, irresistible songs and a thrilling tale of fame and forbidden love!
+         </td>
+         <td style="width: 33%;">
+            <a href="/season/i-studio.15-16.php"><img
+               src="/season/images/160-shipwrecked.jpg" width="160" height="200" border="0" alt="" /></a>
+            <h4 class="title"><a href="/season/i-studio.15-16.php">Independence Studio on 3</a></h4>
+               <b class="date">2015-2016 Season<br />Independence Studio on 3</b>
+            <p class="buy">
+	       <!--<a href="/season/schedule.php?event=126" class="btn">buy tickets</a><br />&#160;-->
+               <nobr><a href="/season/i-studio.15-16.php" class="btn">subscribe Now</a></nobr>
+            </p>
+	    Don't miss <b><i>Shipwrecked!, Becoming Dr. Ruth</i></b>, Eugene O'Neill's 
+	    <b><i>A Moon for the Misbegotten</i></b> and <b><i>Always... Patsy Cline</i></b>. 
+	    It's intimate stories in an intimate space!
+         </td>
+         <td style="width: 33%;">
+            <a href="/season/15-16-Kids.php"><img
+               src="/season/images/160-shrek.jpg" width="160" height="200" border="0" alt="" /></a>
+            <h4 class="title">
+	       <a href="/season/15-16-Kids.php">WST for Kids</a></h4>
+               <b class="date">2015-2016 Season<br />WST for Kids</b>
+               <p class="buy">
+                <!--<a href="/season/schedule.php?event=118" class="btn">buy tickets</a>-->
+		<nobr><a href="/season/15-16-Kids.php" class="btn">subscribe now</a></nobr>
+               </p>
+            Read the books, then see the shows LIVE on stage! Don't miss <b><i>Shrek 
+	    the Musical Jr., Zombie in Love, Freckleface Strawberry</i></b> and 
+	    <b><i>Miss Nelson has a Field Day!</i></b>
+         </td>
+      </tr>
+   </table> 
+
+
+   <br /><div class="box" style="text-align: center;"><h6>
+
+   Find us on &#160; 
+   <a href="http://www.facebook.com/walnutstreettheatre" target="_blank" class="social facebook">Facebook</a> &#160;&#183;&#160; 
+   <a href="http://instagram.com/walnutstreettheatre" target="_blank" class="social instagram">Instagram</a> &#160;&#183;&#160; 
+   <a href="https://twitter.com/WalnutStTheatre" target="_blank" class="social twitter">Twitter</a></li>
+
+   </h6></div><br />
+
+   <p>
+            <h4><a href="/season/">Upcoming Productions</a></h4>
+            Join us for our 206th Anniversary Season!
+   </p>
+
+
+
+      <p>
+            <h4><a href="/season/2015-2016.mainstage.php">
+	    Join us for our 2015-2016 Mainstage Season!</a></h4>
+	    It's time to dance the night away with Cole Porter's "swell party," HIGH SOCIETY!  
+	    Broadway's new musical hit, <i><b>A CHRISTMAS STORY, The Musical</b></i>, is 
+	    based on the hilarious blockbuster movie. You'll fall in love with Broadway's 
+	    classic comedy <i><b>HARVEY</b></i> and get 'hook'ed on <i><b>PETER AND THE 
+	    STARCATCHER</b></i>...  Finally, get in on our <i><b>SISTER ACT</b></i> and 
+	    you'll end the season jumpin’ with joy! 
+	    <a href="/season/2015-2016.mainstage.php"><nobr>Learn more here!</nobr></a>
+
+   </p>
+
+
+
+      <p>
+            <h4><a href="/season/15-16-Kids.php">
+	    Our 2015-2016 WST for Kids shows!</a></h4>
+            Don't miss <b><i>Shrek the Musical, Zombie in Love, Freckleface Strawberry</i></b>
+	    and <b><i>Miss Nelson Has a Field Day!</i></b> Read the books, then see the 
+	    shows LIVE at the Walnut!  Last year's series sold out on subscriptions, don't wait.
+	    <a href="/season/15-16-Kids.php"><nobr>Learn more here!</nobr></a>
+
+   </p>
+
+   <p>
+            <h4><a href="/season/i-studio.15-16.php">
+	    Our 2015-2016 Independence Studio on 3 Season! </a></h4>
+	    Intimate stories in and intimate space!  You'll see Pulitzer Prize-winner 
+	    Donald Margulies' daring high seas adventure, <b><i>Shipwrecked!</i></b>; 
+	    the humorous and surprising story of Dr. Ruth Westheimer, <b><i>Becoming Dr. Ruth</i></b>; 
+	    Eugene O'Neill's masterpiece, <b><i>A Moon for the Misbegotten</i></b>; 
+	    the Tony Award-winning Best Play, <b><i>Red</i></b>; and the hit musical 
+	    celebration of true friendship, <b><i>Always...Patsy Cline</i></b>!
+	    <a href="/season/i-studio.15-16.php"><nobr>Learn more here!</nobr></a>
+
+   </p>
+
+
+
+   <p>
+            <h4><a href="/season/other-comps.php">Other Companies/Studio 5</a></h4>
+            Other theater companies performing at the Walnut.
+   </p>
+
+   <br /><br /><br />
+<img src="/images/home/hd-news-2009a.gif" width="548" height="15" border="0" alt="News" />
+<p><a href="/news/?id=329">Turn up that dial!  It's Time for the Tony Award-Winning Musical MEMPHIS! NOW - July 12</a></p>
+<p><a href="/news/?id=321">Walnut Street Theatre Announces Its 207th Anniversary Season!</a></p>
+<p><a href="/news/?id=331">Independence Studio on 3's 2015-2016 Season Announcement!</a></p>
+ 
+   </div>
+   
+   <div id="sidebar">
+   
+   <!-- history item -->
+
+   <img src="/images/home/hd-history-2009a.gif" width="262" height="16" border="0" alt="WST History" /><br /><br />
+   <a href="/theatre/facts.php"><img src="/images/home/icon-25.jpg" width="110" height="70" border="0" alt="" 
+      class="right" /></a>
+   <h6><a href="/theatre/facts.php">Punk Rockers At The Walnut</a></h6>
+   The Clash, one of the leading and most controversial of Britain's new wave rock bands, played one performance at the Walnut as part of their second US tour, "The Clash Take the Fifth" tour, of September-October 1979.
+
+   <br /><br />
+   
+   <h6><a href="/theatre/gallery/">Historic Photo Gallery</a></h6>
+
+   <br />
+   
+   <h6><a href="/visit/theatre-tour.php">Tour the Theatre</a></h6>
+
+   <br />
+
+   <h6><a href="/visit/shop.php">Order Our Books Online</a></h6>
+
+   <br /><br />
+
+   <!-- highlights -->
+
+   <img src="/images/home/hd-highlights-2009a.gif" width="262" height="16" border="0" alt="Highlights" /><br /><br />
+
+   <!-- renew -->
+
+
+   <a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN" 
+      target="_blank">
+   <h6 style="color: #FFCC00;">My Walnut Subscription Account</h6></a><br />
+   <a href="/visit/subscribers.php">Manage your tickets or make a donation here.</a>
+
+<!--
+<br /><br />
+<a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN" target="_blank"><img 
+      src="/images/home/icon-renew_home.jpg" width="110" height="91" border="0" alt="" class="right" /></a> 
+
+   <a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN"
+      target="_blank">Renew online for the 2015-2016 Season!</a>
+<br /><br />
+   <a href="https://oss.ticketmaster.com/aps/wst/EN/buy/browse?g%5B0%5D=14551"
+      target="_blank">Purchase a new 2015-2016 subscription here!</a>
+<br /><br />
+   <a href="/season/2015-2016.mainstage.php"
+      target="_blank">Learn more about these shows here!</a>
+-->
+<br /><br />
+
+
+   <br /><br />
+
+
+   <!-- subscription account logins -->
+
+<!--<h6><a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN">My
+   Walnut Subscription Account</a></h6>
+   Subscribers: Log in here to manage your account!
+   <br /><br />-->
+   
+   <!-- mailing list -->
+
+   <a href="http://www.walnutstreettheatre.org/enter.php?contest=48"><img
+      src="/season/images/90-christmas-story.jpg" width="90" height="118" border="0" alt="" class="right" /></a>
+
+   <h6><a href="http://www.walnutstreettheatre.org/enter.php?contest=48">
+	Join Our <nobr>Mailing List</nobr></a></h6>
+    Sign up for our free email newsletter for advance notice and exclusive discounts 
+    and you'll be entered to win
+    <b>VIP tickets Broadway's Holiday Hit... <i>A Christmas Story, the Musical!</i></b>
+
+   <br clear="right" /><br />
+
+   <!-- Tix-For Two Gift Certificates -->
+   
+   <h6><a href="http://www.ticketmaster.com/20132014-tixfortwo-gift-certificates-walnut-philadelphia-pennsylvania-07-21-2014/event/020048CBF39C8E83?artistid=1874122&majorcatid=10005&minorcatid=56" target="_blank">Gift Our Tix-For-Two 
+   Gift Certificates</a></h6>
+   Treat someone special to a magical live performance.
+
+   <br /><br />
+
+   <!-- Theatre School -->
+
+   <a href="/education/school.php"><img src="/images/home/icon-school.2014.jpg" 
+      width="110" height="70" border="0" alt="" class="right" /></a>
+
+   <h6><a href="/education/school.php">Theatre School</a></h6>
+   View Fall 2015 Semester classes for kids, teens, and adults!
+
+
+      <br /><br />
+
+   <!-- Donate -->
+
+   <h6><a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN">Become a <nobr>Walnut Angel:</nobr><br /> 
+      Donate Now!</a></h6>
+   Walnut Street Theatre is a non-profit organization. Help support our educational outreach 
+   programs, world-class theatre and our historic building with a 
+   <a href="https://oss.ticketmaster.com/html/home.htmI?team=wst&l=EN"><nobr>tax-deductible contribution</nobr></a>.
+  
+
+   <br /><br />
+
+   <!-- New York -->
+
+   <h6><a href="http://www.givenik.com/WalnutStreet" target="_blank">Going to <nobr>New York?</nobr></a></h6>
+   Get Broadway tickets with exclusive discounts here and support Walnut Street Theatre!<br /><br />
+
+
+   <br /><br />
+
+   <!-- Playbill -->
+  
+   <h6><a href="http://manzomediagroup.com/walnutstreettheatre/" target="_blank">Advertise in <i>Playbill</i></a></h6>
+   Reach the largest subscription audience in the world!  Advertise in <i>Playbill</i>&#160; for our Mainstage, the 
+   Independence Studio on 3 or our WST for Kids shows. Learn more 
+   <a href="http://manzomediagroup.com/walnutstreettheatre/" target="_blank">here</a>!
+   
+   <br /><br />
+
+   <a name="connect"></a>
+   <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #B90F29;">
+   <ul class="connect" style="margin: 0px; padding: 0px;">
+      <li><span class="st_sharethis_custom"
+         st_summary="Walnut Street Theatre is America's Oldest Theatre and Philadelphia's most popular theatre company! Sign up for our e-newsletter and receive inside news, special offers and performance updates at www.walnutstreettheatre.org/signup"
+         st_image="http://www.walnutstreettheatre.org/images/wst-share-icon.jpg"><a href="#connect"
+         class="social share">Share With Friends</a></span></li>
+      <li><a href="http://www.facebook.com/walnutstreettheatre" target="_blank" class="social facebook">Facebook</a></li>
+      <li><a href="http://instagram.com/walnutstreettheatre" target="_blank" class="social instagram">Instagram</a></li>
+      <li><a href="https://twitter.com/WalnutStTheatre" target="_blank" class="social twitter">Twitter</a></li>
+      <li><a href="/enter.php?contest=48" class="social email">Join Our Mailing List</a></li>
+   </ul>
+   </div>
+
+   <br /><br />
+
+   <small>
+   Photos, top of page: L-R: 
+   Terry Burrell in <i>Ethel!</i> (2012), Rachel York in <i>Rodgers and Hammerstein's The King and I</i> (2011) 
+   and Miguel Jarquin-Moreland in <i>Buddy &ndash; The Buddy Holly Story</i> (2012). Photos by Mark Garvin.
+   </small>
+
+   </div>
+
+   <br clear="all" />
+
+</div>
+
+   <div id="footer"><div style="padding: 0px 15px 0px 62px;">
+
+   <p><img src="/images/home/sponsors-home-2015c.png" width="840" height="289" border="0" alt="" 
+      usemap="#sponsors" /></p>
+   <br />
+   <p><hr noshade size="1" /></p>
+
+   <p>
+
+   
+   <b>Walnut Street Theatre</b> | 
+   825 Walnut Street, Philadelphia, PA 19107, 215-574-3550 | 
+   <a href="/contact.php">Contact Us</a> | <a href="/theatre/privacy.php">Privacy Policy</a><br /><br />
+
+   Copyright &copy; 2009-2015, Walnut Street Theatre. All rights reserved. 
+   Website developed by 
+   <a href="http://www.zerodefectdesign.com" target="_blank">Zero Defect Design LLC</a>.
+   </p>
+
+   </div></div>
+
+<map name="sponsors">
+   <area shape="rect" alt="" coords="0,225,142,275"   href="http://www.peco.com/" target="_blank" />
+   <area shape="rect" alt="" coords="584,225,718,276" href="http://www.aa.com" target="_blank" />
+   <area shape="rect" alt="" coords="498,111,555,181" href="http://www.wrti.org/" target="_blank" />
+   <area shape="rect" alt="" coords="587,111,684,181" href="http://www.mixphiladelphia.com/" target="_blank" />
+   <area shape="rect" alt="" coords="394,111,463,177" href="http://www.philadelphiaweekly.com/" target="_blank" />
+   <area shape="rect" alt="" coords="247,110,360,176" href="http://www.courierpostonline.com/apps/pbcs.dll/frontpage" target="_blank" />
+   <area shape="rect" alt="" coords="104,125,205,158" href="http://www.metro.us/philadelphia/" target="_blank" />
+   <area shape="rect" alt="" coords="0,109,84,174"    href="http://www.nbcphiladelphia.com/" target="_blank" />
+   <area shape="rect" alt="" coords="360,24,489,74"   href="http://www.stradley.com/index.php" target="_blank" />
+   <area shape="rect" alt="" coords="510,24,669,74"   href="https://www.mtb.com/personal/Pages/Index.aspx" target="_blank" />
+   <area shape="rect" alt="" coords="690,24,840,74"   href="https://www.wilmingtontrust.com/" target="_blank" />
+   <area shape="rect" alt="" coords="105,24,339,74"   href="http://www.pbp.com/" target="_blank" />
+   <area shape="rect" alt="" coords="0,24,84,74"      href="http://www.pwc.com/us/en/index.jhtml" target="_blank" />
+   <area shape="rect" alt="" coords="217,228,346,277" href="http://www.pncartsalive.com/philadelphia/" target="_blank" />
+</map>
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher:'2512f13a-bcfd-4a53-a8d3-fe5cd8ba21c1', onhover: false });</script>
+<script>
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-8393603-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
+

@@ -1,5 +1,29 @@
 
 var map
+function forgot(){
+$('#loginModal .modal-body').html('\
+      <form role="form">\
+      Please enter your email.\
+      <div class="form-group email-form" style="">\
+      <input type="text" style="" id="forgotEmail" class="form-control" placeholder="Email">\
+      </div>\
+      <br>\
+      <div class="form-group" style=" ">\
+      <br>\
+      <a style="" id="forgotButton" class="btn btn-default">Send Verification Email</a>\
+      </div>\
+      </form>')
+$('#forgotButton').on('click', function(){
+  email = $('#forgotEmail').val()
+$.ajax({
+        url:"/forgot",
+        data:{"email":email},
+        success:$('#loginModal .modal-body').html('Check your email to reset your password.')
+    })
+
+})
+
+}
 function blog(){
 $.ajax({
         url:"/blog",
@@ -249,6 +273,57 @@ function full_theater(){
 function full_reviews(){
     $.ajax({
         url: "/fullreviews",
+        success: show_full_reviews,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function reviewsbyshow(){
+    $.ajax({
+        url: "/reviewsbyshow",
+        success: show_full_reviews,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function reviewsbyusers(){
+    $.ajax({
+        url: "/reviewsbyusers",
+        success: show_full_reviews,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function reviewsbyreviewer(){
+    $.ajax({
+        url: "/reviewsbyreviewer",
         success: show_full_reviews,
          beforeSend: function() {
             // console.log("before");
@@ -1477,7 +1552,11 @@ var goods = [];
           
           bads.push(this.name)
         });
-       
+  if(jQuery('#reviewModal .private input:checked').length == 0){
+      var checkPrivate = "no"
+  }else{
+      var checkPrivate = "yes"
+  }
   var text = $("#reviewModal #writeuserreview").val();
  var showid = $('.modalShowID').text()
    $.ajax({
@@ -1513,16 +1592,21 @@ var goods = [];
 function submit_review(){
 
 	var goods = [];
-        $('#checkboxlistgood input:checked').each(function() {
+        $('.widget-popular #checkboxlistgood input:checked').each(function() {
         	
         	goods.push(this.name)
         });
     var bads = [];
-        $('#checkboxlistbad input:checked').each(function() {
+        $('.widget-popular #checkboxlistbad input:checked').each(function() {
         	
         	bads.push(this.name)
         });
-       
+  if(jQuery('.widget-popular .private input:checked').length == 0){
+      var checkPrivate = "no"
+  }else{
+      var checkPrivate = "yes"
+  }
+  
 	var text = $("#writeuserreview2").val();
 	var showname = $("#showname").text();
 	var showid = $('#showid').text();
@@ -1534,7 +1618,8 @@ function submit_review(){
 			text: text,
 			stars: stars,
 			goods: JSON.stringify(goods),
-			bads: JSON.stringify(bads)
+			bads: JSON.stringify(bads),
+      checkPrivate: checkPrivate
 		},
     beforeSend: function() {
             // console.log("before");
@@ -1735,6 +1820,18 @@ $(window).hashchange( function test(){
     case "#reviewModal":
        
         break;
+    case "#byshow":
+      reviewsbyshow();
+      break;
+    case "#byreviewer":
+      reviewsbyreviewer();
+      break;
+    case "#byusers":
+      reviewsbyusers();
+      break;
+    case "#forgot":
+      forgot();
+      break;
 
 
                                                             
@@ -1753,6 +1850,10 @@ $(window).hashchange( function test(){
 
 if($('#fromEmail').text() == 'a'){
    $('#emailModal').modal()
+
+}
+if($('#fromPassword').text() == 'a'){
+   $('#frompasswordModal').modal()
 
 }
 $('.facebookLogin').on("click",function(){

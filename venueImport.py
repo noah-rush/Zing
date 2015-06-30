@@ -29,15 +29,16 @@ def run():
 		site = worksheet.cell_value(curr_row, 6)
 		fb = worksheet.cell_value(curr_row, 7)
 		tw = worksheet.cell_value(curr_row, 8)
-		c.execute("SELECT * FROM PHILLYVENUES WHERE NAME = %s", (venuename,))
+		tix = worksheet.cell_value(curr_row, 9)
+		c.execute("SELECT * FROM Theatres WHERE NAME = %s", (venuename,))
 		testResults = c.fetchall()
 		if len(testResults) == 0:
 			print venuename
-			c.execute("""INSERT INTO PHILLYVENUES(name, address, description,
-						 website, phone, email, facebook, twitter) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""",
-					     (venuename, address, descript, site, phone, email, fb, tw))
+			c.execute("""INSERT INTO THEATRES(name, address, descript,
+						 site, phone, email, fb, tw, tix) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+					     (venuename, address, descript, site, phone, email, fb, tw, tix))
 			conn.commit()
-			c.execute("SELECT id from PHILLYVENUES WHERE name = %s", (venuename,))
+			c.execute("SELECT id from THEATRES WHERE name = %s", (venuename,))
 			venueid = c.fetchall()[0]['id']
 			urllib.urlretrieve(img, "static/ZingVenueImages/" + str(venueid) + ".png")
 

@@ -39,7 +39,7 @@ def run():
 		testResults = c.fetchall()
 		if len(testResults) == 0:
 			print showname
-			c.execute("SELECT id FROM PHILLYVENUES WHERE name = %s", (venue,))
+			c.execute("SELECT id FROM THEATRES WHERE name = %s", (venue,))
 			venueid = c.fetchall()[0]['id']
 			print venueid
 			c.execute("""INSERT INTO ZINGSHOWS( name, descript, producer,  start, enddate, venueid) 
