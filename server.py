@@ -1429,7 +1429,8 @@ def venue():
         tw['text'] = tweetText
         tweetsList.append(tw)
       tweetsList = resort(tweetsList)
-
+    else:
+      tweets = []
       
       # while testText.find("http")>0:
       #   truncatenum = testText.find("http")
