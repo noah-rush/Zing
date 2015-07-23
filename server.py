@@ -1403,30 +1403,32 @@ def venue():
     twitterHandle = results['tw']
     twitterHandle = twitterHandle[twitterHandle.rfind("/")+1:]
     print twitterHandle
-    tweets = t.statuses.user_timeline(screen_name=twitterHandle)
     tweetsList = []
-    for tweet in tweets:
-      tw = {}
-      tw['created_at'] = tweet['created_at']
-      if len(tweet['entities']['urls']) > 0:
-        tw['links'] = []
-        for x in tweet['entities']['urls']:
-          print x['url']
-          tw['links'].append(x['url'])
-      if 'media' in tweet['entities'].keys():
-        print tweet['entities']['media'][0]['media_url']
-        tw['media'] = tweet['entities']['media'][0]['media_url']
-      else:
-        tw['media'] = ""
-      tweetText = tweet['text']
-      testText = tweetText
-      http = tweetText[tweetText.find("http"):]
-      http = http[:http.find(" ")]
-      print http
-      tweetText = tweetText.replace(http, "")
-      tw['text'] = tweetText
-      tweetsList.append(tw)
-
+    if twitterHandle != "":
+      tweets = t.statuses.user_timeline(screen_name=twitterHandle)
+      tweetsList = []
+      for tweet in tweets:
+        tw = {}
+        tw['created_at'] = tweet['created_at']
+        if len(tweet['entities']['urls']) > 0:
+          tw['links'] = []
+          for x in tweet['entities']['urls']:
+            print x['url']
+            tw['links'].append(x['url'])
+        if 'media' in tweet['entities'].keys():
+          print tweet['entities']['media'][0]['media_url']
+          tw['media'] = tweet['entities']['media'][0]['media_url']
+        else:
+          tw['media'] = ""
+        tweetText = tweet['text']
+        testText = tweetText
+        http = tweetText[tweetText.find("http"):]
+        http = http[:http.find(" ")]
+        print http
+        tweetText = tweetText.replace(http, "")
+        tw['text'] = tweetText
+        tweetsList.append(tw)
+      tweetsList = resort(tweetsList)
 
       
       # while testText.find("http")>0:
@@ -1439,8 +1441,6 @@ def venue():
       #   print testText
 
    
-      print "\n"
-    tweetsList = resort(tweetsList)
     results['descript'] = Markup(results['descript'])
     c.execute("SELECT * from Karlstaff where theatre = %s", (results['name'],))
     employees = c.fetchall()
