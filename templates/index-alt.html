@@ -34,7 +34,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <div class="emailVerif" style="text-align: center" class="panel panel-default">
+                    <div style="text-align: center" class="emailVerif panel panel-default">
                         <h3>          Please check your email to verify your identity before you can review shows. 
           </h3>
                     </div>
@@ -47,7 +47,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <div class="emailVerif" style="text-align: center" class="panel panel-default">
+                    <div \ style="text-align: center" class="emailVerif panel panel-default">
                         <h3>Thank you for verifying your account. Welcome to Zing!</h3>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <div class="emailVerif" style="text-align: center" class="">
+                    <div class="emailVerif" style="text-align: center">
                         <h3>Your password has been updated.</h3>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                                     <br>
                                     <input class="good" name="Funny" type="checkbox"> Funny
                                     <br>
-                                    <input class="good" name="Thought provoking" type="checkbox"> Thought provoking</input>
+                                    <input class="good" name="Thought provoking" type="checkbox"> Thought provoking
                                     <br>
                                     <input class="good" name="Energizing" type="checkbox"> Energizing
                                     <br>
@@ -138,7 +138,7 @@
     <input type="radio" name="stars" value="5"><i></i>
     </span>
                         <div class="private">
-                            <input type="checkbox" name="private"> Keep Review Private? Your Rating will be added to the overall tally.</input>
+                            <input type="checkbox" name="private"> Keep Review Private? Your Rating will be added to the overall tally.
                         </div>
                         <div>
                             <button onClick="modal_submit_review()" type="button" id="modalsubmitshowreview" class="btn btn-primary">Submit Review</button>
@@ -595,7 +595,7 @@
                                         </a>
                                         <h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
                                         <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-                                        <p>{{post['descript']}}</p>
+                                        {{post['descript']}}
                                         <div class="bar">
                                             <a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
                                             <a href="#post/{{post['id']}}" class="more">more</a>
