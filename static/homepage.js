@@ -1134,6 +1134,7 @@ function show_password(data){
 /////////////////Retrieval From Ajax, this can be compressed
 function display_show(data){
     jQuery('body').animate({"scrollTop":0})
+     jQuery('html').animate({"scrollTop":0})
     $(".page-content").html(data);
 
 
@@ -1844,6 +1845,8 @@ $(window).hashchange( function test(){
         
         $(".page" + page).show()
         jQuery('body').animate({"scrollTop":jQuery('.postsList .head').offset().top - $('.fixed').height()})
+        jQuery('html').animate({"scrollTop":jQuery('.postsList .head').offset().top - $('.fixed').height()})
+
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
    
