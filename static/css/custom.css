@@ -1291,6 +1291,33 @@ main {
     margin-top:10px;
     margin-bottom: 10px;
 }
+.past {
+    background: black;
+    color: white;
+    padding: 6px;
+    width: 100%;
+    border-radius: 0px;
+    font-size: 14px;
+    float: left;
+    text-align: center;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.future{
+      background: blue;
+    color: white;
+    border-radius: 0px;
+    text-align: center;
+    color: white;
+    padding: 6px;
+    width: 100%;
+    border-radius: 0px;
+    font-size: 14px;
+    float: left;
+    text-align: center;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
 .desktopGetTickets {
 
     width: 50%;
