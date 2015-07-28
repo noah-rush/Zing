@@ -53,6 +53,61 @@ app.config.update(dict(
 
 mail = Mail(app)
 
+
+
+def fullScheduleTemplate(results, title):
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    print results
+    months = {"01": "January ",
+              "02": "February ",
+              "03": "March ",
+              "04": "April ",
+              "05": "May ",
+              "06": "June ",
+              "07": "July ", 
+              "08": "August ",
+              "09": "September ", 
+              "10": "October ", 
+              "11": "November ", 
+              "12": "December "}
+    for result in results:
+      result['descript'] = Markup(result['descript'])
+      c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
+                    WHERE showid = %s""", (result['id'],))
+      for a in c.fetchall():
+        if a['sum'] != None:
+          result['rating'] = convert_to_percent(float(a['sum'])/float(a['count']))
+      c.execute("SELECT name FROM Theatres WHERE id = %s", (result['venueid'],))
+      venueResult = c.fetchall()
+      if len(venueResult)>0:
+        venuename = venueResult[0]['name']
+      else:
+        venuename = ""
+      result['venuename'] = Markup(venuename)
+      result['name'] = Markup(result['name'])
+      result['start'] = str(result['start'])
+      result['enddate'] = str(result['enddate'])
+      monthfirst = result['start'].find("-")
+      monthlast = result['start'].rfind("-")
+      month = result['start'][monthfirst+1:monthlast]
+      day = result['start'][monthlast+1:]
+      year = result['start'][:4]
+      if day[0] == "0":
+        day = day[1:]
+      result['start'] = months[month] + day 
+      monthfirst = result['enddate'].find("-")
+      monthlast = result['enddate'].rfind("-")
+      month = result['enddate'][monthfirst+1:monthlast]
+      day = result['enddate'][monthlast+1:]
+      if day[0] == "0":
+        day = day[1:]
+      year = result['enddate'][:4]
+      result['enddate'] = months[month] + day + ", " +  year
+    results = resort(results)
+    totalCountMod = len(results)%3
+    return render_template('fullschedule.html', title = title, results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
+
+
 ### convenience function for converting date strings to postgres readable dates, not currently in use 
 def resort(infoList):
   newList = []
@@ -161,8 +216,9 @@ def comingsoon():
       result["rating"] = rating
       c.execute("SELECT address, name FROM THEATRES WHERE id = %s",(result['venueid'], ))
       venuedata = c.fetchall()[0]
+      result['name'] = Markup(result['name'])
       result["address"] = venuedata['address'] 
-      result["venue"] = venuedata['name'] 
+      result["venue"] = Markup(venuedata['name']) 
     return results
 
 def allposts():
@@ -1289,7 +1345,54 @@ def pastshows():
     totalCountMod = len(results)%3
     return render_template('fullschedule.html', title = "Past Shows", results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
- ###returns a fullschedule of shows--duh
+ ###returns a fullschedule of shows
+@app.route('/comedy')
+def comedy():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, COMEDY WHERE COMEDY.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Comedies" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/music')
+def music():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, Musicals WHERE Musicals.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Musicals" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/classics')
+def classics():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, CLASSICS WHERE CLASSICS.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Classics" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/drama')
+def drama():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, DRAMA WHERE DRAMA.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Dramas" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/experimen')
+def experimen():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, Experimental WHERE EXPERIMENTAL.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Experimental" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/emailList')
+def emailList():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    email = request.args.get('email')
+    c.execute("INSERT INTO emailList(email) VALUES(%s)", (email,))
+    conn.commit()
+    return ""
 
 @app.route('/fullschedule')
 def fullschedule():
@@ -2028,6 +2131,36 @@ def addtag():
               VALUES(%s, %s)""", (articleid,showid))
    conn.commit()
    return "did it"
+
+@app.route('/manageGenre', methods =['GET', 'POST'])
+def manageGenre():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT * FROM ZINGSHOWS")
+  shows = c.fetchall()
+  for show in shows:
+    show['name'] = Markup(show['name'])
+  return render_template("manageGenre.html", shows = shows)
+
+
+@app.route('/genreSubmit', methods =['GET', 'POST'])
+def genreSubmit():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  showid = str(request.args.get('show'))
+  genre = request.args.get('genre')
+  print showid
+  print genre
+  if genre == "Comedy":
+    c.execute("INSERT INTO Comedy(showid) values(%s)", (showid,))
+  if genre == "Experimental":
+    c.execute("INSERT INTO Experimental(showid) values(%s)", (showid,))
+  if genre == "Classics":
+    c.execute("INSERT INTO Classics(showid) values(%s)", (showid,))
+  if genre == "Drama":
+    c.execute("INSERT INTO Drama(showid) values(%s)", (showid,))
+  if genre == "Musical":
+    c.execute("INSERT INTO Musicals(showid) values(%s)", (showid,))
+  conn.commit()
+  return ""
 
 
 @app.route('/manageOutReviews', methods=['GET', 'POST'])

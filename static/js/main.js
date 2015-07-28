@@ -12,6 +12,9 @@ $(window).scroll(function()
 		if($(window).width()>767){
 		$('.page-content').css({"margin-top": "180px"});
 	}
+	if($(window).width()<982){
+		$('.col-title').css({"margin-top":"0px"});
+	}
 		// $('.logo-fixed').show();
 		if(!fixed){
 			$('.col-title').css({"width":"16%"});
@@ -26,6 +29,9 @@ $(window).scroll(function()
 	}
 	else
 	{
+		if($(window).width()<982){
+		$('.col-title').css({"margin-top":"23px"})
+		}
 		$('.page-content').css({"margin-top": "0px"});
 		$('.page-header-middle').removeClass('fixed');	
 		if(fixed){

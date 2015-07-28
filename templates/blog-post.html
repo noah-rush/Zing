@@ -140,13 +140,7 @@
 								<div class="cont">
 								<div class = "col-md-6">
 									<img src="static/Zingimages/{{showdata['id']}}.jpg" width="710" height="400" alt="">
-									 {%if useron == "confirm email"%}
-              <a class="btn btn-default mobileReviewButton" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
-              {%elif useron !=  "none" %}
-            <a class="btn btn-default WriteReviewMobile mobileReviewButton" data-toggle = "reviewModal">Write a Review</a>
-             {%else%}
-             <a class="btn btn-default  mobileReviewButton loginSidebar" data-toggle = "reviewModal">Write a Review</a>
-             {%endif%}
+							
              {%if showdata['nowplaying'] == "yes"%}
              <div class = "nowplaying mobileReviewButton"> <span class = "glyphicon glyphicon-play "></span> Now Playing</div>
              {%elif showdata['nowplaying'] == "future"%}
@@ -159,16 +153,25 @@
 
              </div>
              <div class ="col-md-6">
+             <div class = "ticketsAndStatus">
              {%if showdata['nowplaying'] == "yes"%}
              <div class = "nowplaying desktopNowPlaying"> <span class = "glyphicon glyphicon-play"></span> Now Playing</div>
-              <div class = "desktopGetTickets"><a href ="{{venue[0]['tix']}}"><span class = "glyphicon glyphicon-usd"></span> Get Tickets</a></div>
+             <a target = "_blank" href ="{{venue[0]['tix']}}"> <div class = "desktopGetTickets">$ Get Tickets</div></a>
              {%elif showdata['nowplaying'] == "future"%}
              <div class = "future desktopNowPlaying"> <span class = "glyphicon glyphicon-forward"></span> Upcoming</div>
-             <div class = "desktopGetTickets"><a href ="{{venue[0]['tix']}}"><span class = "glyphicon glyphicon-usd"></span> Get Tickets</a></div>
+             <a target = "_blank" href ="{{venue[0]['tix']}}"><div class = "desktopGetTickets">$ Get Tickets</div></a>
               {%elif showdata['nowplaying'] == "past"%}
              <div class = "past desktopNowPlaying"> <span class = "glyphicon glyphicon-backward"></span> Finished</div>
 
              {%endif%}
+             		 {%if useron == "confirm email"%}
+              <a class="btn btn-default mobileReviewButton" href = "#emailNotYet" data-toggle = "reviewModal">Write a Review</a>
+              {%elif useron !=  "none" %}
+            <a class="btn btn-default WriteReviewMobile mobileReviewButton" data-toggle = "reviewModal">Write a Review</a>
+             {%else%}
+             <a class="btn btn-default  mobileReviewButton loginSidebar" data-toggle = "reviewModal">Write a Review</a>
+             {%endif%}
+             </div>
 									{{headerDescription}}
 								
 
@@ -182,8 +185,11 @@
 									<div class="overview">
 									 <div class = "row reviewsRow">
     <div class = "col-md-6 reviewCritics">
-								
+		{%if articles|length >0 %}						
 <h2>Critic's Reviews</h2>
+{%else%}
+<h2>No reviews yet.. Check back soon!</h2>
+{%endif%}
 {% for article in articles %}
 
 <p><a  target = "_blank"  href = "{{article['link']}}"><span> {{article['title']}}</span></a></p>
@@ -191,8 +197,22 @@
 {%endfor%}
 
 </div>
-<div class = "col-md-6">
+<div class = "col-md-6 userReviews">
+	{%if userreviews|length >0 %}						
 <h2>User Reviews</h2>
+{%else%}
+<h2 class = "firstReview">No user reviews yet.. be the 
+
+  {%if useron == "confirm email"%}
+              <a class="btn btn-default reviewTopMenu confirmEmailModal"  data-toggle = "reviewModal">first!</a>
+              {%elif useron !=  "none" %}
+            <a class="btn btn-default reviewTopMenu writeReviewModal"  data-toggle = "reviewModal">first!</a>
+             {%else%}
+             <a class="btn btn-default reviewTopMenu loginSidebar" data-toggle = "reviewModal">first!</a>
+             {%endif%}
+
+             </h2>
+{%endif%}
 {% for review in userreviews %}
 <li class="list-group-item userReview" style = "text-align: left"><p>
 
@@ -291,7 +311,9 @@
 							
 							<!-- related posts -->
 							<div class="related-posts">
+								{%if venueShows|length>1%}
 								<div class="head">Shows @ {{venue[0]['name']}}</div>
+								{%endif%}
 								<ul>
 								{%for venueshow in venueShows%}
 								{%if venueshow['id'] != showdata['id']%}
@@ -417,7 +439,7 @@
         <br>
         <br>
         <div class = "row">
-          <div class = "col-md-6 col-sm-6 col-xs-6">
+          <div class = "col-md-6 ">
             <div class = "checkboxlistgood" id = "checkboxlistgood">
               <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
               <br>
@@ -440,7 +462,7 @@
               <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
           </div>
         </div>
-      <div class = "col-md-6 col-sm-6 col-xs-6">
+      <div class = "col-md-6">
         <div class = "checkboxlistbad" id = "checkboxlistbad">
             <input type = "checkbox" name = "Overly long"> Overly long</input>
             <br>

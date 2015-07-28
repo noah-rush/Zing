@@ -1,0 +1,16 @@
+<div class = "manageGenre">
+
+<select class = "selectShow">
+{%for show in shows%}
+<option value = "{{show['id']}}">{{show['name']}}</option>
+{%endfor%}
+</select>
+<select class = "selectGenre">
+<option>Comedy</option>
+<option>Experimental</option>
+<option>Classics</option>
+<option>Drama</option>
+<option>Musical</option>
+</select>
+<a href = "#genreSubmit" class = "btn btn-genre">Submit Genre</a>
+</div>

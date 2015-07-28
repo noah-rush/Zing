@@ -1,5 +1,107 @@
 
 var map
+function emailList(){
+  var email = $('.emailList').val()
+     $.ajax({
+        url: "/emailList",
+         beforeSend: function() {
+            // console.log("before");
+             $('.email-widget').html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+              $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+    $('.email-widget').html("<div class='head'>Thanks for Joining. Look out for our emails!</div>")
+  }
+    });
+
+}
+function comedy(){
+    $.ajax({
+        url: "/comedy",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+              $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
+function experim(){
+    $.ajax({
+        url: "/experimen",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
+function music(){
+    $.ajax({
+        url: "/music",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').remove();
+  },
+  complete: function(){
+  
+     $('#loader').hide();
+  
+  }
+    });
+
+};
+function classic(){
+    $.ajax({
+        url: "/classics",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
+function drama(){
+    $.ajax({
+        url: "/drama",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
 function forgot(){
 $('#loginModal .modal-body').html('\
       <form role="form">\
@@ -24,6 +126,21 @@ $.ajax({
 })
 
 }
+function genre(){
+  $.ajax({
+        url:"/manageGenre",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+  $('#loader').remove();
+   
+  }
+    })
+}
 function blog(){
 $.ajax({
         url:"/blog",
@@ -34,7 +151,7 @@ $.ajax({
      $('#loader').show();
   },
   complete: function(){
-  $('#loader').hide();
+  $('#loader').remove();
    
   }
     })
@@ -159,7 +276,7 @@ $.ajax({
   },
   complete: function(){
     // console.log("done")
-     $('#loader').hide();
+     $('#loader').remove();
      homepage();
   }
     })
@@ -212,7 +329,7 @@ function get_all_shows(){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         success: display_all_shows
@@ -230,7 +347,7 @@ function full_schedule(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -247,7 +364,7 @@ function pastshows(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -264,7 +381,7 @@ function full_theater(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -281,7 +398,7 @@ function full_reviews(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -298,7 +415,7 @@ function reviewsbyshow(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -315,7 +432,7 @@ function reviewsbyusers(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -332,7 +449,7 @@ function reviewsbyreviewer(){
   },
   complete: function(){
   
-     $('#loader').hide();
+     $('#loader').remove();
   
   }
     });
@@ -382,7 +499,7 @@ function find(data){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         success: display_show
@@ -403,7 +520,7 @@ function post(data){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         success: show_post
@@ -424,7 +541,7 @@ function reviews(data){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         success: show_full_reviews
@@ -445,7 +562,7 @@ function show(data){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         success: display_show
@@ -487,7 +604,7 @@ function open_editor(){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
         url:"/edit"
@@ -504,7 +621,7 @@ function manageReviews(){
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   }
     })
@@ -520,7 +637,7 @@ function manageOutReviews(){
   },
   complete: function(){
     // console.log("done")
-     $('#loader').hide();
+     $('#loader').remove();
      show_out_manager();
   },
   success:show_out_manager
@@ -918,7 +1035,7 @@ $.ajax({
   },
   complete: function(){
    
-     $('#loader').hide();
+     $('#loader').remove();
      
   },
     success:  function(){
@@ -1018,7 +1135,17 @@ function show_password(data){
 function display_show(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
-    $('.WriteReviewMobile').click(function(){
+
+
+    $('.review .writeReviewModal').click(function(){
+  modalReview()
+  $('.search3').find('input').val($('#myModalLabel').text());
+  $('.widget-modal-review .head').html("What did you think of " + $('#myModalLabel').text() + "?")
+  $('.widget-modal-review').slideToggle();
+  $('.modalShowID').text($('#showid').text());
+  $('#reviewModal').animate({"top": "0%"})
+})
+      $('.WriteReviewMobile').click(function(){
   modalReview()
   $('.search3').find('input').val($('#myModalLabel').text());
   $('.widget-modal-review .head').html("What did you think of " + $('#myModalLabel').text() + "?")
@@ -1208,7 +1335,30 @@ function show_post(data){
 jQuery('.fullschedule .showAtVenueDescript').remove()
      jQuery('body').animate({"scrollTop":0})
       $('a[href="/barrymore-awards/2015/recommended"]').remove();
+      $('.btn-genre').click(function(){
+        var genre = jQuery('.selectGenre').val();
+        var show = jQuery('.selectShow').val();
+        var showname = jQuery('.selectShow option:selected').text()
+          $.ajax({
+        url:"/genreSubmit",
+        data: {show:show, genre: genre},
+        success: function(){
+            $(".manageGenre").append("<div class = 'added'>" + showname + " has been tagged as a " + genre +".</div>" )
+            $('.added').delay(2000).fadeOut(200);
 
+        },
+         beforeSend: function() {
+            // console.log("before");
+             $(".manageGenre").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+          },
+          complete: function(){
+          $('#loader').remove();
+   
+  }
+    })
+      }
+      )
  
 }
 function show_full_reviews(data){
@@ -1810,6 +1960,24 @@ $(window).hashchange( function test(){
     case "#blog":
         blog();
         break;
+    case "#genreTagShows":
+        genre();
+        break;
+    case "#comedy":
+        comedy();
+        break;
+    case "#exp":
+        experim();
+        break; 
+    case "#dram":
+        drama();
+        break; 
+    case "#class":
+        classic();
+        break; 
+    case "#mus":
+        music();
+        break;
     case "#emailNotYet":
         $("#emailNotYetModal").modal()
           $('#emailNotYetModal').on('hidden.bs.modal', function (e) {
@@ -1832,6 +2000,7 @@ $(window).hashchange( function test(){
     case "#forgot":
       forgot();
       break;
+
 
 
                                                             
@@ -1887,6 +2056,10 @@ $('.writeReviewModal').click(function(){
 
 $('.WriteReviewMobile').click(function(){
   modalReview()
+})
+
+$('.joinEmailList').click(function(){
+  emailList();
 })
 
 
