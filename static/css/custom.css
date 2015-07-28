@@ -1267,6 +1267,9 @@ main {
      .desktopGetTickets{
     margin-top:0px ;
     }
+    h2.firstReview{
+    margin-top:0px;
+}
   .mobileReviewButton {
     background: #B11E24;
     color: white;
