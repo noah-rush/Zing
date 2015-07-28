@@ -1,6 +1,9 @@
 .modal-backdrop{
     position:fixed;
 }
+.userReviews{
+    overflow:visible !important;
+}
 h2.firstReview{
     margin-top:-6px;
 }

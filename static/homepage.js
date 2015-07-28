@@ -1716,7 +1716,9 @@ var goods = [];
       text: text,
       stars: stars,
       goods: JSON.stringify(goods),
-      bads: JSON.stringify(bads)
+      bads: JSON.stringify(bads),
+        checkPrivate: checkPrivate
+
     },
     beforeSend: function() {
              $('#reviewModal').modal('hide');
