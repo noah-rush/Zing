@@ -4,6 +4,9 @@
 h2.firstReview{
     margin-top:-6px;
 }
+.col-md-6{
+    overflow:auto;
+}
 .ticketsAndStatus{
     overflow:auto;
 }
