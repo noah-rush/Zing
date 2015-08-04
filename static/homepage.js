@@ -1203,8 +1203,9 @@ function display_show(data){
 function display_venue(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
-    $('.showAtVenueDescript').remove();
-    jQuery('.field-content p br:first-child').remove()
+ if(  jQuery('.showAtVenueDescript').text() == ""){
+jQuery('.showAtVenueDescript').remove()
+}    jQuery('.field-content p br:first-child').remove()
     $('a[href="/barrymore-awards/2015/recommended"]').remove();
     var address = $("#address").text();
  $('#widgets-switcher').on('click', function()
@@ -1333,7 +1334,9 @@ function show_post(data){
      $(".page-content").html(data);
      pager()
          jQuery('.field-content p br:first-child').remove()
+         if(  jQuery('.fullschedule .showAtVenueDescript').text() == ""){
 jQuery('.fullschedule .showAtVenueDescript').remove()
+}
      jQuery('body').animate({"scrollTop":0})
       $('a[href="/barrymore-awards/2015/recommended"]').remove();
       $('.btn-genre').click(function(){

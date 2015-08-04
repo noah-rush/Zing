@@ -71,7 +71,7 @@ def fullScheduleTemplate(results, title):
               "11": "November ", 
               "12": "December "}
     for result in results:
-      result['descript'] = Markup(result['descript'])
+      # result['descript'] = Markup(result['descript'])
       c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
                     WHERE showid = %s""", (result['id'],))
       for a in c.fetchall():
@@ -1662,6 +1662,7 @@ def show():
       venue = c.fetchall()
       venue[0]['name'] = Markup(venue[0]['name'])
       venue[0]['descript'] = Markup(venue[0]['descript'])
+      #and ZINGUSERREVIEWS.private = %s
       c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY')
                 from ZINGRATINGS, ZINGUSERREVIEWS

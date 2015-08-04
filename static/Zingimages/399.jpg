@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!--[if lte IE 7]>
+<html class="ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="user-scalable=yes">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>It&#8217;s a Wonderful Life: A Live Radio Play | Bucks County Playhouse</title>
+		<!-- Load Google Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Unica+One">
+	<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" media="all" href="http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/style.css" />
+	<link rel="pingback" href="http://www.bcptheater.org/xmlrpc.php" />
+	
+
+
+	<link rel='stylesheet' id='formidable-css'  href='http://www.bcptheater.org/wp-content/uploads/formidable/css/formidablepro.css?ver=1.07.01' type='text/css' media='all' />
+<link rel='stylesheet' id='mappress-css'  href='http://www.bcptheater.org/wp-content/plugins/mappress-google-maps-for-wordpress/css/mappress.css?ver=2.40.3' type='text/css' media='all' />
+<link rel='stylesheet' id='NextGEN-css'  href='http://www.bcptheater.org/wp-content/plugins/nextgen-gallery/css/nggallery.css?ver=1.0.0' type='text/css' media='screen' />
+<link rel='stylesheet' id='thickbox-css'  href='http://www.bcptheater.org/wp-includes/js/thickbox/thickbox.css?ver=20121105' type='text/css' media='all' />
+<link rel='stylesheet' id='counteverest-css'  href='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/_inc/counteverest/css/counteverest.css?ver=3.5.2' type='text/css' media='all' />
+<link rel='stylesheet' id='uds-billboard-css'  href='http://www.bcptheater.org/wp-content/plugins/uBillboard/css/billboard.min.css?ver=3.5.2' type='text/css' media='screen' />
+<link rel='stylesheet' id='pcs-styles-css'  href='http://www.bcptheater.org/wp-content/plugins/post-content-shortcodes/default-styles.css?ver=0.3' type='text/css' media='screen' />
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/plugins/nextgen-gallery/js/jquery.cycle.all.min.js?ver=2.9995'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/plugins/nextgen-gallery/js/ngg.slideshow.min.js?ver=1.06'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.bcptheater.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.bcptheater.org/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='The 25th Annual Putnam County Spelling Bee' href='http://www.bcptheater.org/shows-events/the-25th-annual-putnam-county-spelling-bee/' />
+<link rel='next' title='Villain: DeBlanks&#8230;A fill-in-the-blanks diversion' href='http://www.bcptheater.org/shows-events/villan-deblanks-a-fill-in-the-blanks-diversion/' />
+<meta name="generator" content="WordPress 3.5.2" />
+<!-- <meta name="NextGEN" version="1.9.13" /> -->
+
+
+<!-- Plugin: Open external links a new window. Plugin by Kristian Risager Larsen, http://kristianrisagerlarsen.dk . Download it at http://wordpress.org/extend/plugins/open-external-links-in-a-new-window/ -->
+<script type="text/javascript">//<![CDATA[
+	function external_links_in_new_windows_loop() {
+		if (!document.links) {
+			document.links = document.getElementsByTagName('a');
+		}
+		var change_link = false;
+		var force = '';
+		var ignore = '';
+
+		for (var t=0; t<document.links.length; t++) {
+			var all_links = document.links[t];
+			change_link = false;
+			
+			if(document.links[t].hasAttribute('onClick') == false) {
+				// forced if the address starts with http (or also https), but does not link to the current domain
+				if(all_links.href.search(/^http/) != -1 && all_links.href.search('www.bcptheater.org') == -1) {
+					// alert('Changeda '+all_links.href);
+					change_link = true;
+				}
+					
+				if(force != '' && all_links.href.search(force) != -1) {
+					// forced
+					// alert('force '+all_links.href);
+					change_link = true;
+				}
+				
+				if(ignore != '' && all_links.href.search(ignore) != -1) {
+					// alert('ignore '+all_links.href);
+					// ignored
+					change_link = false;
+				}
+
+				if(change_link == true) {
+					// alert('Changed '+all_links.href);
+					document.links[t].setAttribute('onClick', 'javascript:window.open(\''+all_links.href+'\'); return false;');
+					document.links[t].removeAttribute('target');
+				}
+			}
+		}
+	}
+	
+	// Load
+	function external_links_in_new_windows_load(func)
+	{	
+		var oldonload = window.onload;
+		if (typeof window.onload != 'function'){
+			window.onload = func;
+		} else {
+			window.onload = function(){
+				oldonload();
+				func();
+			}
+		}
+	}
+
+	external_links_in_new_windows_load(external_links_in_new_windows_loop);
+	//]]></script>
+
+
+<!-- Simple Google Analytics Begin -->
+<script type="text/javascript">
+var _gaq = [['_setAccount','UA-34198679-1'],['_trackPageview']];(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<!-- Simple Google Analytics End -->
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<style type="text/css">.broken_link, a.broken_link {
+	text-decoration: line-through;
+}</style><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19194699-27']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+ <script type="text/javascript">
+
+   function myFocus(element) {
+
+     if (element.value == element.defaultValue) {
+
+       element.value = '';
+
+     }
+
+   }
+
+   function myBlur(element) {
+
+     if (element.value == '') {
+
+       element.value = element.defaultValue;
+
+     }
+
+   }
+
+  </script>
+</head>
+<body class="single single-bcp_event postid-11351"> <img src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/images/logoforprint.png' id='printbanner' />	<header class="site">
+		<div class="inner">
+			<div class="top">
+								<div id="logo"><a class="title" rel="home" href="http://www.bcptheater.org">Bucks County Playhouse</a></div>
+				<form role="search" method="get" id="searchform" action="http://www.bcptheater.org/">
+        <input type="text" value="Search" data-placeholder="Search" name="s" id="s" onfocus="myFocus(this);" onblur="myBlur(this);" />
+        <input type="submit" id="searchsubmit" value="Search" />
+       <label class="screen-reader-text" for="s">Search for:</label>
+
+</form>				<div class="donate-button">
+					<a href='http://ticketing.artsphilly.org/support/contribution.aspx?org=uc'>Donate Now</a>
+				</div>
+				<div class="nav mini">
+					<ul id="menu-footer-menu" class="menu"><li id="menu-item-115" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-115"><a href="http://www.bcptheater.org/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-114" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-114"><a href="http://www.bcptheater.org/sales-refund-policy/">Sales &#038; Refund Policy</a></li>
+<li id="menu-item-116" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116"><a href="http://www.bcptheater.org/contact/">Contact</a></li>
+<li id="menu-item-117" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-117"><a href="http://www.bcptheater.org/support-us/donate/">Donate</a></li>
+<li id="menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-118"><a href="http://www.bcptheater.org/buy-tickets/">Buy Tickets</a></li>
+</ul>				</div>
+			</div>
+			<nav>
+				<ul id="menu-main-menu" class="menu"><li id="menu-item-219" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-219"><a href="http://www.bcptheater.org/shows-and-events/">Shows &#038; Events</a>
+<ul class="sub-menu">
+	<li id="menu-item-334" class="menu-item menu-item-type-taxonomy menu-item-object-bcp_tax_category menu-item-334"><a href="http://www.bcptheater.org/shows-events-seasons/special-events/">Special Events</a></li>
+	<li id="menu-item-333" class="menu-item menu-item-type-taxonomy menu-item-object-bcp_tax_category menu-item-333"><a href="http://www.bcptheater.org/shows-events-seasons/past-shows-events/">Past Shows &#038; Events</a></li>
+</ul>
+</li>
+<li id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-65"><a href="http://www.bcptheater.org/buy-tickets/">Buy Tickets</a>
+<ul class="sub-menu">
+	<li id="menu-item-11345" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11345"><a href="http://www.bcptheater.org/shows-events/the-25th-annual-putnam-county-spelling-bee/">The 25th Annual Putnam County Spelling Bee</a></li>
+	<li id="menu-item-11354" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-11354"><a href="http://www.bcptheater.org/shows-events/its-a-wonderful-life-a-live-radio-play/">It&#8217;s A Wonderful Life</a></li>
+	<li id="menu-item-10604" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10604"><a href="http://www.bcptheater.org/buy-tickets/bridge-street-concert-series/">Bridge Street Concert Series</a>
+	<ul class="sub-menu">
+		<li id="menu-item-10817" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10817"><a href="http://www.bcptheater.org/shows-events/rodney-marsalis-philadelphia-big-brass/">Rodney Marsalis Philadelphia Big Brass</a></li>
+	</ul>
+</li>
+	<li id="menu-item-11177" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11177"><a href="http://www.bcptheater.org/shows-events/sandy-hacketts-rat-pack-show/">Sandy Hackett&#8217;s Rat Pack Show</a></li>
+	<li id="menu-item-11690" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11690"><a href="http://www.bcptheater.org/shows-events/connection-beyond-with-medium-marisa-liza-pell/http://">Connection Beyond with Medium Marisa Liza Pell</a></li>
+	<li id="menu-item-2717" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2717"><a href="http://www.bcptheater.org/buy-tickets/gift-certificates/">Gift Certificates</a></li>
+	<li id="menu-item-67" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-67"><a href="http://www.bcptheater.org/buy-tickets/group-sales/">Group Sales</a></li>
+</ul>
+</li>
+<li id="menu-item-68" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68"><a href="http://www.bcptheater.org/about-us/">About Us</a>
+<ul class="sub-menu">
+	<li id="menu-item-69" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69"><a href="http://www.bcptheater.org/about-us/history/">History</a></li>
+	<li id="menu-item-70" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-70"><a href="http://www.bcptheater.org/about-us/mission-vision/">Mission &#038; Vision</a></li>
+	<li id="menu-item-5982" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5982"><a href="http://www.bcptheater.org/about-us/transforming-the-playhouse-the-renovation/">The Renovation</a></li>
+	<li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="http://www.bcptheater.org/about-us/staff-team/">Staff &#038; Team</a>
+	<ul class="sub-menu">
+		<li id="menu-item-89" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89"><a href="http://www.bcptheater.org/about-us/staff-team/bridge-street-foundation/">Bridge Street Foundation</a></li>
+		<li id="menu-item-90" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-90"><a href="http://www.bcptheater.org/about-us/staff-team/bucks-county-playhouse-staff/">Bucks County Playhouse Staff</a></li>
+	</ul>
+</li>
+	<li id="menu-item-4394" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4394"><a href="http://www.bcptheater.org/about-us/seating-chart/">Seating Chart</a></li>
+	<li id="menu-item-7621" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7621"><a href="http://www.bcptheater.org/renting-our-spaces/">Renting Our Spaces</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7625" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7625"><a href="http://www.bcptheater.org/about-us/renting-our-space/">The Bucks County Playhouse</a></li>
+		<li id="menu-item-7626" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7626"><a href="http://www.bcptheater.org/renting-the-lambertville-music-hall/">The Lambertville Hall</a></li>
+	</ul>
+</li>
+	<li id="menu-item-73" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-73"><a href="http://www.bcptheater.org/about-us/faqs/">FAQs</a></li>
+	<li id="menu-item-98" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-98"><a href="http://www.bcptheater.org/about-us/employment/">Employment</a>
+	<ul class="sub-menu">
+		<li id="menu-item-7561" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7561"><a href="http://www.bcptheater.org/about-us/employment/">Employment</a></li>
+		<li id="menu-item-1184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1184"><a href="http://www.bcptheater.org/about-us/internship/">Internships</a></li>
+		<li id="menu-item-10504" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10504"><a href="http://www.bcptheater.org/about-us/casting/">Casting</a></li>
+	</ul>
+</li>
+	<li id="menu-item-6451" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6451"><a href="http://www.bcptheater.org/support-us/volunteer/">Volunteer</a></li>
+	<li id="menu-item-92" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-92"><a href="http://www.bcptheater.org/contact/">Contact Us</a></li>
+</ul>
+</li>
+<li id="menu-item-93" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-93"><a href="http://www.bcptheater.org/members-partners/">Subscribers &#038; Partners</a></li>
+<li id="menu-item-96" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-96"><a href="http://www.bcptheater.org/support-us/">Support Us</a>
+<ul class="sub-menu">
+	<li id="menu-item-99" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-99"><a href="http://www.bcptheater.org/support-us/donate/">Make a Donation</a></li>
+	<li id="menu-item-4846" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4846"><a href="http://www.bcptheater.org/play-a-leading-role/">Play a Leading Role</a></li>
+	<li id="menu-item-6184" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6184"><a href="http://www.bcptheater.org/gift-ideas-from-the-bcp/">Gift Ideas from the BCP</a></li>
+	<li id="menu-item-3382" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3382"><a href="http://www.bcptheater.org/support-us/bucks-county-playhouse-dono/">Bucks County Playhouse Donors</a></li>
+	<li id="menu-item-97" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-97"><a href="http://www.bcptheater.org/support-us/volunteer/">Volunteer</a></li>
+</ul>
+</li>
+<li id="menu-item-340" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-340"><a href="http://www.bcptheater.org/plan-your-visit/">Plan Your Visit</a>
+<ul class="sub-menu">
+	<li id="menu-item-9484" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9484"><a href="http://www.bcptheater.org/plan-your-visit/places-to-eat/">Places to Eat</a></li>
+	<li id="menu-item-9504" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9504"><a href="http://www.bcptheater.org/plan-your-visit/places-to-stay/">Places to Stay</a></li>
+	<li id="menu-item-341" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-341"><a href="http://www.bcptheater.org/plan-your-visit/area-attractions/">Area Attractions</a></li>
+	<li id="menu-item-5175" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5175"><a href="http://www.bcptheater.org/riverside-deck-and-playhouse-courtyard/">Playhouse Riverview Café</a></li>
+	<li id="menu-item-4243" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4243"><a href="http://www.bcptheater.org/parking-2/">Parking</a></li>
+	<li id="menu-item-342" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-342"><a href="http://www.bcptheater.org/plan-your-visit/directions-parking-and-other-transportation/">Directions and Other Transportation</a></li>
+	<li id="menu-item-7016" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7016"><a href="http://www.bcptheater.org/about-us/renting-our-space/">Renting Our Space</a></li>
+</ul>
+</li>
+<li id="menu-item-182" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-182"><a href="http://www.bcptheater.org/education/">Education</a>
+<ul class="sub-menu">
+	<li id="menu-item-6135" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6135"><a href="http://www.bcptheater.org/bucks-county-playhouse-youth-company/">Bucks County Playhouse Youth Company</a></li>
+	<li id="menu-item-9007" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9007"><a href="http://www.bcptheater.org/girlspeak/">GIRLSPEAK</a></li>
+	<li id="menu-item-11648" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11648"><a href="http://www.bcptheater.org/junior-acting-company/">Junior Acting Company</a></li>
+	<li id="menu-item-6136" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6136"><a href="http://www.bcptheater.org/young-artists-festival/">New Voices: Playwrights and Actors Festival</a></li>
+	<li id="menu-item-2882" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2882"><a href="http://www.bcptheater.org/education/starcatchers-summer-theater-camp/">Starcatchers Summer Theater Camp</a></li>
+	<li id="menu-item-4274" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4274"><a href="http://www.bcptheater.org/education/student-theater-festival-2014/">Student Theater Festival</a></li>
+	<li id="menu-item-11187" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11187"><a href="http://www.bcptheater.org/education/talk-story/">Talk Story</a></li>
+	<li id="menu-item-11649" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11649"><a href="http://www.bcptheater.org/teen-shakespeare-company/">Teen Shakespeare Company</a></li>
+</ul>
+</li>
+<li id="menu-item-103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-103"><a href="http://www.bcptheater.org/media/">Media</a>
+<ul class="sub-menu">
+	<li id="menu-item-312" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-312"><a href="http://www.bcptheater.org/media/news/">News</a></li>
+	<li id="menu-item-104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-104"><a href="http://www.bcptheater.org/media/photos/">Photos</a></li>
+	<li id="menu-item-105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-105"><a href="http://www.bcptheater.org/media/videos/">Videos</a></li>
+	<li id="menu-item-313" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-313"><a href="http://www.bcptheater.org/media/press-releases/">In The News&#8230;</a></li>
+</ul>
+</li>
+</ul>			</nav>
+			<script>
+				// add arrow to Shows & Events every time an event is displayed
+				jQuery('body.single-bcp_event nav .menu > li:contains(Shows & Events)').addClass('current-menu-ancestor');
+			</script>
+		</div>
+	</header>	<div id="content" class="event">
+		<div class="inner">
+			<div class="top">
+				<div class="breadcrumb"><a href="http://www.bcptheater.org">Home</a><span class="delimiter"> &gt; </span><a href="http://www.bcptheater.org/shows-and-events/" >Shows & Events</a> <span class="delimiter"> &gt; </span> It's a Wonderful Life: A Live Radio Play</div>				<div id="toolbox"></div>
+			</div>
+			<aside class="left sidebar">
+	<ul class="nav pages">
+									
+			<li class=" "><a href="http://www.bcptheater.org/shows-events-seasons/bcp-education-programs/">BCP Education Programs</a>
+			
+							<ul class="children">
+								<li class=""><a href="http://www.bcptheater.org/shows-events/aladdin-jr/">Aladdin Jr.</a></li>
+									</ul>
+							</li>
+						
+			<li class=" "><a href="http://www.bcptheater.org/shows-events-seasons/bridge-street-concert-series/">Bridge Street Concert Series</a>
+			
+							<ul class="children">
+								<li class=""><a href="http://www.bcptheater.org/shows-events/rodney-marsalis-philadelphia-big-brass/">Rodney Marsalis Philadelphia Big Brass</a></li>
+									</ul>
+							</li>
+						
+			<li class=" current_page_ancestor"><a href="http://www.bcptheater.org/shows-events-seasons/2015-season/">2015 Season</a>
+			
+							<ul class="children">
+								<li class=""><a href="http://www.bcptheater.org/shows-events/the-25th-annual-putnam-county-spelling-bee/">The 25th Annual Putnam County Spelling Bee</a></li>
+										<li class="current_page_item"><a href="http://www.bcptheater.org/shows-events/its-a-wonderful-life-a-live-radio-play/">It's a Wonderful Life: A Live Radio Play</a></li>
+									</ul>
+							</li>
+						
+			<li class=" "><a href="http://www.bcptheater.org/shows-events-seasons/special-events/">Special Events</a>
+			
+							<ul class="children">
+								<li class=""><a href="http://www.bcptheater.org/shows-events/sandy-hacketts-rat-pack-show/">Rat Pack Show</a></li>
+									</ul>
+							</li>
+						
+			<li class=" "><a href="http://www.bcptheater.org/shows-events-seasons/past-shows-events/">Past Shows &amp; Events</a>
+			
+							<ul class="children">
+								<li class=""><a href="http://www.bcptheater.org/shows-events/national-pastime/">National Pastime</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/oscar-hammerstein-festival/">Oscar Hammerstein Festival</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-rocky-horror-show-2/">The Rocky Horror Show</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/company/">Company</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/villan-deblanks-a-fill-in-the-blanks-diversion/">Villain: DeBlanks...A fill-in-the-blanks diversion</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/on-golden-pond/">On Golden Pond</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/free-concert-on-the-river/">Free Concert on the River</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/trout-fishing-in-america/">Trout Fishing in America</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/art-in-the-hall/">Art in the Hall</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/vickie-shaw/">Vickie Shaw </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/sing-a-long-hairspray/">Sing-A-Long Hairspray</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/talk-story-new-voices-festival/">Talk Story & New Voices Festival</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/sing-along-saturdays/">Sing-A-Long Saturdays</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/playhouse-exhibit-benefit-tour/">Playhouse Exhibit Benefit Tour</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/bucks-county-comedy/">Bucks County Comedy</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/mmistl/">Meet Me In St. Louis: A Live Radio Play</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/5852-2/">Farewell To Jed Bernstein </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/community-reception-to-welcome-the-new-leadership-team/">Community Reception To Welcome The New Leadership Team</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/my-life-on-a-diet/">My Life On A Diet</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/my-mothers-italian-my-fathers-jewish-im-home-for-the-holidays/">My Mother's Italian, My Father's Jewish, I'm Home for the Holidays</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-rocky-horror-show/">The Rocky Horror Show</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-skivvies/">The Skivvies</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/a-tribute-to-angela-lansbury/">A Tribute To Angela Lansbury</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/lambertville-music-hall-concert-series-2/">Lambertville Music Hall Concert Series</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-godbox/">The God Box, A Daughter's Story</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/bucks-county-cabaret-featuring-alan-cumming/">Bucks County Cabaret: Featuring Alan Cumming</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/riverside-symphonia-a-little-night-music/">Riverside Symphonia: A Little Night Music </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-tale-of-the-allergists-wife/">The Tale of the Allergist's Wife</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/summer-of-42/">Summer of '42</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/really-rosie/">Really Rosie</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-world-goes-round/">The World Goes 'Round</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/mothersandsons/">Mothers and Sons</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/mame/">Mame</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/david-steinberg-might-be-something-big-might-not/">David Steinberg: Might Be Something Big...Might Not</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/gala-benefit/">Gala Benefit 2013</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/special-event-in-the-mood/">In the Mood</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/my-fathers-italian-my-mothers-jewish-im-in-therapy/">My Mother's Italian, My Father's Jewish, & I'm In Therapy</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/the-vagina-monologues/">The Vagina Monologues</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/misery/">Misery</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/75th-anniversary-gala-benefit/">75th Anniversary Gala Benefit</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/halloween-festivities-at-the-playhouse/">Halloween Festivities at the Playhouse</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/love-letters/">Love Letters </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/bucks-county-cabaret/">Bucks County Cabaret</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/playhouse-impressions-a-complimentary-celebration-of-art/">Playhouse Impressions: A Complimentary Celebration of Art</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/bubbly-and-bites/">Bubbly and Bites!</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/barefoot-in-the-park-opening-night/">Barefoot in the Park Opening Night </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/barefoot-in-the-park-opening-night-pre-performance-dinner/">Barefoot in the Park Opening Night Pre-Performance Dinner </a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/barefoot-in-the-park/">Barefoot in the Park</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/special-barefoot-in-the-park-events-talkback-series-and-free-yoga-class/">Special Barefoot in the Park Events: Talkback Series and Free Yoga Class</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/sing-a-long-a-sound-of-music/">Sing-A-Long-A Sound of Music</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/july-cabaret/">July Cabaret</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/a-grand-night-for-singing/">A Grand Night for Singing</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/gala-performance/">Gala Performance</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/holiday-tree-lighting-ceremony/">Holiday Tree Lighting Ceremony</a></li>
+										<li class=""><a href="http://www.bcptheater.org/shows-events/a-past-event-from-previous-season/">Press Conference, April 2012</a></li>
+									</ul>
+							</li>
+				</ul>
+			
+					<div class="event-widget">
+					<h2 class="title">Box Office</h2>
+					<div class="content">
+				<p>Buy tickets online, or for individual tickets, subscriptions, or group sales call (215) 862-2121</p>
+<p><b><span style="text-decoration: underline;">Bucks County Playhouse Box Office Hours:</span></b></p>
+<p>Mondays: CLOSED</p>
+<p>Tuesday &#8211; Saturday: 12pm to 5pm</p>
+<p>Sunday 12pm to 5pm (Performance days ONLY)</p>
+			</div>
+		
+	</div>
+			<div class="event-widget">
+					<h2 class="title">Playhouse Riverview Café</h2>
+					<div class="content">
+				<p>Riverview Café Deck Bar Hours:<br />
+Monday – 4p-8p<br />
+Tuesday 4p-8p<br />
+Thursday 4p-8p<br />
+Friday 4p-10p<br />
+Saturday 12p-10p<br />
+Sunday 1p-6p</p>
+<p>*Hours may be extended due to performances.</p>
+			</div>
+		
+	</div>
+			<div class="event-widget">
+					<h2 class="title has-link"><a href="http://www.bcptheater.org/stay-connected/">Stay Connected<span></span></a></h2>
+					<div class="content">
+				<p>Sign up now to receive BCP newsletters and announcements.</p>
+			</div>
+		
+	</div>
+	<div id="widget-" class="widget">
+    </div></aside>			<section id="event">
+								<article class="full-text">
+										<div class="featured-image full">
+						<img width="330" height="255" src="http://www.bcptheater.org/wp-content/uploads/2012/06/Its-a-wonderful-life-FI.jpg" class="attachment-full wp-post-image" alt="It&#039;s a wonderful life FI" />					</div>
+					                    						<h1 class="title event">It&#8217;s a Wonderful Life: A Live Radio Play</h1>
+						<div class="meta-container clearfix">
+						<p class="meta first">December 11, 2015 &mdash; December 27, 2015</p><div class='meta third'><b>Tue & Thu Evenings:</b> 7:30pm<br>
+<b>Fri & Sat Evenings:</b> 8pm<br>
+<b>Wed, Thu, Sat & Sun Matinees:</b> 2pm
+<br><br>
+<b>Saturday, December 12th:</b> 7pm</div>		<a class="buy" href="http://ticketing.artsphilly.org/tickets/eventDetails.aspx?id=34937&org=uc" target="_blank" >Buy Tickets</a>
+							</div>
+					<p>Spend the holidays at the Bucks County Playhouse!</p>
+<p>Directed by <strong>Gordon Greenberg</strong>, choreographed by <strong>Lorin Latarro</strong>, and inspired by the classic American film<strong><em>, It’s A Wonderful Life: A Live Radio Play</em></strong> is performed as a 1940s live radio broadcast in front of a studio audience. This beloved American holiday classic, that tells the story of idealistic George Bailey as he considers his demise one fateful Christmas Eve, comes to captivating life with the help of an ensemble that brings over two dozen characters to the stage. It premiered in 1996 and has since been produced countless times around the country to critical acclaim.</p>
+				</article>
+							</section>
+		</div>
+		<div class="shadow bottom"><span></span></div>
+	</div>
+	<footer class="site">
+		<div class="inner">
+			<div class="col1">
+				<div class="nav footer">
+					<ul id="menu-footer-menu-1" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-115"><a href="http://www.bcptheater.org/privacy-policy/">Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-114"><a href="http://www.bcptheater.org/sales-refund-policy/">Sales &#038; Refund Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116"><a href="http://www.bcptheater.org/contact/">Contact</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-117"><a href="http://www.bcptheater.org/support-us/donate/">Donate</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-118"><a href="http://www.bcptheater.org/buy-tickets/">Buy Tickets</a></li>
+</ul>				</div>
+				<div class="copyright">
+										©2012 Bucks County Playhouse, New Hope, PA 18938 <br />
+Box Office: (215) 862-2121				
+				</div>
+			</div>
+			<div class="col2">
+				<ul class="social">
+										<li class='twitter'><a href='http://twitter.com/#!/TheaterBCP' target='_blank' title='Twitter'><img src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/images/icon-twitter.png' /></a></li><li class='facebook'><a href='http://www.facebook.com/bcptheater' target='_blank' title='Facebook'><img src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/images/icon-facebook.png' /></a></li><li class='youtube'><a href='http://www.youtube.com/user/bcptheaterinfo' target='_blank' title='YouTube'><img src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/images/icon-youtube.png' /></a></li>				</ul>
+				<div class="credit">
+					<p><a href="http://www.imbuecreative.com" target="_blank">website design and development by imbuecreative.com</a></p>
+				</div>
+			</div>
+		</div>
+		
+<script type="text/javascript">tb_pathToImage = "http://www.bcptheater.org/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "http://www.bcptheater.org/wp-includes/js/thickbox/tb-close.png";</script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/plugins/wp-super-faq/wp_super_faq.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/js/main.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-includes/js/jquery/ui/jquery.ui.core.min.js?ver=1.9.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"http:\/\/www.bcptheater.org\/wp-includes\/js\/thickbox\/loadingAnimation.gif","closeImage":"http:\/\/www.bcptheater.org\/wp-includes\/js\/thickbox\/tb-close.png"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/themes/bucks-county-playhouse/_inc/counteverest/js/jquery.counteverest.js?ver=3.5.2'></script>
+<script type='text/javascript' src='http://www.bcptheater.org/wp-content/plugins/uBillboard/js/billboard.min.js?ver=3.0'></script>
+	</footer>
+
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4fc54cc0102edb6c"></script>
+<!-- Segment Pixel - NJ - Bucks County Playhouse - Site - DO NOT MODIFY -->
+<img src="http://ib.adnxs.com/seg?add=2041513&t=2" width="1" height="1" />
+<!-- End of Segment Pixel -->
+</body>
+</html>

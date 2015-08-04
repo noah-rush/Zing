@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<script>var __pbpa = true;</script><script>var translated_warning_string = 'Warning: Never enter your Tumblr password unless \u201chttps://www.tumblr.com/login\u201d\x0ais the address in your web browser.\x0a\x0aYou should also see a green \u201cTumblr, Inc.\u201d identification in the address bar.\x0a\x0aSpammers and other bad guys use fake forms to steal passwords.\x0a\x0aTumblr will never ask you to log in from a user\u2019s blog.\x0a\x0aAre you absolutely sure you want to continue?';</script><script type="text/javascript" language="javascript" src="http://assets.tumblr.com/assets/scripts/pre_tumblelog.js?_v=75ff60d174af47d7ea271d82d4fe1151"></script>
+<!DOCTYPE html>
+
+<!-- 
+
+rue theme by http://anhchors.tumblr.com
+support: anhchor@gmail.com
+
+    THEME CREDITS:
+    + icons from http://fontawesome.io
+    + background from http://subtlepatterns.com
+    + avatar & header from http://unsplash.com
+    + sticky menu from http://codepen.io/senff/pen/ayGvD
+    + fitvids from http://fitvidsjs.com
+
+-->
+
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# blog: http://ogp.me/ns/blog#">
+    <meta charset="UTF-8" />
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>
+        Bullets Over Broadway - 
+        
+        
+        
+        Kimmel Center for the Performing Arts
+    </title>
+    <link rel="shortcut icon" href="http://33.media.tumblr.com/avatar_7fb4112fc553_128.png" />
+    <link rel="alternate" type="application/rss+xml" href="http://kimmelcenter.tumblr.com/rss" />
+    <meta name="description" content="Bullets Over Broadway October 27 &ndash; November 1, 2015 ǀ Academy of Music Written by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by..." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="image:Background Image" content="http://static.tumblr.com/ouqpclx/PuOnlk60u/cubes.png" />
+<meta name="image:Header Image" content="http://static.tumblr.com/ouqpclx/O5Znlk5zz/trees-compressed.jpg" />
+
+<meta name="color:Title" content="#ffffff" />
+<meta name="color:Background" content="#eeeeee" />
+<meta name="color:Navigation Background" content="#ffffff" />
+<meta name="color:Navigation Links" content="#444444" />
+<meta name="color:Posts Background" content="#ffffff" />
+<meta name="color:Text" content="#444444" />
+<meta name="color:Links Hover" content="#777777" />
+<meta name="color:Ruled Lines" content="#ccc" />
+<meta name="color:Tags" content="#999999" />
+<meta name="color:Pagination" content="#444" />
+
+<meta name="font:Font" content="Gibson" />
+
+<meta name="if:Sticky Navigation" content="1" />
+<meta name="if:Icon Navigation" content="0" />
+<meta name="if:Show Random" content="1" />
+<meta name="if:Show RSS" content="1" />
+<meta name="if:Left Sidebar" content="0" />
+<meta name="if:Uppercase Tags" content="0" />
+<meta name="if:White Like and Reblog Buttons" content="0" />
+<meta name="if:Show Search" content="1" />
+<meta name="if:Show Copyright" content="1" />
+
+<meta name="text:Google Font" content="" />
+<meta name="text:Font Size" content="100%" />
+<meta name="text:Header Overlay Opacity" content="0.1" />
+<meta name="text:Header Height" content="30vh" />
+<meta name="text:Ask Label" content="Ask" />
+<meta name="text:Google Analytics ID" content="" />
+<meta name='text:Disqus Shortname' content="" />
+
+
+<style type="text/css">
+
+body { 
+    background:#000000 url('http://assets.tumblr.com/images/x.gif?v=1') fixed; 
+    color:#444444; 
+    font-family: 'Gibson', sans-serif, sans-serif; 
+    font-size:100%; 
+    line-height:1.5; 
+    margin:0; 
+    word-wrap:break-word; 
+}
+a { 
+    color:#888888; 
+    text-decoration:none; 
+    transition:0.2s;
+}
+a:hover { 
+    color:#777777; 
+}
+a img { 
+    border:none; 
+}
+h1, h2, h3, h4, h5, h6 { 
+    font-weight:normal; 
+    margin:0; 
+    padding:0; 
+}
+blockquote { 
+    border-left:1px solid #ccc; 
+    margin:0; 
+    padding:0 0 0 5%; 
+}
+pre { 
+    background:#e4e4e4; 
+    color:#444; 
+    padding:5%; 
+    white-space:pre-wrap; 
+}
+hr { 
+    border:none; 
+    height:1px; 
+    width:80%; 
+    margin:5% auto; 
+    background:#ccc; 
+    background-image:-webkit-linear-gradient(left, #ffffff, #ccc, #ffffff); 
+    background-image:-moz-linear-gradient(left, #ffffff, #ccc, #ffffff); 
+    background-image:-o-linear-gradient(left, #ffffff, #ccc, #ffffff); 
+    background-image:linear-gradient(left, #ffffff, #ccc, #ffffff); 
+}
+
+img { 
+    max-width:100%; 
+    height:auto; 
+}
+blockquote iframe { 
+    max-width:100%; 
+} 
+.post iframe#youtube_iframe { 
+    max-width:100%; 
+}
+
+/* HEADER */
+.header { 
+    padding:3em 0; /* calc fallback */
+    padding:calc((45vh - 5.8em) / 2 + 1px) 0; 
+    text-align:center; 
+    width:100%; 
+    background:url('http://static.tumblr.com/535308251c9b0f14c291baf71ec9fc0f/kwhlsnh/E6Mnnzoxh/tumblr_static_b2fd57o4l6o0kg80sosk4oowg.png') center; 
+    background:-webkit-linear-gradient(rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0)), url('http://static.tumblr.com/535308251c9b0f14c291baf71ec9fc0f/kwhlsnh/E6Mnnzoxh/tumblr_static_b2fd57o4l6o0kg80sosk4oowg.png') center;
+    background:-moz-linear-gradient(rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0)), url('http://static.tumblr.com/535308251c9b0f14c291baf71ec9fc0f/kwhlsnh/E6Mnnzoxh/tumblr_static_b2fd57o4l6o0kg80sosk4oowg.png') center;
+    background:-o-linear-gradient(rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0)), url('http://static.tumblr.com/535308251c9b0f14c291baf71ec9fc0f/kwhlsnh/E6Mnnzoxh/tumblr_static_b2fd57o4l6o0kg80sosk4oowg.png') center;
+    background:linear-gradient(rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0)), url('http://static.tumblr.com/535308251c9b0f14c291baf71ec9fc0f/kwhlsnh/E6Mnnzoxh/tumblr_static_b2fd57o4l6o0kg80sosk4oowg.png') center;
+    -webkit-background-size:cover; 
+    -moz-background-size:cover; 
+    -o-background-size:cover; 
+    background-size:cover; 
+} 
+.header h1 { 
+    border:.2em solid #ffffff; 
+    display:inline-block; 
+    font-family:'Calluna Sans', sans-serif; 
+    font-weight:bold; 
+    margin:0 5%; 
+    padding:.5em 1em;
+    text-transform:uppercase;
+}
+.header a { 
+    color:#ffffff; 
+}
+
+
+/* NAVIGATION BAR */
+nav { 
+    background:#ffffff; 
+    margin:0; 
+    padding:0; 
+    position:relative; 
+    text-align:center; 
+    width:100%; 
+    z-index:999; 
+}
+nav a, nav a:hover { 
+    color:#444444 
+}
+nav ul { 
+    font-size:0; 
+    font-weight:bold; 
+    list-style:none; 
+    margin:0 auto; 
+    padding:0; 
+    text-transform:uppercase; 
+}
+nav li { 
+    border-bottom:3px solid #ffffff; 
+    display:inline-block; 
+    font-size:16px; 
+    margin:0 auto; 
+    padding:1em 1.5em; 
+    transition:0.2s; 
+}
+nav li:hover { 
+    border-bottom:3px solid #444444; 
+}
+
+.navigate { 
+    color:#444444;
+    font-weight:bold; 
+    text-transform:uppercase; 
+    font-size:100%; 
+    padding:1em 0; 
+    transition:.2s; 
+    cursor:pointer; 
+}
+.rotate { 
+    -moz-transition:all .4s ease-out; 
+    -webkit-transition:all .4s ease-out; 
+    transition:all .4s ease-out;
+}
+.rotate.down { 
+    -moz-transform:rotate(-180deg); 
+    -webkit-transform:rotate(-180deg);
+    transform:rotate(-180deg);
+}
+
+/* MEDIA QUERIES FOR RESPONSIVE LAYOUT */
+@media (min-width:1020px) { /* shows sidebar */
+    .wrapper { width:990px; }
+    
+    
+        .sidebar { margin:0 0 0 730px; width:260px; }
+        .content { float:left; width:675px; }
+    
+    .sbsec { margin:0 0 10% 0; padding:15%; }
+}
+
+@media (min-width:750px) and (max-width:1019px) { /* one column */
+    .wrapper { width:675px; }
+    .sidebar { clear:both; }
+    .sbsec { margin:5% 0; padding:10%; }
+}
+
+@media (max-width:749px) { /* one column */
+    .wrapper { width:90%; }
+    .sidebar { clear:both; }
+    .sbsec { margin:5% 0; padding:10%; }
+}
+
+@media (min-width:481px) { /* not mobile */
+    .navigate { display:none; }
+    .photopost, .audioembed, .videopost { margin:0 0 5% 0; }
+    nav ul { display:block !important; }
+}
+
+@media (max-width:480px) { /* mobile */
+    .photopost, .audioembed, .videopost { margin:0 -12% 5%; margin:0 calc(-10% / .81) 5%; }
+    
+        nav ul { display:none; }
+    
+}
+
+@media (max-width:400px) { /* mobile */
+       
+}
+
+.wrapper { margin:0 auto; padding:5% 0 0 0; }
+
+/* SIDEBAR (shows as footer when viewport <1020px) */
+.sidebar { 
+    text-align:center; 
+}
+.sbsec { 
+    background:#ffffff; 
+    border-radius:3px; 
+}
+img.sbimage { 
+    display:inline-block; 
+    margin:0 auto .5em; 
+}
+.square { 
+    border-radius:3px; 
+}
+.circle { 
+    border-radius:96px; /* border-radius percentage fallback */
+    border-radius:100%; 
+}
+.sbsec h2 { 
+    border-bottom:1px solid #ccc; 
+    margin:0 0 .8em 0; 
+    padding:0 0 .5em 0; 
+}
+.desc { 
+    text-align:left; 
+}
+
+ul.links { 
+    border:1px solid #ccc; 
+    list-style:none; 
+    margin:1.5em 0 0 0; 
+    padding:0 1.5em 1.5em; 
+    text-transform:uppercase; 
+}
+.linktitle { 
+    background:#ffffff; 
+    display:inline-block; 
+    padding:0 1em; 
+    position:relative; 
+    top:-.7em; 
+}
+ul.links li { 
+    margin:0; 
+    padding:.5em 0; 
+}
+
+.searchbar { 
+    margin:1.5em auto 0; 
+    text-align:center; 
+}
+input#search { 
+    background:#ffffff; 
+    border:1px solid #ccc; 
+    color:#ccc; 
+    font-family: 'Gibson', sans-serif, sans-serif; 
+    margin:0; 
+    padding:1em; 
+    -webkit-box-sizing:border-box; 
+    -moz-box-sizing:border-box; 
+    -o-box-sizing:border-box;
+    box-sizing:border-box; 
+    width:100%; 
+}
+input#search:hover, input#search:focus, input#search:active { 
+    color:#444444; 
+    outline:none; 
+}
+
+.credits { 
+    font-size:.9em; 
+    margin:0 0 10% 0; 
+    color:#444; 
+    text-transform:uppercase; 
+}
+.credits a { 
+    color:#444; 
+    text-decoration:underline; 
+}
+
+
+/* POSTS */
+.pagesort { /* day/search/tag pages */ 
+    color:#444;
+    font-weight:700; 
+    margin:0 0 5% 0; 
+    text-align:center; 
+    text-transform:uppercase; 
+} 
+.post { 
+    background:#ffffff; 
+    margin:0 0 10% 0; 
+    padding:10%; 
+    border-radius:3px; 
+}
+.posthead { 
+    border-top:1px solid #ccc; 
+    margin:5% 0; 
+    text-align:center; 
+    text-transform:uppercase; 
+}
+.date { 
+    background:#ffffff; 
+    display:inline-block; 
+    padding:0 1em; 
+    position:relative; 
+    top:-.8em; 
+}
+
+/* PHOTO POSTS */
+.photopost { 
+    text-align:center; 
+} 
+.photopost:hover .highres { 
+    opacity:1; 
+}
+.highres { 
+    background:rgba(0,0,0,0.7); 
+    border-radius:3px; 
+    color:#fff; 
+    font-size:1.5em; 
+    margin:1em 0 0 1em; 
+    padding:.5em .8em; 
+    opacity:0; 
+    position:absolute; 
+    text-align:center; 
+    transition:.2s ease-in; 
+    z-index:99; 
+}
+.highres:hover { 
+    background:rgba(0,0,0,.9); 
+}
+img.nothighres { 
+    display:none; 
+}
+.photopost iframe { /* responsive photoset on mobile/tablet */
+    width:1px; 
+    min-width:100%; 
+    *width:100%; 
+}
+
+/* QUOTE POSTS*/
+h3.quotepost { 
+    margin:0 0 5% 0; 
+}
+
+/* CHAT POSTS */
+ul.chat { 
+    list-style:none; 
+    margin:0px; 
+    padding:0px; 
+}
+ul.chat li { 
+    border-bottom:1px solid #ccc; 
+    padding:3%; 
+}
+ul.chat li:last-child { 
+    border-bottom:none; 
+}
+
+/* AUDIO POSTS */
+.audioembed iframe { 
+    width:1px; 
+    min-width:100%; 
+    *width:100%; 
+}
+iframe.spotify_audio_player { 
+    height:80px; 
+}
+
+/* VIDEO POSTS */
+.videopost { 
+    text-align:center; 
+}
+
+/* LINK/ANSWER POSTS */
+.answerpost { 
+    text-align:center; 
+}
+.question { 
+    border:1px solid #ccc; 
+    padding:5%; 
+    text-align:left; 
+}
+.aby { 
+    background:#ffffff; 
+    display:inline-block; 
+    font-size:.9em; 
+    padding:0 1em; 
+    position:relative; 
+    text-align:center; 
+    text-transform:uppercase; 
+}
+.askedby { 
+    top:-.9em; 
+}
+.answeredby { /* reblogged answers*/
+    bottom:-.8em; 
+}
+
+
+/* POST INFO: NOTES, VIA/OP/SRC, REBLOG/LIKE, TAGS */
+.postfoot { 
+    border-top:1px solid #ccc; 
+    font-size:.9em; 
+    margin:10% 0 0 0; 
+    text-align:center; 
+     
+}
+
+ul.rb { /* via/op icons, reblog/like buttons on index pages */
+    background:#ffffff; 
+    display:inline-block; 
+    list-style:none; 
+    margin:0; 
+    padding:0 1em; 
+    position:relative; 
+    text-align:center; top:-11px; 
+}
+ul.rb li { 
+    display:inline-block; 
+    margin:0 .3em; 
+}
+img.postvia { /* submitter/via/op icons */
+    border-radius:20px; /* border-radius percentage fallback */
+    border-radius:100%; 
+    width:20px; 
+} 
+a.dsq-comment-count { 
+    text-transform:lowercase; 
+}
+.rebloginfo { /* submission/via/op/src info on permalink pages */
+    padding:5% 0 0 0; 
+} 
+ul.tags { 
+    list-style:none; 
+    margin:0; 
+    padding:0; 
+}
+ul.tags li { 
+    display:inline; 
+    margin:0 1em 0 0; 
+    padding:0; 
+}
+ul.tags li:last-child { 
+    margin:0; 
+}
+ul.tags a.tag { 
+    color:#999999; 
+}
+ul.tags a.tag:hover { 
+    color:#777777; 
+}
+
+/* POST NOTES */
+.postnotes { 
+    border-top:1px solid #ccc; 
+     /* only show postnotes onclick if disqus enabled*/
+    margin:5% 0 0 0; 
+}
+ol.notes { 
+    list-style:none; 
+    margin:0; 
+    padding:0; 
+    text-align:left; 
+}
+ol.notes li.note { 
+    border-bottom:1px solid #ccc; 
+    padding:3%; 
+}
+ol.notes li.note:last-child { 
+    border-bottom:none; padding:3% 3% 0 3%; 
+}
+ol.notes li.note img.avatar { 
+    border-radius:16px; /* border-radius percentage fallback */
+    border-radius:100%; 
+    margin:0 1em 0 0; 
+    vertical-align:middle; 
+}
+ol.notes blockquote { 
+    margin:3% 0 0 0; 
+}
+ol.notes blockquote a { 
+    color:#444444; 
+}
+.expandnotes { 
+    border-top:1px solid #ccc; 
+    color:#888888; 
+    cursor:pointer; 
+    margin:5% 0 -2% 0; 
+    padding:3% 0 0 0; 
+    text-align:center; 
+}
+
+
+/* PAGINATION */
+.pagination { 
+    color:#444; 
+    font-size:.9em; 
+    margin:10% 0; 
+    text-align:center; 
+    text-transform:uppercase; 
+}
+.pagination ol { 
+    list-style:none; 
+    margin:0; 
+    padding:0 0 1em 0; 
+}
+.pagination li { 
+    border-bottom:3px solid #444; 
+    display:inline-block; 
+    margin: 0px 1px; 
+    padding:1em; 
+    transition-duration:0.2s; 
+}
+.pagination li:hover { 
+    border-bottom:3px solid #888888; 
+}
+.pagination a { 
+    color:#444; 
+}
+.pagination li#current { 
+    border-bottom:3px solid #888888; 
+    font-weight:700; 
+}
+
+/* DAY/POST NAVIGATION */
+.pagination ul { 
+    list-style:none; 
+    margin:0; 
+    padding:0 0 10% 0; 
+    text-align:right; 
+    width:100%; 
+}
+.pagination li.prevday { 
+    float:right; 
+}  
+.pagination li.nextday { 
+    float:left; 
+}
+
+
+
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> <!-- jQuery -->
+<script src="http://static.tumblr.com/ouqpclx/heNnjoj2d/jquery.fitvids.js"></script> <!-- FitVids http://fitvidsjs.com/ -->
+
+<link rel="alternate" href="android-app://com.tumblr/tumblr/x-callback-url/blog?blogName=kimmelcenter%26postID=113356147248" />
+<link rel="alternate" type="application/json+oembed" href="http://www.tumblr.com/oembed/1.0?url=http://kimmelcenter.tumblr.com/post/113356147248/bullets-over-broadway" title="Bullets Over Broadway
+October 27 &ndash; November 1, 2015 ǀ Academy of Music
+Written by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by Woody Allen and Douglas McGrath, Bullets Over..."/>
+<script src="http://assets.tumblr.com/assets/scripts/tumblelog.js?_v=93bb152582dbb408afc826f52e6676b4"></script>
+
+<link rel="stylesheet" type="text/css" href="http://assets.tumblr.com/fonts/gibson/stylesheet.css?v=3"><link rel="stylesheet" type="text/css" href="http://assets.tumblr.com/fonts/callunasans/stylesheet.css?v=3">
+
+<!-- BEGIN TUMBLR FACEBOOK OPENGRAPH TAGS --><!-- If you'd like to specify your own Open Graph tags, define the og:url and og:title tags in your theme's HTML. --><!-- Read more: http://ogp.me/ --><meta property="fb:app_id" content="48119224995" /><meta property="og:site_name" content="" /><meta property="og:title" content="Bullets Over Broadway" /><meta property="og:url" content="http://kimmelcenter.tumblr.com/post/113356147248/bullets-over-broadway" /><meta property="og:description" content="October 27 &ndash; November 1, 2015 ǀ Academy of Music
+Written by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by Woody Allen and Douglas..." /><meta property="og:determiner" content="a" /><meta property="og:type" content="tumblr-feed:entry" /><meta property="og:image" content="https://31.media.tumblr.com/6d8ccf8560d56420209e486095c7b11f/tumblr_inline_nl2arh9CqR1qhayy6.jpg" /><meta property="og:image" content="https://31.media.tumblr.com/7496b32a9b10c1cf312b16b6280fc80e/tumblr_inline_nl28biLLJC1qhayy6.jpg" /><meta property="al:ios:url" content="tumblr://x-callback-url/blog?blogName=kimmelcenter&amp;postID=113356147248" /><meta property="al:ios:app_name" content="Tumblr" /><meta property="al:ios:app_store_id" content="305343404" /><meta property="al:android:url" content="tumblr://x-callback-url/blog?blogName=kimmelcenter&amp;postID=113356147248" /><meta property="al:android:app_name" content="Tumblr" /><meta property="al:android:package" content="com.tumblr" /><!-- END TUMBLR FACEBOOK OPENGRAPH TAGS -->
+
+
+<!-- TWITTER TAGS --><meta charset="utf-8"><meta name="twitter:card" content="summary" /><meta name="twitter:title" content="Bullets Over Broadway" /><meta name="twitter:description" content="October 27 &ndash; November 1, 2015 ǀ Academy of Music&nbsp; Written by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by Woody Allen and Douglas McGrath, Bullets Over Broadway is the story of a young playwright who, in desperate need..." /><meta name="twitter:url" content="http://kimmelcenter.tumblr.com/post/113356147248/bullets-over-broadway" /><meta name="twitter:site" content="tumblr" /><meta name="twitter:app:name:iphone" content="Tumblr" /><meta name="twitter:app:name:ipad" content="Tumblr" /><meta name="twitter:app:name:googleplay" content="Tumblr" /><meta name="twitter:app:id:iphone" content="305343404" /><meta name="twitter:app:id:ipad" content="305343404" /><meta name="twitter:app:id:googleplay" content="com.tumblr" /><meta name="twitter:app:url:iphone" content="tumblr://x-callback-url/blog?blogName=kimmelcenter&amp;postID=113356147248&amp;referrer=twitter-cards" /><meta name="twitter:app:url:ipad" content="tumblr://x-callback-url/blog?blogName=kimmelcenter&amp;postID=113356147248&amp;referrer=twitter-cards" /><meta name="twitter:app:url:googleplay" content="tumblr://x-callback-url/blog?blogName=kimmelcenter&amp;postID=113356147248&amp;referrer=twitter-cards" />
+
+<!-- GOOGLE CAROUSEL --><script type="application/ld+json">{"@type":"SocialMediaPosting","url":"http:\/\/kimmelcenter.tumblr.com\/post\/113356147248\/bullets-over-broadway","mainEntityOfPage":true,"datePublished":"2015-03-11T18:23:13-04:00","author":"kimmelcenter","image":{"@list":["https:\/\/31.media.tumblr.com\/6d8ccf8560d56420209e486095c7b11f\/tumblr_inline_nl2arh9CqR1qhayy6.jpg","https:\/\/31.media.tumblr.com\/7496b32a9b10c1cf312b16b6280fc80e\/tumblr_inline_nl28biLLJC1qhayy6.jpg"]},"headline":"Bullets Over Broadway","articleBody":"October 27 \u2013 November 1, 2015 \u01c0 Academy of Music\nWritten by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by Woody Allen and Douglas McGrath, Bullets Over Broadway is the story of a young playwright who, in desperate need...","@context":"http:\/\/schema.org"}</script>
+</head>
+
+
+<body>
+
+
+<div class="header">
+    <a href="/"><h1>Kimmel Center for the Performing Arts</h1></a>
+</div>
+
+
+<nav>
+    <div class="navigate">Navigate <span class="desc-arrow"><i class="fa fa-chevron-down rotate"></i></span></div>
+    <ul>
+        
+        
+        
+            <a href="/"><li>Home</li></a>
+            <a href="/ask"><li>Ask</li></a>
+            <a href="/archive"><li>Archive</li></a>
+            
+            <a href="/submit"><li>Submit</li></a>
+            <a href="http://kimmelcenter.tumblr.com/rss"><li>RSS</li></a>
+        
+    </ul>
+</nav>
+
+
+<div class="wrapper">
+<div class="content">
+
+
+
+
+
+
+
+
+
+
+<div class="post">
+
+
+    <div class="posthead">
+        <div class="date"><a href="http://kimmelcenter.tumblr.com/post/113356147248/bullets-over-broadway">11 Mar 2015</a></div>
+    </div>
+
+
+
+    <h1>Bullets Over Broadway</h1>
+    <p><b>October 27 &ndash; November 1, 2015 &#448; Academy of Music&nbsp;</b></p><figure><img src="http://31.media.tumblr.com/6d8ccf8560d56420209e486095c7b11f/tumblr_inline_nl2arh9CqR1qhayy6.jpg" alt="image"></figure><p>Written by Woody Allen, with direction and choreography by Susan Stroman and based upon the screenplay of the acclaimed film by Woody Allen and Douglas McGrath, <i>Bullets Over Broadway</i> is the story of a young playwright who, in desperate need offinancial backing for his next show, accepts an offer he can&rsquo;t refuse from amobster looking to please his showgirl girlfriend.<br><br><a href="http://www.kimmelcenter.org/broadway/subs1516.php" target="_blank"><font size="4"><b>Multi-show packages start at just $109! SUBSCRIBE TODAY!</b></font></a></p><figure class="tmblr-embed"><iframe width="500" height="281" id="youtube_iframe" src="https://www.youtube.com/embed/u-MNY_zGhDM?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque" frameborder="0"></iframe></figure><figure><img src="http://38.media.tumblr.com/7496b32a9b10c1cf312b16b6280fc80e/tumblr_inline_nl28biLLJC1qhayy6.jpg" alt="image"></figure><p><i>Photos by Matthew Murphy</i></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="postfoot">
+    
+
+    
+    <div class="rebloginfo">
+        
+        
+        
+    </div>
+    
+    
+    <ul class="tags">
+        
+        
+        
+        
+        
+    </ul>
+</div>
+
+
+
+    
+        
+    
+
+
+
+</div><!-- post -->
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <div class="pagination">
+        <ul>
+            <a href="http://kimmelcenter.tumblr.com/post/114306781358"><li class="nextday"><i class="fa fa-angle-left"></i> Next post</li></a>
+            <a href="http://kimmelcenter.tumblr.com/post/110547460773"><li class="prevday">Previous post <i class="fa fa-angle-right"></i></li></a>
+        </ul>
+    </div> 
+
+
+
+
+</div><!-- content -->
+
+
+<div class="sidebar">
+    <div class="sbsec">
+        
+        
+        <div class="desc"><p>Kimmel Center. Academy of Music. Merriam Theater. Tickets: <a href="http://www.kimmelcenter.org/">kimmelcenter.org</a></p></div>
+        
+        
+        <div class="searchbar">
+            <form action="/search" method="get">
+                <input type="text" id="search" name="q" placeholder="Search" />
+            </form>
+        </div>
+        
+    </div>
+    <div class="credits">
+        &#0169; 2011–2015 kimmelcenter<br />
+        Theme by <a href="http://anhchors.tumblr.com" target="_blank">anhchors</a>
+        <br />Powered by <a href="http://www.tumblr.com/">Tumblr</a>
+    </div>
+</div>
+
+
+</div><!-- wrapper -->
+
+<script>
+    $(document).ready(function() {
+        $('.navigate').click(function() {
+                $('nav ul').slideToggle("medium");
+                $('.rotate').toggleClass("down");
+        });
+        
+    });
+</script>
+
+<script src="path/to/jquery.fitvids.js"></script>
+<script>
+      $(document).ready(function(){
+        // Target your .container, .wrapper, .post, etc.
+        $(".videopost").fitVids();
+      });
+      
+    // vine responsive http://codepen.io/chrisdrogaris/pen/KIBvJ
+      
+      //Use fitvids.js to make it responsive
+    $('body').fitVids({
+      customSelector: "iframe[src*='vine']"
+    });
+
+    //Keep track of of window resizing
+    var h = $(window).height(), w = $(window).width();
+
+    //Check when window is resizing
+    $( window ).resize(function() {
+      var window_growing = false;
+      var nh = $(window).height(), nw = $(window).width();
+      
+      //Check if window is growing when resized
+      if(nw > w){
+        window_growing = true;
+      }
+      h = nh; w = nw; // update h and w;
+      
+      //If window grows then reload iframe
+      if(window_growing){
+        $( '.vine-embed' ).attr( 'src', function ( i, val ) { return val;});
+      }
+
+    });
+
+    // for native tumblr video http://stackoverflow.com/questions/24084703/responsive-tumblr-videos-not-working
+    $('.videopost').fitVids({ customSelector: "iframe[src*='tumblr.com'], iframe[src='about:blank']" });
+</script>
+ 
+
+<script>
+        // Create a clone of the menu, right next to original.
+        // http://codepen.io/senff/pen/ayGvD
+    $('nav').addClass('original').clone().insertAfter('nav').addClass('cloned').css('position','fixed').css('top','0').css('width','100%').css('background','#ffffff');
+    $('.cloned').removeClass('original');
+
+    stickMenu();
+
+    jQuery( window ).scroll(function() {
+        stickMenu();
+    });
+
+
+    function stickMenu() {
+      
+        var menu = document.querySelector('nav');
+        var menupos = menu.offsetTop;
+
+       if (jQuery(window).scrollTop() >= menupos) {
+         // scrolled past the menu; only show the cloned, sticky menu.
+         jQuery('.cloned').show();
+         jQuery('.original').css('visibility','hidden');
+       } else {
+         // not scrolled past the menu; only show the original menu.
+         jQuery('.cloned').hide();
+         jQuery('.original').css('visibility','visible');
+       }
+    }
+</script>
+
+
+
+
+<!-- BEGIN TUMBLR CODE --><iframe scrolling="no" width="1" height="1" frameborder="0" style="background-color:transparent; overflow:hidden; position:absolute; top:0; left:0; z-index:9999;" id="ga_target"></iframe><script type="text/javascript">
+    (function(){
+        var analytics_frame = document.getElementById('ga_target');
+        var analytics_iframe_loaded;
+        var user_logged_in;
+        var blog_is_nsfw = 'No';
+        var addthis_enabled = true;
+
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+        eventer(messageEvent,function(e) {
+            var message = (e.data && e.data.split) ? e.data.split(';') : '';
+            switch (message[0]) {
+                case 'analytics_iframe_loaded':
+                    analytics_iframe_loaded = true;
+                    postCSMessage();
+                    postGAMessage();
+                    postATMessage();
+                    break;
+                case 'user_logged_in':
+                    user_logged_in = message[1];
+                    postGAMessage();
+                    postATMessage();
+                    break;
+            }
+        }, false);
+
+        analytics_frame.src = "https://secure.assets.tumblr.com/analytics.html?f65f173ecd0610e1ad2f9930f8476598#" + 
+                              "http://kimmelcenter.tumblr.com";
+        function postGAMessage() {
+            if (analytics_iframe_loaded && user_logged_in) {
+                var is_ajax = false;
+                analytics_frame.contentWindow.postMessage(['tick_google_analytics', is_ajax, user_logged_in, blog_is_nsfw, '/private/113356147248/tumblr_nl28epLlEg1qijzgt?route=%2Fprivate%2F%3Aid%2F%3Akey'].join(';'), analytics_frame.src.split('/analytics.html')[0]);
+            }
+        }
+        function postCSMessage() {
+            COMSCORE = true;
+            analytics_frame.contentWindow.postMessage('enable_comscore;' + window.location, analytics_frame.src.split('/analytics.html')[0]);
+        }
+        function postATMessage() {
+            if (addthis_enabled && analytics_iframe_loaded) {
+                analytics_frame.contentWindow.postMessage('enable_addthis', analytics_frame.src.split('/analytics.html')[0]);
+            }
+        }
+    })();
+</script><script type="text/javascript">!function(s){s.src='https://px.srvcs.tumblr.com/impixu?T=1438704777&J=eyJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cDpcL1wva2ltbWVsY2VudGVyLnR1bWJsci5jb21cL3ByaXZhdGVcLzExMzM1NjE0NzI0OFwvdHVtYmxyX25sMjhlcExsRWcxcWlqemd0IiwicmVxdHlwZSI6MCwicm91dGUiOiJcL3ByaXZhdGVcLzppZFwvOmtleSJ9&U=GLABBBIEHJ&K=daeda8c7d2ae172c4d5d837181a531608c249b69fd0055789621fd91468f3b05&R='.replace(/&R=[^&$]*/,'').concat('&R='+escape(document.referrer)).slice(0,2000).replace(/%.?.?$/,'');}(new Image());</script><noscript><img style="position:absolute;z-index:-3334;top:0px;left:0px;visibility:hidden;" src="https://px.srvcs.tumblr.com/impixu?T=1438704777&J=eyJ0eXBlIjoidXJsIiwidXJsIjoiaHR0cDpcL1wva2ltbWVsY2VudGVyLnR1bWJsci5jb21cL3ByaXZhdGVcLzExMzM1NjE0NzI0OFwvdHVtYmxyX25sMjhlcExsRWcxcWlqemd0IiwicmVxdHlwZSI6MCwicm91dGUiOiJcL3ByaXZhdGVcLzppZFwvOmtleSIsIm5vc2NyaXB0IjoxfQ==&U=GLABBBIEHJ&K=35e6350d6a758efbdf428e3b5eb5329edae0172076cd6cff6823de020e106f41&R="></noscript><script>
+        (function (w,d) {
+            'use strict';
+            var l = function(el, type, listener, useCapture) {
+                el.addEventListener ?
+                el.addEventListener(type, listener, !!useCapture) :
+                el.attachEvent && el.attachEvent('on' + type, listener, !!useCapture);
+            };
+            var a = function () {
+                                if (d.getElementById('tumblr-cdx')) {
+                    return;
+                }
+                var s = d.createElement('script');
+                var el = d.getElementsByTagName('script')[0];
+                s.async = true;
+                s.src = 'http://assets.tumblr.com/assets/scripts/vendor/cedexis/cedexis.radar.js?_v=fee584537390c0b6a994bdf433a12f90';
+                s.type = 'text/javascript';
+                s.id = 'tumblr-cdx';
+                d.body.appendChild(s);
+            };
+            l(w,'load',a);
+        }(window, document));
+</script><script type="text/javascript">!function(s){s.src='https://px.srvcs.tumblr.com/impixu?T=1438704777&J=eyJ0eXBlIjoicG9zdCIsInVybCI6Imh0dHA6XC9cL2tpbW1lbGNlbnRlci50dW1ibHIuY29tXC9wcml2YXRlXC8xMTMzNTYxNDcyNDhcL3R1bWJscl9ubDI4ZXBMbEVnMXFpanpndCIsInJlcXR5cGUiOjAsInJvdXRlIjoiXC9wcml2YXRlXC86aWRcLzprZXkiLCJwb3N0cyI6W3sicG9zdGlkIjoiMTEzMzU2MTQ3MjQ4IiwiYmxvZ2lkIjoiMTY0MzMyODQiLCJzb3VyY2UiOjMzfV19&U=HDNCNNEIMJ&K=c701858b71162e5bf8cf2585a8eeabafeabcea1ebd2efa0594dc969c1330cd78&R='.replace(/&R=[^&$]*/,'').concat('&R='+escape(document.referrer)).slice(0,2000).replace(/%.?.?$/,'');}(new Image());</script><noscript><img style="position:absolute;z-index:-3334;top:0px;left:0px;visibility:hidden;" src="https://px.srvcs.tumblr.com/impixu?T=1438704777&J=eyJ0eXBlIjoicG9zdCIsInVybCI6Imh0dHA6XC9cL2tpbW1lbGNlbnRlci50dW1ibHIuY29tXC9wcml2YXRlXC8xMTMzNTYxNDcyNDhcL3R1bWJscl9ubDI4ZXBMbEVnMXFpanpndCIsInJlcXR5cGUiOjAsInJvdXRlIjoiXC9wcml2YXRlXC86aWRcLzprZXkiLCJwb3N0cyI6W3sicG9zdGlkIjoiMTEzMzU2MTQ3MjQ4IiwiYmxvZ2lkIjoiMTY0MzMyODQiLCJzb3VyY2UiOjMzfV0sIm5vc2NyaXB0IjoxfQ==&U=HDNCNNEIMJ&K=2e8d8c11b79f27559d8e729976caf3676d8eb4a95eda8fc22e1d632d142829df&R="></noscript><script src="http://assets.tumblr.com/assets/scripts/vendor/yahoo/rapid-3.29.js?_v=eba0b54ceda4a58e0c1ee32920e5bc09"></script>
+<script src="http://assets.tumblr.com/assets/scripts/vendor/yahoo/rapidworker-1.2.js?_v=2c11d5915df4de9216a0aae5988fad84"></script>
+<script>
+            (function() {
+                var YAHOO = window.YAHOO;
+                if (YAHOO) {
+                    var keys = {
+                        pd:'/private/:id/:key',
+                        _li:0,
+                        b_id:16433284,
+                        i_rad:0,
+                        i_strm:0,
+                        test_id:'OTHER,Tumblr',
+                        anon_id:''
+                    };
+                    var conf = {
+                        webworker_file:'/assets/scripts/vendor/yahoo/rapid-web-worker-1.2.js',
+                                                spaceid:1197716038,
+                        client_only:1,
+                        test_id:'OTHER,Tumblr',
+                        keys:keys,
+                        nol:1,
+                        fpc:true
+                    };
+                    YAHOO.rapid = new YAHOO.i13n.Rapid(conf);
+                }
+            })();
+        </script><script>
+        (function (w,d) {
+            'use strict';
+            var l = function(el, type, listener, useCapture) {
+                el.addEventListener ?
+                el.addEventListener(type, listener, !!useCapture) :
+                el.attachEvent && el.attachEvent('on' + type, listener, !!useCapture);
+            };
+            var a = function () {
+                                if (d.getElementById('tumblr-cdx')) {
+                    return;
+                }
+                var s = d.createElement('script');
+                var el = d.getElementsByTagName('script')[0];
+                s.async = true;
+                s.src = 'http://assets.tumblr.com/assets/scripts/vendor/cedexis/cedexis.radar.js?_v=fee584537390c0b6a994bdf433a12f90';
+                s.type = 'text/javascript';
+                s.id = 'tumblr-cdx';
+                d.body.appendChild(s);
+            };
+            l(w,'load',a);
+        }(window, document));
+</script><iframe id="tumblr_controls" class="tumblr_controls" width="1" height="1" frameborder="0" scrolling="no" src="https://secure.assets.tumblr.com/assets/html/iframe/o.html?_v=8db7fb9bef714760fbdd571b749b938c#src=http%3A%2F%2Fkimmelcenter.tumblr.com%2Fprivate%2F113356147248%2Ftumblr_nl28epLlEg1qijzgt&amp;pid=113356147248&amp;rk=YWTSRqjt&amp;is_private=1&amp;lang=en_US&amp;name=kimmelcenter&amp;brag=false&amp;avatar=http%3A%2F%2F38.media.tumblr.com%2Favatar_7fb4112fc553_64.png&amp;title=Kimmel+Center+for+the+Performing+Arts&amp;url=http%3A%2F%2Fkimmelcenter.tumblr.com%2F&amp;page_slide=slide"></iframe>
+<div id="teaser_iframe_container" style="display:none;"><iframe scrolling="no" frameborder="0" src="http://assets.tumblr.com/assets/html/iframe/teaser.html?_v=6b3a1486653c91009b7bb527a80aaa0e#src=http%3A%2F%2Fkimmelcenter.tumblr.com%2Fprivate%2F113356147248%2Ftumblr_nl28epLlEg1qijzgt&amp;pid=113356147248&amp;rk=YWTSRqjt&amp;is_private=1&amp;lang=en_US&amp;name=kimmelcenter&amp;brag=false&amp;avatar=http%3A%2F%2F38.media.tumblr.com%2Favatar_7fb4112fc553_64.png&amp;title=Kimmel+Center+for+the+Performing+Arts&amp;url=http%3A%2F%2Fkimmelcenter.tumblr.com%2F&amp;page_slide=slide" id="teaser_iframe" width="1" height="1"></iframe></div><script type="text/javascript">
+    (function(Tumblr){
+        var follow_iframe_initialized = false;
+        if (Tumblr.FollowTeaser && Tumblr.PostMessageListener) {
+            // Don't do anything until the first initialize event
+            Tumblr.PostMessageListener.initialize(function(message, origin) {
+                if (follow_iframe_initialized || message.length < 2) return;
+
+                if (message[0] === 'follow_iframe' && message[1] === 'enable') {
+                    Tumblr.FollowTeaser.current_page = 1;
+                    Tumblr.FollowTeaser.infer_infinite_scroll = true;
+                    Tumblr.FollowTeaser.create_from_tumblr_controls("http:\/\/assets.tumblr.com\/assets\/html\/iframe\/follow.html?_v=08b408e4d2cc04ac4808ce0c8fd51ff0");
+                    Tumblr.FollowTeaser.scroll_listener(true);
+                    follow_iframe_initialized = true;
+                }
+            });
+        }
+    })(this.Tumblr || (this.Tumblr = {}));
+</script><!--[if IE]><script type="text/javascript">document.getElementById('tumblr_controls').allowTransparency=true;</script><![endif]--><!-- END TUMBLR CODE -->
+
+</body>
+</html>

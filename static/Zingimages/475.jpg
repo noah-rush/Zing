@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+   <title>Shipwrecked! | Broadway Philadelphia - Walnut Street Theatre</title>
+   <link rel="stylesheet" href="/style/global.css" type="text/css" />
+   <link rel="stylesheet" href="/style/search.css" type="text/css" />
+   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+   <script type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+   <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+   <script type="text/javascript" src="/js/global.js"></script>
+<!--
+   <script language="JavaScript" src="http://www.mywebetools.com/walnut/lib/popup.js.php?text=1&header=&footer=&header_align=&footer_align=&taf_button=&back_color=&text_color=&url=&url_text="></script>
+-->
+      <meta name="title" content="Shipwrecked! | Broadway Philadelphia" />
+   <meta property="og:image" content="http://www.walnutstreettheatre.org/images/wst-share-icon.jpg" />
+   <link rel="stylesheet" type="text/css" href="/js/shadowbox/shadowbox.css">
+   <script type="text/javascript" src="/js/shadowbox/shadowbox.js"></script>
+   <script type="text/javascript">
+      Shadowbox.init({ overlayOpacity: 0.8, continuous: "true" });
+   </script>
+   <link rel="apple-touch-icon" href="/m/images/apple-touch-icon.png" />
+   <meta name="msapplication-TileImage" content="/images/wst-tile.png" />
+   <meta name="msapplication-TileColor" content="#870808" />
+   <!-- BEGIN MTM CODE // DO NOT REMOVE -->
+   <script type="text/javascript" src="//nexus.ensighten.com/mogointeractive/2190/Bootstrap.js"></script>
+   <!-- END MTM CODE // DO NOT REMOVE -->
+</head>
+<body>
+<div id="header"><!-- robots content="noindex" --><a 
+   href="/"><img src="/images/wst-sub-206.jpg" width="930" height="86" border="0" alt="" /></a><div id="search">
+<script>
+  (function() {
+    var cx = '010026669665491158215:q8-85ryrllg';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div></div><div id="menu">
+
+   <!--  menu bar -->
+
+   <ul id="mainMenu" style="margin-left: 45px;">
+      <li style="width: 49px;"><a href="/" style="background-image: none;" 
+         onMouseOver="rollOn('home');" onMouseOut="rollOff('home');"><img
+         name="home" src="/images/menu/home1.gif"
+         width="49" height="25" border="0" alt="Home Page" /></a>
+      </li>
+      <li style="width: 78px;"><a href="/season/" class="divider"
+         onMouseOver="rollOn('season');" onMouseOut="rollOff('season');"><img
+         name="season" src="/images/menu/season1.gif"
+         width="78" height="25" border="0" alt="The Season" /></a>
+         <ul>
+            <li><a href="/visit/subscribe.php">Subscribe Now</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/"><b>Mainstage</b></a></li>
+            <li><a href="/season/high-society.php" class="bullet">High Society</a></li>
+            <li><a href="/season/christmas-story.php" class="bullet">A Christmas Story</a></li>
+            <li><a href="/season/harvey.php" class="bullet">Harvey</a></li>
+            <li><a href="/season/starcatcher.php" class="bullet">Peter and the Starcatcher</a></li>
+            <li><a href="/season/sister-act.php" class="bullet">Sister Act</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/i-studio.php"><b>Independence Studio on 3</b></a></li>
+            <li><a href="/season/shipwrecked.php" class="bullet">Shipwrecked!</a></li>
+            <li><a href="/season/dr-ruth.php" class="bullet">Becoming Dr. Ruth</a></li>
+            <li><a href="/season/moon.php" class="bullet">A Moon for the Misbegotten</a></li>
+            <li><a href="/season/red.php" class="bullet">Red</a></li>
+            <li><a href="/season/patsy.php" class="bullet">Always... Patsy Cline</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/wst-kids.php"><b>Walnut Street Theatre for Kids</b></a></li>
+            <li><a href="/season/shrek.php" class="bullet">Shrek The Musical Jr.</a></li>
+            <li><a href="/season/carol15.php" class="bullet">Charles Dickens' A Christmas Carol</a></li>
+            <li><a href="/season/zombie-love.php" class="bullet">Zombie in Love</a></li>
+            <li><a href="/season/freckleface.php" class="bullet">Freckleface Strawberry</a></li>
+            <li><a href="/season/nelson.php" class="bullet">Miss Nelson Has a Field Day</a></li>
+            <li><hr noshade size="1" /></li>
+            <li><a href="/season/ontour.php"><b>On Tour</b></a></li>
+	    <li><a href="/season/ontour.php#moon" class="bullet">A Moon for the Misbegotten</a></li>
+         </ul>
+      </li>
+      <li style="width: 68px;"><a href="/visit/" class="divider"
+         onMouseOver="rollOn('visit');" onMouseOut="rollOff('visit');"><img
+         name="visit" src="/images/menu/visit1.gif"  
+         width="68" height="25" border="0" alt="Your Visit" /></a>
+         <ul>
+      	   <li><a href="/season/">Buy Tickets</a></li>
+      	   <li><a href="/visit/premium-seating.php">Premium Seating</a></li>
+     	   <li><a href="/visit/box-office.php">Box Office</a></li>
+      	   <li><a href="/visit/subscribe.php">Subscribe Now!</a></li>
+           <li><a href="/visit/subscribers.php">Current Subscribers</a></li>
+      	   <li><a href="/visit/online-exchange.php">Subscriber Online Exchanges</a></li>
+      	   <li><a href="/visit/groups.php">Group Sales</a></li>
+           <li><a href="/visit/luxury-boxes.php">Luxury Boxes</a></li>
+      	   <li><a href="/visit/gift.php">Gift Certificates</a></li>
+       	   <li><a href="/visit/discounts.php">Ticket Discounts</a></li>
+      	   <li><a href="/visit/standby.php">Standby Tickets</a></li>
+      	   <li><a href="/visit/subscribe.php#special">Special Needs</a></li>
+      	   <li><a href="/visit/seating.php">Seating</a></li>
+      	   <li><a href="/visit/directions.php">Directions and Parking</a></li>
+      	   <li><a href="/visit/d-guide.php">Dining and Hotel Guide</a></li>
+      	   <li><a href="/visit/theatre-tour.php">Backstage Tours</a></li>
+      	   <li><a href="/theatre/tour/">Behind the Scenes Photo Tour</a></li>
+      	   <li><a href="/visit/barrymore.php">Barrymore's Caf&eacute;</a></li>
+      	   <li><a href="/visit/shop.php">Gift Shop</a></li>
+      	   <li><a href="/visit/shop.php">Purchase Show Related Merchandise</a></li>
+         </ul>
+      </li>
+      <li style="width: 70px;"><a href="/education/" class="divider"
+         onMouseOver="rollOn('education');" onMouseOut="rollOff('education');"><img
+         name="education" src="/images/menu/education1.gif"
+         width="70" height="25" border="0" alt="Education" /></a>
+         <ul>
+            <li><a href="/education/school.php">The Theatre School</a></li>
+            <li><a href="/education/camp.php">Camp Walnut</a></li>
+            <li><a href="/education/touring.php">Touring Outreach Company</a></li>
+            <li><a href="/education/residency-program.php">Residency Program</a></li>
+            <li><a href="/education/adopt.php">Adopt-A-School Program</a></li>
+            <li><a href="/education/pro-app/">Professional Apprentice Program</a></li>
+            <li><a href="/education/kids.php">Theatre for Kids Series</a></li>
+            <li><a href="/education/continuing.php">Continuing Education</a></li>
+            <!--<li><a href="/education/perspectives/">Seeing the Stage Through Our Eyes</a></li>-->
+            <li><a href="/education/education-report.php">Education Report</a></li>
+         </ul>
+      </li>
+      <li style="width: 76px;"><a href="/support/" class="divider"
+         onMouseOver="rollOn('support');" onMouseOut="rollOff('support');"><img
+         name="support" src="/images/menu/support1.gif"
+         width="76" height="25" border="0" alt="Support Us" /></a>
+         <ul>
+            <li><a href="/support/individual.php">Individual Giving</a></li>
+            <li><a href="/support/planned.php">Planned Giving</a></li>
+            <li><a href="/support/corporate.php">Corporate Giving</a></li>
+            <li><a href="/support/young-leaders.php">Young Leaders Council</a></li>
+            <li><a href="/support/special.php">Special Events</a></li>
+            <li><a href="/theatre/mission.php">Mission Statement</a></li>
+		 </ul>
+      </li>
+      <li style="width: 110px;"><a href="/theatre/" class="divider"
+         onMouseOver="rollOn('theatrehistory');" onMouseOut="rollOff('theatrehistory');"><img
+         name="theatrehistory" src="/images/menu/theatrehistory1.gif"
+         width="110" height="25" border="0" alt="Theatre & History" /></a>
+         <ul>
+            <li><a href="/theatre/history.php">History</a></li>
+            <li><a href="/theatre/gallery/">Historic Photo Gallery</a></li>
+            <li><a href="/theatre/tour/">Behind the Scenes Photo Tour</a></li>
+            <li><a href="/theatre/video.php">Video: About the Walnut</a></li>
+            <li><a href="/theatre/state-theatre.php">State Theatre of Pennsylvania</a></li>
+            <li><a href="/theatre/milestones.php">Historic Milestones</a></li>
+            <li><a href="/theatre/facts.php">Fun Facts about The Walnut</a></li>
+            <li><a href="/theatre/staff.php">Staff and Board Members</a></li>
+            <li><a href="/theatre/forrest.php">Edwin Forrest Award</a></li>
+            <li><a href="/theatre/behind.php">Scenic, Property and Costume Fabrication Shops</a></li>
+            <li><a href="/theatre/rental.php">Space Rental</a></li>
+            <li><a href="/theatre/related.php">Related Organizations' Websites</a></li>
+            <li><a href="/theatre/mission.php">Mission Statement</a></li>
+			<li><a href="/season/mainstage.php">Mainstage Production History</a></li>
+			<li><a href="/season/studioon3.php">Independence Studio on 3 Production History</a></li>
+         </ul>
+      </li>
+      <li style="width: 91px;"><a href="/opportunities/" class="divider"
+         onMouseOver="rollOn('opportunities');" onMouseOut="rollOff('opportunities');"><img
+         name="opportunities" src="/images/menu/opportunities1.gif"
+         width="91" height="25" border="0" alt="Opportunities" /></a>
+         <ul>
+            <li><a href="/opportunities/casting.php">Casting</a></li>
+	    <li><a href="/auditions/">Greater Philadelphia Annual Auditions</a></li>
+            <li><a href="/opportunities/literary.php">Literary</a></li>
+            <li><a href="/opportunities/employment.php">Employment</a></li>
+            <li><a href="/opportunities/volunteer.php">Volunteers</a></li>
+            <li><a href="/education/pro-app.php">Apprenticeships</a></li>
+         </ul>
+      </li>
+      <li style="width: 89px;"><a href="/news/" class="divider"
+         onMouseOver="rollOn('news');" onMouseOut="rollOff('news');"><img
+         name="news" src="/images/menu/news1.gif"
+         width="89" height="25" border="0" alt="News & Press" /></a>
+      </li>
+      <li style="width: 79px;"><a href="/enter.php?contest=48" class="divider"
+         onMouseOver="rollOn('mail');" onMouseOut="rollOff('mail');"><img
+         name="mail" src="/images/menu/mail1.gif"
+         width="79" height="25" border="0" alt="Mailing List" /></a>
+      </li>
+      <li style="width: 39px;"><a href="/theatre/faq.php" class="divider"
+         onMouseOver="rollOn('faq');" onMouseOut="rollOff('faq');"><img
+         name="faq" src="/images/menu/faq1.gif"
+         width="39" height="25" border="0" alt="Frequently Asked Questions" /></a>
+      </li>
+      <li style="width: 66px;"><a href="/season/calendar.php" class="divider"
+         onMouseOver="rollOn('calendar');" onMouseOut="rollOff('calendar');"><img
+         name="calendar" src="/images/menu/calendar1.gif"
+         width="66" height="25" border="0" alt="Calendar" /></a>
+      </li>
+
+   </ul>
+
+   <!-- /robots --></div>
+
+<div id="container">
+
+   <div id="content">
+   <!-- email-a-friend control -->
+   
+
+
+
+<!--------------------------------------- IMAGE & QUOTE ---------------------------------------------->
+
+
+<img src="images/160-shipwrecked.jpg" width="160" height="209" border="0" alt="" class="right" />
+
+
+<p><i>"Thumbs up!"</i> Milwaukee Journal Sentinel 
+<i>"a glittering world premiere... dazzles the eyes and ears"</i> Third Coast Digest</p>
+
+
+<!--------------------------------------- TITLE & AUTHOR ---------------------------------------------->
+
+<h2>Shipwrecked! An Entertainment<br />
+The Amazing Adventures of Louis de Rougemont <br />
+(as Told by Himself)</h2>
+
+<p>
+By Donald Margulies<br />
+<b class="date">October 6 &ndash; November 1, 2015</b><br />
+Independence Studio on 3</b>
+</p>
+
+
+<!--------------------------------------- PURCHASE TICKET ---------------------------------------------->
+
+<p class="buy">Tickets go on sale to the general public starting August 16.<br />
+   <b>Now Seating Subscribers! </b><br />
+   <a href="/season/i-studio.15-16.php" class="btn">subscribe now</a>&#160;
+   <a href="/season/schedule.php?event=132" class="btn">performance calendar</a>
+</p>
+   
+
+<!--------------------------------------- DESCRIPTION ---------------------------------------------->
+
+<p>
+An old man hobbles onstage and declares, "I'm about to tell you a story. 
+A fantastic and amazing story! A story all the more remarkable because 
+every word of it is true."  So says Louis de Rougemont.  His brave and 
+amazing adventures left nineteenth-century England spellbound.  Dare to 
+be whisked away by this heroic tale of the high seas, filled with exotic 
+islanders, flying wombats, giant sea turtles and a monstrous man-eating octopus!  
+Inspired by a true story, Pulitzer Prize-winner Donald Marguiles' <b><i>Shipwrecked</i></b> 
+examines how far we're willing to blur the line between fact and fiction
+in order to leave our mark on the world. 
+</p>
+
+
+<!--------------------------------------- SIDEBAR / FOOTER ---------------------------------------------->
+
+
+<br /><br />
+
+
+
+<!-----------------------------------SPONSOR------------------------------------------------------->
+
+<h5>Sponsored By</h5>
+
+<h6 style="color: #FFF;">The Independence Foundation</h6>
+
+<br />
+
+
+<!----------------------------------MEDIA---------------------------------------------------------->
+
+
+<h5>Media Partners</h5>
+   
+
+<table border="0" cellspacing="0" cellpadding="5" style="margin-left: -5px;">
+
+
+	<tr>
+	<td colspan="2">
+	<a href="http://www.philadelphiaweekly.com/" target="_blank">
+	<img src="images/pw-logo.gif" width="66" height="40" border="0" alt="Philadelphia Weekly logo" />
+	</a>
+
+&#160; &#160;
+
+	<a href="http://www.wrti.org/" target="_blank">
+	<img src="images/wrti_logo_2013.png" width="60" height="47" border="0" 
+	style="margin-right: 15px;" alt="WRTI logo" /></a>
+	</td>
+	</tr>
+
+</table>
+
+
+   </div>
+   <div id="sidebar">
+
+
+<b>Subscribe Now!<br />Our 2015-2016 Season</b>
+   <ul>
+      <li><a href="/season/2015-2016.mainstage.php">Mainstage Series</a></li>
+      <li><a href="/season/i-studio.15-16.php">Independence Studio on 3</a></li>
+      <li><a href="/season/15-16-Kids.php">Walnut Street Theatre for Kids</a></li>
+   </ul>
+<br />
+   <img src="/images/hd/about-show220.gif" width="220" height="16" border="0"
+      alt="About This Show" />
+   <ul>
+      <!--<li><a href="/season/schedule.php?event=112">View Show Calendar</a></li>--> 
+      <!--<li><a href="/season/facts.php?id=307">Production Facts</a></li>-->
+      <li><a href="/visit/directions.php">Get Directions</a></li>
+      <li><a href="/visit/d-guide.php">Find a Restaurant</a></li>
+      <li><a href="/store/">Purchase Show Related Merchandise</a></li>
+      <li><a href="/season/">See Other Productions</a></li>
+      <li><a href="/visit/subscribe.php">Subscribe Now!</a></li>   
+      <li>Running Time: 1 hour and 30 minutes</li>
+      <li>Tickets: $30 &ndash; $35</li>
+   </ul>
+
+
+
+
+   <a name="connect"></a>
+   <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #B90F29;">
+   <ul class="connect" style="margin: 0px; padding: 0px;">
+      <li><span class="st_sharethis_custom"  
+         st_summary="Walnut Street Theatre is America's Oldest Theatre and Philadelphia's most popular theatre company! Sign up for our e-newsletter and receive inside news, special offers and performance updates at www.walnutstreettheatre.org/signup"
+         st_image="http://www.walnutstreettheatre.org/images/wst-share-icon.jpg"><a href="#connect"
+         class="social share">Share With Friends</a></span></li>
+      <li><a href="http://www.facebook.com/walnutstreettheatre" target="_blank" class="social facebook">Facebook</a></li>
+      <li><a href="http://instagram.com/walnutstreettheatre" target="_blank" class="social instagram">Instagram</a></li>
+      <li><a href="https://twitter.com/WalnutStTheatre" target="_blank" class="social twitter">Twitter</a></li>
+      <li><a href="/enter.php?contest=48" class="social email">Join Our Mailing List</a></li>
+   </ul>
+   </div>
+
+   </div>
+   <br clear="all" />
+</div>
+
+   <!-- robots content="noindex" -->
+   <div id="footer"><div style="padding: 0px 20px 0px 55px;">
+
+   <b>Walnut Street Theatre</b> | 
+   825 Walnut Street, Philadelphia, PA 19107, 215-574-3550 | 
+   <a href="/contact.php">Contact Us</a> | 
+   <a href="/theatre/privacy.php">Privacy Policy</a><br /><br />
+
+   Copyright &copy; 2009-2015, Walnut Street Theatre. All rights reserved. 
+   Website developed by 
+   <a href="http://www.zerodefectdesign.com" target="_blank">Zero Defect Design LLC</a>.
+
+   </div></div>
+   <!-- /robots -->
+
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher:'2512f13a-bcfd-4a53-a8d3-fe5cd8ba21c1', onhover: false });</script>
+<script>
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-8393603-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
+
