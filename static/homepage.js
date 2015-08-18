@@ -1839,14 +1839,26 @@ $(window).hashchange( function test(){
      if(hash.substring(0,5) == "#page")
     {
         page = hash.substring(5);
-        var pages = Math.floor($('.blog-list .item').length/5)
+        var pages = Math.floor($(' .item').length/6)
       
-        for(var i = 0; i<=pages; i++){
 
-          pagenum = i+1
-          // console.log(pagenum)
-          $('.page' + pagenum).hide();
+        jQuery('.item').each(function(e){
+        console.log(e);
+        itemnum = e+1;
+        item = ".item" + itemnum
+        if(itemnum>(page-1)*6 && itemnum<(page*6 +1)){
+          jQuery(item).show();
+        }else{
+         jQuery(item).hide();
         }
+
+      }
+       )
+
+
+
+
+     
         for(var i = 0; i<=pages; i++){
 
          pagenum = i+1
@@ -1856,14 +1868,13 @@ $(window).hashchange( function test(){
           }
         }
         
-        $(".page" + page).show()
         jQuery('body').animate({"scrollTop":jQuery('.postsList .head').offset().top - $('.fixed').height()})
         jQuery('html').animate({"scrollTop":jQuery('.postsList .head').offset().top - $('.fixed').height()})
 
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
-   
-        if($(".page" + nextPage).length > 0){
+        console.log(6*parseInt(page));
+        if($(".item" + (6*parseInt(page) +1)).length > 0){
            $(".pager .next").show()
             $(".pager .next").attr('href',"#page" + nextPage);
            
@@ -2080,7 +2091,17 @@ $('.joinEmailList').click(function(){
   emailList();
 })
 
+jQuery('.item').each(function(e){
+  console.log(e);
+  itemnum = e+1;
+  item = ".item" + itemnum
+  if(e<6){
+    jQuery(item).show();
+  }else{
+        jQuery(item).hide();
 
+  }
+})
 
 // trackScrolling();
 // ads();
