@@ -225,10 +225,12 @@
   <input type="radio" name="rating" value="4"><i></i>
   <input type="radio" name="rating" value="5"><i></i>
 </span>
-
+<span>{{review[3]}}</span>
+<div>
 {{review[2][0]['first']}} {{review[2][0]['last']}} -- 
 {{review[0]}}
-{{review[3]}}</p></li>
+</div>
+</li>
 {%endfor %}	
 </div>
 </div>
@@ -443,40 +445,59 @@
         <div class = "row">
           <div class = "col-md-6 ">
             <div class = "checkboxlistgood" id = "checkboxlistgood">
-              <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring</input>
+              <input class = "good"  name = "Inspiring" type = "checkbox"> Inspiring
               <br>
-              <input class = "good" name = "Funny" type = "checkbox"> Funny</input>
+              <input class = "good" name = "Funny" type = "checkbox"> Funny
               <br>
-              <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking</input>
+              <input class = "good" name = "Thought provoking" type = "checkbox"> Thought provoking
               <br>
-              <input class = "good" name = "Energizing" type = "checkbox"> Energizing</input>
+              <input class = "good" name = "Energizing" type = "checkbox"> Energizing
               <br>
-              <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous</input>
+              <input class = "good" name = "Outrageous" type = "checkbox"> Outrageous
               <br>
-              <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining</input>
+              <input class = "good" name = "Entertaining" style = "text-color: green" type = "checkbox"> Entertaining
               <br>
-              <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching</input>
+              <input class = "good" name = "Heart Wrenching" type = "checkbox"> Heart Wrenching
               <br>
-              <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic</input>
+              <input class = "good" name = "Dramatic" type = "checkbox"> Dramatic
               <br>
-              <input class = "good" name = "Passionate" type = "checkbox"> Passionate</input>
+              <input class = "good" name = "Passionate" type = "checkbox"> Passionate
               <br>
-              <input class = "good" name = "Sexy" type = "checkbox"> Sexy</input>
+              <input class = "good" name = "Sexy" type = "checkbox"> Sexy
+              <br>
+              
+
           </div>
         </div>
       <div class = "col-md-6">
         <div class = "checkboxlistbad" id = "checkboxlistbad">
-            <input type = "checkbox" name = "Overly long"> Overly long</input>
+            <input type = "checkbox" name = "Overly long"> Overly long
             <br>
-            <input type = "checkbox" name = "Boring"> Boring</input>
+            <input type = "checkbox" name = "Boring"> Boring
             <br>
-            <input type = "checkbox" name = "Self Indulgent"> Self Indulgent</input>
+            <input type = "checkbox" name = "Self Indulgent"> Self Indulgent
             <br>
-            <input type = "checkbox" name = "Sophmoric"> Sophmoric</input>
+            <input type = "checkbox" name = "Sophmoric"> Sophmoric
             <br>
-            <input type = "checkbox" name = "Insulting"> Insulting</input>
+            <input type = "checkbox" name = "Insulting"> Insulting
             <br>
-            <input type = "checkbox" name = "A dud"> A dud</input>
+            <input type = "checkbox" name = "A dud"> A dud
+            <br>
+            <input  name = "Shocking" type = "checkbox"> Shocking
+              <br>
+              <input  name = "Long-Winded" type = "checkbox"> Long-Winded
+              <br>
+              <input  name = "Preachy" type = "checkbox"> Preachy
+              <br>
+              <input  name = "Trite" type = "checkbox"> Trite
+              <br>
+              <input  name = "Cheesy" type = "checkbox"> Cheesy
+              <br>
+              <input  name = "Predictable" type = "checkbox"> Predictable
+              <br>
+              <input name = "Uninspired" type = "checkbox"> Uninspired
+              <br>
+              <input  name = "Poor Acting" type = "checkbox"> Poor Acting
         </div>
       </div>
     </div>
