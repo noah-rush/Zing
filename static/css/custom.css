@@ -1,7 +1,9 @@
 .fullschedule .showAtVenueDescript{
     padding:10px;
 }
-
+.filler{
+    background-image:url("../img/patterns/item-3.png");
+}
 .modal-backdrop{
     position:fixed;
 }

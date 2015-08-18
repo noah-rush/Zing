@@ -1802,6 +1802,16 @@ function start (){
 	// getcomingsoon();
 	// homepage();
     // inputs();
+    $('.homeWidgets .col-md-3').each(function(){
+      console.log("abc")
+      console.log($(this).height())
+      console.log($('.homeWidgets').height())
+if($(this).height() < $('.homeWidgets').height()){
+  console.log("xxx")
+  fillerHeight = $('.homeWidgets').height()-$(this).height();
+  $(this).append('<div class = "filler" style ="height: ' + fillerHeight + 'px"></div> ')
+}
+})
     pager();
     popularItems();
 $(window).hashchange( function test(){
@@ -2069,6 +2079,7 @@ $('.WriteReviewMobile').click(function(){
 $('.joinEmailList').click(function(){
   emailList();
 })
+
 
 
 // trackScrolling();
