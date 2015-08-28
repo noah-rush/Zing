@@ -28,7 +28,9 @@ def update():
 	 			   "http://citypaper.net/rss/arts/", 
 				   "http://feeds.feedburner.com/ShapiroOnTheater",  
 	 			   "http://www.philly.com/phillystage.rss",
-	 			   "http://www.philly.com/philly_entertainment_arts.rss"]
+	 			   "http://www.philly.com/philly_entertainment_arts.rss",
+	 			   "http://feeds.feedburner.com/PW-ArtsCulture"
+	 			   ]
 
 
 	# target_urls = ["http://feeds.feedburner.com/PW-ArtsCulture"]

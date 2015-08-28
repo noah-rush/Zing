@@ -581,7 +581,7 @@ def _handleShowUpload(files):
 ### zing sign in without facebook    
 @app.route('/signin',  methods=[ 'POST'])
 def signin():
-  email = request.form['email']
+  email = str(request.form['email']).lower()
   password = request.form['hidden']
   print email
   print password
@@ -723,7 +723,7 @@ def reset_password():
 @app.route('/zingnewuser', methods=['GET', 'POST'])
 def zingnewuser():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-  email = str(request.form['email'])
+  email = str(request.form['email']).lower()
   firstname = str(request.form['firstname'])
   lastname = str(request.form['lastname'])
   password = str(request.form['password'])
