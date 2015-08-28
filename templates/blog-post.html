@@ -172,6 +172,14 @@
              <a class="btn btn-default  mobileReviewButton loginSidebar" data-toggle = "reviewModal">Write a Review</a>
              {%endif%}
              </div>
+             {%if days|length >0%}
+             {%for day in days%}
+             {{day['to_char']}}
+             <hr>
+             {%endfor%}
+             <br>
+             {%endif%}
+
 									{{headerDescription}}
 								
 

@@ -58,10 +58,10 @@ mail = Mail(app)
 def fullScheduleTemplate(results, title):
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     print results
-    months = {"01": "January ",
-              "02": "February ",
-              "03": "March ",
-              "04": "April ",
+    months = {"01": "January",
+              "02": "February",
+              "03": "March",
+              "04": "April",
               "05": "May ",
               "06": "June ",
               "07": "July ", 
@@ -71,7 +71,7 @@ def fullScheduleTemplate(results, title):
               "11": "November ", 
               "12": "December "}
     for result in results:
-      # result['descript'] = Markup(result['descript'])
+      result['descript'] = Markup(result['descript'])
       c.execute("""SELECT SUM(rating), COUNT(rating)  FROM ZINGRATINGS
                     WHERE showid = %s""", (result['id'],))
       for a in c.fetchall():
@@ -87,22 +87,22 @@ def fullScheduleTemplate(results, title):
       result['name'] = Markup(result['name'])
       result['start'] = str(result['start'])
       result['enddate'] = str(result['enddate'])
-      monthfirst = result['start'].find("-")
-      monthlast = result['start'].rfind("-")
-      month = result['start'][monthfirst+1:monthlast]
-      day = result['start'][monthlast+1:]
-      year = result['start'][:4]
-      if day[0] == "0":
-        day = day[1:]
-      result['start'] = months[month] + day 
-      monthfirst = result['enddate'].find("-")
-      monthlast = result['enddate'].rfind("-")
-      month = result['enddate'][monthfirst+1:monthlast]
-      day = result['enddate'][monthlast+1:]
-      if day[0] == "0":
-        day = day[1:]
-      year = result['enddate'][:4]
-      result['enddate'] = months[month] + day + ", " +  year
+      # monthfirst = result['start'].find("-")
+      # monthlast = result['start'].rfind("-")
+      # month = result['start'][monthfirst+1:monthlast]
+      # day = result['start'][monthlast+1:]
+      # year = result['start'][:4]
+      # if day[0] == "0":
+      #   day = day[1:]
+      # result['start'] = months[month] + day 
+      # monthfirst = result['enddate'].find("-")
+      # monthlast = result['enddate'].rfind("-")
+      # month = result['enddate'][monthfirst+1:monthlast]
+      # day = result['enddate'][monthlast+1:]
+      # if day[0] == "0":
+      #   day = day[1:]
+      # year = result['enddate'][:4]
+      # result['enddate'] = months[month] + day + ", " +  year
     results = resort(results)
     totalCountMod = len(results)%3
     return render_template('fullschedule.html', title = title, results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
@@ -181,8 +181,6 @@ def toprated():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("""SELECT ZINGSHOWS.name,ZINGSHOWS.id, SUM(rating), COUNT(rating) 
     from ZINGRatings, ZINGSHOWS WHERE ZINGSHOWS.id = ZINGRATINGS.showid
-    and enddate > now()
-    and start < now() 
     GROUP BY ZINGSHOWS.id,ZINGSHOWS.name""")
   results = c.fetchall()
   sortedResults = []
@@ -528,6 +526,20 @@ def photo():
 UPLOAD_FOLDER = 'static/images/'
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 
+
+@app.route('/showPhoto', methods=[ 'POST'])
+def showPhoto():
+    try:
+        files = request.files
+        print files
+        uploaded_files = _handleShowUpload(files)
+        return jsonify({'files': uploaded_files})
+    except:
+        raise
+        return jsonify({'status': 'error'})
+UPLOAD_FOLDER = 'static/Zingimages/'
+ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+
 #### functions for photo uploading
 def allowed_file(filename):
   extension = filename[filename.find('.')+1:]
@@ -546,6 +558,20 @@ def _handleUpload(files):
     for key, file in files.iteritems():
         if file and allowed_file(file.filename):
             filename = file.filename
+            print os.path.join(UPLOAD_FOLDER, filename)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            filenames.append("%s" % (file.filename))
+    return filenames
+
+def _handleShowUpload(files):
+    if not files:
+       return None
+    filenames = []
+    saved_files_urls = []
+    for key, file in files.iteritems():
+        if file and allowed_file(file.filename):
+            filename = file.filename
+            filename = str(session['showid']) + '.jpg'
             print os.path.join(UPLOAD_FOLDER, filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             filenames.append("%s" % (file.filename))
@@ -1346,12 +1372,55 @@ def pastshows():
     return render_template('fullschedule.html', title = "Past Shows", results=results,totalCountMod = totalCountMod, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
  ###returns a fullschedule of shows
+@app.route('/tonight')
+def tonight():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, SHOWDAYS WHERE SHOWDAYS.showid = ZINGSHOWS.id and SHOWDAYS.date = current_date GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Playing Tonight" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/weekend')
+def weekend():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("""SELECT ZINGSHOWS.* FROM ZINGSHOWS, SHOWDAYS 
+                WHERE SHOWDAYS.showid = ZINGSHOWS.id 
+                AND (SHOWDAYS.date, SHOWDAYS.date)
+                OVERLAPS (current_date , current_date + interval '1 week')
+                GROUP BY Zingshows.id ORDER BY start ASC""")
+    results = c.fetchall()
+    weekendResults = []
+    for result in results:
+      c.execute("""SELECT to_char(date, 'Day') from SHOWDAYS
+                  WHERE SHOWDAYS.showid = %s
+                  AND (SHOWDAYS.date, SHOWDAYS.date)
+                  OVERLAPS (current_date , current_date + interval '1 week')""", (result['id'],))
+      daysOfTheWeek = c.fetchall()
+      weekend = False
+      for day in daysOfTheWeek:
+        if day['to_char'].strip() == "Friday" or day['to_char'].strip() == "Saturday" or day['to_char'].strip() == "Sunday":
+          weekend = True
+      if weekend:
+        weekendResults.append(result)
+    title = "Playing This Weekend" 
+    return fullScheduleTemplate(weekendResults, title)
+
+
+
 @app.route('/comedy')
 def comedy():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, COMEDY WHERE COMEDY.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
     results = c.fetchall()
     title = "Comedies" 
+    return fullScheduleTemplate(results, title)
+
+@app.route('/fringe')
+def fringe():
+    c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    c.execute("SELECT ZINGSHOWS.* FROM ZINGSHOWS, Fringe WHERE FRINGE.showid = ZINGSHOWS.id GROUP BY Zingshows.id ORDER BY start ASC")
+    results = c.fetchall()
+    title = "Fringe Festival" 
     return fullScheduleTemplate(results, title)
 
 @app.route('/music')
@@ -1577,6 +1646,15 @@ def show():
     show = request.args.get('show')
     c.execute("SELECT * from ZINGSHOWS where id = %s", (show,))
     showdata = c.fetchall()
+    c.execute("SELECT to_char(date, 'Day: Month, DD YYYY HH:MI') from SHOWDAYS where showid = %s",(show,))
+    days = c.fetchall()
+    for day in days:
+      tempDay = day['to_char']
+      if tempDay.find("12:00") >0:
+        print "rere"
+        tempDay = tempDay.replace("12:00", "")
+        print tempDay
+        day['to_char'] = tempDay
     c.execute("SELECT * FROM ZINGSHOWS where id = %s AND enddate>= now() AND start <= now() ", (show,))
     nowplaying =c.fetchall()
     if len(nowplaying)>0:
@@ -1769,6 +1847,7 @@ def show():
                 WHERE showid = %s""", (show,))
       count = str(c.fetchall()[0]['count'])
       template_vars = {"showdata": showdata[0],
+                        "days": days,
                       "producer": producer,
                        "description": description,
                        "headerDescription": headerDescription,
@@ -2112,6 +2191,19 @@ def removeOutReview():
    conn.commit()
    return "did it"
 
+@app.route('/removeBulkOutReview', methods = ['GET', 'POST'])
+def removeBulkOutReview():
+   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+   articleids = json.loads(request.args.get('articleids'))
+   for this in articleids:
+      c.execute("""DELETE FROM ZINGOUTSIDECONTENT WHERE 
+              id = %s""", (this,))
+      c.execute("""DELETE FROM ZINGOUTSIDESHOWTAGS WHERE 
+              articleid = %s""", (this,))
+      conn.commit()
+   print articleids
+   return "did it"
+
 
 @app.route('/removeTag', methods = ['GET', 'POST'])
 def removeTag():
@@ -2142,6 +2234,52 @@ def manageGenre():
     show['name'] = Markup(show['name'])
   return render_template("manageGenre.html", shows = shows)
 
+@app.route('/addshow', methods =['GET', 'POST'])
+def addshow():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  c.execute("SELECT * FROM THEATRES")
+  theatres = c.fetchall()
+  for theatre in theatres:
+    theatre['name'] = Markup(theatre['name'])
+  return render_template("addShows.html", theatres = theatres)
+
+
+@app.route('/publishShow', methods =['GET', 'POST'])
+def pubShow():
+  c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+  prod = request.args.get('producer')
+  title = request.args.get('title')
+  start = request.args.get('start')
+  end = request.args.get('end')
+  descript = request.args.get('descript')
+  venue = request.args.get('venue')
+  genre = request.args.get('genre')
+  c.execute("""INSERT INTO ZINGSHOWS
+                (name, descript, producer, venueid,
+                  start, enddate) VALUES(
+                  %s,%s,%s,%s,%s,%s)""",
+              (title, descript, prod, venue, start, end))
+  conn.commit()
+  c.execute("""SELECT id from ZINGSHOWS
+                WHERE name = %s""",
+                (title,))
+  showid = c.fetchall()[0]['id']
+  if genre == "Comedy":
+    c.execute("INSERT INTO Comedy(showid) values(%s)", (showid,))
+  if genre == "Fringe":
+    c.execute("INSERT INTO Fringe(showid) values(%s)", (showid,))
+  if genre == "Experimental":
+    c.execute("INSERT INTO Experimental(showid) values(%s)", (showid,))
+  if genre == "Classics":
+    c.execute("INSERT INTO Classics(showid) values(%s)", (showid,))
+  if genre == "Drama":
+    c.execute("INSERT INTO Drama(showid) values(%s)", (showid,))
+  if genre == "Musical":
+    c.execute("INSERT INTO Musicals(showid) values(%s)", (showid,))
+  conn.commit()
+  session['showid'] = showid
+  return str(showid)
+
 
 @app.route('/genreSubmit', methods =['GET', 'POST'])
 def genreSubmit():
@@ -2152,6 +2290,8 @@ def genreSubmit():
   print genre
   if genre == "Comedy":
     c.execute("INSERT INTO Comedy(showid) values(%s)", (showid,))
+  if genre == "Fringe":
+    c.execute("INSERT INTO Fringe(showid) values(%s)", (showid,))
   if genre == "Experimental":
     c.execute("INSERT INTO Experimental(showid) values(%s)", (showid,))
   if genre == "Classics":
@@ -2177,10 +2317,7 @@ def manageOutReviews():
     else:
       review['showname'] = "No tag"
     c.execute("SELECT * from SNIPPETS WHERE articleid = %s", (review['id'],))
-    snippets = c.fetchall()
-    for snippet in snippets:
-      print snippet['snippet']
-      
+    snippets = c.fetchall()      
     review['snippets'] = snippets
   return render_template("manageOutsideReviews.html", results = results, count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 

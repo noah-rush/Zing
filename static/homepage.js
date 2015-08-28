@@ -34,6 +34,40 @@ function comedy(){
     });
 
 };
+function tonight(){
+    $.ajax({
+        url: "/tonight",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+              $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
+function weekend(){
+    $.ajax({
+        url: "/weekend",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+              $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
 function experim(){
     $.ajax({
         url: "/experimen",
@@ -88,6 +122,23 @@ function classic(){
 function drama(){
     $.ajax({
         url: "/drama",
+        success: show_post,
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").append("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+  },
+  complete: function(){
+  
+     $('#loader').remove();
+  
+  }
+    });
+
+};
+function fringe(){
+    $.ajax({
+        url: "/fringe",
         success: show_post,
          beforeSend: function() {
             // console.log("before");
@@ -608,6 +659,23 @@ function open_editor(){
      
   },
         url:"/edit"
+    })
+}
+
+function addashow(){
+    $.ajax({
+        success: show_editor,
+           beforeSend: function() {
+            
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+     $('#loader').show();
+  },
+  complete: function(){
+   
+     $('#loader').remove();
+     
+  },
+        url:"/addshow"
     })
 }
 function manageReviews(){
@@ -1334,7 +1402,7 @@ function show_post(data){
      $(".page-content").html(data);
      pager()
          jQuery('.field-content p br:first-child').remove()
-         if(  jQuery('.fullschedule .showAtVenueDescript').text() == ""){
+         if(  jQuery('.fullschedule .showAtVenueDescript').text().trim() == ""){
 jQuery('.fullschedule .showAtVenueDescript').remove()
 }
      jQuery('body').animate({"scrollTop":0})
@@ -1404,7 +1472,21 @@ function show_out_manager(data){
     jQuery('body').animate({"scrollTop":0})
     $(".page-content").html(data);
     var addingTagID
-   
+    $('.bulkDelete').on("click", function(){
+      reviewsToDelete = []
+     $('.bulkRemove:checked').each(
+        function(){
+          reviewsToDelete.push($(this).val())
+        })
+     console.log(reviewsToDelete)
+
+       $.ajax({
+            success: manageOutReviews,
+            data: {articleids:JSON.stringify(reviewsToDelete)},
+            url: "/removeBulkOutReview"
+        });
+    })
+
      $('.anOutReview').each(function(){
       $(this).find('.addAtag').autocomplete({serviceUrl: '/autocomplete/allshows', onSelect: function(e){
         if(e['type'] == "venue"){
@@ -1479,7 +1561,10 @@ function show_editor(data){
      $('#addtags').autocomplete({serviceUrl: '/autocomplete/justshows', onSelect: function(e){
           console.log(e)
       }}); 
+     if($('#editor1').length>0){
     CKEDITOR.replace( 'editor1' );
+
+     }
     CKEDITOR.replace( 'editor2' );
     $('#addtag').on('click', function(e){
         $('.tag-drop').append('<span>' + $('#addtags').val() + '<a class = "close">x</a></span>');
@@ -1506,10 +1591,7 @@ function show_editor(data){
         }
     }
     )
-    $('#addphoto').on('click', function(e){
-       
-        $('#fileupload').trigger('click');
-    });
+    
 
 
 
@@ -1648,7 +1730,73 @@ if(topcount>3){
 
 
 }
+function publishShow(){
+  var descript = CKEDITOR.instances.editor2.getData();
+  var title = $('#show-title').val();
+  var producer = $('#show-producer').val();
+  var venue = $('.selectVenue').val();
+  var photo = $('#photopath').val();
+  var genre = $('.selectGenre').val()
+  var start = $('#show-start').val()
+  var end = $('#show-end').val()
+  console.log(title);
+  console.log(descript);
+  console.log(venue);
+  console.log(producer);
+  console.log(photo);
+  console.log(genre);
+  console.log(start);
+  console.log(end);
 
+  $.ajax({
+    url: "/publishShow",
+     success: function(data){
+            var showid = data
+            $(".editor").prepend("<div class = 'added'>" + title + " has been published.</div>" )
+            $('.added').delay(2000).fadeOut(200);
+            console.log(data);
+             $('.editor').html('<a id="addphoto" style="width = 100%" class="btn btn-success">Add Photo</a><input type="text" id="photopath" class="form-control" placeholder="Add a photo -->" autocomplete="on"><br> <input id="showfileupload" type="file" style="display:none" name="files[]" data-url="/showPhoto">')
+               $('#showfileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                
+                window.location.href = "#show/"+showid
+               
+            });
+        }
+    }
+    )
+    $('#addphoto').on('click', function(e){
+       
+        $('#showfileupload').trigger('click');
+    });
+
+
+
+            // setTimeout(function(){
+            //   window.location.href ="#blog"}, 2000);
+
+        },
+         beforeSend: function() {
+            // console.log("before");
+             $(".editor").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+          },
+          complete: function(){
+          $('#loader').remove();
+   
+  },
+    data: {title: title,
+        descript: descript,
+         venue: venue,
+           producer: producer,
+            genre: genre,
+            start:start,
+            end:end}
+  })
+
+}
 
 
 function publish(){
@@ -1672,6 +1820,23 @@ function publish(){
   finalTags = JSON.stringify(finalTags)
   $.ajax({
     url: "/contentPost",
+     success: function(){
+            $(".page-content").prepend("<div class = 'added'>" + title + " has been published.</div>" )
+            $('.added').delay(2000).fadeOut(200);
+             window.location.href ="#blog"
+            // setTimeout(function(){
+            //   window.location.href ="#blog"}, 2000);
+
+        },
+         beforeSend: function() {
+            // console.log("before");
+             $(".page-content").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
+            $('#loader').show();
+          },
+          complete: function(){
+          $('#loader').remove();
+   
+  },
     data: {title: title,
         descript: descript,
         tags: finalTags,
@@ -2001,6 +2166,9 @@ $(window).hashchange( function test(){
     case "#dram":
         drama();
         break; 
+    case "#fringe":
+        fringe();
+        break; 
     case "#class":
         classic();
         break; 
@@ -2028,6 +2196,18 @@ $(window).hashchange( function test(){
       break;
     case "#forgot":
       forgot();
+      break;
+    case "#tonight":
+      tonight();
+      break;
+    case "#weekend":
+      weekend();
+      break;
+    case "#addashow":
+      addashow();
+      break;
+    case "#publishshow":
+      publishShow();
       break;
 
 

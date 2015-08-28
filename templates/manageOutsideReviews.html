@@ -18,6 +18,7 @@
 
               
 <div class = "fullreviews">
+<button class = "btn btn-danger bulkDelete" style= "display:block" >Delete Checked Reviews</button>
 
 {% for result in results%}
 
@@ -38,6 +39,7 @@
 <div class = "showAtVenue">
 <div class = "anOutReview">
 <br>
+<input type = "checkbox" class = "bulkRemove" value = "{{result['id']}}">
 <div class = "reviewManagerHeadline"><a target = "_blank" href = "{{result['link']}}">{{result['title']}}</a> </div><div class = "reviewTags">{{result['showname'][0]['name']}}</div>
 <br>
 <button class = "btn btn-danger removeOutReview" value = "{{result['id']}}">Delete Review</button>

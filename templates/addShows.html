@@ -1,0 +1,61 @@
+ <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="editor">
+   
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" style="width: 100%" id="show-title" class="form-control" placeholder="Title">
+                <br>
+                <input type="text" style="width: 100%" id="show-producer" class="form-control" placeholder="Producer">
+                <br>
+                <select class="selectVenue">
+                    {%for theatre in theatres%}
+                    <option value="{{theatre['id']}}">{{theatre['name']}}</option>
+                    {%endfor%}
+                </select>
+                <br>
+                 Start Date:
+                <input type="date" id = "show-start" name="bday">
+                <br> End Date:
+                <input type="date" id = "show-end" name="bday">
+                <br>
+                <select class="selectGenre">
+                    <option>Comedy</option>
+                    <option>Experimental</option>
+                    <option>Classics</option>
+                    <option>Drama</option>
+                    <option>Musical</option>
+                    <option>Fringe</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <a href="#publishshow" style="width = 100%" class="btn btn-success">Publish Show</a>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+        <br>
+        <br>
+        <h2>Description</h2>
+        <textarea name="editor2" id="editor2" rows="10" cols="80">
+            Description of show
+        </textarea>
+      
+        <script>
+        </script>
+    </form>
+</div>
