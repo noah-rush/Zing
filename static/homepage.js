@@ -968,11 +968,11 @@ function show_modal(data){
 }
 
 function facebookLogin(){
-  console.log("got to there ")
+  // console.log("got to there ")
      FB.login(function(response) {
 FB.api('/me', function(response) {
     name = response.first_name;
-    console.log(response);
+    // console.log(response);
  
         
               $.ajax({
@@ -1040,7 +1040,7 @@ no = true;
 }
 var commitment
  $('.theatergoing input:checked').each(function() {
-            console.log(this.value);
+            // console.log(this.value);
             commitment = this.value;
             
         });
@@ -1081,7 +1081,7 @@ no = true;
 }
 var commitment
  $('.theatergoing input:checked').each(function() {
-            console.log(this.value);
+            // console.log(this.value);
             commitment = this.value;
             
         });
@@ -1478,7 +1478,7 @@ function show_out_manager(data){
         function(){
           reviewsToDelete.push($(this).val())
         })
-     console.log(reviewsToDelete)
+     // console.log(reviewsToDelete)
 
        $.ajax({
             success: manageOutReviews,
@@ -1654,6 +1654,17 @@ function show_reviews(){
 
 
 function pager(){
+     jQuery('.item').each(function(e){
+  // console.log(e);
+  itemnum = e+1;
+  item = ".item" + itemnum
+  if(e<6){
+    jQuery(item).show();
+  }else{
+        jQuery(item).hide();
+
+  }
+})
   var pages = Math.floor($('.blog-list .item').length/6)
   // console.log(Math.floor($('.blog-list .item').length/6))
   for(var i = 0; i<=pages; i++){
@@ -1739,14 +1750,14 @@ function publishShow(){
   var genre = $('.selectGenre').val()
   var start = $('#show-start').val()
   var end = $('#show-end').val()
-  console.log(title);
-  console.log(descript);
-  console.log(venue);
-  console.log(producer);
-  console.log(photo);
-  console.log(genre);
-  console.log(start);
-  console.log(end);
+  // console.log(title);
+  // console.log(descript);
+  // console.log(venue);
+  // console.log(producer);
+  // console.log(photo);
+  // console.log(genre);
+  // console.log(start);
+  // console.log(end);
 
   $.ajax({
     url: "/publishShow",
@@ -1754,7 +1765,7 @@ function publishShow(){
             var showid = data
             $(".editor").prepend("<div class = 'added'>" + title + " has been published.</div>" )
             $('.added').delay(2000).fadeOut(200);
-            console.log(data);
+            // console.log(data);
              $('.editor').html('<a id="addphoto" style="width = 100%" class="btn btn-success">Add Photo</a><input type="text" id="photopath" class="form-control" placeholder="Add a photo -->" autocomplete="on"><br> <input id="showfileupload" type="file" style="display:none" name="files[]" data-url="/showPhoto">')
                $('#showfileupload').fileupload({
         dataType: 'json',
@@ -1779,7 +1790,7 @@ function publishShow(){
 
         },
          beforeSend: function() {
-            // console.log("before");
+            // console
              $(".editor").html("<div id = 'loader'><img src = 'static/ajax-loader.gif'></img></div>");
             $('#loader').show();
           },
@@ -1968,11 +1979,11 @@ function start (){
 	// homepage();
     // inputs();
     $('.homeWidgets .col-md-3').each(function(){
-      console.log("abc")
-      console.log($(this).height())
-      console.log($('.homeWidgets').height())
+      // console.log("abc")
+      // console.log($(this).height())
+      // console.log($('.homeWidgets').height())
 if($(this).height() < $('.homeWidgets').height()){
-  console.log("xxx")
+  // console.log("xxx")
   fillerHeight = $('.homeWidgets').height()-$(this).height();
   $(this).append('<div class = "filler" style ="height: ' + fillerHeight + 'px"></div> ')
 }
@@ -2008,7 +2019,7 @@ $(window).hashchange( function test(){
       
 
         jQuery('.item').each(function(e){
-        console.log(e);
+        // console.log(e);
         itemnum = e+1;
         item = ".item" + itemnum
         if(itemnum>(page-1)*6 && itemnum<(page*6 +1)){
@@ -2038,7 +2049,7 @@ $(window).hashchange( function test(){
 
         nextPage = parseInt(page) + 1
         prevPage = parseInt(page) - 1
-        console.log(6*parseInt(page));
+        // console.log(6*parseInt(page));
         if($(".item" + (6*parseInt(page) +1)).length > 0){
            $(".pager .next").show()
             $(".pager .next").attr('href',"#page" + nextPage);
@@ -2272,7 +2283,7 @@ $('.joinEmailList').click(function(){
 })
 
 jQuery('.item').each(function(e){
-  console.log(e);
+  // console.log(e);
   itemnum = e+1;
   item = ".item" + itemnum
   if(e<6){

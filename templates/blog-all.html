@@ -1,180 +1,46 @@
-	<main class="page-content blogpage">
-			
-				<div class="grid-cont" style=" background-repeat:no-repeat">		
-					
+<main class="page-content blogpage">
+    <div class="grid-cont" style=" background-repeat:no-repeat">
+        <div class="grid-row">
+            <div class="grid-col grid-col-12">
+                <!-- blog list -->
+                <div class="blog-list postsList">
+                    <div class="head">latest posts</div>
+                 {%for post in blog%} {%if (loop.index+2)%3 == 0%}
+                            <div class="grid-row ">
+                                {%endif%} 
+                                <div class="grid-col grid-col-4 ">
+                                    <div class="item{{loop.index}} item">
+                                        <a href="#post/{{post['id']}}" class="pic">
+                                            <img src="static/images/{{post['photo']}}" alt="">
+                                        </a>
+                                        <h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
+                                        <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
+                                        {{post['descript']}}
+                                        <div class="bar">
+                                            <a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
+                                            <a href="#post/{{post['id']}}" class="more">more</a>
+                                            <a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
+                                            <i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
+                                        </div>
+                                    </div>
+                            </div>
+        {%if loop.index%3 == 0%}
+        </div>
+        {%endif%} {%endfor%}
+        {%if blog|length%3 == 0%}
 
-	<div class="grid-row">
-						<div class="grid-col grid-col-12">
-							<!-- blog list -->
-							<div class="blog-list postsList">
-								<div class="head">latest posts</div>
-
-
-								{%for post in blog%}
-                {%if (loop.index+2)%3 == 0%}
-                <div class="grid-row ">
-                {%endif%}
-								{%if loop.index<=6%}
-                <div class="grid-col grid-col-4 ">
-								<div class="item page1">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                  <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-									<p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-                
-								{%if loop.index>6 and loop.index<=12%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page2">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}"  alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                  <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-									<p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-								{%if loop.index>12 and loop.index<=18%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page3">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}"  alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-
-									<p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-								{%if loop.index>18 and loop.index<=24%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page4">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}"  alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-
-                  <p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-								{%if loop.index>24 and loop.index<=30%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page5">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}" alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-
-                  <p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-								{%if loop.index>30 and loop.index<=36%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page6">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}"alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-
-                  <p>{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-										<i class="fa fa-pencil fa-flip-horizontal"></i>{{post['author']}}
-									</div>
-								</div>
-                </div>
-								{%endif%}
-								{%if loop.index>36 and loop.index<=42%}
-                                <div class="grid-col grid-col-4">
-
-								<div class="item page7">
-									<a href="#post/{{post['id']}}" class="pic">
-										<img src="static/images/{{post['photo']}}"  alt="">
-									</a>
-									<h2><a href="#post/{{post['id']}}">{{post['title']}}</a></h2>
-                                    <div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-
-                  <p >{{post['descript']}}</p>
-									<div class="bar">
-										<a href="#post/{{post['id']}}" class="fa fa-share fa-flip-vertical"></a>
-										<a href="#post/{{post['id']}}" class="more">more</a>
-										<a href="#" class="comments"><i class="fa fa-comment"></i>10</a>
-										<div class="date"><i class="fa fa-clock-o"></i>{{post['date']}}</div>
-									</div>
-								</div>
-                </div>
-								{%endif%}
-                {%if loop.index%3 == 0%}
-                </div>
-                {%endif%}
-								{%endfor%}
-							<!--/ blog list -->
-							
-							<!-- pager -->
-              </div>
-              </div>
-              </div>
-              </div>
-							<div class="pager">
-
-								<a href="#" class="prev fa fa-chevron-left"></a>
-								<a href="#page2" class="next fa fa-chevron-right"></a>
-							
-								
-								
-							</div>
-							</main>
+        {%else%}
+        </div>
+        {%endif%}
+            <!--/ blog list -->
+            <!-- pager -->
+            </div>
+            </div>
+            </div>
+            <div class="pager">
+                <a href="#" class="prev fa fa-chevron-left"></a>
+                <a href="#page2" class="next fa fa-chevron-right"></a>
+            </div>
+            </div>
+            
+</main>
