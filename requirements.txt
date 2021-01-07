@@ -1,5 +1,5 @@
 Flask==0.9
-Jinja2==2.6
+Jinja2==2.10.1
 Werkzeug==0.9.6
 gunicorn==0.17.2
 psycopg2==2.5.3
