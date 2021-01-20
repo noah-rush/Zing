@@ -57,7 +57,6 @@ mail = Mail(app)
 
 def fullScheduleTemplate(results, title):
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    print results
     months = {"01": "January",
               "02": "February",
               "03": "March",
@@ -115,7 +114,6 @@ def resort(infoList):
   newList2 = []
   newList3 = []
   for i in enumerate(infoList):
-    print i
     if i[0]%3 == 0:
       newList1.append(i[1])
     if i[0]%3 == 1:
@@ -123,8 +121,6 @@ def resort(infoList):
     if i[0]%3 == 2:
       newList3.append(i[1])
   newList = newList1 + newList2 + newList3
-  for i in newList:
-    print i
   return newList
 
 
@@ -132,7 +128,6 @@ def resort(infoList):
 
 def convertDate(date):
         strlength = len(date)
-        print date
         day = date[:date.find("y")+1]
         month = date[date.find("ber")-6:strlength-6]
         numday = date[strlength-6: strlength-4]
@@ -140,7 +135,6 @@ def convertDate(date):
         if  numday.find("0") == 0:
           numday = numday[1:]
         playingdate = day + ", " + month + " " + numday +" " + year
-        print playingdate
         return playingdate
 
 ### convenience function for converting avgs in 1-5 to 0-100%
@@ -245,7 +239,6 @@ def reviewMenu():
                ORDER BY ZINGOUTSIDECONTENT.id DESC
                LIMIT 10""")
   results = c.fetchall()
-  print results
   return results
 
 @app.route('/forgot', methods=['GET','POST'])
@@ -269,7 +262,6 @@ def forgot():
     msg.html = html
     mail.send(msg)
 
-  print email
   return ""
 
 @app.route('/loaderio-83465c8b2028a6a6aa7cc879d3d87461/')
@@ -462,7 +454,6 @@ def post():
   c.execute("SELECT * from BLOGPOSTS where id = %s", (articleid,))
   article = c.fetchall()
   article = article[0]
-  print article
   c.execute("SELECT * FROM BLOGPOSTS where id = %s",(previd,))
   prevarticle = c.fetchall()
   if len(prevarticle) > 0:
@@ -517,7 +508,6 @@ def post():
 def photo():
     try:
         files = request.files
-        print files
         uploaded_files = _handleUpload(files)
         return jsonify({'files': uploaded_files})
     except:
@@ -531,7 +521,6 @@ ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 def showPhoto():
     try:
         files = request.files
-        print files
         uploaded_files = _handleShowUpload(files)
         return jsonify({'files': uploaded_files})
     except:
@@ -543,7 +532,6 @@ ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 #### functions for photo uploading
 def allowed_file(filename):
   extension = filename[filename.find('.')+1:]
-  print extension
   allowed = False
   for exts in ALLOWED_EXTENSIONS:
     if extension == exts:
@@ -558,7 +546,6 @@ def _handleUpload(files):
     for key, file in files.iteritems():
         if file and allowed_file(file.filename):
             filename = file.filename
-            print os.path.join(UPLOAD_FOLDER, filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             filenames.append("%s" % (file.filename))
     return filenames
@@ -572,7 +559,6 @@ def _handleShowUpload(files):
         if file and allowed_file(file.filename):
             filename = file.filename
             filename = str(session['showid']) + '.jpg'
-            print os.path.join(UPLOAD_FOLDER, filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             filenames.append("%s" % (file.filename))
     return filenames
@@ -583,8 +569,6 @@ def _handleShowUpload(files):
 def signin():
   email = str(request.form['email']).lower()
   password = request.form['hidden']
-  print email
-  print password
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT first,id, passhash FROM USERS where email=%s", (email,))
   data = c.fetchall()
@@ -597,7 +581,6 @@ def signin():
     return "Please Login with Facebook"
   else:
     if security.check_password_hash(realkey, password):
-      print "passsword local"
       session['username'] = userid
       return "USER LOGIN" + data[0]['first']
   return "Incorrect Password"
@@ -637,7 +620,6 @@ def fbcreateform():
   lastname = str(request.args.get('lastname'))
   c.execute("SELECT * from USERS where email = %s",(email,))
   testemail = c.fetchall()
-  print testemail
   if testemail != []:
     userid = testemail[0]['id']
     session['username'] = testemail[0]['id']
@@ -731,7 +713,6 @@ def zingnewuser():
   testemail = c.fetchall()
   if testemail != []:
     userid = testemail[0]['id']
-    print "here"
     return "EMAIL FOUND" + testemail[0]['first']
   fullname = firstname + lastname
   you = User(fullname, password)
@@ -818,7 +799,6 @@ def picks():
                 GROUP BY ZINGSHOWS.name, ZINGSHOWS.id """)
   results = c.fetchall()
   sortedResults = []
-  print results
   for result in results:
       result['name'] = Markup(result['name'])
       showid = result['id']
@@ -942,7 +922,6 @@ def picks():
 def source():
     c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     pub = request.args.get('pub')
-    print pub
     publication = ""
     img = ""
     if pub == "inq":
@@ -973,7 +952,6 @@ def source():
       publication = "http://www.philly.com/r?19=960&32=3796&7=195487&40=http%3A%2F%2Fwww.philly.com%2Fphilly%2Fentertainment%2Farts"
       title = "Philly.com"
       img = "phillydotcom.png"
-    print publication
     c.execute("""SELECT ZINGOUTSIDECONTENT.*
                 FROM ZingoutsideContent, ZINGOUTSIDESHOWTAGS
                 WHERE ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id
@@ -986,7 +964,6 @@ def source():
       result['pub-go'] = pub
       result['pub-image'] = img
       result['author'] = Markup(result['author'])
-      print result['descript']
       result['descript'] = Markup(result['descript'])
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
                   ZINGShows.*
@@ -1022,7 +999,6 @@ def fullreviews():
       result['author'] = Markup(result['author'])
       # soup = BeautifulSoup(Markup(result['descript']))
       # result['descript'] = soup.get_text()
-      print result['descript']
       c.execute("""SELECT ZINGOUTSIDESHOWTAGS.showid,
                   ZINGShows.*
                   FROM ZINGOUTSIDESHOWTAGS , ZINGSHOWS
@@ -1059,7 +1035,6 @@ def fullreviews():
       if result['publication'] == "http://www.philadelphiaweekly.com/arts-and-culture":
         result['pub-image'] = "pw.jpg"
         result['pub-go'] = "phil-week"
-    print len(results)*2/3
     results = resort(results)
     return render_template('fullreviews.html', results=results, title = "All Reviews", image = "none", count1 = int(len(results)/3), count2 = int(len(results)*2/3))
 
@@ -1090,7 +1065,6 @@ def reviewsbyshow():
         else:
           temp = {"showid" : result['showid'], "articleids": [result['articleid']] }
         byshowresults.append(temp)
-    print byshowresults
     for byshow in byshowresults:
       byshow['headlines'] = []
       byshow['links'] = []
@@ -1176,7 +1150,6 @@ def reviewsbyreviewer():
         showTags.append(result['author'])
         temp = {"showid" : result['author'], "headlines": [[result['title'], result['link']]], "name" :  result['author']}
         byshowresults.append(temp)
-    print byshowresults
     # for byshow in byshowresults:
     #   byshow['headlines'] = []
     #   byshow['links'] = []
@@ -1321,7 +1294,6 @@ def pastshows():
     #              GROUP BY Karlshows2.name""")
     c.execute("SELECT * FROM ZINGSHOWS WHERE enddate < now() ORDER BY start ASC")
     results = c.fetchall()
-    print results
     months = {"01": "January ",
               "02": "February ",
               "03": "March ",
@@ -1474,7 +1446,6 @@ def fullschedule():
     #              GROUP BY Karlshows2.name""")
     c.execute("SELECT * FROM ZINGSHOWS WHERE enddate > now() ORDER BY start ASC")
     results = c.fetchall()
-    print results
     months = {"01": "January ",
               "02": "February ",
               "03": "March ",
@@ -1574,7 +1545,6 @@ def venue():
     results['name'] = Markup(results['name'])
     twitterHandle = results['tw']
     twitterHandle = twitterHandle[twitterHandle.rfind("/")+1:]
-    print twitterHandle
     tweetsList = []
     if twitterHandle != "":
       tweets = t.statuses.user_timeline(screen_name=twitterHandle)
@@ -1585,10 +1555,8 @@ def venue():
         if len(tweet['entities']['urls']) > 0:
           tw['links'] = []
           for x in tweet['entities']['urls']:
-            print x['url']
             tw['links'].append(x['url'])
         if 'media' in tweet['entities'].keys():
-          print tweet['entities']['media'][0]['media_url']
           tw['media'] = tweet['entities']['media'][0]['media_url']
         else:
           tw['media'] = ""
@@ -1596,7 +1564,6 @@ def venue():
         testText = tweetText
         http = tweetText[tweetText.find("http"):]
         http = http[:http.find(" ")]
-        print http
         tweetText = tweetText.replace(http, "")
         tw['text'] = tweetText
         tweetsList.append(tw)
@@ -1651,9 +1618,7 @@ def show():
     for day in days:
       tempDay = day['to_char']
       if tempDay.find("12:00") >0:
-        print "rere"
         tempDay = tempDay.replace("12:00", "")
-        print tempDay
         day['to_char'] = tempDay
     c.execute("SELECT * FROM ZINGSHOWS where id = %s AND enddate>= now() AND start <= now() ", (show,))
     nowplaying =c.fetchall()
@@ -1772,11 +1737,9 @@ def show():
                 and ZINGOUTSIDESHOWTAGS.articleid = ZINGOUTSIDECONTENT.id""", 
                 (showdata[0]['id'],))
       articleids = c.fetchall()
-      print articleids
       outsideArticles = []
       outsideArticleIDs = []
       for article in articleids:
-        print article['articleid']
         if article['articleid'] in outsideArticleIDs:
           pass
         else:
@@ -1919,7 +1882,6 @@ def profile():
     commitment = c.fetchall()
     if len(commitment) > 0:
       commitment = commitment[0]
-    print results
     c.execute("""SELECT reviewText, ZINGUSERREVIEWS.userid, 
                 rating, to_char(ZINGRATINGS.time, 'MMDDYYYY'), ZINGRATINGS.showid,
                 ZINGSHOWS.name
@@ -2055,13 +2017,11 @@ def submitreview():
     c.execute("""DELETE FROM ZINGBADADJECTIVES
                     WHERE userid= %s and showid = %s""", (userid, showID))
     for good in goods:
-      print good
       
       c.execute("""INSERT INTO ZINGGOODADJECTIVES(showid, adjective, userid)
                 VALUES(%s,%s,%s)""",
                 (showID, good, userid))
     for bad in bads:
-      print bad
       c.execute("""INSERT INTO ZINGBADADJECTIVES(showid, adjective, userid)
                 VALUES(%s,%s,%s)""",
                 (showID, bad, userid))
@@ -2108,7 +2068,6 @@ def submitreview():
 
       
   
-    print numUserRatings
     c.execute("SELECT name from ZINGSHOWS WHERE id = %s", (showID,))
     show = c.fetchall()[0]['name']
     html = render_template(
@@ -2135,8 +2094,7 @@ def fblogin():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT ID, emailconfirm FROM USERS WHERE EMAIL = %s", (email,))
   results = c.fetchall()
-  print results
-  print results[0]['emailconfirm']
+
   if results[0]['emailconfirm']:
     session['username'] = results[0]['id']
     return redirect(url_for('index'))
@@ -2149,8 +2107,6 @@ def login():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   c.execute("SELECT ID, emailconfirm FROM USERS WHERE EMAIL = %s", (email,))
   results = c.fetchall()
-  print results
-  print results[0]['emailconfirm']
   if results[0]['emailconfirm']:
     session['username'] = results[0]['id']
     return "session logged in Flask"
@@ -2201,7 +2157,6 @@ def removeBulkOutReview():
       c.execute("""DELETE FROM ZINGOUTSIDESHOWTAGS WHERE 
               articleid = %s""", (this,))
       conn.commit()
-   print articleids
    return "did it"
 
 
@@ -2286,8 +2241,7 @@ def genreSubmit():
   c = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
   showid = str(request.args.get('show'))
   genre = request.args.get('genre')
-  print showid
-  print genre
+
   if genre == "Comedy":
     c.execute("INSERT INTO Comedy(showid) values(%s)", (showid,))
   if genre == "Fringe":
@@ -2357,7 +2311,6 @@ def manageReviews():
         if len(showname) > 0:
           data.append(Markup(showname[0]['name']))
         reviewtexts.append(data)
-  print results
   return render_template("manageReviews.html", userreviews = reviewtexts, count1 = int(len(reviewtexts)/3), count2 = int(len(reviewtexts)*2/3))
 
 
@@ -2393,7 +2346,6 @@ def donesurvey():
   prefs  = json.loads(prefs)
   commitment = request.args.get('commitment')
   worksin = False
-  print yes 
   if yes =="true":
     worksin = True
   drama = prefs['drama']
